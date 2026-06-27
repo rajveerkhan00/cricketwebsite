@@ -71,8 +71,7 @@ export default function Contact() {
                 <div className="flex flex-col text-sm">
                   <span className="text-zinc-400 font-light">Email Us</span>
                   <a href="mailto:SUPPORT@CricOverlay.COM" className="font-semibold text-zinc-200 hover:text-white transition-colors">
-                    SUPPORT@CricOverlay.COM
-                  </a>
+    cricovelay@gmail.com                  </a>
                 </div>
               </div>
 
@@ -84,8 +83,8 @@ export default function Contact() {
                 </span>
                 <div className="flex flex-col text-sm">
                   <span className="text-zinc-400 font-light">Call Us</span>
-                  <a href="tel:+8801912229606" className="font-semibold text-zinc-200 hover:text-white transition-colors">
-                    +8801912229606
+                  <a href="tel:+3013113580" className="font-semibold text-zinc-200 hover:text-white transition-colors">
+                    +3013113580
                   </a>
                 </div>
               </div>
