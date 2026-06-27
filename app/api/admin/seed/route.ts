@@ -21,7 +21,7 @@ export async function GET() {
 
     const admin = await User.create({
       name: "Super Admin",
-      email: "admin@crickprobd.com",
+      email: "admin@CricOverlay.com",
       password: hashedPassword,
       role: "admin",
       restricted: false,
@@ -31,7 +31,7 @@ export async function GET() {
       {
         message: "✅ Admin created successfully!",
         credentials: {
-          email: "admin@crickprobd.com",
+          email: "admin@CricOverlay.com",
           password: "Admin@123456",
           note: "Change this password immediately after first login.",
         },

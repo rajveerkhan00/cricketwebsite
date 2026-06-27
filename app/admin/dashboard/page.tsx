@@ -1223,9 +1223,9 @@ function SendCustomEmailModal({
   payment: PaymentRecord;
   onClose: () => void;
 }) {
-  const [subject, setSubject] = useState("CrickproBD Account Credentials");
+  const [subject, setSubject] = useState("CricOverlay Account Credentials");
   const [body, setBody] = useState(
-    `Hello,\n\nThank you for your payment. Your transaction has been verified!\n\nHere are your account credentials:\nEmail: ${payment.email}\nPassword: \n\nYou can log in at: ${window.location.origin}/login\n\nRegards,\nCrickproBD Team`
+    `Hello,\n\nThank you for your payment. Your transaction has been verified!\n\nHere are your account credentials:\nEmail: ${payment.email}\nPassword: \n\nYou can log in at: ${window.location.origin}/login\n\nRegards,\nCricOverlay Team`
   );
   const [loading, setLoading] = useState(false);
 

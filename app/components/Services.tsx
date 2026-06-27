@@ -32,7 +32,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="bg-[#03041c] py-24 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none">
+    <section id="services" className="bg-[#03041c] py-24 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none">
       
       {/* Small Category Pill */}
       <div className="mb-4">

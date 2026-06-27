@@ -14,7 +14,7 @@ export default function Pricing() {
 
   const handlePlanCheckout = (tier: any) => {
     if (tier.price === "$0" || tier.price.toLowerCase().includes("free") || tier.price === "0") {
-      toast.success(`Welcome to CrickproBD! You are now subscribed to the ${tier.name} Plan.`);
+      toast.success(`Welcome to CricOverlay! You are now subscribed to the ${tier.name} Plan.`);
       return;
     }
     setSelectedPlan(tier);

@@ -31,6 +31,21 @@ export default function Contact() {
               <p className="text-zinc-400 text-sm font-light leading-relaxed">
                 Reach out to us directly or fill out the form and our team will get back to you within 24 hours.
               </p>
+
+              <div className="rounded-xl border border-zinc-800/60 bg-[#0b1038] p-4 flex flex-col gap-3">
+                <h4 className="text-sm font-bold tracking-wider text-zinc-100 uppercase">Website Owners</h4>
+                <div className="flex flex-col gap-2">
+                  {[
+                    { name: "Shahzaib", role: "Founder & Lead Strategist" },
+                    { name: "Rashid", role: "Founder & Product Lead" },
+                  ].map((owner, idx) => (
+                    <div key={idx}>
+                      <p className="text-sm font-semibold text-white">{owner.name}</p>
+                      <p className="text-xs text-amber-500">{owner.role}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col gap-6">
@@ -55,8 +70,8 @@ export default function Contact() {
                 </span>
                 <div className="flex flex-col text-sm">
                   <span className="text-zinc-400 font-light">Email Us</span>
-                  <a href="mailto:SUPPORT@CRICKPROBD.COM" className="font-semibold text-zinc-200 hover:text-white transition-colors">
-                    SUPPORT@CRICKPROBD.COM
+                  <a href="mailto:SUPPORT@CricOverlay.COM" className="font-semibold text-zinc-200 hover:text-white transition-colors">
+                    SUPPORT@CricOverlay.COM
                   </a>
                 </div>
               </div>
@@ -77,7 +92,7 @@ export default function Contact() {
             </div>
 
             <div className="text-[10px] text-zinc-500 font-semibold tracking-wider">
-              CRICKPROBD TEAM CO.
+              CricOverlay TEAM CO.
             </div>
           </div>
 

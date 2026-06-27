@@ -84,7 +84,7 @@ export default function AdminForgotPassword() {
             </label>
             <input
               type="email"
-              placeholder="admin@crickprobd.com"
+              placeholder="admin@CricOverlay.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-500 transition-colors placeholder:text-zinc-600"

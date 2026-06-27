@@ -1,24 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { toast } from "react-toastify";
 
 export default function Header() {
-  const [activeTab, setActiveTab] = useState("HOME");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
   const { data: session } = useSession();
 
   const navLinks = [
     { name: "HOME", type: "link", href: "/" },
     { name: "Tournaments", type: "badge", href: "/tournaments" },
     { name: "PRICING", type: "link", href: "/pricing" },
-    { name: "THEMES", type: "link", href: "#" },
     { name: "ABOUT", type: "link", href: "/about" },
     { name: "CONTACT", type: "link", href: "/contact" },
+    { name: "Privacy Policy", type: "link", href: "/privacy-policy" },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
+
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#05072c] border-b border-white/10 px-6 py-4 shadow-xl backdrop-blur-md bg-opacity-95 select-none font-outfit">
@@ -27,13 +36,13 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3 cursor-pointer select-none group">
           <Image
             src="/logo.png"
-            alt="CrickproBD Logo"
+            alt="CricOverlay Logo"
             width={36}
             height={36}
             className="rounded-full border border-white/25 transition-all duration-300 group-hover:rotate-[15deg] group-hover:scale-105"
           />
           <span className="text-2xl font-extrabold tracking-tight text-white transition-transform duration-300 group-hover:scale-[1.02] font-space">
-            Crick<span className="text-amber-500 font-black">pro</span>BD
+            Cric<span className="text-amber-500 font-black">Over</span>lay
           </span>
         </Link>
 
@@ -57,17 +66,16 @@ export default function Header() {
                 </Link>
               );
             }
-            const isActive = activeTab === link.name;
+            const active = isActive(link.href);
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setActiveTab(link.name)}
-                className={`relative py-2 px-1 text-white transition-all duration-300 ease-out hover:text-white/80 ${isActive ? "text-white" : "text-zinc-400"
+                className={`relative py-2 px-1 text-white transition-all duration-300 ease-out hover:text-white/80 ${active ? "text-white" : "text-zinc-400"
                   }`}
               >
                 {link.name}
-                {isActive && (
+                {active && (
                   <span className="absolute bottom-0 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 animate-pulse" />
                 )}
               </Link>
@@ -130,7 +138,6 @@ export default function Header() {
                       e.preventDefault();
                       toast.warn("Please login to access Tournaments!");
                     } else {
-                      setActiveTab(link.name);
                       setMobileMenuOpen(false);
                     }
                   }}
@@ -140,16 +147,15 @@ export default function Header() {
                 </Link>
               );
             }
-            const isActive = activeTab === link.name;
+            const active = isActive(link.href);
             return (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => {
-                  setActiveTab(link.name);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full py-2 text-left font-semibold text-sm tracking-wider transition-colors ${isActive ? "text-emerald-400 border-l-2 border-emerald-400 pl-2" : "text-zinc-400 hover:text-white"
+                className={`w-full py-2 text-left font-semibold text-sm tracking-wider transition-colors ${active ? "text-emerald-400 border-l-2 border-emerald-400 pl-2" : "text-zinc-400 hover:text-white"
                   }`}
               >
                 {link.name}

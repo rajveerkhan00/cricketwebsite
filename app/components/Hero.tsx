@@ -31,7 +31,7 @@ export default function Hero() {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight font-space">
-            CRICKPROBD - LIVE CRICKET
+            CricOverlay - LIVE CRICKET
             <span className="block mt-2 bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
               SCORING OVERLAY APP
             </span>
@@ -56,7 +56,7 @@ export default function Hero() {
           <div className="relative w-full max-w-[440px] aspect-square flex items-center justify-center">
             <Image
               src="/hero-illustration-transparent-v4.png"
-              alt="CrickproBD Scorecard App Display"
+              alt="CricOverlay Scorecard App Display"
               width={440}
               height={440}
               priority

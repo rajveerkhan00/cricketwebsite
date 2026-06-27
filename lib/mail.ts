@@ -12,7 +12,7 @@ export async function sendResetPasswordEmail(
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || `"CrickproBD" <noreply@crickprobd.com>`;
+  const from = process.env.SMTP_FROM || `"CricOverlay" <noreply@CricOverlay.com>`;
 
   console.log("-----------------------------------------");
   console.log(`[PASSWORD RESET] Request for ${email} (${isAdmin ? "Admin" : "User"})`);
@@ -41,7 +41,7 @@ export async function sendResetPasswordEmail(
   const mailOptions = {
     from,
     to: email,
-    subject: "Reset your CrickproBD Password",
+    subject: "Reset your CricOverlay Password",
     text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`,
     html: `
       <!DOCTYPE html>
@@ -148,7 +148,7 @@ export async function sendResetPasswordEmail(
           <div class="content">
             <h1>Password Reset Request</h1>
             <p>Hello,</p>
-            <p>We received a request to reset the password for your account on CrickproBD. Click the button below to set a new password. This link is valid for <strong>1 hour</strong>.</p>
+            <p>We received a request to reset the password for your account on CricOverlay. Click the button below to set a new password. This link is valid for <strong>1 hour</strong>.</p>
             <div class="btn-container">
               <a href="${resetUrl}" class="btn">Reset Password</a>
             </div>
@@ -158,7 +158,7 @@ export async function sendResetPasswordEmail(
             <p style="font-size: 13px; margin-bottom: 0;">If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged.</p>
           </div>
           <div class="footer">
-            &copy; 2026 CrickproBD. All rights reserved.
+            &copy; 2026 CricOverlay. All rights reserved.
           </div>
         </div>
       </body>
@@ -178,7 +178,7 @@ export async function sendPaymentReceivedConfirmationEmail(
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || `"CrickproBD" <noreply@crickprobd.com>`;
+  const from = process.env.SMTP_FROM || `"CricOverlay" <noreply@CricOverlay.com>`;
 
   console.log("-----------------------------------------");
   console.log(`[PAYMENT CONFIRMATION] Sending to user ${email}`);
@@ -204,7 +204,7 @@ export async function sendPaymentReceivedConfirmationEmail(
     from,
     to: email,
     subject: "JazzCash Payment Received - Pending Admin Verification",
-    text: `Hello,\n\nWe have received your payment of ${details.itemPrice} for ${details.itemName}.\n\nOur admin team will verify your transaction (TRX ID: ${details.trxId}). Your account details (email and password) will be sent to you soon (at most 1 hour).\n\nThank you for choosing CrickproBD.`,
+    text: `Hello,\n\nWe have received your payment of ${details.itemPrice} for ${details.itemName}.\n\nOur admin team will verify your transaction (TRX ID: ${details.trxId}). Your account details (email and password) will be sent to you soon (at most 1 hour).\n\nThank you for choosing CricOverlay.`,
     html: `
       <!DOCTYPE html>
       <html>
@@ -325,7 +325,7 @@ export async function sendPaymentReceivedConfirmationEmail(
             <p><strong>Note:</strong> Admin will confirm your payment and your account login email & password will be sent to you soon (<strong>at most 1 hour</strong>).</p>
           </div>
           <div class="footer">
-            &copy; 2026 CrickproBD. All rights reserved.
+            &copy; 2026 CricOverlay. All rights reserved.
           </div>
         </div>
       </body>
@@ -345,7 +345,7 @@ export async function sendAdminPaymentNotificationEmail(
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || `"CrickproBD System" <noreply@crickprobd.com>`;
+  const from = process.env.SMTP_FROM || `"CricOverlay System" <noreply@CricOverlay.com>`;
 
   if (!host || !user || !pass) {
     console.warn("[WARNING] SMTP is not fully configured. Notification simulated.");
@@ -490,7 +490,7 @@ export async function sendAdminPaymentNotificationEmail(
             <p>Please log in to your dashboard to review this payment and send the login details.</p>
           </div>
           <div class="footer">
-            System generated notification &copy; 2026 CrickproBD.
+            System generated notification &copy; 2026 CricOverlay.
           </div>
         </div>
       </body>
@@ -511,7 +511,7 @@ export async function sendAdminCustomEmail(
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || `"CrickproBD Support" <support@crickprobd.com>`;
+  const from = process.env.SMTP_FROM || `"CricOverlay Support" <support@CricOverlay.com>`;
 
   if (!host || !user || !pass) {
     if (process.env.NODE_ENV === "production") {
@@ -599,7 +599,7 @@ export async function sendAdminCustomEmail(
             ${formattedBody}
           </div>
           <div class="footer">
-            &copy; 2026 CrickproBD. All rights reserved.
+            &copy; 2026 CricOverlay. All rights reserved.
           </div>
         </div>
       </body>
