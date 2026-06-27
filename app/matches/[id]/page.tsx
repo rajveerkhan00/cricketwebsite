@@ -365,7 +365,7 @@ export default function MatchScoringPage() {
 
   // Record outcome of a ball
   const recordBall = (
-    type: "runs" | "wide" | "noball" | "wicket" | "bye" | "legbye",
+    type: "runs" | "wide" | "noball" | "widenoball" | "wicket" | "bye" | "legbye",
     runsVal = 0,
     wicketDismissedName = "",
     wicketNewBatsmanName = ""
@@ -459,6 +459,12 @@ export default function MatchScoringPage() {
 
       updatedThisOver.push("Nb");
       anim = "FREE HIT";
+    } else if (type === "widenoball") {
+      // Wide + No Ball: 2 extras (1 wide + 1 noball), ball does NOT count
+      currentScore += 2 + runsVal;
+      updatedBowlers[bowlerIdx].runsConceded += 2 + runsVal;
+      updatedThisOver.push("WNb");
+      anim = "FREE HIT";
     } else if (type === "bye" || type === "legbye") {
       currentScore += runsVal;
       // Runs go to extras, not to batsman, but batsman faces ball
@@ -512,7 +518,7 @@ export default function MatchScoringPage() {
 
     // Check if over completed
     let isOverEnd = false;
-    if (type !== "wide" && type !== "noball") {
+    if (type !== "wide" && type !== "noball" && type !== "widenoball") {
       if (currentBalls % match.ballsPerOver === 0) {
         isOverEnd = true;
         currentOvers = Math.floor(currentBalls / match.ballsPerOver);
@@ -1014,26 +1020,36 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Over balls display (Image 3 circles) */}
-                <div className="flex items-center gap-1.5 mt-2 justify-center">
-                  {Array.from({ length: match.ballsPerOver }).map((_, idx) => {
-                    const outcome = scoringState.thisOver[idx];
-                    return (
-                      <div
-                        key={idx}
-                        className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-inner ${
-                          outcome
-                            ? outcome === "W"
-                              ? "bg-red-600 text-white border border-red-500"
-                              : ["4", "6"].includes(outcome)
-                              ? "bg-amber-500 text-black"
-                              : "bg-white text-zinc-800"
-                            : "bg-white/20 border border-white/10"
-                        }`}
-                      >
-                        {outcome || ""}
-                      </div>
-                    );
-                  })}
+                <div className="flex items-center gap-1.5 mt-2 justify-center flex-wrap">
+                  {(() => {
+                    const ballsPerOver = match?.ballsPerOver || 6;
+                    const thisOver = scoringState.thisOver || [];
+                    // Each NB / WD / WNb is a free ball → adds +1 extra circle slot
+                    const extrasCount = thisOver.filter(
+                      (b) => b && (b === "Nb" || b === "WNb" || b === "Wd")
+                    ).length;
+                    const totalCirclesCount = ballsPerOver + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, idx) => {
+                      const outcome = thisOver[idx];
+                      let bgClass = "bg-white/20 border border-white/10"; // empty slot
+                      if (outcome) {
+                        if (outcome === "W") bgClass = "bg-red-600 text-white border border-red-500";
+                        else if (outcome === "6" || outcome === "4") bgClass = "bg-amber-500 text-black";
+                        else if (outcome === "Nb") bgClass = "bg-blue-500 text-white";
+                        else if (outcome === "WNb") bgClass = "bg-purple-500 text-white";
+                        else if (outcome === "Wd") bgClass = "bg-orange-600 text-white";
+                        else bgClass = "bg-white text-zinc-800";
+                      }
+                      return (
+                        <div
+                          key={idx}
+                          className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-inner ${bgClass}`}
+                        >
+                          {outcome || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
             </div>
@@ -1125,6 +1141,12 @@ export default function MatchScoringPage() {
                     className="flex-1 min-w-[50px] py-3 bg-[#121542] hover:bg-[#1b1f63] border border-zinc-700/50 text-blue-300 font-extrabold rounded-xl text-base hover:border-amber-500 transition-all active:scale-95 cursor-pointer"
                   >
                     NB
+                  </button>
+                  <button
+                    onClick={() => recordBall("widenoball")}
+                    className="flex-1 min-w-[50px] py-3 bg-[#121542] hover:bg-[#1b1f63] border border-zinc-700/50 text-purple-300 font-extrabold rounded-xl text-sm hover:border-amber-500 transition-all active:scale-95 cursor-pointer"
+                  >
+                    WD+NB
                   </button>
                   <button
                     onClick={() => {

@@ -244,7 +244,7 @@ function BallCircle({ val, ballColors, borderColor, size = 28 }: { val?: string;
     if (val === "W") { bg = ballColors.wicket; color = "#fff"; shadow = `0 0 10px ${ballColors.wicket}`; }
     else if (val === "6") { bg = ballColors.six; color = "#000"; shadow = `0 0 10px ${ballColors.six}`; }
     else if (val === "4") { bg = ballColors.four; color = "#000"; shadow = `0 0 10px ${ballColors.four}`; }
-    else if (val === "Wd" || val === "Nb") { bg = ballColors.extra; color = "#fff"; }
+    else if (val === "Wd" || val === "Nb" || val === "WNb") { bg = ballColors.extra; color = "#fff"; }
     else { bg = ballColors.runs; color = "#fff"; }
   }
   return <div style={{ width: size, height: size, borderRadius: "50%", background: bg, color, boxShadow: shadow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.length > 1 ? size * 0.29 : size * 0.38, fontWeight: 900, border: val ? "none" : `1px solid ${borderColor}20`, flexShrink: 0 }}>{val || ""}</div>;
@@ -772,7 +772,15 @@ export default function OverlayPage() {
               {scoringState.thisOver.length>0&&<>
                 <div style={{ fontSize:9, color:theme.textSecondary, fontWeight:800, letterSpacing:2, marginBottom:12 }}>THIS OVER</div>
                 <div style={{ display:"flex", justifyContent:"center", gap:10 }}>
-                  {scoringState.thisOver.map((val,i)=><BallCircle key={i} val={val} ballColors={theme.ballColors} borderColor={theme.borderColor} size={40} />)}
+                  {(() => {
+                    const bpo = match.ballsPerOver || 6;
+                    const thisOver = scoringState.thisOver || [];
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCircles = bpo + extrasCount;
+                    return Array.from({ length: totalCircles }).map((_, i) => (
+                      <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={40} />
+                    ));
+                  })()}
                 </div>
               </>}
             </div>
@@ -1022,7 +1030,15 @@ export default function OverlayPage() {
             <div style={{ padding:"8px 22px", display:"flex", alignItems:"center", gap:10, borderTop:`1px solid ${theme.borderColor}20`, background:"rgba(0,0,0,0.3)" }}>
               <span style={{ fontSize:9, color:theme.textSecondary, fontWeight:800, letterSpacing:1.5, flexShrink:0 }}>THIS OVER</span>
               <div style={{ display:"flex", gap:5 }}>
-                {Array.from({length:match.ballsPerOver}).map((_,i)=><BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />)}
+                {(() => {
+                  const bpo = match?.ballsPerOver || 6;
+                  const thisOver = scoringState.thisOver || [];
+                  const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                  const totalCirclesCount = bpo + extrasCount;
+                  return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                    <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
+                  ));
+                })()}
               </div>
               <div style={{ marginLeft:"auto", display:"flex", gap:16 }}>
                 <div style={{ fontSize:10, fontWeight:800, color:theme.textSecondary }}>CRR: <span style={{ color:theme.accent }}>{calcRR(scoringState)}</span></div>
