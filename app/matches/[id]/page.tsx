@@ -112,6 +112,10 @@ export default function MatchScoringPage() {
   const [nonStrikerInput, setNonStrikerInput] = useState("");
   const [bowlerInput, setBowlerInput] = useState("");
 
+  // New Bowler Modal
+  const [showNewBowlerModal, setShowNewBowlerModal] = useState(false);
+  const [newBowlerInput, setNewBowlerInput] = useState("");
+
   // Dismissal Modal
   const [showWicketModal, setShowWicketModal] = useState(false);
   const [wicketType, setWicketType] = useState<"Bowled" | "Caught" | "LBW" | "Run Out" | "Stumped">("Bowled");
@@ -143,6 +147,10 @@ export default function MatchScoringPage() {
       setMatch(data.match);
       if (data.match.scoringState) {
         setScoringState(data.match.scoringState);
+        const ownerCheck = session?.user && data.match && (session.user as any).id === data.match.userId;
+        if (ownerCheck && data.match.scoringState.inningsStarted && !data.match.scoringState.bowler) {
+          setShowNewBowlerModal(true);
+        }
       }
     } catch (err: any) {
       setError(err.message || "Something went wrong.");
@@ -190,7 +198,9 @@ export default function MatchScoringPage() {
     state: ScoringState | null,
     newStatus?: "Not Started" | "Live" | "Completed",
     t1Players?: string[],
-    t2Players?: string[]
+    t2Players?: string[],
+    tossWonBy?: "team1" | "team2",
+    optedTo?: "Bat" | "Bowl"
   ) => {
     try {
       const body: any = {};
@@ -198,6 +208,8 @@ export default function MatchScoringPage() {
       if (newStatus !== undefined) body.status = newStatus;
       if (t1Players !== undefined) body.playersTeam1 = t1Players;
       if (t2Players !== undefined) body.playersTeam2 = t2Players;
+      if (tossWonBy !== undefined) body.tossWonBy = tossWonBy;
+      if (optedTo !== undefined) body.optedTo = optedTo;
 
       const res = await fetch(`/api/matches/${matchId}`, {
         method: "PUT",
@@ -627,6 +639,8 @@ export default function MatchScoringPage() {
         setMatch((prev) => (prev ? { ...prev, status: "Completed" } : null));
       } else if (isOverEnd) {
         showToast("Over complete! Select new bowler.");
+        setNewBowlerInput("");
+        setShowNewBowlerModal(true);
       }
     }
   };
@@ -775,6 +789,24 @@ export default function MatchScoringPage() {
     setScoringState(updated);
     saveScoringState(updated);
     showToast(`Display screen updated: ${screenName.toUpperCase()}`);
+  };
+
+  const handleNewBowlerSubmit = () => {
+    if (!newBowlerInput.trim()) {
+      showToast("Please enter or select a bowler name.", "error");
+      return;
+    }
+    if (!scoringState) return;
+
+    const updated = {
+      ...scoringState,
+      bowler: newBowlerInput.trim(),
+    };
+
+    setScoringState(updated);
+    saveScoringState(updated);
+    setShowNewBowlerModal(false);
+    showToast(`Bowler updated to ${newBowlerInput.trim()}`);
   };
 
   const handleSendCustomInput = () => {
@@ -1013,7 +1045,17 @@ export default function MatchScoringPage() {
               {/* Right Box: Bowler & Over balls (Teal gradient background) */}
               <div className="bg-gradient-to-tr from-cyan-500 via-teal-500 to-emerald-500 rounded-2xl p-4 flex flex-col justify-between min-h-[120px] shadow-lg text-white border border-cyan-400/20">
                 <div className="flex justify-between items-center text-sm font-black">
-                  <span>{scoringState.bowler || "Bowler"}</span>
+                  <div
+                    className="flex items-center gap-1 cursor-pointer hover:text-amber-200 transition-colors"
+                    onClick={() => {
+                      setNewBowlerInput(scoringState.bowler);
+                      setShowNewBowlerModal(true);
+                    }}
+                    title="Change Bowler"
+                  >
+                    <span>{scoringState.bowler || "Bowler"}</span>
+                    <span className="text-[10px] opacity-70">✏️</span>
+                  </div>
                   <span>
                     {activeBowlerStats?.wickets || 0} - {activeBowlerStats?.runsConceded || 0}
                   </span>
@@ -1120,7 +1162,22 @@ export default function MatchScoringPage() {
             {scoringState && scoringState.inningsStarted && (
               <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
                 <h3 className="text-sm font-extrabold tracking-wider text-zinc-400 uppercase">Record Ball Score</h3>
-                <div className="flex flex-wrap items-center gap-2">
+
+                {/* No-bowler warning */}
+                {!scoringState.bowler && (
+                  <div
+                    className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
+                    onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
+                  >
+                    <span className="text-amber-400 text-lg">⚠️</span>
+                    <div>
+                      <p className="text-amber-300 font-black text-xs uppercase tracking-wider">No Bowler Selected</p>
+                      <p className="text-amber-200/70 text-[10px]">Tap here to select the bowler before scoring</p>
+                    </div>
+                  </div>
+                )}
+
+                <div className={`flex flex-wrap items-center gap-2 ${!scoringState.bowler ? "opacity-40 pointer-events-none" : ""}`}>
                   {[0, 1, 2, 3, 4, 6].map((run) => (
                     <button
                       key={run}
@@ -1189,7 +1246,7 @@ export default function MatchScoringPage() {
                       const newOpt = match.optedTo === "Bat" ? "Bowl" : "Bat";
                       if (confirm(`Change toss to: ${newToss === "team1" ? match.team1Name : match.team2Name} won and chose to ${newOpt}?`)) {
                         setMatch(prev => prev ? { ...prev, tossWonBy: newToss, optedTo: newOpt } : null);
-                        saveScoringState(scoringState, undefined, undefined, undefined);
+                        saveScoringState(scoringState, undefined, undefined, undefined, newToss, newOpt);
                         showToast("Toss settings updated.");
                       }
                     }}
@@ -1776,6 +1833,88 @@ export default function MatchScoringPage() {
                   className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-extrabold rounded-lg text-xs"
                 >
                   Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── New Bowler Modal (shows after every over completes) ──────── */}
+      {showNewBowlerModal && scoringState && isOwner && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowNewBowlerModal(false)} />
+          <div className="relative w-full max-w-sm bg-gradient-to-br from-[#0c4a6e] to-[#0c7081] rounded-3xl shadow-2xl border border-cyan-400/30 text-white overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 text-center">
+              <h3 className="text-lg font-black tracking-wider font-space uppercase">🏏 Select New Bowler</h3>
+              <p className="text-emerald-100 text-[10px] font-bold uppercase tracking-widest mt-0.5">
+                Over Complete — Pick next bowler
+              </p>
+            </div>
+
+            <div className="p-6 flex flex-col gap-4">
+              {/* Bowling team label */}
+              <p className="text-[10px] font-black uppercase tracking-wider text-cyan-200 text-center">
+                {currentBowlingTeamLabel} Bowling
+              </p>
+
+              {/* Input */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-black uppercase tracking-wider text-cyan-100">Bowler Name</label>
+                <input
+                  type="text"
+                  value={newBowlerInput}
+                  onChange={(e) => setNewBowlerInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleNewBowlerSubmit(); }}
+                  placeholder="Type or select bowler"
+                  autoFocus
+                  className="w-full bg-[#083d5a] border border-cyan-400/30 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white placeholder:text-cyan-300/40"
+                />
+              </div>
+
+              {/* Quick-pick from bowling roster */}
+              {bowlingRoster && bowlingRoster.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300">
+                    Quick Pick — {currentBowlingTeamLabel}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 max-h-[110px] overflow-y-auto">
+                    {bowlingRoster
+                      .filter((p) => p.toLowerCase() !== newBowlerInput.toLowerCase())
+                      .map((p, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setNewBowlerInput(p)}
+                          className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${
+                            scoringState.bowlers.some((bw) => bw.name.toLowerCase() === p.toLowerCase())
+                              ? "bg-teal-700/60 border-teal-400/40 text-teal-100"
+                              : "bg-[#083d5a] hover:bg-[#0c5a7a] border-cyan-400/20 text-cyan-100"
+                          }`}
+                        >
+                          {p}
+                          {scoringState.bowlers.some((bw) => bw.name.toLowerCase() === p.toLowerCase()) && (
+                            <span className="ml-1 opacity-60 text-[8px]">prev</span>
+                          )}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Action buttons */}
+              <div className="flex gap-3 mt-1">
+                <button
+                  onClick={handleNewBowlerSubmit}
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-black py-2.5 rounded-xl text-sm tracking-wider active:scale-95 transition-all cursor-pointer shadow-lg shadow-emerald-500/20"
+                >
+                  ✓ Confirm Bowler
+                </button>
+                <button
+                  onClick={() => setShowNewBowlerModal(false)}
+                  className="px-4 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-zinc-300 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
+                >
+                  Skip
                 </button>
               </div>
             </div>
