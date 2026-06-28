@@ -110,6 +110,21 @@ const GLOBAL_CSS = `
   .live-dot { animation: livePulse 1.2s ease-in-out infinite; }
   .table-row-animated { animation: rowIn 0.3s ease forwards; }
   .bat-swing { display:inline-block; animation: batSwing 1.6s ease-in-out infinite; }
+  /* Sleek custom scrollbars for vertical scrolling in scoreboards */
+  .scroll-vertical::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scroll-vertical::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+  }
+  .scroll-vertical::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+  }
+  .scroll-vertical::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
 `;
 
 // ── TeamLogo component ──────────────────────────────────────────────────────
@@ -261,6 +276,44 @@ export default function OverlayPage() {
 
   const [match, setMatch] = useState<Match | null>(null);
   const [loading, setLoading] = useState(true);
+  const [accessChecked, setAccessChecked] = useState(false);
+  const [accessGranted, setAccessGranted] = useState(false);
+
+  const emailParam = searchParams?.get("email") || "";
+
+  const checkAccess = async () => {
+    if (isPreview) {
+      setAccessGranted(true);
+      setAccessChecked(true);
+      return;
+    }
+
+    if (!emailParam || !emailParam.includes("@")) {
+      setAccessGranted(false);
+      setAccessChecked(true);
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/my-theme-purchases?email=${encodeURIComponent(emailParam)}`, { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        const approvedSlugs: string[] = data.approvedSlugs || [];
+        if (approvedSlugs.includes(themeSlug)) {
+          setAccessGranted(true);
+        } else {
+          setAccessGranted(false);
+        }
+      } else {
+        setAccessGranted(false);
+      }
+    } catch (err) {
+      console.error("Access check failed:", err);
+      setAccessGranted(false);
+    } finally {
+      setAccessChecked(true);
+    }
+  };
 
   const fetchMatch = async () => {
     try {
@@ -274,15 +327,16 @@ export default function OverlayPage() {
   useEffect(() => {
     if (!matchId) return;
     fetchMatch();
+    checkAccess();
     const interval = setInterval(fetchMatch, 3000);
     return () => clearInterval(interval);
-  }, [matchId]);
+  }, [matchId, themeSlug, emailParam, isPreview]);
 
   const fmtOv = (balls: number, bpo = 6) => `${Math.floor(balls / bpo)}.${balls % bpo}`;
   const calcRR = (state: ScoringState) => (!match || state.balls === 0) ? "0.00" : (state.score / (state.balls / match.ballsPerOver)).toFixed(2);
   const scoringState = match?.scoringState;
 
-  if (loading) return (
+  if (loading || !accessChecked) return (
     <div style={{ background: "#03041c", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontFamily: activeFont }}>
       <style>{GLOBAL_CSS}</style>
       <div style={{ textAlign: "center" }}>
@@ -291,6 +345,34 @@ export default function OverlayPage() {
       </div>
     </div>
   );
+
+  if (!accessGranted) {
+    return (
+      <div style={{ background: "linear-gradient(135deg,#020617,#0f172a)", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, padding: "24px" }}>
+        <style>{GLOBAL_CSS}</style>
+        <div style={{ textAlign: "center", maxWidth: 480, background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.05)", padding: "40px", borderRadius: "24px", boxShadow: "0 20px 50px rgba(0,0,0,0.5)" }}>
+          {/* Lock icon */}
+          <div style={{ fontSize: 72, marginBottom: 20, filter: "drop-shadow(0 0 24px rgba(239,68,68,0.4))" }}>🔒</div>
+          <div style={{ fontSize: 11, color: "#ef4444", fontWeight: 900, letterSpacing: 4, marginBottom: 12, textTransform: "uppercase" }}>Scoreboard Locked</div>
+          <div style={{ fontSize: 24, fontWeight: 950, color: "#fff", marginBottom: 16, letterSpacing: 1, lineHeight: 1.2 }}>Individual Purchase Required</div>
+          <div style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, lineHeight: 1.7, marginBottom: 28 }}>
+            The <span style={{ color: theme.accent, fontWeight: 900 }}>{theme.name}</span> theme is locked.
+            <br />Please purchase this theme using <span style={{ color: "#ffb612", fontWeight: 800 }}>JazzCash</span> from the Scoring Console.
+          </div>
+          <div style={{ background: "rgba(251,191,36,0.05)", border: "1px solid rgba(251,191,36,0.15)", borderRadius: 16, padding: "16px 20px", fontSize: 11, color: "#fbbf24", fontWeight: 700, lineHeight: 1.6 }}>
+            ⚠️ Ensure your link contains the correct purchaser email query parameter:
+            <br />
+            <code style={{ background: "rgba(0,0,0,0.3)", padding: "2px 6px", borderRadius: 4, color: "#fff", display: "inline-block", marginTop: 8, fontFamily: "monospace" }}>&email=your_email@mail.com</code>
+          </div>
+          {emailParam && (
+            <div style={{ marginTop: 20, fontSize: 11, color: "#475569", fontWeight: 600 }}>
+              Checked Email: <span style={{ color: "#94a3b8" }}>{emailParam}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (!match || !scoringState) return (
     <div style={{ background: "#03041c", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#ef4444", fontWeight: 800, fontFamily: activeFont, fontSize: 18 }}>
@@ -535,7 +617,7 @@ export default function OverlayPage() {
                 <div style={{ fontSize:12, color:"#a7f3d0", fontWeight:700, marginTop:4 }}>{fmtOv(innData.balls,match.ballsPerOver)} / {match.overs} OVERS</div>
               </div>}
             </div>
-            <div style={{ background:"rgba(2,15,10,0.98)", border:`2px solid rgba(16,185,129,0.25)`, borderTop:"none", borderRadius:"0 0 16px 16px", overflow:"hidden", boxShadow:"0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div className="scroll-vertical" style={{ background:"rgba(2,15,10,0.98)", border:`2px solid rgba(16,185,129,0.25)`, borderTop:"none", borderRadius:"0 0 16px 16px", overflowY:"auto", maxHeight:"460px", boxShadow:"0 20px 40px rgba(0,0,0,0.8)" }}>
               {innData ? <>
                 <table style={{ width:"100%", borderCollapse:"collapse" }}>
                   <thead><tr style={{ background:`${theme.accent}12`, borderBottom:`2px solid ${theme.accent}30` }}>
@@ -597,7 +679,7 @@ export default function OverlayPage() {
                 {innData&&<div style={{ fontSize:22, fontWeight:950, color:"#fff", marginTop:4 }}>{innData.score}/{innData.wickets} ({fmtOv(innData.balls,match.ballsPerOver)})</div>}
               </div>
             </div>
-            <div style={{ background:"rgba(15,4,4,0.99)", border:`2px solid rgba(239,68,68,0.25)`, borderTop:"none", borderRadius:"0 0 12px 12px", padding:"28px 24px", boxShadow:"0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div className="scroll-vertical" style={{ background:"rgba(15,4,4,0.99)", border:`2px solid rgba(239,68,68,0.25)`, borderTop:"none", borderRadius:"0 0 12px 12px", padding:"28px 24px", maxHeight:"460px", overflowY:"auto", boxShadow:"0 20px 40px rgba(0,0,0,0.8)" }}>
               {innData ? (
                 <div style={{ display:"grid", gridTemplateColumns:`repeat(${Math.min(innData.bowlers.length,4)},1fr)`, gap:20 }}>
                   {innData.bowlers.map((bw,idx)=>{
@@ -923,7 +1005,7 @@ export default function OverlayPage() {
               {[{name:match.team1Name,players:match.playersTeam1||[],isBat:team1IsBatting},{name:match.team2Name,players:match.playersTeam2||[],isBat:!team1IsBatting}].map((team,ti)=>(
                 <div key={ti} style={{ padding:"24px 28px", borderRight:ti===0?`1px solid ${theme.borderColor}20`:"none" }}>
                   <div style={{ fontSize:11, fontWeight:900, color:team.isBat?"#4ade80":"#f87171", letterSpacing:2, marginBottom:16 }}>{team.name.toUpperCase()} · {team.isBat?"🏏 BATTING":"🎯 BOWLING"}</div>
-                  <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                  <div className="scroll-vertical" style={{ display:"flex", flexDirection:"column", gap:8, maxHeight:"380px", overflowY:"auto", paddingRight:"4px" }}>
                     {team.players.length>0 ? team.players.map((p,i)=>{
                       const isSt=p===scoringState.striker; const isNS=p===scoringState.nonStriker; const isBwl=p===scoringState.bowler;
                       return <div key={i} className="table-row-animated" style={{ animationDelay:`${i*0.04}s`, display:"flex", alignItems:"center", gap:12, background:isSt?"rgba(74,222,128,0.08)":isBwl?"rgba(239,68,68,0.08)":"rgba(255,255,255,0.02)", border:`1px solid ${isSt?"#4ade80":isBwl?"#ef4444":theme.borderColor}20`, borderRadius:12, padding:"10px 14px" }}>

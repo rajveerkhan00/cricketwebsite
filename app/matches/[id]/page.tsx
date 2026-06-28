@@ -1788,6 +1788,7 @@ export default function MatchScoringPage() {
         onClose={() => setShowScoreboardLinks(false)}
         matchId={matchId}
         showToast={showToast}
+        userEmail={session?.user?.email || ""}
       />
 
       <Footer />
