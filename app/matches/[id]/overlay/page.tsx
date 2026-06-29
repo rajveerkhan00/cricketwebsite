@@ -247,9 +247,52 @@ function TeamLogo({ name, isBatting, isBowling, accentColor, borderColor, size =
   );
 }
 
+// Global variables to transfer countdown state to GroundBG without prop drilling
+let globalRemainingSeconds = 0;
+let globalIsPreview = false;
+
 // ── Full screen cricket ground background ───────────────────────────────────
 function GroundBG({ bgUrl }: { bgUrl: string }) {
-  return <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 0, backgroundImage: `url(${bgUrl})`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.14) saturate(0.5)", pointerEvents: "none" }} />;
+  const formatCountdown = (secs: number) => {
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
+    const s = secs % 60;
+    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
+
+  return (
+    <>
+      <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 0, backgroundImage: `url(${bgUrl})`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.14) saturate(0.5)", pointerEvents: "none" }} />
+      {!globalIsPreview && globalRemainingSeconds > 0 && (
+        <div style={{
+          position: "fixed",
+          top: 16,
+          left: 16,
+          background: "rgba(2, 6, 23, 0.9)",
+          border: "1.5px solid rgba(251, 191, 36, 0.5)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.6), 0 0 15px rgba(251, 191, 36, 0.25)",
+          borderRadius: 9999,
+          padding: "10px 20px",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          color: "#fff",
+          fontSize: 12,
+          fontWeight: 900,
+          zIndex: 9999,
+          backdropFilter: "blur(12px)",
+          pointerEvents: "none",
+          fontFamily: "monospace"
+        }}>
+          <span style={{ fontSize: 14 }}>⏳</span>
+          <span style={{ letterSpacing: "1px", color: "rgba(255,255,255,0.7)" }}>UNLOCKED TIMER:</span>
+          <span style={{ color: "#fbbf24", fontSize: 13, textShadow: "0 0 4px rgba(251, 191, 36, 0.5)" }}>
+            {formatCountdown(globalRemainingSeconds)}
+          </span>
+        </div>
+      )}
+    </>
+  );
 }
 
 // ── Ball outcome circle ─────────────────────────────────────────────────────
@@ -278,40 +321,91 @@ export default function OverlayPage() {
   const [loading, setLoading] = useState(true);
   const [accessChecked, setAccessChecked] = useState(false);
   const [accessGranted, setAccessGranted] = useState(false);
+  const [remainingSeconds, setRemainingSeconds] = useState(0);
 
+  // The email used to check/grant access (from URL param or entered by user)
   const emailParam = searchParams?.get("email") || "";
+  const [userEmail, setUserEmail] = useState(emailParam);
 
-  const checkAccess = async () => {
-    if (isPreview) {
-      setAccessGranted(true);
+  // Payment form states
+  const [formEmail, setFormEmail] = useState("");
+  const [formSender, setFormSender] = useState("");
+  const [formTrxId, setFormTrxId] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState("");
+  const [submitErr, setSubmitErr] = useState("");
+
+  // Sync to global for GroundBG countdown display
+  globalRemainingSeconds = remainingSeconds;
+  globalIsPreview = isPreview;
+
+  // Check if user has active ScoreboardAccess for this theme
+  const checkAccess = async (emailToCheck?: string) => {
+    if (isPreview) { setAccessGranted(true); setAccessChecked(true); return; }
+
+    const email = (emailToCheck || userEmail || emailParam).toLowerCase().trim();
+    if (!email || !email.includes("@")) {
       setAccessChecked(true);
-      return;
-    }
-
-    if (!emailParam || !emailParam.includes("@")) {
       setAccessGranted(false);
-      setAccessChecked(true);
       return;
     }
 
     try {
-      const res = await fetch(`/api/my-theme-purchases?email=${encodeURIComponent(emailParam)}`, { cache: "no-store" });
+      const res = await fetch(
+        `/api/scoreboard-access?email=${encodeURIComponent(email)}&themeSlug=${encodeURIComponent(themeSlug)}`,
+        { cache: "no-store" }
+      );
       if (res.ok) {
         const data = await res.json();
-        const approvedSlugs: string[] = data.approvedSlugs || [];
-        if (approvedSlugs.includes(themeSlug)) {
+        if (data.hasAccess) {
           setAccessGranted(true);
-        } else {
-          setAccessGranted(false);
+          setRemainingSeconds(data.remainingSeconds);
+          setUserEmail(email);
+          return;
         }
-      } else {
-        setAccessGranted(false);
       }
-    } catch (err) {
-      console.error("Access check failed:", err);
+      setAccessGranted(false);
+    } catch {
       setAccessGranted(false);
     } finally {
       setAccessChecked(true);
+    }
+  };
+
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formEmail.trim() || !formSender.trim() || !formTrxId.trim()) {
+      setSubmitErr("All fields are required.");
+      return;
+    }
+    setSubmitting(true);
+    setSubmitMsg("");
+    setSubmitErr("");
+    try {
+      const res = await fetch("/api/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formEmail,
+          senderNumber: formSender,
+          trxId: formTrxId,
+          itemName: themeSlug,
+          itemPrice: "Rs. 250",
+          themeSlug,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSubmitMsg(data.message || "Payment verified! Scoreboard unlocking...");
+        // Check access immediately with submitted email
+        setTimeout(() => checkAccess(formEmail), 1000);
+      } else {
+        setSubmitErr(data.message || "Failed to submit.");
+      }
+    } catch {
+      setSubmitErr("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -324,13 +418,28 @@ export default function OverlayPage() {
     } catch (_) { } finally { setLoading(false); }
   };
 
+  // Poll match details every 3 seconds
   useEffect(() => {
     if (!matchId) return;
     fetchMatch();
-    checkAccess();
     const interval = setInterval(fetchMatch, 3000);
     return () => clearInterval(interval);
-  }, [matchId, themeSlug, emailParam, isPreview]);
+  }, [matchId]);
+
+  // Poll access every 8 seconds — instantly picks up admin approve/reject
+  useEffect(() => {
+    if (!matchId || isPreview) return;
+    checkAccess();
+    const interval = setInterval(() => checkAccess(), 8000);
+    return () => clearInterval(interval);
+  }, [matchId, themeSlug, userEmail, emailParam, isPreview]);
+
+  // Live countdown tick
+  useEffect(() => {
+    if (!accessGranted || remainingSeconds <= 0) return;
+    const timer = setInterval(() => setRemainingSeconds(p => Math.max(0, p - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [accessGranted, remainingSeconds]);
 
   const fmtOv = (balls: number, bpo = 6) => `${Math.floor(balls / bpo)}.${balls % bpo}`;
   const calcRR = (state: ScoringState) => (!match || state.balls === 0) ? "0.00" : (state.score / (state.balls / match.ballsPerOver)).toFixed(2);
@@ -348,27 +457,62 @@ export default function OverlayPage() {
 
   if (!accessGranted) {
     return (
-      <div style={{ background: "linear-gradient(135deg,#020617,#0f172a)", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, padding: "24px" }}>
+      <div style={{ background: "linear-gradient(135deg,#020617,#0b0f19)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, padding: "32px 24px", color: "#fff" }}>
         <style>{GLOBAL_CSS}</style>
-        <div style={{ textAlign: "center", maxWidth: 480, background: "rgba(255, 255, 255, 0.02)", border: "1px solid rgba(255, 255, 255, 0.05)", padding: "40px", borderRadius: "24px", boxShadow: "0 20px 50px rgba(0,0,0,0.5)" }}>
-          {/* Lock icon */}
-          <div style={{ fontSize: 72, marginBottom: 20, filter: "drop-shadow(0 0 24px rgba(239,68,68,0.4))" }}>🔒</div>
-          <div style={{ fontSize: 11, color: "#ef4444", fontWeight: 900, letterSpacing: 4, marginBottom: 12, textTransform: "uppercase" }}>Scoreboard Locked</div>
-          <div style={{ fontSize: 24, fontWeight: 950, color: "#fff", marginBottom: 16, letterSpacing: 1, lineHeight: 1.2 }}>Individual Purchase Required</div>
-          <div style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, lineHeight: 1.7, marginBottom: 28 }}>
-            The <span style={{ color: theme.accent, fontWeight: 900 }}>{theme.name}</span> theme is locked.
-            <br />Please purchase this theme using <span style={{ color: "#ffb612", fontWeight: 800 }}>JazzCash</span> from the Scoring Console.
+        <div style={{ width: "100%", maxWidth: 500, background: "rgba(13, 17, 39, 0.75)", border: "1px solid rgba(255,255,255,0.08)", padding: "36px 32px", borderRadius: "28px", boxShadow: "0 24px 60px rgba(0,0,0,0.6)", backdropFilter: "blur(12px)" }}>
+          {/* Header */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", marginBottom: 24 }}>
+            <div style={{ fontSize: 56, marginBottom: 10, filter: "drop-shadow(0 0 20px rgba(251,180,18,0.3))" }}>🔒</div>
+            <h1 style={{ fontSize: 24, fontWeight: 900, letterSpacing: "-0.5px", marginBottom: 6 }}>Scoreboard Locked</h1>
+            <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.5 }}>
+              Unlock <span style={{ color: theme.accent, fontWeight: 800 }}>{theme.name}</span> for 24 hours — unlocks instantly after payment.
+            </p>
           </div>
-          <div style={{ background: "rgba(251,191,36,0.05)", border: "1px solid rgba(251,191,36,0.15)", borderRadius: 16, padding: "16px 20px", fontSize: 11, color: "#fbbf24", fontWeight: 700, lineHeight: 1.6 }}>
-            ⚠️ Ensure your link contains the correct purchaser email query parameter:
-            <br />
-            <code style={{ background: "rgba(0,0,0,0.3)", padding: "2px 6px", borderRadius: 4, color: "#fff", display: "inline-block", marginTop: 8, fontFamily: "monospace" }}>&email=your_email@mail.com</code>
-          </div>
-          {emailParam && (
-            <div style={{ marginTop: 20, fontSize: 11, color: "#475569", fontWeight: 600 }}>
-              Checked Email: <span style={{ color: "#94a3b8" }}>{emailParam}</span>
+
+          {/* JazzCash Instructions */}
+          <div style={{ background: "rgba(255,182,18,0.05)", border: "1px solid rgba(255,182,18,0.15)", borderRadius: 14, padding: "14px 18px", marginBottom: 20 }}>
+            <div style={{ fontSize: 10, color: "#ffb612", fontWeight: 900, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 10 }}>💳 Pay via JazzCash</div>
+            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "6px 14px", fontSize: 13, alignItems: "center" }}>
+              <span style={{ color: "#64748b" }}>Number:</span>
+              <span style={{ fontWeight: 800, fontFamily: "monospace", color: "#fff", fontSize: 15 }}>01021410502</span>
+              <span style={{ color: "#64748b" }}>Name:</span>
+              <span style={{ fontWeight: 800, color: "#fff" }}>MUHAMMAD RASHID</span>
+              <span style={{ color: "#64748b" }}>Amount:</span>
+              <span style={{ fontWeight: 900, color: "#ffb612", fontSize: 16 }}>Rs. 250</span>
             </div>
-          )}
+            <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 8 }}>
+              Send Rs. 250 → get TID from JazzCash → fill below → unlocks instantly ✅
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handlePaymentSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Your Email</label>
+              <input type="email" required placeholder="email@example.com" value={formEmail} onChange={e => setFormEmail(e.target.value)}
+                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Your JazzCash Number</label>
+              <input type="text" required placeholder="e.g. 03001234567" value={formSender} onChange={e => setFormSender(e.target.value)}
+                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Transaction ID (TID)</label>
+              <input type="text" required placeholder="TID from JazzCash app" value={formTrxId} onChange={e => setFormTrxId(e.target.value)}
+                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box", textTransform: "uppercase" }} />
+            </div>
+            {submitErr && (
+              <div style={{ fontSize: 12, color: "#f87171", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", padding: "10px 14px", borderRadius: 10 }}>❌ {submitErr}</div>
+            )}
+            {submitMsg && (
+              <div style={{ fontSize: 12, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", padding: "10px 14px", borderRadius: 10, lineHeight: 1.5 }}>✅ {submitMsg}</div>
+            )}
+            <button type="submit" disabled={submitting}
+              style={{ background: submitting ? "#334155" : "linear-gradient(135deg, #ffb612, #ea580c)", border: "none", borderRadius: 12, padding: "14px", color: submitting ? "#94a3b8" : "#000", fontWeight: 900, cursor: submitting ? "not-allowed" : "pointer", fontSize: 14, textTransform: "uppercase", letterSpacing: 1, marginTop: 4 }}>
+              {submitting ? "⏳ Verifying..." : "🔓 Unlock Scoreboard"}
+            </button>
+          </form>
         </div>
       </div>
     );

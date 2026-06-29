@@ -45,6 +45,8 @@ interface PaymentRecord {
   itemPrice: string;
   status: "pending" | "approved" | "rejected";
   createdAt: string;
+  updatedAt?: string;
+  matchId?: string;
 }
 
 
@@ -2238,87 +2240,125 @@ export default function AdminDashboard() {
                         </td>
                       </tr>
                     ) : (
-                      filteredPayments.map((payment) => (
-                        <tr key={payment._id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center text-white font-bold text-sm">
-                                {payment.email.charAt(0).toUpperCase()}
+                      filteredPayments.map((payment) => {
+                        let expiryText = "";
+                        let isActive = false;
+                        if (payment.status === "approved" && payment.matchId) {
+                          const expiryDate = new Date(new Date(payment.updatedAt || payment.createdAt).getTime() + 24 * 60 * 60 * 1000);
+                          const remainingMs = expiryDate.getTime() - Date.now();
+                          if (remainingMs > 0) {
+                            const hours = Math.floor(remainingMs / (3600 * 1000));
+                            const mins = Math.floor((remainingMs % (3600 * 1000)) / (60 * 1000));
+                            expiryText = `${hours}h ${mins}m left`;
+                            isActive = true;
+                          } else {
+                            expiryText = "Expired";
+                          }
+                        }
+
+                        return (
+                          <tr key={payment._id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center text-white font-bold text-sm">
+                                  {payment.email.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                  <p className="text-white text-sm font-semibold">{payment.email}</p>
+                                </div>
                               </div>
-                              <div>
-                                <p className="text-white text-sm font-semibold">{payment.email}</p>
+                            </td>
+                            <td className="px-6 py-4 text-zinc-300 font-mono text-xs">
+                              {payment.senderNumber}
+                            </td>
+                            <td className="px-6 py-4 text-[#ffb612] font-mono text-xs font-bold">
+                              {payment.trxId}
+                            </td>
+                            <td className="px-6 py-4 text-zinc-300 font-semibold text-xs">
+                              <div>{payment.itemName}</div>
+                              {payment.matchId && (
+                                <div className="mt-1">
+                                  <a
+                                    href={`/matches/${payment.matchId}/overlay`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-amber-400 hover:underline text-[10px] bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20"
+                                  >
+                                    View Scoreboard Overlay
+                                  </a>
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-6 py-4 text-emerald-400 font-extrabold text-sm">
+                              {payment.itemPrice}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex flex-col gap-1">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide w-fit ${
+                                  payment.status === "approved"
+                                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                    : payment.status === "rejected"
+                                    ? "bg-red-500/15 text-red-400 border border-red-500/30"
+                                    : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                                }`}>
+                                  <span className={`w-1.5 h-1.5 rounded-full ${
+                                    payment.status === "approved" ? "bg-emerald-400" : payment.status === "rejected" ? "bg-red-400" : "bg-amber-400"
+                                  }`} />
+                                  {payment.status.toUpperCase()}
+                                </span>
+                                {expiryText && (
+                                  <span className={`text-[10px] font-semibold px-2 py-0.5 rounded w-fit ${
+                                    isActive ? "text-amber-400 bg-amber-500/10 border border-amber-500/20" : "text-zinc-500 bg-zinc-800"
+                                  }`}>
+                                    {expiryText}
+                                  </span>
+                                )}
                               </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 text-zinc-300 font-mono text-xs">
-                            {payment.senderNumber}
-                          </td>
-                          <td className="px-6 py-4 text-[#ffb612] font-mono text-xs font-bold">
-                            {payment.trxId}
-                          </td>
-                          <td className="px-6 py-4 text-zinc-300 font-semibold text-xs">
-                            {payment.itemName}
-                          </td>
-                          <td className="px-6 py-4 text-emerald-400 font-extrabold text-sm">
-                            {payment.itemPrice}
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide ${
-                              payment.status === "approved"
-                                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                : payment.status === "rejected"
-                                ? "bg-red-500/15 text-red-400 border border-red-500/30"
-                                : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                            }`}>
-                              <span className={`w-1.5 h-1.5 rounded-full ${
-                                payment.status === "approved" ? "bg-emerald-400" : payment.status === "rejected" ? "bg-red-400" : "bg-amber-400"
-                              }`} />
-                              {payment.status.toUpperCase()}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-zinc-500 text-xs">
-                            {new Date(payment.createdAt).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center justify-end gap-2">
-                              {payment.status !== "approved" && (
+                            </td>
+                            <td className="px-6 py-4 text-zinc-500 text-xs">
+                              {new Date(payment.createdAt).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center justify-end gap-2">
+                                {payment.status !== "approved" && (
+                                  <button
+                                    onClick={() => handleUpdatePaymentStatus(payment._id, "approved")}
+                                    disabled={updatingPaymentId === payment._id}
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20 cursor-pointer"
+                                  >
+                                    Approve
+                                  </button>
+                                )}
+                                {payment.status !== "rejected" && (
+                                  <button
+                                    onClick={() => handleUpdatePaymentStatus(payment._id, "rejected")}
+                                    disabled={updatingPaymentId === payment._id}
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                  >
+                                    {payment.status === "approved" ? "Revoke / Reject" : "Reject"}
+                                  </button>
+                                )}
                                 <button
-                                  onClick={() => handleUpdatePaymentStatus(payment._id, "approved")}
-                                  disabled={updatingPaymentId === payment._id}
-                                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20 cursor-pointer"
+                                  onClick={() => setEmailTarget(payment)}
+                                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20 cursor-pointer"
                                 >
-                                  Approve
+                                  Send Email
                                 </button>
-                              )}
-                              {payment.status !== "rejected" && (
                                 <button
-                                  onClick={() => handleUpdatePaymentStatus(payment._id, "rejected")}
-                                  disabled={updatingPaymentId === payment._id}
-                                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                  onClick={() => setDeletePaymentTarget(payment)}
+                                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white border border-zinc-700/50 cursor-pointer"
                                 >
-                                  Reject
+                                  Delete
                                 </button>
-                              )}
-                              <button
-                                onClick={() => setEmailTarget(payment)}
-                                className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20 cursor-pointer"
-                              >
-                                Send Email
-                              </button>
-                              <button
-                                onClick={() => setDeletePaymentTarget(payment)}
-                                className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white border border-zinc-700/50 cursor-pointer"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>

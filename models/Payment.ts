@@ -26,6 +26,11 @@ const PaymentSchema = new Schema(
       type: String,
       required: [true, "Item price is required"],
     },
+    matchId: {
+      type: Schema.Types.ObjectId,
+      ref: "Match",
+      required: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
