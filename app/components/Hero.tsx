@@ -1,8 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    if (session) {
+      router.push("/tournaments");
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
     <section className="relative min-h-[85vh] w-full bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] flex items-center justify-center overflow-hidden py-20 px-6 md:px-12 font-outfit">
       {/* Subtle Hexagonal Mesh Overlay (Spider Net) */}
@@ -42,7 +55,10 @@ export default function Hero() {
           </p>
           
           <div className="pt-4 flex flex-col sm:flex-row gap-4">
-            <button className="group relative bg-[#1b8c1b] hover:bg-[#157015] active:scale-95 text-white font-bold text-lg px-8 py-3.5 rounded-lg transition-all duration-300 shadow-[0_4px_20px_rgba(27,140,27,0.3)] hover:shadow-[0_4px_25px_rgba(27,140,27,0.5)]">
+            <button
+              onClick={handleGetStarted}
+              className="group relative bg-[#1b8c1b] hover:bg-[#157015] active:scale-95 text-white font-bold text-lg px-8 py-3.5 rounded-lg transition-all duration-300 shadow-[0_4px_20px_rgba(27,140,27,0.3)] hover:shadow-[0_4px_25px_rgba(27,140,27,0.5)]"
+            >
               Get Started
             </button>
           </div>
