@@ -2469,6 +2469,904 @@ export default function OverlayPage() {
     );
   }
 
+  // ── CRICFUSION / 8th Theme: White rounded capsule with indigo/red center (matches image) ──
+  if (themeSlug === "cricfusion") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `NEED ${need} RUNS FROM ${bLeft ?? 0} BALLS`
+        : match.status === "Completed"
+          ? "MATCH COMPLETED"
+          : "MATCH IN PROGRESS";
+
+    const thisOver = scoringState.thisOver || [];
+    const bpo = match.ballsPerOver || 6;
+    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+    const totalBallSlots = bpo + extrasCount;
+
+    const getBallStyle = (val?: string): { bg: string; color: string; border?: string } => {
+      if (!val) return { bg: "transparent", color: "transparent", border: "1px solid rgba(0,0,0,0.15)" };
+      if (val === "W" || val === "Wk") return { bg: "#dc2626", color: "#ffffff" };
+      if (val === "6" || val === "6s" || val === "4" || val === "4s") return { bg: "#15803d", color: "#ffffff" };
+      return { bg: "#ffffff", color: "#000000", border: "1px solid #1a1a1a" };
+    };
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#15803d", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>CricFusion Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "96vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.25))" }}>
+
+            {/* Floating TARGET pill above scoreboard */}
+            {scoringState.target !== null && (
+              <div style={{ position: "absolute", top: "-22px", left: "50%", transform: "translateX(-50%)", background: "#110b38", border: "2px solid #a78bfa", borderRadius: "20px", padding: "3px 20px", color: "#ffffff", fontSize: "11px", fontWeight: "900", letterSpacing: "1.5px", zIndex: 10, whiteSpace: "nowrap", boxShadow: "0 4px 12px rgba(17,11,56,0.4)" }}>
+                TARGET - {scoringState.target}
+              </div>
+            )}
+
+            {/* Main scoreboard row (White rounded capsule) */}
+            <div style={{ display: "flex", alignItems: "center", height: "66px", background: "#ffffff", overflow: "hidden", borderRadius: "9999px", padding: "0 18px", border: "1px solid rgba(0,0,0,0.08)", justifyContent: "space-between" }}>
+
+              {/* LEFT: Batsmen names + stats */}
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingLeft: "10px", minWidth: "210px", flexShrink: 0 }}>
+                {/* Striker */}
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "2px" }}>
+                  <span style={{ color: "#dc2626", marginRight: "6px", fontSize: "12px", display: "flex", alignItems: "center" }}>▶</span>
+                  <span style={{ color: "#1e1b4b", fontWeight: "900", fontSize: "14px", textTransform: "uppercase", width: "110px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {scoringState.striker || "—"}
+                  </span>
+                  <span style={{ color: "#1e1b4b", fontWeight: "900", fontSize: "15px", marginLeft: "auto" }}>
+                    {striker?.runs ?? 0}
+                    <sub style={{ fontSize: "10px", fontWeight: "700", bottom: "0px", marginLeft: "2px", color: "rgba(30,27,75,0.6)" }}>{striker?.balls ?? 0}</sub>
+                  </span>
+                </div>
+                {/* Non-Striker */}
+                <div style={{ display: "flex", alignItems: "center", paddingLeft: "14px" }}>
+                  <span style={{ color: "rgba(30,27,75,0.75)", fontWeight: "700", fontSize: "13px", textTransform: "uppercase", width: "110px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {scoringState.nonStriker || "—"}
+                  </span>
+                  <span style={{ color: "rgba(30,27,75,0.75)", fontWeight: "800", fontSize: "14px", marginLeft: "auto" }}>
+                    {nonStriker?.runs ?? 0}
+                    <sub style={{ fontSize: "9px", fontWeight: "600", bottom: "0px", marginLeft: "2px", color: "rgba(30,27,75,0.45)" }}>{nonStriker?.balls ?? 0}</sub>
+                  </span>
+                </div>
+              </div>
+
+              {/* CENTER BLOCK: Team matchup + score + status (Indigo/Red Capsule) */}
+              <div style={{ background: "#110b38", height: "48px", borderRadius: "9999px", display: "flex", alignItems: "stretch", overflow: "hidden", minWidth: "300px", maxWidth: "340px", flex: 1, margin: "0 14px", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.2)" }}>
+                {/* Left section of the capsule */}
+                <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+                  {/* Top Red row */}
+                  <div style={{ background: "#d92d20", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "2px 14px", height: "50%" }}>
+                    <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {bowlTeamShort} V {batTeamShort}
+                    </span>
+                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13px" }}>
+                      {scoringState.score} - {scoringState.wickets}
+                    </span>
+                  </div>
+                  {/* Bottom Indigo row */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "2px 10px", height: "50%" }}>
+                    <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                      {statusLine}
+                    </span>
+                  </div>
+                </div>
+                {/* Right section of the capsule (Overs) */}
+                <div style={{ background: "#110b38", color: "#ffffff", width: "65px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "900", borderLeft: "1px solid rgba(255,255,255,0.15)", flexShrink: 0 }}>
+                  {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
+                </div>
+              </div>
+
+              {/* RIGHT BLOCK: Bowler & Ball outcomes */}
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: "220px", flexShrink: 0 }}>
+                {/* Bowler name + stats */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
+                  <span style={{ color: "#1e1b4b", fontWeight: "900", fontSize: "13px", textTransform: "uppercase" }}>
+                    {scoringState.bowler || "—"}
+                  </span>
+                  <span style={{ color: "#1e1b4b", fontWeight: "900", fontSize: "14px", marginLeft: "10px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
+                    <sub style={{ fontSize: "9px", fontWeight: "700", bottom: "0px", marginLeft: "1px", color: "rgba(30,27,75,0.6)" }}>
+                      {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver).split(".")[1] || 0}
+                    </sub>
+                  </span>
+                </div>
+                {/* Ball circles */}
+                <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                  {Array.from({ length: totalBallSlots }).map((_, i) => {
+                    const val = thisOver[i];
+                    const bs = getBallStyle(val);
+                    return (
+                      <div key={i} style={{
+                        width: "20px", height: "20px",
+                        background: bs.bg,
+                        color: bs.color,
+                        border: bs.border || "none",
+                        borderRadius: "50%",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: val && val.length > 1 ? "8px" : "10px",
+                        fontWeight: "900",
+                        flexShrink: 0
+                      }}>
+                        {val === "." ? "" : val || ""}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Watermark brand icon */}
+              <div style={{ display: "flex", alignItems: "center", background: "#15803d", padding: "4px 8px", borderRadius: "4px", color: "#ffffff", fontSize: "10px", fontWeight: "900", gap: "3px", marginLeft: "10px", flexShrink: 0, height: "24px" }}>
+                <span>🏏</span>
+                <span style={{ fontSize: "9px", letterSpacing: "0.5px" }}>CricScorer</span>
+              </div>
+
+            </div>
+          </div>
+        ) : (
+          /* Match not started */
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#ffffff", border: "2px solid #dc2626", borderRadius: "9999px", padding: "16px 48px", textAlign: "center", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}>
+            <div style={{ color: "#1e1b4b", fontWeight: 950, fontSize: "18px", letterSpacing: "2px" }}>
+              🏏 {match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}
+            </div>
+            <div style={{ color: "#dc2626", fontSize: "11px", fontWeight: "900", marginTop: "4px", letterSpacing: "2px" }}>
+              MATCH NOT STARTED
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── T20 EMERGING ASIA CUP 2024 / 9th Theme: Neon Cyberpunk style ──
+  if (themeSlug === "t20-emerging-asia-cup") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+    const rrr = (need !== null && bLeft !== null && bLeft > 0) ? ((need / bLeft) * match.ballsPerOver).toFixed(2) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `NEED ${need} RUNS IN ${bLeft} BALLS (RRR: ${rrr})`
+        : `CRR: ${calcRR(scoringState)}`;
+
+    const thisOver = scoringState.thisOver || [];
+    const bpo = match.ballsPerOver || 6;
+    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+    const totalBallSlots = bpo + extrasCount;
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#06b6d4", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>T20 Emerging Asia Cup Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "95vw", maxWidth: "1300px", position: "relative", zIndex: 1, filter: "drop-shadow(0 0 15px rgba(6,182,212,0.3))" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "rgba(8, 12, 28, 0.95)", border: "1.5px solid #0ea5e9", borderRadius: "10px", overflow: "hidden", backdropFilter: "blur(12px)" }}>
+              {/* Batting Team Skew panel */}
+              <div style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
+                <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "14px", textTransform: "uppercase" }}>{batTeamShort}</span>
+              </div>
+
+              {/* Batsmen details */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", gap: "24px" }}>
+                {/* Striker */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    <span style={{ color: "#0ea5e9", fontSize: "10px" }}>⚡</span>
+                    <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px" }}>{scoringState.striker || "—"}</span>
+                  </div>
+                  <span style={{ color: "#22d3ee", fontWeight: "800", fontSize: "15px", paddingLeft: "14px" }}>
+                    {striker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "10px" }}>({striker?.balls ?? 0})</span>
+                  </span>
+                </div>
+                {/* Non Striker */}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "600", fontSize: "12px", paddingLeft: "10px" }}>{scoringState.nonStriker || "—"}</span>
+                  <span style={{ color: "#94a3b8", fontWeight: "700", fontSize: "13px", paddingLeft: "10px" }}>
+                    {nonStriker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "9px" }}>({nonStriker?.balls ?? 0})</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Center Score Block */}
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0 28px", borderLeft: "1px dashed rgba(14,165,233,0.3)", borderRight: "1px dashed rgba(14,165,233,0.3)", minWidth: "220px" }}>
+                <span style={{ color: "#f97316", fontWeight: "950", fontSize: "28px", lineHeight: 1, textShadow: "0 0 10px rgba(249,115,22,0.4)" }}>
+                  {scoringState.score}-{scoringState.wickets}
+                </span>
+                <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", marginTop: "2px" }}>
+                  OVERS: {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
+                </span>
+              </div>
+
+              {/* Bowler Stats */}
+              <div style={{ display: "flex", flex: 1.1, padding: "0 18px", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "10px", fontWeight: "800" }}>CURRENT BOWLER</span>
+                  <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</span>
+                  <span style={{ color: "#0ea5e9", fontWeight: "800", fontSize: "14px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0} <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "10px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                  </span>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, idx) => (
+                    <div key={idx} style={{
+                      width: "18px", height: "18px",
+                      borderRadius: "4px",
+                      background: ball === "W" ? "#ef4444" : ["4", "6"].includes(ball) ? "#22c55e" : "rgba(255,255,255,0.1)",
+                      color: "#ffffff",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: "10px", fontWeight: "900"
+                    }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bowling Team Skew Panel */}
+              <div style={{ background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)" }}>
+                <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "14px", textTransform: "uppercase" }}>{bowlTeamShort}</span>
+              </div>
+            </div>
+            {/* Bottom Status bar */}
+            <div style={{ background: "rgba(6, 182, 212, 0.15)", border: "1.5px solid #0ea5e9", borderTop: "none", borderRadius: "0 0 8px 8px", padding: "3px 20px", display: "flex", justifyContent: "center" }}>
+              <span style={{ color: "#22d3ee", fontSize: "10px", fontWeight: "900", letterSpacing: "1px" }}>{statusLine}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "rgba(8,12,28,0.95)", border: "2px solid #0ea5e9", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#0ea5e9", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#f97316", fontSize: "11px", fontWeight: "900", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── SA20 / 10th Theme: Yellow, Black and White Skewed Stadium Display ──
+  if (themeSlug === "sa20") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `SA20 - BATTING REQUIRE ${need} RUNS IN ${bLeft} BALLS`
+        : `INNINGS NO: ${scoringState.inningsNo} - LIVE FROM SOUTH AFRICA`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#facc15", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>SA20 Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "96vw", maxWidth: "1320px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.6))" }}>
+            {/* Target pill */}
+            {scoringState.target !== null && (
+              <div style={{ position: "absolute", top: "-22px", left: "50%", transform: "translateX(-50%)", background: "#facc15", color: "#000", borderRadius: "4px", padding: "2px 16px", fontSize: "11px", fontWeight: "900", letterSpacing: "1px", zIndex: 5 }}>
+                TARGET: {scoringState.target}
+              </div>
+            )}
+
+            {/* Scoreboard row */}
+            <div style={{ display: "flex", alignItems: "stretch", height: "70px", background: "#111", border: "2px solid #facc15", overflow: "hidden", borderRadius: "6px" }}>
+              {/* Batting team logo/badge */}
+              <div style={{ background: "#facc15", color: "#000", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", fontWeight: "950", fontSize: "16px", textTransform: "uppercase" }}>
+                {batTeamShort}
+              </div>
+
+              {/* Batsmen details */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", gap: "20px", borderRight: "1px solid rgba(250,204,21,0.2)" }}>
+                {/* Striker */}
+                <div>
+                  <span style={{ color: "#facc15", fontWeight: "900", fontSize: "13px" }}>▶ {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#fff", fontWeight: "900", fontSize: "16px" }}>{striker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px" }}>({striker?.balls ?? 0})</span></div>
+                </div>
+                {/* Non Striker */}
+                <div>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "700", fontSize: "12px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "rgba(255,255,255,0.8)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>({nonStriker?.balls ?? 0})</span></div>
+                </div>
+              </div>
+
+              {/* Center score display */}
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0 24px", minWidth: "180px", background: "#222" }}>
+                <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "28px", lineHeight: 1 }}>
+                  {scoringState.score} - {scoringState.wickets}
+                </span>
+                <span style={{ color: "#facc15", fontSize: "12px", fontWeight: "800", marginTop: "3px" }}>
+                  OVERS: {fmtOv(scoringState.balls, match.ballsPerOver)}
+                </span>
+              </div>
+
+              {/* Bowler Details */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", justifyContent: "space-between", borderLeft: "1px solid rgba(250,204,21,0.2)" }}>
+                <div>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", fontWeight: "700" }}>BOWLER</span>
+                  <div style={{ color: "#fff", fontWeight: "800", fontSize: "14px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
+                  <div style={{ color: "#facc15", fontWeight: "900", fontSize: "14px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
+                  </div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "#000", border: "1px solid #facc15", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bowling team */}
+              <div style={{ background: "#222", color: "#facc15", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", fontWeight: "950", fontSize: "16px", textTransform: "uppercase", borderLeft: "2px solid #facc15" }}>
+                {bowlTeamShort}
+              </div>
+            </div>
+            {/* Bottom Status bar */}
+            <div style={{ background: "#facc15", padding: "3px 20px", display: "flex", justifyContent: "center", border: "2px solid #facc15", borderTop: "none", borderRadius: "0 0 6px 6px" }}>
+              <span style={{ color: "#000", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#111", border: "2px solid #facc15", borderRadius: 8, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#facc15", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#fff", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── JIO CINEMA / 11th Theme: Glassmorphic entertainment card ──
+  if (themeSlug === "jiocinema") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `TARGET: ${scoringState.target} | NEED ${need} IN ${bLeft} BALLS`
+        : `LIVE STREAMING - CRICPROBD ON JIO CINEMA`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#ec4899", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>Jio Cinema Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(225,29,72,0.25))" }}>
+            {/* Top red glass banner */}
+            <div style={{ background: "linear-gradient(90deg, #e11d48 0%, #be123c 100%)", borderRadius: "10px 10px 0 0", padding: "8px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ background: "#ffffff", color: "#be123c", fontWeight: "950", fontSize: "10px", padding: "2px 8px", borderRadius: "4px", letterSpacing: "1px" }}>LIVE</span>
+                <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "12px", letterSpacing: "0.5px" }}>{currentBatTeam.toUpperCase()} VS {currentBowlTeam.toUpperCase()}</span>
+              </div>
+              <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "12px" }}>{statusLine}</span>
+            </div>
+
+            {/* Main glass body */}
+            <div style={{ background: "rgba(15, 23, 42, 0.85)", border: "1px solid rgba(255,255,255,0.1)", borderTop: "none", borderRadius: "0 0 10px 10px", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", backdropFilter: "blur(12px)" }}>
+              {/* Left Batsmen */}
+              <div style={{ display: "flex", gap: "24px" }}>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontSize: "12px" }}>🏏 {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#ffffff", fontSize: "18px", fontWeight: "900" }}>{striker?.runs ?? 0} <span style={{ color: "#94a3b8", fontSize: "11px", fontWeight: "600" }}>{striker?.balls ?? 0}b</span></div>
+                </div>
+                <div>
+                  <span style={{ color: "#64748b", fontSize: "11px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: "700" }}>{nonStriker?.runs ?? 0} <span style={{ color: "#64748b", fontSize: "10px" }}>{nonStriker?.balls ?? 0}b</span></div>
+                </div>
+              </div>
+
+              {/* Center capsule Score */}
+              <div style={{ background: "#ffffff", padding: "8px 24px", borderRadius: "50px", display: "flex", alignItems: "center", gap: "16px", boxShadow: "0 4px 15px rgba(0,0,0,0.3)" }}>
+                <span style={{ color: "#be123c", fontWeight: "950", fontSize: "24px" }}>{batTeamShort} {scoringState.score}-{scoringState.wickets}</span>
+                <div style={{ width: "2px", height: "24px", background: "rgba(0,0,0,0.1)" }} />
+                <span style={{ color: "#0f172a", fontWeight: "800", fontSize: "14px" }}>{fmtOv(scoringState.balls, match.ballsPerOver)} OVERS</span>
+              </div>
+
+              {/* Right Bowler */}
+              <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontSize: "12px" }}>⚾ {scoringState.bowler || "—"}</span>
+                  <div style={{ color: "#ffffff", fontSize: "18px", fontWeight: "900" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0} <span style={{ color: "#94a3b8", fontSize: "11px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span></div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "4px", background: ball === "W" ? "#e11d48" : ["4", "6"].includes(ball) ? "#10b981" : "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "950" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "rgba(15, 23, 42, 0.95)", border: "2px solid #e11d48", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#e11d48", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#cbd5e1", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── IPL / 12th Theme: Royal blue and gold broadcast styling ──
+  if (themeSlug === "ipl") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `IPL BROADCAST: NEED ${need} RUNS FROM ${bLeft} BALLS`
+        : `VIBRANT IPL ACTION LIVE - INNINGS ${scoringState.inningsNo}`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#eab308", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>IPL Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
+            {/* Top header bar */}
+            <div style={{ background: "linear-gradient(90deg, #1e3a8a 0%, #0f172a 100%)", borderTop: "3px solid #eab308", borderLeft: "3.5px solid #eab308", borderRight: "3.5px solid #eab308", borderRadius: "10px 10px 0 0", padding: "6px 20px", display: "flex", justifyContent: "space-between" }}>
+              <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "11px", letterSpacing: "1px" }}>IPL OFFICIAL BROADCAST</span>
+              <span style={{ color: "#eab308", fontWeight: "900", fontSize: "11px", letterSpacing: "1px" }}>{statusLine}</span>
+            </div>
+
+            {/* Main Scoreboard panel */}
+            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "#0c0a23", border: "3.5px solid #eab308", borderTop: "none", borderRadius: "0 0 10px 10px", overflow: "hidden" }}>
+              {/* Batting team gold badge */}
+              <div style={{ background: "linear-gradient(180deg, #eab308 0%, #ca8a04 100%)", color: "#000", fontWeight: "950", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
+                {batTeamShort}
+              </div>
+
+              {/* Batsmen details */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", gap: "24px", marginLeft: "-10px" }}>
+                <div>
+                  <span style={{ color: "#eab308", fontWeight: "900", fontSize: "13px" }}>▶ {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "16px" }}>{striker?.runs ?? 0} <span style={{ color: "#94a3b8", fontSize: "11px" }}>({striker?.balls ?? 0})</span></div>
+                </div>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontWeight: "600", fontSize: "12px", paddingLeft: "10px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "#94a3b8", fontWeight: "700", fontSize: "14px", paddingLeft: "10px" }}>{nonStriker?.runs ?? 0} <span style={{ color: "#64748b", fontSize: "10px" }}>({nonStriker?.balls ?? 0})</span></div>
+                </div>
+              </div>
+
+              {/* Center Score block */}
+              <div style={{ background: "#1e3a8a", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0 24px", minWidth: "200px", borderLeft: "2px solid #eab308", borderRight: "2px solid #eab308" }}>
+                <span style={{ color: "#eab308", fontWeight: "950", fontSize: "26px", lineHeight: 1 }}>{scoringState.score} - {scoringState.wickets}</span>
+                <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", marginTop: "2px" }}>OVERS: {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}</span>
+              </div>
+
+              {/* Bowler Details */}
+              <div style={{ display: "flex", flex: 1.1, padding: "0 18px", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <span style={{ color: "#94a3b8", fontSize: "11px", fontWeight: "800" }}>BOWLER</span>
+                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "14px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
+                  <div style={{ color: "#eab308", fontWeight: "900", fontSize: "14px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0} <span style={{ color: "#cbd5e1", fontSize: "10px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                  </div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "#1e3a8a", border: "1.5px solid #eab308", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bowling team */}
+              <div style={{ background: "linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%)", color: "#eab308", fontWeight: "950", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)" }}>
+                {bowlTeamShort}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#0c0a23", border: "2px solid #eab308", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#eab308", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#ffffff", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── WT20 2024 / 13th Theme: Neon pink and slate digital screen ──
+  if (themeSlug === "wt20-2024") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `NEED ${need} RUNS IN ${bLeft} BALLS`
+        : `WORLD CUP LIVE - GROUP MATCH`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#ec4899", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>WT20 2024 Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "95vw", maxWidth: "1300px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.6))" }}>
+            {/* Target floating bubble */}
+            {scoringState.target !== null && (
+              <div style={{ position: "absolute", top: "-22px", left: "50%", transform: "translateX(-50%)", background: "#ec4899", color: "#fff", borderRadius: "10px", padding: "3px 20px", fontSize: "11px", fontWeight: "900", letterSpacing: "1px", zIndex: 5 }}>
+                TARGET: {scoringState.target}
+              </div>
+            )}
+
+            {/* Scoreboard row */}
+            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "#0c0216", border: "1.5px solid #ec4899", overflow: "hidden", borderRadius: "4px" }}>
+              {/* Batting Team Pink Badge */}
+              <div style={{ background: "#ec4899", color: "#ffffff", fontWeight: "900", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px" }}>
+                {batTeamShort}
+              </div>
+
+              {/* Slanted chevron split */}
+              <div style={{ width: "12px", background: "#a855f7", transform: "skewX(-15deg)", marginLeft: "-6px", marginRight: "-6px", zIndex: 2 }} />
+
+              {/* Batsmen */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", gap: "24px" }}>
+                <div>
+                  <span style={{ color: "#ec4899", fontWeight: "900", fontSize: "13px" }}>🏏 {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#ffffff", fontWeight: "900", fontSize: "16px" }}>{striker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px" }}>({striker?.balls ?? 0})</span></div>
+                </div>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontWeight: "600", fontSize: "12px", paddingLeft: "10px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "#94a3b8", fontWeight: "700", fontSize: "14px", paddingLeft: "10px" }}>{nonStriker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }}>({nonStriker?.balls ?? 0})</span></div>
+                </div>
+              </div>
+
+              {/* Slanted chevron split */}
+              <div style={{ width: "12px", background: "#a855f7", transform: "skewX(-15deg)", marginLeft: "-6px", marginRight: "-6px", zIndex: 2 }} />
+
+              {/* Center score */}
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0 24px", minWidth: "220px", background: "rgba(236,72,153,0.15)" }}>
+                <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "28px", lineHeight: 1 }}>{scoringState.score} - {scoringState.wickets}</span>
+                <span style={{ color: "#ec4899", fontSize: "11px", fontWeight: "900", marginTop: "2px" }}>OVERS: {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}</span>
+              </div>
+
+              {/* Slanted chevron split */}
+              <div style={{ width: "12px", background: "#a855f7", transform: "skewX(-15deg)", marginLeft: "-6px", marginRight: "-6px", zIndex: 2 }} />
+
+              {/* Bowler Details */}
+              <div style={{ display: "flex", flex: 1.1, padding: "0 18px", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "10px", fontWeight: "800" }}>BOWLER</span>
+                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
+                  <div style={{ color: "#ec4899", fontWeight: "900", fontSize: "14px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                  </div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "transparent", border: "1px solid #ec4899", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Slanted chevron split */}
+              <div style={{ width: "12px", background: "#a855f7", transform: "skewX(-15deg)", marginLeft: "-6px", marginRight: "-6px", zIndex: 2 }} />
+
+              {/* Bowling team */}
+              <div style={{ background: "#25023a", color: "#ec4899", fontWeight: "900", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px" }}>
+                {bowlTeamShort}
+              </div>
+            </div>
+            {/* Bottom Status strip */}
+            <div style={{ background: "#ec4899", padding: "3px 20px", display: "flex", justifyContent: "center", borderRadius: "0 0 4px 4px" }}>
+              <span style={{ color: "#000", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#0c0216", border: "2px solid #ec4899", borderRadius: 8, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#ec4899", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#ffffff", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── BBL STAR SPORTS / 14th Theme: Forest green skew TV broadcast banner ──
+  if (themeSlug === "bbl-starsports") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `NEED ${need} RUNS TO WIN`
+        : `LIVE BROADCAST FROM STAR SPORTS`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#10b981", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>BBL Star Sports Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
+            {/* Main banner block */}
+            <div style={{ display: "flex", alignItems: "stretch", height: "70px", background: "linear-gradient(135deg, #022c22 0%, #064e3b 100%)", border: "2.5px solid #cbd5e1", overflow: "hidden", borderRadius: "8px" }}>
+              {/* Batting team skewed panel */}
+              <div style={{ background: "#eab308", color: "#000", fontWeight: "950", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
+                {batTeamShort}
+              </div>
+
+              {/* Batsmen info */}
+              <div style={{ display: "flex", flex: 1, padding: "0 18px", alignItems: "center", gap: "24px", marginLeft: "-10px" }}>
+                <div>
+                  <span style={{ color: "#eab308", fontWeight: "800", fontSize: "13px" }}>▶ {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#ffffff", fontWeight: "900", fontSize: "15px" }}>{striker?.runs ?? 0} <span style={{ color: "#94a3b8", fontSize: "10px" }}>({striker?.balls ?? 0})</span></div>
+                </div>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontWeight: "600", fontSize: "12px", paddingLeft: "10px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "#94a3b8", fontWeight: "700", fontSize: "13px", paddingLeft: "10px" }}>{nonStriker?.runs ?? 0} <span style={{ color: "#64748b", fontSize: "9px" }}>({nonStriker?.balls ?? 0})</span></div>
+                </div>
+              </div>
+
+              {/* Center score */}
+              <div style={{ background: "#022c22", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0 24px", minWidth: "200px", borderLeft: "2px solid #cbd5e1", borderRight: "2px solid #cbd5e1" }}>
+                <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "26px", lineHeight: 1 }}>{scoringState.score} - {scoringState.wickets}</span>
+                <span style={{ color: "#eab308", fontSize: "11px", fontWeight: "800", marginTop: "2px" }}>OVERS: {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}</span>
+              </div>
+
+              {/* Bowler Stats */}
+              <div style={{ display: "flex", flex: 1.1, padding: "0 18px", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <span style={{ color: "#cbd5e1", fontSize: "11px", fontWeight: "800" }}>BOWLER</span>
+                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
+                  <div style={{ color: "#eab308", fontWeight: "900", fontSize: "14px" }}>
+                    {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
+                  </div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "rgba(255,255,255,0.08)", border: "1px solid #cbd5e1", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bowling team */}
+              <div style={{ background: "#cbd5e1", color: "#000", fontWeight: "950", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)" }}>
+                {bowlTeamShort}
+              </div>
+            </div>
+            {/* Status bottom ribbon */}
+            <div style={{ background: "#cbd5e1", padding: "4px 20px", display: "flex", justifyContent: "center", borderRadius: "0 0 8px 8px" }}>
+              <span style={{ color: "#064e3b", fontSize: "11px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#022c22", border: "2px solid #cbd5e1", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#eab308", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#ffffff", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── IPL 2025 / 15th Theme: Premium luxury purple-magenta glass ──
+  if (themeSlug === "ipl-2025") {
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+
+    const getShortNameLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortNameLocal(currentBatTeam);
+    const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+
+    let statusLine = scoringState.customInputText
+      ? scoringState.customInputText.toUpperCase()
+      : need !== null
+        ? `IPL 2025: REQUIRE ${need} RUNS IN ${bLeft} BALLS`
+        : `IPL 2025 SEASON ACTION LIVE`;
+
+    const thisOver = scoringState.thisOver || [];
+
+    return (
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#a855f7", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
+          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>IPL 2025 Theme</span>
+        </div>}
+        {renderCustomOverlay()}{renderMom()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(168,85,247,0.35))" }}>
+            {/* Top gold bar */}
+            <div style={{ background: "linear-gradient(90deg, #581c87 0%, #3b0764 100%)", borderTop: "3px solid #fbbf24", borderRadius: "12px 12px 0 0", padding: "6px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ color: "#fbbf24", fontWeight: "900", fontSize: "11px", letterSpacing: "1px" }}>IPL 2025 PLATINUM EDITION</span>
+              <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "11px" }}>{statusLine}</span>
+            </div>
+
+            {/* Main luxury body */}
+            <div style={{ background: "rgba(24, 10, 48, 0.9)", border: "2px solid #fbbf24", borderTop: "none", borderRadius: "0 0 12px 12px", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", backdropFilter: "blur(16px)" }}>
+              {/* Left Batsmen */}
+              <div style={{ display: "flex", gap: "24px" }}>
+                <div>
+                  <span style={{ color: "#fbbf24", fontWeight: "800", fontSize: "13px" }}>▶ {scoringState.striker || "—"}</span>
+                  <div style={{ color: "#ffffff", fontSize: "17px", fontWeight: "900" }}>{striker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px" }}>{striker?.balls ?? 0}b</span></div>
+                </div>
+                <div>
+                  <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px" }}>{scoringState.nonStriker || "—"}</span>
+                  <div style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: "700" }}>{nonStriker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }}>{nonStriker?.balls ?? 0}b</span></div>
+                </div>
+              </div>
+
+              {/* Elevated diamond center Score block */}
+              <div style={{ background: "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)", padding: "8px 24px", borderRadius: "4px", transform: "skewX(-10deg)", boxShadow: "0 4px 15px rgba(251,191,36,0.4)", display: "flex", alignItems: "center", gap: "14px", border: "1.5px solid #ffffff" }}>
+                <span style={{ color: "#000000", fontWeight: "950", fontSize: "25px", transform: "skewX(10deg)" }}>{batTeamShort} {scoringState.score}-{scoringState.wickets}</span>
+                <div style={{ width: "2px", height: "20px", background: "rgba(0,0,0,0.2)" }} />
+                <span style={{ color: "#000000", fontWeight: "900", fontSize: "13px", transform: "skewX(10deg)" }}>{fmtOv(scoringState.balls, match.ballsPerOver)} OVR</span>
+              </div>
+
+              {/* Right Bowler */}
+              <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                <div>
+                  <span style={{ color: "#fbbf24", fontSize: "11px", fontWeight: "800" }}>BOWLER</span>
+                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "14px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
+                  <div style={{ color: "#ffffff", fontSize: "16px", fontWeight: "900" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</div>
+                </div>
+                {/* Outcomes */}
+                <div style={{ display: "flex", gap: "4px" }}>
+                  {thisOver.slice(-5).map((ball, i) => (
+                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "rgba(255,255,255,0.08)", border: "1px solid #fbbf24", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "rgba(24, 10, 48, 0.95)", border: "2px solid #fbbf24", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#fbbf24", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#cbd5e1", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   // ── ALL OTHER THEMES: original lower-third design ────────────────────────
   return (
     <div style={{ position:"relative", minHeight:"100vh", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:isPreview?"center":"flex-end", padding:isPreview?"80px 0 28px":"0 0 28px", fontFamily:activeFont, overflow:"hidden" }}>

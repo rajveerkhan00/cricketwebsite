@@ -26,8 +26,13 @@ export async function GET() {
 
     let themes = await ScoreboardTheme.find().sort({ themeId: 1 });
 
-    if (themes.length === 0) {
-      await ScoreboardTheme.insertMany(DEFAULT_THEMES);
+    if (themes.length < DEFAULT_THEMES.length) {
+      for (const defaultTheme of DEFAULT_THEMES) {
+        const exists = themes.some(t => t.themeId === defaultTheme.themeId);
+        if (!exists) {
+          await ScoreboardTheme.create(defaultTheme);
+        }
+      }
       themes = await ScoreboardTheme.find().sort({ themeId: 1 });
     }
 
