@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 import ScoreboardLinksModal from "../../components/ScoreboardLinksModal";
+import { toast } from "react-toastify";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Match {
@@ -134,12 +135,45 @@ export default function MatchScoringPage() {
   const [isLegByes, setIsLegByes] = useState(false);
   const [isWicketCheck, setIsWicketCheck] = useState(false);
 
-  // UI Toast helper
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
-
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
+    } else {
+      toast.info(message);
+    }
+  };
+
+  const showConfirm = (message: string, onConfirm: () => void) => {
+    const toastId = toast.info(
+      <div className="flex flex-col gap-2 p-1 text-left">
+        <p className="font-semibold text-xs text-white leading-relaxed">{message}</p>
+        <div className="flex gap-2 justify-end mt-1">
+          <button
+            onClick={() => {
+              onConfirm();
+              toast.dismiss(toastId);
+            }}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] px-3 py-1.5 rounded active:scale-95 transition-all cursor-pointer uppercase tracking-wider"
+          >
+            Confirm
+          </button>
+          <button
+            onClick={() => toast.dismiss(toastId)}
+            className="bg-zinc-700 hover:bg-zinc-600 text-zinc-300 font-bold text-[10px] px-3 py-1.5 rounded active:scale-95 transition-all cursor-pointer uppercase tracking-wider"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>,
+      {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
+      }
+    );
   };
 
   const isOwner = session?.user && match && (session.user as any).id === match.userId;
@@ -187,7 +221,7 @@ export default function MatchScoringPage() {
 
   // Automatically clear standard overlay animations after a timeout
   useEffect(() => {
-    if (scoringState?.animation && ["FOUR", "SIX", "WICKET"].includes(scoringState.animation)) {
+    if (scoringState?.animation && scoringState.animation !== "INNINGS BREAK" && scoringState.animation !== "TOUR BOUNDARIES") {
       const timer = setTimeout(() => {
         setScoringState((prev) => {
           if (!prev) return null;
@@ -341,7 +375,19 @@ export default function MatchScoringPage() {
       return;
     }
 
-    const { batting, bowling } = getTeamsByToss();
+    const isSecondInnings = scoringState && (scoringState.inningsNo === 2 || !!scoringState.firstInnings);
+
+    let batting: "team1" | "team2";
+    let bowling: "team1" | "team2";
+
+    if (isSecondInnings) {
+      batting = scoringState.battingTeam;
+      bowling = scoringState.bowlingTeam;
+    } else {
+      const teams = getTeamsByToss();
+      batting = teams.batting;
+      bowling = teams.bowling;
+    }
 
     const sName = strikerInput.trim();
     const nsName = nonStrikerInput.trim();
@@ -390,7 +436,7 @@ export default function MatchScoringPage() {
       battingTeam: batting,
       bowlingTeam: bowling,
       inningsStarted: true,
-      inningsNo: 1,
+      inningsNo: isSecondInnings ? 2 : 1,
       striker: sName,
       nonStriker: nsName,
       bowler: bName,
@@ -398,7 +444,7 @@ export default function MatchScoringPage() {
       wickets: 0,
       balls: 0,
       overs: 0,
-      target: null,
+      target: isSecondInnings ? (scoringState.target || 0) : null,
       thisOver: [],
       batsmen: [
         { name: sName, runs: 0, balls: 0, fours: 0, sixes: 0, out: false },
@@ -416,6 +462,7 @@ export default function MatchScoringPage() {
       decision: null,
       displayStatsMode: null,
       history: [],
+      firstInnings: isSecondInnings ? scoringState.firstInnings : undefined,
     };
 
     setScoringState(initialState);
@@ -793,58 +840,56 @@ export default function MatchScoringPage() {
       showToast("You can only archive Innings 1.", "error");
       return;
     }
-    if (!confirm("Are you sure you want to manually archive Innings 1 and transition to Innings 2?")) {
-      return;
-    }
+    showConfirm("Are you sure you want to manually archive Innings 1 and transition to Innings 2?", () => {
+      const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
+      const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
 
-    const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
-    const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
+      const nextInningsState: ScoringState = {
+        battingTeam: secondInningsBatting,
+        bowlingTeam: secondInningsBowling,
+        inningsStarted: true,
+        inningsNo: 2,
+        striker: "",
+        nonStriker: "",
+        bowler: "",
+        score: 0,
+        wickets: 0,
+        balls: 0,
+        overs: 0,
+        target: scoringState.score + 1,
+        thisOver: [],
+        batsmen: [],
+        bowlers: [],
+        fallOfWickets: [],
+        animation: "INNINGS BREAK",
+        displayScreen: "default",
+        customInputText: "",
+        momPlayer: "",
+        tournamentStatsPlayer: "",
+        decision: null,
+        displayStatsMode: null,
+        history: [],
+        firstInnings: {
+          score: scoringState.score,
+          wickets: scoringState.wickets,
+          balls: scoringState.balls,
+          overs: scoringState.overs,
+          batsmen: scoringState.batsmen,
+          bowlers: scoringState.bowlers,
+          fallOfWickets: scoringState.fallOfWickets || [],
+        },
+      };
 
-    const nextInningsState: ScoringState = {
-      battingTeam: secondInningsBatting,
-      bowlingTeam: secondInningsBowling,
-      inningsStarted: true,
-      inningsNo: 2,
-      striker: "",
-      nonStriker: "",
-      bowler: "",
-      score: 0,
-      wickets: 0,
-      balls: 0,
-      overs: 0,
-      target: scoringState.score + 1,
-      thisOver: [],
-      batsmen: [],
-      bowlers: [],
-      fallOfWickets: [],
-      animation: "INNINGS BREAK",
-      displayScreen: "default",
-      customInputText: "",
-      momPlayer: "",
-      tournamentStatsPlayer: "",
-      decision: null,
-      displayStatsMode: null,
-      history: [],
-      firstInnings: {
-        score: scoringState.score,
-        wickets: scoringState.wickets,
-        balls: scoringState.balls,
-        overs: scoringState.overs,
-        batsmen: scoringState.batsmen,
-        bowlers: scoringState.bowlers,
-        fallOfWickets: scoringState.fallOfWickets || [],
-      },
-    };
+      setScoringState(nextInningsState);
+      saveScoringState(nextInningsState, "Live");
+      showToast("First innings manually archived! Setting up 2nd innings...");
 
-    setScoringState(nextInningsState);
-    saveScoringState(nextInningsState, "Live");
-    showToast("First innings manually archived! Setting up 2nd innings...");
-
-    // Open Innings Setup modal
-    setStrikerInput("");
-    setNonStrikerInput("");
-    setBowlerInput("");
-    setShowStartInningsModal(true);
+      // Open Innings Setup modal
+      setStrikerInput("");
+      setNonStrikerInput("");
+      setBowlerInput("");
+      setShowStartInningsModal(true);
+    });
   };
 
   // Handle Wicket click
@@ -868,11 +913,12 @@ export default function MatchScoringPage() {
 
   // Reset Scoring State (Default! button)
   const resetMatchScoring = () => {
-    if (!confirm("Are you sure you want to reset all scoring data? This clears current score state.")) return;
-    setScoringState(null);
-    setMatch((prev) => (prev ? { ...prev, status: "Not Started" } : null));
-    saveScoringState(null, "Not Started");
-    showToast("Scoring reset successfully.");
+    showConfirm("Are you sure you want to reset all scoring data? This clears current score state.", () => {
+      setScoringState(null);
+      setMatch((prev) => (prev ? { ...prev, status: "Not Started" } : null));
+      saveScoringState(null, "Not Started");
+      showToast("Scoring reset successfully.");
+    });
   };
 
   // Update spectator displays / animations
@@ -1007,8 +1053,21 @@ export default function MatchScoringPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#03041c] text-white" suppressHydrationWarning={true}>
-        <div className="flex flex-col items-center gap-3" suppressHydrationWarning={true}>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden" suppressHydrationWarning={true}>
+        {/* Hex mesh */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <pattern id="hex-grid-load-m" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hex-grid-load-m)" />
+          </svg>
+        </div>
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+        <div className="flex flex-col items-center gap-3 relative z-10" suppressHydrationWarning={true}>
           <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" suppressHydrationWarning={true} />
           <p className="text-zinc-400 font-semibold tracking-wider font-space" suppressHydrationWarning={true}>LOADING MATCH SCOREBOARD...</p>
         </div>
@@ -1019,9 +1078,22 @@ export default function MatchScoringPage() {
   // Error state
   if (error || !match) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#03041c] text-white">
+      <div className="flex min-h-screen flex-col bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
+        {/* Hex mesh */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <pattern id="hex-grid-err-m" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hex-grid-err-m)" />
+          </svg>
+        </div>
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
         <Header />
-        <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
+        <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8 relative z-10">
           <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -1053,45 +1125,24 @@ export default function MatchScoringPage() {
   const activeBowlerStats = scoringState?.bowlers.find((bw) => bw.name === scoringState.bowler);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#03041c] text-white select-none relative overflow-hidden font-sans">
-      {/* Background flows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[45%] h-[55%] rounded-full bg-cyan-600/5 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[45%] h-[55%] rounded-full bg-indigo-600/5 blur-[130px] pointer-events-none" />
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white select-none relative overflow-hidden font-sans">
+      {/* Hexagonal Mesh Overlay */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <pattern id="hex-grid-ctrl" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+              <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hex-grid-ctrl)" />
+        </svg>
+      </div>
+      {/* Background glows */}
+      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
 
       <Header />
 
-      {/* Floating inline toast notification */}
-      {toast && (
-        <div className="fixed bottom-8 right-8 z-50 animate-bounce">
-          <div
-            className={`px-5 py-3.5 rounded-xl border text-sm font-semibold shadow-2xl flex items-center gap-3 backdrop-blur-md ${toast.type === "success"
-                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
-                : toast.type === "error"
-                  ? "bg-red-500/15 border-red-500/40 text-red-300"
-                  : "bg-blue-500/15 border-blue-500/40 text-blue-300"
-              }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
-            {toast.message}
-          </div>
-        </div>
-      )}
-
-      {/* Screen Animation Overlay (Specator and Scorer view) */}
-      {scoringState?.animation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs pointer-events-none">
-          <div className="text-center animate-scale-up-fade px-8 py-6 rounded-3xl border border-white/10 bg-[#07092e]/85 shadow-2xl">
-            <h2 className="text-6xl font-black font-space tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 animate-pulse">
-              ★ {scoringState.animation} ★
-            </h2>
-            {scoringState.displayScreen !== "default" && (
-              <p className="text-xs text-zinc-400 font-bold uppercase tracking-widest mt-2">
-                Screen Mode: {scoringState.displayScreen}
-              </p>
-            )}
-          </div>
-        </div>
-      )}
 
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 px-4 md:px-6 z-10 flex flex-col gap-6">
         {/* ── Breadcrumb & Links ─────────────────────────────────────────── */}
@@ -1274,7 +1325,7 @@ export default function MatchScoringPage() {
         {isOwner && (
           <div className="flex flex-col gap-6 mt-2">
             {/* Overlay & Innings Master Control */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
+            {/* <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800/60 pb-3">
                 <div>
                   <h3 className="text-sm font-extrabold tracking-wider text-zinc-400 uppercase">Overlay & Innings Master Control</h3>
@@ -1297,7 +1348,7 @@ export default function MatchScoringPage() {
                   <span>CLOSE ALL BANNERS & OVERLAYS ✕</span>
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* ── Unified Cricket Controller ─────────────────────────────────── */}
             <div className="relative w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/10" style={{ background: "linear-gradient(to bottom, #ca32e6 0%, #357ef7 55%, #05ccd9 100%)" }}>
@@ -1324,15 +1375,15 @@ export default function MatchScoringPage() {
                       if (target !== "1" && target !== "2") return;
                       const newName = prompt("Enter new batsman name:");
                       if (!newName || !newName.trim()) return;
-                      
+
                       const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
                       const activeStriker = scoringState.striker;
                       const activeNonStriker = scoringState.nonStriker;
                       let retiredName = target === "1" ? activeStriker : activeNonStriker;
-                      
+
                       const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
                       if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
-                      
+
                       const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
                       if (newIdx === -1) {
                         updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
@@ -1356,11 +1407,11 @@ export default function MatchScoringPage() {
                           t2Changed = true;
                         }
                       }
-                      
+
                       if (t1Changed || t2Changed) {
                         setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
                       }
-                      
+
                       const { history: _, ...stateWithoutHistory } = scoringState;
                       const updated: ScoringState = {
                         ...(scoringState as ScoringState),
@@ -1410,14 +1461,16 @@ export default function MatchScoringPage() {
                   </button>
                 </div>
 
-                {/* Row 3: 🎯 | Tour Name | B1 | B2 */}
+                {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
                 <div className="flex justify-between gap-3 px-2">
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("TARGET")}
-                    className="w-14 h-10 rounded-lg text-black font-black text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
-                  >
-                    🎯
-                  </button>
+                  {scoringState?.inningsNo === 2 && (
+                    <button
+                      onClick={() => handleUpdateDisplayScreen("TARGET")}
+                      className="w-14 h-10 rounded-lg text-black font-black text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
+                    >
+                      🎯
+                    </button>
+                  )}
                   <button
                     onClick={() => handleUpdateDisplayScreen("TOURNAME")}
                     className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700"
@@ -1471,28 +1524,38 @@ export default function MatchScoringPage() {
                   </button>
                 </div>
 
-                {/* Row 5: END Inning 2 | UNDO */}
+                {/* Row 5: END INNING (innings-aware) | UNDO */}
                 <div className="flex justify-between gap-4 px-2">
-                  <button
-                    onClick={() => {
-                      if (!scoringState) return;
-                      if (confirm("End Inning 2 and complete the match?")) {
-                        const { history: _, ...stateWithoutHistory } = scoringState;
-                        const updated: ScoringState = {
-                          ...(scoringState as ScoringState),
-                          history: [...(scoringState.history || []), stateWithoutHistory]
-                        };
-                        setScoringState(updated);
-                        setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
-                        saveScoringState(updated, "Completed");
-                        showToast("Inning 2 ended!");
-                      }
-                    }}
-                    className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ backgroundColor: "#701a75" }}
-                  >
-                    END Inning 2
-                  </button>
+                  {scoringState?.inningsNo === 1 ? (
+                    <button
+                      onClick={handleArchiveInnings1}
+                      className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+                      style={{ backgroundColor: "#701a75" }}
+                    >
+                      END INNING 1
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        if (!scoringState) return;
+                        showConfirm("End Inning 2 and complete the match?", () => {
+                          const { history: _, ...stateWithoutHistory } = scoringState;
+                          const updated: ScoringState = {
+                            ...(scoringState as ScoringState),
+                            history: [...(scoringState.history || []), stateWithoutHistory]
+                          };
+                          setScoringState(updated);
+                          setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
+                          saveScoringState(updated, "Completed");
+                          showToast("Inning 2 ended!");
+                        });
+                      }}
+                      className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+                      style={{ backgroundColor: "#701a75" }}
+                    >
+                      END INNING 2
+                    </button>
+                  )}
                   <button
                     onClick={handleUndo}
                     className="w-32 py-2.5 rounded-lg text-white font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600"
@@ -1562,11 +1625,10 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Number Pad */}
-                <div className={`flex flex-col gap-4 mt-2 ${
-                  scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
-                }`}>
+                <div className={`flex flex-col gap-4 mt-2 max-w-xs mx-auto w-full ${scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
+                  }`}>
                   {/* Row 1: 0 1 2 3 */}
-                  <div className="grid grid-cols-4 gap-4 px-4 justify-items-center">
+                  <div className="grid grid-cols-4 gap-3 justify-items-center">
                     {[0, 1, 2, 3].map((run) => (
                       <button
                         key={run}
@@ -1579,7 +1641,7 @@ export default function MatchScoringPage() {
                   </div>
 
                   {/* Row 2: 4 5 6 ... */}
-                  <div className="grid grid-cols-4 gap-4 px-4 justify-items-center">
+                  <div className="grid grid-cols-4 gap-3 justify-items-center">
                     {[4, 5, 6].map((run) => (
                       <button
                         key={run}
@@ -1766,12 +1828,12 @@ export default function MatchScoringPage() {
                 >
                   STOP
                 </button>
-                <button
+                {/* <button
                   onClick={handleClearAllOverlays}
                   className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-md shadow-rose-500/10"
                 >
                   CLOSE ALL BANNERS & OVERLAYS ✕
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -1781,10 +1843,10 @@ export default function MatchScoringPage() {
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   "DEFAULT!",
-                  "Y1BAT",
-                  "Y1BALL",
-                  "Y2BAT",
-                  "Y2BALL",
+                  "1BAT",
+                  "1BALL",
+                  "2BAT",
+                  "2BALL",
                   "SUMMARY",
                   "FOW",
                   "B1",
@@ -1798,8 +1860,8 @@ export default function MatchScoringPage() {
                     key={screen}
                     onClick={() => handleUpdateDisplayScreen(screen)}
                     className={`px-3 py-2 text-[10px] font-black tracking-wider rounded-lg active:scale-95 border transition-all cursor-pointer ${scoringState?.displayScreen === screen
-                        ? "bg-amber-500/25 border-amber-500 text-amber-300"
-                        : "bg-[#121542] hover:bg-[#1b1f63] border-zinc-700/50 text-zinc-300"
+                      ? "bg-amber-500/25 border-amber-500 text-amber-300"
+                      : "bg-[#121542] hover:bg-[#1b1f63] border-zinc-700/50 text-zinc-300"
                       }`}
                   >
                     {screen}
@@ -1814,8 +1876,8 @@ export default function MatchScoringPage() {
               <button
                 onClick={() => handleSetDecision("PENDING")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "PENDING"
-                    ? "bg-[#ffcc00] text-black ring-2 ring-amber-400"
-                    : "bg-[#ffcc00] hover:bg-amber-500 text-black font-semibold"
+                  ? "bg-[#ffcc00] text-black ring-2 ring-amber-400"
+                  : "bg-[#ffcc00] hover:bg-amber-500 text-black font-semibold"
                   }`}
               >
                 PENDING
@@ -1823,8 +1885,8 @@ export default function MatchScoringPage() {
               <button
                 onClick={() => handleSetDecision("OUT")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "OUT"
-                    ? "bg-red-600 text-white ring-2 ring-red-500"
-                    : "bg-red-600 hover:bg-red-700 text-white"
+                  ? "bg-red-600 text-white ring-2 ring-red-500"
+                  : "bg-red-600 hover:bg-red-700 text-white"
                   }`}
               >
                 OUT
@@ -1832,8 +1894,8 @@ export default function MatchScoringPage() {
               <button
                 onClick={() => handleSetDecision("NOT OUT")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "NOT OUT"
-                    ? "bg-emerald-600 text-white ring-2 ring-emerald-500"
-                    : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                  ? "bg-emerald-600 text-white ring-2 ring-emerald-500"
+                  : "bg-emerald-600 hover:bg-emerald-700 text-white"
                   }`}
               >
                 NOT OUT
@@ -2234,8 +2296,8 @@ export default function MatchScoringPage() {
                           key={i}
                           onClick={() => setNewBowlerInput(p)}
                           className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${scoringState.bowlers.some((bw) => bw.name.toLowerCase() === p.toLowerCase())
-                              ? "bg-teal-700/60 border-teal-400/40 text-teal-100"
-                              : "bg-[#083d5a] hover:bg-[#0c5a7a] border-cyan-400/20 text-cyan-100"
+                            ? "bg-teal-700/60 border-teal-400/40 text-teal-100"
+                            : "bg-[#083d5a] hover:bg-[#0c5a7a] border-cyan-400/20 text-cyan-100"
                             }`}
                         >
                           {p}

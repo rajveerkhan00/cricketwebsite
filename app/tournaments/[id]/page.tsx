@@ -575,8 +575,21 @@ export default function TourPage() {
   // ─── Loading ───────────────────────────────────────────────────────────────
   if (status === "loading" || status === "unauthenticated" || pageLoading) {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#03041c] text-white">
-        <div className="flex flex-col items-center gap-4">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
+        {/* Hex mesh */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <pattern id="hex-grid-load-t" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hex-grid-load-t)" />
+          </svg>
+        </div>
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+        <div className="flex flex-col items-center gap-4 relative z-10">
           <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
           <p className="text-zinc-400 text-sm font-semibold tracking-wider font-space animate-pulse">
             LOADING TOURNAMENT...
@@ -589,9 +602,22 @@ export default function TourPage() {
   // ─── Error ─────────────────────────────────────────────────────────────────
   if (fetchError) {
     return (
-      <div className="flex min-h-screen w-full flex-col bg-[#03041c] text-white">
+      <div className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
+        {/* Hex mesh */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <pattern id="hex-grid-err" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hex-grid-err)" />
+          </svg>
+        </div>
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
         <Header />
-        <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
+        <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8 relative z-10">
           <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
             <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -612,10 +638,21 @@ export default function TourPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-[#03041c] text-white font-sans select-none relative overflow-hidden">
+    <div className="flex flex-col min-h-screen w-full bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white font-sans select-none relative overflow-hidden">
+      {/* Hexagonal Mesh Overlay */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <pattern id="hex-grid-tid" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+              <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hex-grid-tid)" />
+        </svg>
+      </div>
       {/* Background glows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[50%] rounded-full bg-amber-600/5 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[50%] rounded-full bg-blue-600/5 blur-[130px] pointer-events-none" />
+      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
 
       <Header />
 

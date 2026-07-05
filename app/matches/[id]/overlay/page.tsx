@@ -323,6 +323,7 @@ export default function OverlayPage() {
   const [loading, setLoading] = useState(true);
   const [accessChecked, setAccessChecked] = useState(false);
   const [accessGranted, setAccessGranted] = useState(false);
+  const [currentAnim, setCurrentAnim] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
 
   // The email used to check/grant access (from URL param or entered by user)
@@ -442,6 +443,24 @@ export default function OverlayPage() {
     const timer = setInterval(() => setRemainingSeconds(p => Math.max(0, p - 1)), 1000);
     return () => clearInterval(timer);
   }, [accessGranted, remainingSeconds]);
+
+  // Manage animation overlays client-side for exactly 3 seconds
+  useEffect(() => {
+    const anim = match?.scoringState?.animation;
+    if (anim) {
+      if (anim !== "INNINGS BREAK" && anim !== "TOUR BOUNDARIES") {
+        setCurrentAnim(anim);
+        const timer = setTimeout(() => {
+          setCurrentAnim(null);
+        }, 3000);
+        return () => clearTimeout(timer);
+      } else {
+        setCurrentAnim(anim);
+      }
+    } else {
+      setCurrentAnim(null);
+    }
+  }, [match?.scoringState?.animation]);
 
   const fmtOv = (balls: number, bpo = 6) => `${Math.floor(balls / bpo)}.${balls % bpo}`;
   const calcRR = (state: ScoringState) => (!match || state.balls === 0) ? "0.00" : (state.score / (state.balls / match.ballsPerOver)).toFixed(2);
@@ -583,8 +602,8 @@ export default function OverlayPage() {
   );
 
   // ════════════════════ 1. ANIMATION ════════════════════
-  if (scoringState.animation) {
-    const anim = scoringState.animation;
+  if (currentAnim) {
+    const anim = currentAnim;
     let bg = "linear-gradient(135deg,#0f172a,#1e293b)", glow = theme.borderColor, label = "★", main = anim, sub = `${match.team1Name} vs ${match.team2Name}`;
     if (anim === "FOUR") { bg = "linear-gradient(135deg,#7c2d12,#dc2626,#f97316,#fbbf24)"; glow = "#fbbf24"; label = "✨ BOUNDARY HIT"; main = "FOUR!"; sub = `${scoringState.striker} • ${striker?.runs ?? 0} runs`; }
     else if (anim === "SIX") { bg = "linear-gradient(135deg,#1e1b4b,#1d4ed8,#06b6d4)"; glow = "#06b6d4"; label = "🚀 MAXIMUM SIX"; main = "SIX!"; sub = `${scoringState.striker} clears the rope!`; }
