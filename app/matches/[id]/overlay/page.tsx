@@ -785,7 +785,7 @@ export default function OverlayPage() {
     const ds = scoringState.displayScreen.toUpperCase();
     const isY1Bat=ds==="Y1BAT"; const isY2Bat=ds==="Y2BAT";
     const isY1Ball=ds==="Y1BALL"; const isY2Ball=ds==="Y2BALL";
-    const isSummary=ds==="SUMMARY"; const isFow=ds==="FOW";
+    const isSummary=ds==="SUMMARY"; const isFullScore=ds==="FULLSCORE"; const isFow=ds==="FOW";
     const isBowlerSp=ds==="BOWLER"; const isTarget=ds==="TARGET";
     const isPartner=ds==="PARTNERSHIP";
     const isSquads=ds==="B1"||ds==="B2"||ds==="TEAMS PLAYERS";
@@ -1175,6 +1175,110 @@ export default function OverlayPage() {
                   <div style={{ background:"rgba(56,189,248,0.1)", border:"1px solid rgba(56,189,248,0.3)", borderRadius:10, padding:"6px 14px", fontSize:13, color:"#38bdf8", fontWeight:900 }}>{nonStriker?.sixes??0}×6s</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (isFullScore) {
+      const inn1 = getInnState(1);
+      const inn2 = getInnState(2);
+      const bt1 = getInnTeam(1, "bat");
+      const bt2 = getInnTeam(2, "bat");
+      const winnerText = match.status === "Completed"
+        ? (scoringState.target !== null
+            ? (scoringState.score >= scoringState.target
+                ? `${currentBatTeam} won by ${Math.max(0, 10 - scoringState.wickets)} wicket${Math.max(0, 10 - scoringState.wickets) === 1 ? "" : "s"}`
+                : `${(scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name)} won by ${Math.max(0, scoringState.target - scoringState.score - 1)} run${Math.max(0, scoringState.target - scoringState.score - 1) === 1 ? "" : "s"}`)
+            : "Match completed")
+        : match.status;
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "96vw", maxWidth: "1480px" }}>
+            {renderCustomOverlay()}{renderMom()}
+            <div className="slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "18px 28px", textAlign: "center" }}>
+              <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>FULL SCORECARD · {theme.name.toUpperCase()}</div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: theme.accentText, marginTop: 6 }}>{match.team1Name.toUpperCase()} vs {match.team2Name.toUpperCase()}</div>
+              <div style={{ fontSize: 12, color: theme.textSecondary, marginTop: 6 }}>{winnerText}</div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22, background: "rgba(7,12,28,0.98)", border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 20px 20px", padding: "28px", boxShadow: "0 20px 40px rgba(0,0,0,0.7)" }}>
+              {[{ label: `INNINGS 1 · ${bt1}`, inn: inn1 }, { label: `INNINGS 2 · ${bt2}`, inn: inn2 }].map((section, idx) => {
+                if (!section.inn) {
+                  return (
+                    <div key={idx} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${theme.borderColor}18`, borderRadius: 18, padding: "22px", minHeight: "360px" }}>
+                      <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: 2, color: theme.textSecondary, marginBottom: 18 }}>{section.label.toUpperCase()}</div>
+                      <div style={{ color: theme.textSecondary, fontSize: 14, padding: "24px 0" }}>No innings data available.</div>
+                    </div>
+                  );
+                }
+
+                const inn = section.inn;
+                return (
+                  <div key={idx} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${theme.borderColor}18`, borderRadius: 18, padding: "22px", minHeight: "360px" }}>
+                    <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: 2, color: theme.textSecondary, marginBottom: 18 }}>{section.label.toUpperCase()}</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "center", marginBottom: 18 }}>
+                      <div style={{ color: theme.accentText, fontSize: 28, fontWeight: 900 }}>{inn.score}/{inn.wickets}</div>
+                      <div style={{ color: theme.textSecondary, fontSize: 12, fontWeight: 800 }}>{fmtOv(inn.balls, match.ballsPerOver)} / {match.overs} overs</div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 18 }}>
+                      <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${theme.borderColor}18`, borderRadius: 14, padding: "16px" }}>
+                        <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 10 }}>TOP BATSMEN</div>
+                        {inn.batsmen.slice(0, 4).map((b, bi) => (
+                          <div key={bi} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, color: "#fff" }}>
+                            <span>{b.name}</span>
+                            <span>{b.runs} ({b.balls})</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${theme.borderColor}18`, borderRadius: 14, padding: "16px" }}>
+                        <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 10 }}>TOP BOWLERS</div>
+                        {inn.bowlers.slice(0, 4).map((bw, bi) => (
+                          <div key={bi} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, color: "#fff" }}>
+                            <span>{bw.name}</span>
+                            <span>{bw.wickets}/{bw.runsConceded}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ borderTop: `1px solid ${theme.borderColor}15`, paddingTop: 16 }}>
+                      <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 12 }}>BATTING</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, minmax(0, 1fr))", gap: 8, fontSize: 10, textTransform: "uppercase", color: theme.textSecondary, marginBottom: 10 }}>
+                        {['Batsman','R','B','4s','6s','SR'].map((col) => <div key={col} style={{ fontWeight: 900 }}>{col}</div>)}
+                      </div>
+                      {inn.batsmen.map((b, bi) => (
+                        <div key={bi} style={{ display: "grid", gridTemplateColumns: "repeat(6, minmax(0, 1fr))", gap: 8, padding: "8px 0", borderBottom: bi < inn.batsmen.length - 1 ? `1px solid ${theme.borderColor}12` : "none", color: "#fff", fontSize: 12 }}>
+                          <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{b.name}</div>
+                          <div>{b.runs}</div>
+                          <div>{b.balls}</div>
+                          <div>{b.fours}</div>
+                          <div>{b.sixes}</div>
+                          <div>{b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0"}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ borderTop: `1px solid ${theme.borderColor}15`, paddingTop: 16, marginTop: 16 }}>
+                      <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 12 }}>BOWLING</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 8, fontSize: 10, textTransform: "uppercase", color: theme.textSecondary, marginBottom: 10 }}>
+                        {['Bowler','O','R','W','Eco'].map((col) => <div key={col} style={{ fontWeight: 900 }}>{col}</div>)}
+                      </div>
+                      {inn.bowlers.map((bw, bi) => {
+                        const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * match.ballsPerOver).toFixed(2) : "0.00";
+                        return (
+                          <div key={bi} style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 8, padding: "8px 0", borderBottom: bi < inn.bowlers.length - 1 ? `1px solid ${theme.borderColor}12` : "none", color: "#fff", fontSize: 12 }}>
+                            <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{bw.name}</div>
+                            <div>{fmtOv(bw.ballsBowled, match.ballsPerOver)}</div>
+                            <div>{bw.runsConceded}</div>
+                            <div>{bw.wickets}</div>
+                            <div>{eco}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

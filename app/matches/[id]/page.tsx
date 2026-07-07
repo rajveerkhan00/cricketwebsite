@@ -955,6 +955,181 @@ export default function MatchScoringPage() {
     showToast(`Display screen updated: ${screenName.toUpperCase()}`);
   };
 
+  const computeMatchResultText = () => {
+    if (!match || !scoringState || match.status !== "Completed") return "";
+    if (scoringState.target !== null) {
+      const battingTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
+      const bowlingTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
+      if (scoringState.score >= scoringState.target) {
+        const wicketsLeft = Math.max(0, 10 - scoringState.wickets);
+        const wicketsText = wicketsLeft === 1 ? "1 wicket" : `${wicketsLeft} wickets`;
+        return `${battingTeam} won by ${wicketsText}`;
+      }
+      const margin = Math.max(0, scoringState.target - scoringState.score - 1);
+      return `${bowlingTeam} won by ${margin} run${margin === 1 ? "" : "s"}`;
+    }
+    return "Match completed";
+  };
+
+  const renderBatsmenRows = (batsmen: BatsmanStats[]) => batsmen.map((b) => `
+      <tr>
+        <td>${b.name}</td>
+        <td>${b.runs}</td>
+        <td>${b.balls}</td>
+        <td>${b.fours}</td>
+        <td>${b.sixes}</td>
+        <td>${b.out ? "Out" : "Not Out"}</td>
+      </tr>
+    `).join("");
+
+  const renderBowlingRows = (bowlers: BowlerStats[]) => bowlers.map((bw) => `
+      <tr>
+        <td>${bw.name}</td>
+        <td>${bw.runsConceded}</td>
+        <td>${bw.ballsBowled}</td>
+        <td>${bw.wickets}</td>
+      </tr>
+    `).join("");
+
+  const buildInningsSection = (
+    label: string,
+    battingTeam: string,
+    bowlingTeam: string,
+    data: {
+      score: number;
+      wickets: number;
+      balls: number;
+      overs: number;
+      batsmen: BatsmanStats[];
+      bowlers: BowlerStats[];
+      fallOfWickets?: FallOfWicket[];
+    },
+    ballsPerOver: number
+  ) => `
+      <h2>${label}</h2>
+      <p><strong>Batting:</strong> ${battingTeam}</p>
+      <p><strong>Score:</strong> ${data.score}-${data.wickets} (${formatOvers(data.balls, ballsPerOver)} overs)</p>
+      <h3>Batting Scorecard</h3>
+      <table>
+        <thead><tr><th>Name</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th><th>Status</th></tr></thead>
+        <tbody>${renderBatsmenRows(data.batsmen)}</tbody>
+      </table>
+      <h3>Bowling Figures</h3>
+      <table>
+        <thead><tr><th>Name</th><th>Runs</th><th>Balls</th><th>Wickets</th></tr></thead>
+        <tbody>${renderBowlingRows(data.bowlers)}</tbody>
+      </table>
+      ${data.fallOfWickets && data.fallOfWickets.length > 0 ? `
+        <h3>Fall of Wickets</h3>
+        <table>
+          <thead><tr><th>Score</th><th>Wickets</th><th>Over</th><th>Batsman</th></tr></thead>
+          <tbody>
+            ${data.fallOfWickets.map((f) => `
+              <tr>
+                <td>${f.score}</td>
+                <td>${f.wickets}</td>
+                <td>${f.over}</td>
+                <td>${f.batsman}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      ` : ""}
+    `;
+
+  const handleDownloadSummaryPDF = () => {
+    if (!match || !scoringState) return;
+    const winnerText = computeMatchResultText() || "Match completed";
+    const firstInnings = scoringState.firstInnings;
+    const firstInningsBatTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
+    const firstInningsBowlTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
+    const secondInningsBatTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
+    const secondInningsBowlTeam = scoringState.bowlingTeam === "team1" ? match.team1Name : match.team2Name;
+
+    const html = `
+      <html>
+        <head>
+          <title>Match Summary</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; color: #111; }
+            h1 { font-size: 28px; margin-bottom: 8px; }
+            h2 { font-size: 20px; margin-top: 24px; margin-bottom: 8px; }
+            h3 { font-size: 16px; margin-top: 18px; margin-bottom: 6px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+            th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+            th { background: #f0f0f0; }
+            .summary-line { margin: 8px 0; }
+            .section-divider { height: 1px; background: #ddd; margin: 18px 0; }
+          </style>
+        </head>
+        <body>
+          <h1>Match Summary</h1>
+          <p class="summary-line"><strong>Match:</strong> ${match.team1Name} vs ${match.team2Name}</p>
+          <p class="summary-line"><strong>Status:</strong> ${match.status}</p>
+          <p class="summary-line"><strong>Result:</strong> ${winnerText}</p>
+          ${scoringState.target !== null ? `<p class="summary-line"><strong>Target:</strong> ${scoringState.target}</p>` : ""}
+          ${firstInnings ? buildInningsSection("1st Innings", firstInningsBatTeam, firstInningsBowlTeam, firstInnings, match.ballsPerOver) : ""}
+          <div class="section-divider"></div>
+          ${buildInningsSection("2nd Innings", secondInningsBatTeam, secondInningsBowlTeam, scoringState, match.ballsPerOver)}
+        </body>
+      </html>`;
+
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  };
+
+  const handleDownloadFullScorecardPDF = () => {
+    if (!match || !scoringState) return;
+    const winnerText = computeMatchResultText() || "Match completed";
+    const firstInnings = scoringState.firstInnings;
+    const firstInningsBatTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
+    const firstInningsBowlTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
+    const secondInningsBatTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
+    const secondInningsBowlTeam = scoringState.bowlingTeam === "team1" ? match.team1Name : match.team2Name;
+
+    const html = `
+      <html>
+        <head>
+          <title>Full Scorecard</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; color: #111; }
+            h1 { font-size: 28px; margin-bottom: 8px; }
+            h2 { font-size: 22px; margin-top: 24px; margin-bottom: 10px; }
+            h3 { font-size: 16px; margin-top: 18px; margin-bottom: 6px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+            th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+            th { background: #f0f0f0; }
+            .summary-line { margin: 8px 0; }
+            .section-divider { height: 1px; background: #ddd; margin: 18px 0; }
+          </style>
+        </head>
+        <body>
+          <h1>Full Match Scorecard</h1>
+          <p class="summary-line"><strong>Match:</strong> ${match.team1Name} vs ${match.team2Name}</p>
+          <p class="summary-line"><strong>Status:</strong> ${match.status}</p>
+          <p class="summary-line"><strong>Result:</strong> ${winnerText}</p>
+          ${scoringState.target !== null ? `<p class="summary-line"><strong>Target:</strong> ${scoringState.target}</p>` : ""}
+          ${firstInnings ? buildInningsSection("1st Innings", firstInningsBatTeam, firstInningsBowlTeam, firstInnings, match.ballsPerOver) : `<h2>1st Innings</h2><p>First innings data not available.</p>`}
+          <div class="section-divider"></div>
+          ${buildInningsSection("2nd Innings", secondInningsBatTeam, secondInningsBowlTeam, scoringState, match.ballsPerOver)}
+          <div class="section-divider"></div>
+          <h2>Match Notes</h2>
+          <p>This scorecard includes both innings and all available batting and bowling figures.</p>
+        </body>
+      </html>`;
+
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  };
+
   const handleNewBowlerSubmit = () => {
     if (!newBowlerInput.trim()) {
       showToast("Please enter or select a bowler name.", "error");
@@ -1198,6 +1373,40 @@ export default function MatchScoringPage() {
               RUN RATE: {calculateRunRate()}{" "}
               {scoringState.target !== null && ` | TARGET: ${scoringState.target}`}
             </div>
+
+            {match?.status === "Completed" && (
+              <div className="flex flex-col items-center gap-3 pt-3">
+                <div className="w-full max-w-3xl px-4 py-3 bg-emerald-500/10 border border-emerald-400/20 rounded-2xl text-emerald-100 text-center font-bold">
+                  {computeMatchResultText()}
+                </div>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("SUMMARY")}
+                    className="w-32 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    SUMMARY
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
+                    className="w-40 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-slate-600 hover:bg-slate-700"
+                  >
+                    FULL SCORECARD
+                  </button>
+                  <button
+                    onClick={handleDownloadSummaryPDF}
+                    className="w-44 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-amber-500 hover:bg-amber-600"
+                  >
+                    DOWNLOAD SUMMARY PDF
+                  </button>
+                  <button
+                    onClick={handleDownloadFullScorecardPDF}
+                    className="w-44 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-violet-600 hover:bg-violet-700"
+                  >
+                    DOWNLOAD FULL SCORECARD PDF
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Grid 3 boxes layout matching Image 3 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1458,6 +1667,22 @@ export default function MatchScoringPage() {
                     style={{ background: "linear-gradient(135deg, #0f1035, #1e1b4b)" }}
                   >
                     Mini-Score
+                  </button>
+                </div>
+
+                {/* Row 2b: SUMMARY | FULL SCORECARD */}
+                <div className="flex justify-center gap-3 px-2 w-fit mx-auto">
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("SUMMARY")}
+                    className="w-32 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    SUMMARY
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
+                    className="w-40 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-slate-600 hover:bg-slate-700"
+                  >
+                    FULL SCORECARD
                   </button>
                 </div>
 
@@ -1848,6 +2073,7 @@ export default function MatchScoringPage() {
                   { label: "2BAT", color: "bg-indigo-600", hover: "hover:bg-indigo-700", selected: "bg-indigo-400/30 border-indigo-400 text-indigo-300" },
                   { label: "2BALL", color: "bg-rose-600", hover: "hover:bg-rose-700", selected: "bg-rose-400/30 border-rose-400 text-rose-300" },
                   { label: "SUMMARY", color: "bg-cyan-600", hover: "hover:bg-cyan-700", selected: "bg-cyan-400/30 border-cyan-400 text-cyan-300" },
+                  { label: "FULLSCORE", color: "bg-slate-600", hover: "hover:bg-slate-700", selected: "bg-slate-400/30 border-slate-400 text-slate-300" },
                   { label: "FOW", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
                   { label: "B1", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
                   { label: "B2", color: "bg-green-600", hover: "hover:bg-green-700", selected: "bg-green-400/30 border-green-400 text-green-300" },
