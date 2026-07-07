@@ -11,6 +11,8 @@ interface ThemeItem {
   badge?: string;
 }
 
+const FREE_THEME_SLUGS = new Set(["asia-cup", "cwc-19"]);
+
 interface ScoreboardLinksModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -202,7 +204,8 @@ export default function ScoreboardLinksModal({
                       </tr>
                     ) : (
                       themes.map((theme, idx) => {
-                        const isUnlocked = approvedSlugs.includes(theme.slug);
+                        const isFreeTheme = theme.id <= 2 || FREE_THEME_SLUGS.has(theme.slug.toLowerCase().trim());
+                        const isUnlocked = isFreeTheme || approvedSlugs.includes(theme.slug);
                         return (
                           <tr
                             key={theme.id}
@@ -221,7 +224,9 @@ export default function ScoreboardLinksModal({
                                 )}
                               </div>
                             </td>
-                            <td className="p-3 text-center font-bold text-zinc-700">₹ {theme.price}</td>
+                            <td className="p-3 text-center font-bold text-emerald-700">
+                              {isFreeTheme ? "FREE" : `₹ ${theme.price}`}
+                            </td>
                             <td className="p-3 text-center">
                               <button
                                 onClick={() => handlePreview(theme.slug)}

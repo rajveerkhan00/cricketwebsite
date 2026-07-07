@@ -47,6 +47,7 @@ const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: 
   "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(4,6,35,0.96)", secondaryBg: "rgba(8,12,55,0.85)", accent: "#fbbf24", accentText: "#fde68a", textPrimary: "#ffffff", textSecondary: "#e0e7ff", scoreBg: "linear-gradient(135deg, rgba(251,191,36,0.18), rgba(79,70,229,0.18))", scoreText: "#fde68a", borderColor: "#f59e0b", headerBg: "rgba(2,3,20,0.99)", ballColors: { runs: "#4338ca", four: "#fbbf24", six: "#f59e0b", wicket: "#ef4444", extra: "#34d399" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
 };
 const DEFAULT_THEME = THEME_MAP["ipl"];
+const FREE_THEME_SLUGS = new Set(["asia-cup", "cwc-19"]);
 const THEME_FONTS: Record<string, string> = {
   "asia-cup": "'Space Grotesk', sans-serif", "cwc-19": "'Space Grotesk', sans-serif",
   "champions-trophy-2025": "'Space Grotesk', sans-serif", "cwc-25-india": "'Outfit', sans-serif",
@@ -345,6 +346,15 @@ export default function OverlayPage() {
   // Check if user has active ScoreboardAccess for this theme
   const checkAccess = async (emailToCheck?: string) => {
     if (isPreview) { setAccessGranted(true); setAccessChecked(true); return; }
+
+    const normalizedThemeSlug = themeSlug.toLowerCase().trim();
+    if (FREE_THEME_SLUGS.has(normalizedThemeSlug)) {
+      setAccessGranted(true);
+      setAccessChecked(true);
+      setRemainingSeconds(0);
+      setUserEmail((emailToCheck || userEmail || emailParam || "").toLowerCase().trim());
+      return;
+    }
 
     const email = (emailToCheck || userEmail || emailParam).toLowerCase().trim();
     if (!email || !email.includes("@")) {
