@@ -1360,7 +1360,7 @@ export default function MatchScoringPage() {
               <div className="p-4 flex flex-col gap-4">
 
                 {/* Row 1: SWAP BATTER | RETIRE BATTER */}
-                <div className="flex justify-around gap-4 px-2">
+                <div className="flex justify-center gap-4 px-2 w-120 mx-auto">
                   <button
                     onClick={handleSwapBatter}
                     className="flex-1 py-3 px-4 rounded-full text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md border border-white/20"
@@ -1437,7 +1437,7 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
-                <div className="flex justify-between gap-3 px-2">
+                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
                   <button
                     onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
                     className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20"
@@ -1462,7 +1462,7 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
-                <div className="flex justify-between gap-3 px-2">
+                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
                   {scoringState?.inningsNo === 2 && (
                     <button
                       onClick={() => handleUpdateDisplayScreen("TARGET")}
@@ -1494,7 +1494,7 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Row 4: Bowler | Batting | Bowling | PP+ */}
-                <div className="flex justify-between gap-3 px-2">
+                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
                   <button
                     onClick={() => handleUpdateDisplayScreen("BOWLER")}
                     className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
@@ -1525,7 +1525,7 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Row 5: END INNING (innings-aware) | UNDO */}
-                <div className="flex justify-between gap-4 px-2">
+                <div className="flex justify-center items-center gap-4 px-2 w-120 mx-auto">
                   {scoringState?.inningsNo === 1 ? (
                     <button
                       onClick={handleArchiveInnings1}
@@ -1581,7 +1581,7 @@ export default function MatchScoringPage() {
                 )}
 
                 {/* Checkboxes Row 1: Wide | No Ball | Byes */}
-                <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
+                <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black w-[60%] mx-auto">
                   {[
                     { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
                     { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
@@ -1842,29 +1842,29 @@ export default function MatchScoringPage() {
               <h3 className="text-xs font-black tracking-wider text-zinc-400 uppercase">DISPLAY CONTROLLER</h3>
               <div className="flex flex-wrap items-center gap-2">
                 {[
-                  "DEFAULT!",
-                  "1BAT",
-                  "1BALL",
-                  "2BAT",
-                  "2BALL",
-                  "SUMMARY",
-                  "FOW",
-                  "B1",
-                  "B2",
-                  "BOWLER",
-                  "TARGET",
-                  "PARTNERSHIP",
-                  "TEAMS PLAYERS",
+                  { label: "DEFAULT!", color: "bg-blue-600", hover: "hover:bg-blue-700", selected: "bg-blue-400/30 border-blue-400 text-blue-300" },
+                  { label: "1BAT", color: "bg-purple-600", hover: "hover:bg-purple-700", selected: "bg-purple-400/30 border-purple-400 text-purple-300" },
+                  { label: "1BALL", color: "bg-pink-600", hover: "hover:bg-pink-700", selected: "bg-pink-400/30 border-pink-400 text-pink-300" },
+                  { label: "2BAT", color: "bg-indigo-600", hover: "hover:bg-indigo-700", selected: "bg-indigo-400/30 border-indigo-400 text-indigo-300" },
+                  { label: "2BALL", color: "bg-rose-600", hover: "hover:bg-rose-700", selected: "bg-rose-400/30 border-rose-400 text-rose-300" },
+                  { label: "SUMMARY", color: "bg-cyan-600", hover: "hover:bg-cyan-700", selected: "bg-cyan-400/30 border-cyan-400 text-cyan-300" },
+                  { label: "FOW", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
+                  { label: "B1", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
+                  { label: "B2", color: "bg-green-600", hover: "hover:bg-green-700", selected: "bg-green-400/30 border-green-400 text-green-300" },
+                  { label: "BOWLER", color: "bg-lime-600", hover: "hover:bg-lime-700", selected: "bg-lime-400/30 border-lime-400 text-lime-300" },
+                  { label: "TARGET", color: "bg-orange-600", hover: "hover:bg-orange-700", selected: "bg-orange-400/30 border-orange-400 text-orange-300" },
+                  { label: "PARTNERSHIP", color: "bg-amber-600", hover: "hover:bg-amber-700", selected: "bg-amber-400/30 border-amber-400 text-amber-300" },
+                  { label: "TEAMS PLAYERS", color: "bg-violet-600", hover: "hover:bg-violet-700", selected: "bg-violet-400/30 border-violet-400 text-violet-300" },
                 ].map((screen) => (
                   <button
-                    key={screen}
-                    onClick={() => handleUpdateDisplayScreen(screen)}
-                    className={`px-3 py-2 text-[10px] font-black tracking-wider rounded-lg active:scale-95 border transition-all cursor-pointer ${scoringState?.displayScreen === screen
-                      ? "bg-amber-500/25 border-amber-500 text-amber-300"
-                      : "bg-[#121542] hover:bg-[#1b1f63] border-zinc-700/50 text-zinc-300"
+                    key={screen.label}
+                    onClick={() => handleUpdateDisplayScreen(screen.label)}
+                    className={`px-3 py-2 text-[10px] font-black tracking-wider rounded-lg active:scale-95 border transition-all cursor-pointer ${scoringState?.displayScreen === screen.label
+                      ? screen.selected
+                      : `${screen.color} ${screen.hover} border-zinc-700/50 text-white`
                       }`}
                   >
-                    {screen}
+                    {screen.label}
                   </button>
                 ))}
               </div>
