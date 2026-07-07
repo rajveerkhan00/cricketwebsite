@@ -399,21 +399,21 @@ function DeleteModal({
 function StatusBadge({ status }: { status: string }) {
   if (status === "Live") {
     return (
-      <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
-        <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+      <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-red-500 text-white border border-red-500 shadow-sm shadow-red-500/20">
+        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
         LIVE
       </span>
     );
   }
   if (status === "Completed") {
     return (
-      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500 text-white border border-emerald-500 shadow-sm shadow-emerald-500/20">
         ✓ COMPLETED
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-zinc-500/10 text-zinc-400 border border-zinc-500/20">
+    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-zinc-700 text-white border border-zinc-600 shadow-sm shadow-zinc-600/20">
       NOT STARTED
     </span>
   );
@@ -423,13 +423,14 @@ function StatusBadge({ status }: { status: string }) {
 function TypeBadge({ type }: { type: string }) {
   const color =
     type === "Final" ? "from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-300" :
+    type.includes("Group") ? "from-amber-500 to-orange-500 border-orange-500 text-white shadow-sm shadow-orange-500/20" :
     type.includes("Semi") ? "from-purple-500/20 to-violet-500/20 border-purple-500/30 text-purple-300" :
     type.includes("Quarter") || type.includes("Qualifier") || type === "Eliminator"
       ? "from-blue-500/20 to-cyan-500/20 border-blue-500/30 text-blue-300" :
     "from-zinc-500/10 to-zinc-600/10 border-zinc-600/30 text-zinc-400";
 
   return (
-    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-gradient-to-r border ${color}`}>
+    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-gradient-to-r border ${color}`}>
       {type}
     </span>
   );
@@ -757,39 +758,39 @@ export default function TourPage() {
             {matches.map((match, index) => (
               <div
                 key={match._id}
-                className="group relative flex flex-col sm:flex-row sm:items-center gap-4 bg-[#07092e] border border-zinc-800/60 rounded-2xl px-5 py-4 hover:border-zinc-700 hover:shadow-xl hover:shadow-black/20 transition-all duration-300 overflow-hidden"
+                className="group relative flex flex-col sm:flex-row sm:items-center gap-4 bg-gradient-to-r from-amber-500 to-orange-500 border border-orange-100/70 rounded-2xl px-5 py-4 hover:border-orange-300 hover:shadow-[0_20px_50px_-24px_rgba(249,115,22,0.85)] transition-all duration-300 overflow-hidden"
               >
                 {/* Left gradient accent on hover */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-500 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#f59e0b] to-[#fb923c] rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* Match Number Badge */}
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#121542] border border-zinc-700/60 flex items-center justify-center ml-1">
-                  <span className="text-amber-400 font-black font-space text-sm">#{match.matchNo}</span>
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white border border-orange-200/70 flex items-center justify-center ml-1 shadow-sm shadow-orange-200/30">
+                  <span className="text-orange-700 font-black font-space text-sm">#{match.matchNo}</span>
                 </div>
 
                 {/* Match Info */}
-                <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                <div className="flex flex-col gap-1.5 min-w-0 flex-1 text-slate-900">
                   {/* Team names */}
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base font-extrabold text-white font-space group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-base font-extrabold text-slate-900 font-space transition-colors">
                       {match.team1Name.toUpperCase()}
-                      <span className="text-zinc-500 font-normal mx-2">vs</span>
+                      <span className="text-slate-600 font-normal mx-2">vs</span>
                       {match.team2Name.toUpperCase()}
                     </h3>
                     <TypeBadge type={match.matchType} />
                   </div>
 
                   {/* Toss & match details row */}
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 font-semibold">
-                    <span className="text-zinc-300">{getTossDesc(match).toUpperCase()}</span>
-                    <span className="text-zinc-700">•</span>
-                    <span>Overs: <span className="text-zinc-200">{match.overs}</span></span>
-                    <span className="text-zinc-700">•</span>
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-700 font-semibold">
+                    <span className="text-slate-700">{getTossDesc(match).toUpperCase()}</span>
+                    <span className="text-slate-500">•</span>
+                    <span>Overs: <span className="text-slate-800">{match.overs}</span></span>
+                    <span className="text-slate-500">•</span>
                     <span>{match.ballsPerOver} balls/over</span>
                     {match.matchTied && (
                       <>
-                        <span className="text-zinc-700">•</span>
-                        <span className="text-amber-400">TIED</span>
+                        <span className="text-slate-500">•</span>
+                        <span className="text-orange-700">TIED</span>
                       </>
                     )}
                   </div>
@@ -805,7 +806,7 @@ export default function TourPage() {
                   {/* MATCH PAGE */}
                   <Link
                     href={`/matches/${match._id}`}
-                    className="flex items-center gap-1.5 bg-[#121542] hover:bg-[#191e6a] border border-zinc-700/60 text-zinc-200 hover:text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap"
+                    className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800/80 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -818,7 +819,7 @@ export default function TourPage() {
                   <button
                     onClick={() => { setEditTarget(match); setModalError(null); }}
                     title="Edit match"
-                    className="w-9 h-9 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-400 hover:text-emerald-300 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                    className="w-9 h-9 rounded-lg bg-emerald-500 text-white border border-emerald-500/80 hover:bg-emerald-600 text-sm font-bold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shadow-emerald-500/30"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -829,7 +830,7 @@ export default function TourPage() {
                   <button
                     onClick={() => { setDeleteTarget(match); setModalError(null); }}
                     title="Delete match"
-                    className="w-9 h-9 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40 text-red-400 hover:text-red-300 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                    className="w-9 h-9 rounded-lg bg-red-500 text-white border border-red-500/80 hover:bg-red-600 text-sm font-bold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shadow-red-500/30"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

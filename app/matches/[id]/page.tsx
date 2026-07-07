@@ -177,6 +177,8 @@ export default function MatchScoringPage() {
   };
 
   const isOwner = session?.user && match && (session.user as any).id === match.userId;
+  const isMatchCompleted = match?.status === "Completed";
+  const scoreboardLocked = isMatchCompleted;
 
   // Fetch match details
   const fetchMatch = async (initial = false) => {
@@ -356,6 +358,10 @@ export default function MatchScoringPage() {
   // Initialize Innings Modal
   const openStartInnings = () => {
     if (!match) return;
+    if (match.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     const { batName, bowlName } = getTeamsByToss();
     setStrikerInput("");
     setNonStrikerInput("");
@@ -366,6 +372,10 @@ export default function MatchScoringPage() {
   // Submit Start 1st Innings
   const handleStartInningsSubmit = () => {
     if (!match) return;
+    if (match.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!strikerInput.trim() || !nonStrikerInput.trim() || !bowlerInput.trim()) {
       showToast("Please enter Striker, Non-Striker, and Bowler names.", "error");
       return;
@@ -461,8 +471,8 @@ export default function MatchScoringPage() {
       tournamentStatsPlayer: "",
       decision: null,
       displayStatsMode: null,
-      history: [],
-      firstInnings: isSecondInnings ? scoringState.firstInnings : undefined,
+      history: isSecondInnings ? [...(scoringState.history || []), scoringState] : [],
+      firstInnings: isSecondInnings ? scoringState?.firstInnings : undefined,
     };
 
     setScoringState(initialState);
@@ -480,6 +490,10 @@ export default function MatchScoringPage() {
     wicketNewBatsmanName = ""
   ) => {
     if (!match || !scoringState) return;
+    if (match.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
 
     // Create history snapshot for undo
     const { history, ...currentWithoutHistory } = scoringState;
@@ -729,7 +743,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [],
+        history: [...newHistory, scoringState],
         firstInnings: {
           score: currentScore,
           wickets: currentWickets,
@@ -782,12 +796,18 @@ export default function MatchScoringPage() {
     };
 
     setScoringState(restoredState);
+    setMatch((prevMatch) => (prevMatch ? { ...prevMatch, status: "Live" } : null));
+
     saveScoringState(restoredState, "Live");
     showToast("Last action undone.");
   };
 
   // Swap striker and non-striker
   const handleSwapBatter = () => {
+    if (match?.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!scoringState) return;
     const updated = {
       ...scoringState,
@@ -810,6 +830,10 @@ export default function MatchScoringPage() {
 
   // Handle scoring button press using checkbox modifiers
   const handleScoringButton = (runs: number) => {
+    if (match?.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!scoringState || !scoringState.inningsStarted) return;
     if (!scoringState.bowler) {
       showToast("Select a bowler first!", "error");
@@ -832,6 +856,10 @@ export default function MatchScoringPage() {
 
   // Manually archive Innings 1 and transition to Innings 2
   const handleArchiveInnings1 = () => {
+    if (match?.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!scoringState) {
       showToast("No active scoring state to archive.", "error");
       return;
@@ -868,7 +896,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [],
+        history: [...scoringState.history, scoringState],
         firstInnings: {
           score: scoringState.score,
           wickets: scoringState.wickets,
@@ -894,6 +922,10 @@ export default function MatchScoringPage() {
 
   // Handle Wicket click
   const openWicketModal = () => {
+    if (match?.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!scoringState) return;
     setDismissedBatsman(scoringState.striker);
     setNewBatsmanInput("");
@@ -1131,6 +1163,10 @@ export default function MatchScoringPage() {
   };
 
   const handleNewBowlerSubmit = () => {
+    if (match?.status === "Completed") {
+      showToast("Match is completed. Scoreboard is locked.", "info");
+      return;
+    }
     if (!newBowlerInput.trim()) {
       showToast("Please enter or select a bowler name.", "error");
       return;
@@ -1519,7 +1555,7 @@ export default function MatchScoringPage() {
               <p className="font-extrabold text-sm tracking-wider font-space">INNINGS NOT STARTED</p>
               <p className="text-xs text-zinc-500 mt-1">Setup teams and click Start 1st Innings to initialize scoreboard</p>
             </div>
-            {isOwner && (
+            {isOwner && !scoreboardLocked && (
               <button
                 onClick={openStartInnings}
                 className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-lg text-xs font-bold transition-all"
@@ -1572,13 +1608,18 @@ export default function MatchScoringPage() {
                 <div className="flex justify-center gap-4 px-2 w-120 mx-auto">
                   <button
                     onClick={handleSwapBatter}
-                    className="flex-1 py-3 px-4 rounded-full text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md border border-white/20"
+                    disabled={scoreboardLocked}
+                    className={`flex-1 py-3 px-4 rounded-full text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md border border-white/20 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
                     style={{ background: "linear-gradient(90deg, #ca3ee6, #ea580c)" }}
                   >
                     ⇄ SWAP BATTER
                   </button>
                   <button
                     onClick={() => {
+                      if (scoreboardLocked) {
+                        showToast("Match is completed. Scoreboard is locked.", "info");
+                        return;
+                      }
                       if (!scoringState || !match) return;
                       const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
                       if (target !== "1" && target !== "2") return;
@@ -1638,7 +1679,8 @@ export default function MatchScoringPage() {
                       );
                       showToast(retiredName + " retired.");
                     }}
-                    className="flex-1 py-3 px-4 rounded-full text-black font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10"
+                    disabled={scoreboardLocked}
+                    className={`flex-1 py-3 px-4 rounded-full text-black font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
                     style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
                   >
                     RETIRE BATTER
@@ -1648,8 +1690,15 @@ export default function MatchScoringPage() {
                 {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
                 <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
                   <button
-                    onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
-                    className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20"
+                    onClick={() => {
+                      if (scoreboardLocked) {
+                        showToast("Match is completed. Scoreboard is locked.", "info");
+                        return;
+                      }
+                      setNewBowlerInput(""); setShowNewBowlerModal(true);
+                    }}
+                    disabled={scoreboardLocked}
+                    className={`flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
                     style={{ background: "linear-gradient(135deg, #0ea5e9, #2563eb)" }}
                   >
                     CHANGE BOWLER
@@ -1754,7 +1803,8 @@ export default function MatchScoringPage() {
                   {scoringState?.inningsNo === 1 ? (
                     <button
                       onClick={handleArchiveInnings1}
-                      className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+                      disabled={scoreboardLocked}
+                      className={`flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
                       style={{ backgroundColor: "#701a75" }}
                     >
                       END INNING 1
@@ -1762,6 +1812,10 @@ export default function MatchScoringPage() {
                   ) : (
                     <button
                       onClick={() => {
+                        if (scoreboardLocked) {
+                          showToast("Match is completed. Scoreboard is locked.", "info");
+                          return;
+                        }
                         if (!scoringState) return;
                         showConfirm("End Inning 2 and complete the match?", () => {
                           const { history: _, ...stateWithoutHistory } = scoringState;
@@ -1783,7 +1837,8 @@ export default function MatchScoringPage() {
                   )}
                   <button
                     onClick={handleUndo}
-                    className="w-32 py-2.5 rounded-lg text-white font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600"
+                    disabled={!scoringState?.history?.length}
+                    className={`w-32 py-2.5 rounded-lg text-white font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600 ${!scoringState?.history?.length ? "opacity-40 cursor-not-allowed" : ""}`}
                   >
                     UNDO
                   </button>
@@ -1792,7 +1847,7 @@ export default function MatchScoringPage() {
                 <div className="border-t border-black/20 my-1" />
 
                 {/* No-bowler warning */}
-                {scoringState && scoringState.inningsStarted && !scoringState.bowler && (
+                {scoringState && scoringState.inningsStarted && !scoringState.bowler && !scoreboardLocked && (
                   <div
                     className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
                     onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
@@ -1850,7 +1905,7 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Number Pad */}
-                <div className={`flex flex-col gap-4 mt-2 max-w-xs mx-auto w-full ${scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
+                <div className={`flex flex-col gap-4 mt-2 max-w-xs mx-auto w-full ${((scoringState?.inningsStarted && !scoringState?.bowler) || scoreboardLocked) ? "opacity-40 pointer-events-none" : ""}
                   }`}>
                   {/* Row 1: 0 1 2 3 */}
                   <div className="grid grid-cols-4 gap-3 justify-items-center">

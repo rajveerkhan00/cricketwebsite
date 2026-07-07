@@ -464,21 +464,21 @@ export default function Tournaments() {
             {tournaments.map((tournament, index) => (
               <div
                 key={tournament._id}
-                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#07092e] border border-zinc-800/60 rounded-2xl px-5 py-4 hover:border-zinc-700 hover:shadow-xl hover:shadow-black/20 transition-all duration-300 relative overflow-hidden"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-amber-500 to-orange-500 border border-orange-100/70 rounded-2xl px-5 py-4 hover:border-orange-300 hover:shadow-[0_20px_50px_-24px_rgba(249,115,22,0.75)] transition-all duration-300 relative overflow-hidden"
                 style={{ animationDelay: `${index * 60}ms` }}
               >
                 {/* Left accent on hover */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 to-orange-500 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#f59e0b] to-[#fb923c] rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* Tournament Info */}
                 <div className="flex items-center gap-4 min-w-0 pl-1">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-10 h-10 rounded-xl bg-white border border-orange-200/70 flex items-center justify-center flex-shrink-0 shadow-sm shadow-orange-200/30">
+                    <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                     </svg>
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold text-white font-space truncate group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-base font-bold text-slate-900 font-space truncate group-hover:text-orange-700 transition-colors">
                       {tournament.name}
                     </h3>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -486,9 +486,9 @@ export default function Tournaments() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                      <span className="text-xs text-zinc-400 truncate">{tournament.location}</span>
-                      <span className="text-zinc-700">•</span>
-                      <span className="text-xs text-zinc-500">{formatDate(tournament.createdAt)}</span>
+                      <span className="text-xs text-slate-700 truncate">{tournament.location}</span>
+                      <span className="text-slate-500">•</span>
+                      <span className="text-xs text-slate-600">{formatDate(tournament.createdAt)}</span>
                     </div>
                   </div>
                 </div>
@@ -514,7 +514,7 @@ export default function Tournaments() {
                       setModalError(null);
                     }}
                     title="Edit tournament"
-                    className="w-9 h-9 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-400 hover:text-emerald-300 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                    className="w-9 h-9 rounded-lg bg-emerald-500 text-white border border-emerald-500/80 hover:bg-emerald-600 text-sm font-bold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shadow-emerald-500/30"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -528,7 +528,7 @@ export default function Tournaments() {
                       setModalError(null);
                     }}
                     title="Delete tournament"
-                    className="w-9 h-9 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/40 text-red-400 hover:text-red-300 flex items-center justify-center transition-all duration-200 cursor-pointer"
+                    className="w-9 h-9 rounded-lg bg-red-500 text-white border border-red-500/80 hover:bg-red-600 text-sm font-bold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shadow-red-500/30"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
