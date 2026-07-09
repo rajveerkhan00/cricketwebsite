@@ -27,7 +27,7 @@ export default function JazzCashPaymentModal({
   if (!isOpen) return null;
 
   // Format price display
-  const priceDisplay = typeof itemPrice === "number" ? `₹ ${itemPrice}` : itemPrice;
+  const priceDisplay = typeof itemPrice === "number" ? `PKR ${itemPrice}` : itemPrice;
 
   // QR Code URL based on the extracted Till Number
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=JazzCash Till ID: 983622181, Shop: MUHAMMAD Shop, Amount: ${itemPrice}`;

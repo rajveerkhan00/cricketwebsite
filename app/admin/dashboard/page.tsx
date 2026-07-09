@@ -487,7 +487,7 @@ function CreatePricingModal({
               <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price String</label>
               <input
                 type="text"
-                placeholder="e.g. $29 or ₹2,499"
+                placeholder="e.g. PKR 4,999"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
@@ -958,7 +958,7 @@ function CreateScoreboardThemeModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (₹ INR/day)</label>
+              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (PKR/day)</label>
               <input
                 type="number"
                 placeholder="e.g. 150"
@@ -1106,7 +1106,7 @@ function EditScoreboardThemeModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (₹ INR/day)</label>
+              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (PKR/day)</label>
               <input
                 type="number"
                 value={price}
@@ -2095,13 +2095,12 @@ export default function AdminDashboard() {
                             {theme.slug}
                           </td>
                           <td className="px-6 py-4 text-emerald-400 font-extrabold text-sm">
-                            ₹ {theme.price}
+                            PKR {theme.price}
                           </td>
                           <td className="px-6 py-4">
                             {theme.badge ? (
                               <span className="bg-emerald-500/20 text-emerald-400 text-[9px] font-bold px-2 py-0.5 rounded border border-emerald-500/30 uppercase">
-                                {theme.badge}
-                              </span>
+                                {theme.badge}</span>
                             ) : (
                               <span className="text-zinc-600 text-xs">—</span>
                             )}

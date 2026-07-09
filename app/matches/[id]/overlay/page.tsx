@@ -403,7 +403,7 @@ export default function OverlayPage() {
           senderNumber: formSender,
           trxId: formTrxId,
           itemName: themeSlug,
-          itemPrice: "Rs. 250",
+          itemPrice: "PKR 250",
           themeSlug,
         }),
       });
@@ -509,10 +509,10 @@ export default function OverlayPage() {
               <span style={{ color: "#64748b" }}>Name:</span>
               <span style={{ fontWeight: 800, color: "#fff" }}>MUHAMMAD RASHID</span>
               <span style={{ color: "#64748b" }}>Amount:</span>
-              <span style={{ fontWeight: 900, color: "#ffb612", fontSize: 16 }}>Rs. 250</span>
+              <span style={{ fontWeight: 900, color: "#ffb612", fontSize: 16 }}>PKR 250</span>
             </div>
             <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 8 }}>
-              Send Rs. 250 → get TID from JazzCash → fill below → unlocks instantly ✅
+              Send PKR 250 → get TID from JazzCash → fill below → unlocks instantly ✅
             </div>
           </div>
 

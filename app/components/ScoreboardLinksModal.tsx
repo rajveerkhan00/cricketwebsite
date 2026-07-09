@@ -225,7 +225,7 @@ export default function ScoreboardLinksModal({
                               </div>
                             </td>
                             <td className="p-3 text-center font-bold text-emerald-700">
-                              {isFreeTheme ? "FREE" : `₹ ${theme.price}`}
+                              {isFreeTheme ? "FREE" : `PKR ${theme.price}`}
                             </td>
                             <td className="p-3 text-center">
                               <button

@@ -5,7 +5,7 @@ import { PricingTier } from "@/models/PricingTier";
 const DEFAULT_TIERS = [
   {
     name: "Basic",
-    price: "$0",
+    price: "PKR 0",
     period: "forever",
     description: "Ideal for casual local matches and streaming beginners.",
     features: [
@@ -20,7 +20,7 @@ const DEFAULT_TIERS = [
   },
   {
     name: "Professional",
-    price: "$29",
+    price: "PKR 4,999",
     period: "per month",
     description: "Best for league organizers and serious sports streamers.",
     features: [
@@ -36,7 +36,7 @@ const DEFAULT_TIERS = [
   },
   {
     name: "Enterprise",
-    price: "$99",
+    price: "PKR 14,999",
     period: "per month",
     description: "Built for major sports agencies and broadcasting channels.",
     features: [

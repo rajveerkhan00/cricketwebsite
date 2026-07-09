@@ -12,8 +12,14 @@ export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
   const [isJazzCashOpen, setIsJazzCashOpen] = useState(false);
 
+  const normalizePrice = (price: string) => price?.toString().trim().toLowerCase().replace(/\s/g, "");
+  const isFreePrice = (price: string) => {
+    const normalized = normalizePrice(price);
+    return normalized === "0" || normalized === "pkr0" || normalized === "pk0" || normalized.includes("free");
+  };
+
   const handlePlanCheckout = (tier: any) => {
-    if (tier.price === "$0" || tier.price.toLowerCase().includes("free") || tier.price === "0") {
+    if (isFreePrice(tier.price)) {
       toast.success(`Welcome to CricOverlay! You are now subscribed to the ${tier.name} Plan.`);
       return;
     }
