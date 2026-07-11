@@ -1021,12 +1021,16 @@ export default function MatchScoringPage() {
     showToast(`Displaying Stats: ${selectedStatsPlayer}`);
   };
 
-  const handleTourStatsController = (mode: string) => {
+  const handleTourStatsController = (mode: string | null) => {
     if (!scoringState) return;
     const updated = { ...scoringState, displayStatsMode: mode };
     setScoringState(updated);
     saveScoringState(updated);
-    showToast(`Displaying stats category: ${mode}`);
+    if (mode) {
+      showToast(`Displaying stats category: ${mode}`);
+    } else {
+      showToast("Tour stats off. Showing default scoreboard.");
+    }
   };
 
   const handleSetDecision = (decisionVal: "PENDING" | "OUT" | "NOT OUT" | null) => {
@@ -1126,6 +1130,76 @@ export default function MatchScoringPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white select-none relative overflow-hidden font-sans">
+      <style>{`
+        /* Super small, professional top-right notifications for controller page */
+        .Toastify__toast-container {
+          top: 12px !important;
+          right: 12px !important;
+          left: auto !important;
+          transform: none !important;
+          width: 220px !important;
+          padding: 0 !important;
+        }
+        .Toastify__toast {
+          min-height: auto !important;
+          border-radius: 6px !important;
+          padding: 6px 10px !important;
+          margin-bottom: 6px !important;
+          background: rgba(12, 15, 79, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+          color: #fff !important;
+          font-family: inherit !important;
+        }
+        .Toastify__toast--success {
+          border-left: 3px solid #10b981 !important;
+        }
+        .Toastify__toast--error {
+          border-left: 3px solid #f43f5e !important;
+        }
+        .Toastify__toast--info {
+          border-left: 3px solid #06b6d4 !important;
+        }
+        .Toastify__toast-body {
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 10px !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.02em !important;
+          line-height: 1.3 !important;
+        }
+        .Toastify__toast-icon {
+          width: 12px !important;
+          height: 12px !important;
+          margin-right: 6px !important;
+          flex-shrink: 0 !important;
+        }
+        .Toastify__close-button {
+          align-self: center !important;
+          opacity: 0.6 !important;
+          color: #fff !important;
+          padding: 0 !important;
+          width: 10px !important;
+          height: 10px !important;
+          margin-left: 4px !important;
+        }
+        .Toastify__close-button > svg {
+          width: 8px !important;
+          height: 8px !important;
+        }
+        .Toastify__progress-bar {
+          height: 1.5px !important;
+        }
+        .Toastify__progress-bar--success {
+          background: #10b981 !important;
+        }
+        .Toastify__progress-bar--error {
+          background: #f43f5e !important;
+        }
+        .Toastify__progress-bar--info {
+          background: #06b6d4 !important;
+        }
+      `}</style>
       {/* Hexagonal Mesh Overlay */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
@@ -1352,434 +1426,434 @@ export default function MatchScoringPage() {
 
             {/* ── Unified Cricket Controller ─────────────────────────────────── */}
             <div className="relative w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/10" style={{ background: "linear-gradient(to bottom, #ca32e6 0%, #357ef7 55%, #05ccd9 100%)" }}>
-  {/* Colored top header block */}
-  <div className="pt-6 pb-2 flex flex-col items-center justify-center">
-    <h3 className="text-3xl font-black tracking-wider text-black font-sans uppercase">Controller</h3>
-  </div>
+              {/* Colored top header block */}
+              <div className="pt-6 pb-2 flex flex-col items-center justify-center">
+                <h3 className="text-3xl font-black tracking-wider text-black font-sans uppercase">Controller</h3>
+              </div>
 
-  <div className="p-4 flex flex-col gap-4">
+              <div className="p-4 flex flex-col gap-4">
 
-    {/* Row 1: SWAP BATTER | RETIRE BATTER */}
-    <div className="flex justify-around gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
-      <button
-        onClick={handleSwapBatter}
-        className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 md:gap-2 transition-all active:scale-95 shadow-md border border-white/20"
-        style={{ background: "linear-gradient(90deg, #ca3ee6, #ea580c)" }}
-      >
-        ⇄ SWAP
-      </button>
-      <button
-        onClick={() => {
-          if (!scoringState || !match) return;
-          const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
-          if (target !== "1" && target !== "2") return;
-          const newName = prompt("Enter new batsman name:");
-          if (!newName || !newName.trim()) return;
+                {/* Row 1: SWAP BATTER | RETIRE BATTER */}
+                <div className="flex justify-around gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
+                  <button
+                    onClick={handleSwapBatter}
+                    className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 md:gap-2 transition-all active:scale-95 shadow-md border border-white/20"
+                    style={{ background: "linear-gradient(90deg, #ca3ee6, #ea580c)" }}
+                  >
+                    ⇄ SWAP
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (!scoringState || !match) return;
+                      const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
+                      if (target !== "1" && target !== "2") return;
+                      const newName = prompt("Enter new batsman name:");
+                      if (!newName || !newName.trim()) return;
 
-          const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
-          const activeStriker = scoringState.striker;
-          const activeNonStriker = scoringState.nonStriker;
-          let retiredName = target === "1" ? activeStriker : activeNonStriker;
+                      const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
+                      const activeStriker = scoringState.striker;
+                      const activeNonStriker = scoringState.nonStriker;
+                      let retiredName = target === "1" ? activeStriker : activeNonStriker;
 
-          const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
-          if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
+                      const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
+                      if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
 
-          const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
-          if (newIdx === -1) {
-            updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
-          }
+                      const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
+                      if (newIdx === -1) {
+                        updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
+                      }
 
-          // Check if new batsman is in team roster, and if not, add it
-          const team = scoringState.battingTeam;
-          let updatedT1 = match.playersTeam1 || [];
-          let updatedT2 = match.playersTeam2 || [];
-          let t1Changed = false;
-          let t2Changed = false;
-          const bName = newName.trim();
-          if (team === "team1") {
-            if (!updatedT1.some(p => p.toLowerCase() === bName.toLowerCase())) {
-              updatedT1 = [...updatedT1, bName];
-              t1Changed = true;
-            }
-          } else {
-            if (!updatedT2.some(p => p.toLowerCase() === bName.toLowerCase())) {
-              updatedT2 = [...updatedT2, bName];
-              t2Changed = true;
-            }
-          }
+                      // Check if new batsman is in team roster, and if not, add it
+                      const team = scoringState.battingTeam;
+                      let updatedT1 = match.playersTeam1 || [];
+                      let updatedT2 = match.playersTeam2 || [];
+                      let t1Changed = false;
+                      let t2Changed = false;
+                      const bName = newName.trim();
+                      if (team === "team1") {
+                        if (!updatedT1.some(p => p.toLowerCase() === bName.toLowerCase())) {
+                          updatedT1 = [...updatedT1, bName];
+                          t1Changed = true;
+                        }
+                      } else {
+                        if (!updatedT2.some(p => p.toLowerCase() === bName.toLowerCase())) {
+                          updatedT2 = [...updatedT2, bName];
+                          t2Changed = true;
+                        }
+                      }
 
-          if (t1Changed || t2Changed) {
-            setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
-          }
+                      if (t1Changed || t2Changed) {
+                        setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
+                      }
 
-          const { history: _, ...stateWithoutHistory } = scoringState;
-          const updated: ScoringState = {
-            ...(scoringState as ScoringState),
-            striker: target === "1" ? bName : activeStriker,
-            nonStriker: target === "2" ? bName : activeNonStriker,
-            batsmen: updatedBatsmen,
-            history: [...(scoringState.history || []), stateWithoutHistory]
-          };
-          setScoringState(updated);
-          saveScoringState(
-            updated,
-            undefined,
-            t1Changed ? updatedT1 : undefined,
-            t2Changed ? updatedT2 : undefined
-          );
-          showToast(retiredName + " retired.");
-        }}
-        className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-black font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10"
-        style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
-      >
-        RETIRE
-      </button>
-    </div>
+                      const { history: _, ...stateWithoutHistory } = scoringState;
+                      const updated: ScoringState = {
+                        ...(scoringState as ScoringState),
+                        striker: target === "1" ? bName : activeStriker,
+                        nonStriker: target === "2" ? bName : activeNonStriker,
+                        batsmen: updatedBatsmen,
+                        history: [...(scoringState.history || []), stateWithoutHistory]
+                      };
+                      setScoringState(updated);
+                      saveScoringState(
+                        updated,
+                        undefined,
+                        t1Changed ? updatedT1 : undefined,
+                        t2Changed ? updatedT2 : undefined
+                      );
+                      showToast(retiredName + " retired.");
+                    }}
+                    className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-black font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10"
+                    style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
+                  >
+                    RETIRE
+                  </button>
+                </div>
 
-    {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
-    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
-      <button
-        onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
-        className="flex-1 py-2 md:py-2.5 px-1 md:px-3 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20"
-        style={{ background: "linear-gradient(135deg, #0ea5e9, #2563eb)" }}
-      >
-        CHANGE BOWLER
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen("default")}
-        className="w-16 md:w-24 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm transition-all active:scale-95 shadow-md border border-white/20"
-        style={{ backgroundColor: "#00e600" }}
-      >
-        Default
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen("MINI")}
-        className="w-20 md:w-28 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs transition-all active:scale-95 shadow-md border border-white/20"
-        style={{ background: "linear-gradient(135deg, #0f1035, #1e1b4b)" }}
-      >
-        Mini
-      </button>
-    </div>
+                {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
+                <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+                  <button
+                    onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
+                    className="flex-1 py-2 md:py-2.5 px-1 md:px-3 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20"
+                    style={{ background: "linear-gradient(135deg, #0ea5e9, #2563eb)" }}
+                  >
+                    CHANGE BOWLER
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("default")}
+                    className="w-16 md:w-24 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm transition-all active:scale-95 shadow-md border border-white/20"
+                    style={{ backgroundColor: "#00e600" }}
+                  >
+                    Default
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("MINI")}
+                    className="w-20 md:w-28 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs transition-all active:scale-95 shadow-md border border-white/20"
+                    style={{ background: "linear-gradient(135deg, #0f1035, #1e1b4b)" }}
+                  >
+                    Mini
+                  </button>
+                </div>
 
-    {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
-    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
-      {scoringState?.inningsNo === 2 && (
-        <button
-          onClick={() => handleUpdateDisplayScreen("TARGET")}
-          className="w-10 md:w-14 h-8 md:h-10 rounded-lg text-black font-black text-base md:text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
-        >
-          🎯
-        </button>
-      )}
-      <button
-        onClick={() => handleUpdateDisplayScreen("TOURNAME")}
-        className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700 ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
-      >
-        Tour
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen("B1")}
-        className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-        style={{ background: "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
-      >
-        B1
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen("B2")}
-        className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-        style={{ background: "linear-gradient(135deg, #d946ef, #701a75)" }}
-      >
-        B2
-      </button>
-    </div>
+                {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
+                <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+                  {scoringState?.inningsNo === 2 && (
+                    <button
+                      onClick={() => handleUpdateDisplayScreen("TARGET")}
+                      className="w-10 md:w-14 h-8 md:h-10 rounded-lg text-black font-black text-base md:text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
+                    >
+                      🎯
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("TOURNAME")}
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700 ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
+                  >
+                    Tour
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("B1")}
+                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    style={{ background: "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
+                  >
+                    B1
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("B2")}
+                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    style={{ background: "linear-gradient(135deg, #d946ef, #701a75)" }}
+                  >
+                    B2
+                  </button>
+                </div>
 
-    {/* Row 4: Bowler | Batting | Bowling | PP+ */}
-    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
-      <button
-        onClick={() => handleUpdateDisplayScreen("BOWLER")}
-        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-        style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
-      >
-        Bowler
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
-        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-        style={{ background: "linear-gradient(135deg, #ec4899, #db2777)" }}
-      >
-        Batting
-      </button>
-      <button
-        onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
-        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-        style={{ background: "linear-gradient(135deg, #881337, #4c0519)" }}
-      >
-        Bowling
-      </button>
-      <button
-        onClick={() => handleTriggerAnimation("POWERPLAY")}
-        className="w-12 md:w-16 py-1.5 md:py-2 rounded-lg text-black font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
-      >
-        PP+
-      </button>
-    </div>
+                {/* Row 4: Bowler | Batting | Bowling | PP+ */}
+                <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("BOWLER")}
+                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
+                  >
+                    Bowler
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
+                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    style={{ background: "linear-gradient(135deg, #ec4899, #db2777)" }}
+                  >
+                    Batting
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
+                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    style={{ background: "linear-gradient(135deg, #881337, #4c0519)" }}
+                  >
+                    Bowling
+                  </button>
+                  <button
+                    onClick={() => handleTriggerAnimation("POWERPLAY")}
+                    className="w-12 md:w-16 py-1.5 md:py-2 rounded-lg text-black font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
+                  >
+                    PP+
+                  </button>
+                </div>
 
-    {/* Row 5: END INNING (innings-aware) | UNDO */}
-    <div className="flex justify-between gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
-      {scoringState?.inningsNo === 1 ? (
-        <button
-          onClick={handleArchiveInnings1}
-          className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
-          style={{ backgroundColor: "#701a75" }}
-        >
-          END INN 1
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            if (!scoringState) return;
-            showConfirm("End Inning 2 and complete the match?", () => {
-              const { history: _, ...stateWithoutHistory } = scoringState;
-              const updated: ScoringState = {
-                ...(scoringState as ScoringState),
-                history: [...(scoringState.history || []), stateWithoutHistory]
-              };
-              setScoringState(updated);
-              setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
-              saveScoringState(updated, "Completed");
-              showToast("Inning 2 ended!");
-            });
-          }}
-          className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
-          style={{ backgroundColor: "#701a75" }}
-        >
-          END INN 2
-        </button>
-      )}
-      <button
-        onClick={handleUndo}
-        className="w-24 md:w-32 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600"
-      >
-        UNDO
-      </button>
-    </div>
+                {/* Row 5: END INNING (innings-aware) | UNDO */}
+                <div className="flex justify-between gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
+                  {scoringState?.inningsNo === 1 ? (
+                    <button
+                      onClick={handleArchiveInnings1}
+                      className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+                      style={{ backgroundColor: "#701a75" }}
+                    >
+                      END INN 1
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        if (!scoringState) return;
+                        showConfirm("End Inning 2 and complete the match?", () => {
+                          const { history: _, ...stateWithoutHistory } = scoringState;
+                          const updated: ScoringState = {
+                            ...(scoringState as ScoringState),
+                            history: [...(scoringState.history || []), stateWithoutHistory]
+                          };
+                          setScoringState(updated);
+                          setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
+                          saveScoringState(updated, "Completed");
+                          showToast("Inning 2 ended!");
+                        });
+                      }}
+                      className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+                      style={{ backgroundColor: "#701a75" }}
+                    >
+                      END INN 2
+                    </button>
+                  )}
+                  <button
+                    onClick={handleUndo}
+                    className="w-24 md:w-32 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600"
+                  >
+                    UNDO
+                  </button>
+                </div>
 
-    <div className="border-t border-black/20 my-1" />
+                <div className="border-t border-black/20 my-1" />
 
-    {/* No-bowler warning */}
-    {scoringState && scoringState.inningsStarted && !scoringState.bowler && (
-      <div
-        className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
-        onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
-      >
-        <span className="text-amber-400 text-lg">⚠️</span>
-        <div>
-          <p className="text-amber-300 font-black text-xs uppercase tracking-wider">No Bowler Selected</p>
-          <p className="text-amber-200/70 text-[10px]">Tap here to select the bowler before scoring</p>
-        </div>
-      </div>
-    )}
+                {/* No-bowler warning */}
+                {scoringState && scoringState.inningsStarted && !scoringState.bowler && (
+                  <div
+                    className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
+                    onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
+                  >
+                    <span className="text-amber-400 text-lg">⚠️</span>
+                    <div>
+                      <p className="text-amber-300 font-black text-xs uppercase tracking-wider">No Bowler Selected</p>
+                      <p className="text-amber-200/70 text-[10px]">Tap here to select the bowler before scoring</p>
+                    </div>
+                  </div>
+                )}
 
-    {/* Checkboxes Row 1: Wide | No Ball | Byes */}
-    <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
-      {[
-        { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
-        { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
-        { label: "Byes", checked: isByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsByes(val); } },
-      ].map(({ label, checked, set }) => (
-        <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={checked}
-            onChange={(e) => set(e.target.checked)}
-            className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
-          />
-          <span className="text-black font-extrabold text-sm md:text-lg tracking-wide">{label}</span>
-        </label>
-      ))}
-    </div>
+                {/* Checkboxes Row 1: Wide | No Ball | Byes */}
+                <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
+                  {[
+                    { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
+                    { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
+                    { label: "Byes", checked: isByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsByes(val); } },
+                  ].map(({ label, checked, set }) => (
+                    <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => set(e.target.checked)}
+                        className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
+                      />
+                      <span className="text-black font-extrabold text-sm md:text-lg tracking-wide">{label}</span>
+                    </label>
+                  ))}
+                </div>
 
-    {/* Checkboxes Row 2: Leg Byes | Wicket */}
-    <div className="flex items-center justify-center gap-8 md:gap-12 py-2 px-2 bg-transparent text-black">
-      {[
-        { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsLegByes(val); } },
-        { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => { resetScoringCheckboxes(); setIsWicketCheck(val); }, info: true },
-      ].map(({ label, checked, set, info }) => (
-        <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={checked}
-            onChange={(e) => set(e.target.checked)}
-            className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
-          />
-          <span className="text-black font-extrabold text-sm md:text-lg tracking-wide flex items-center gap-1">
-            {label}
-            {info && (
-              <span className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-yellow-400 text-blue-800 flex items-center justify-center font-bold text-[8px] md:text-xs shadow-sm border border-yellow-300">
-                i
-              </span>
-            )}
-          </span>
-        </label>
-      ))}
-    </div>
+                {/* Checkboxes Row 2: Leg Byes | Wicket */}
+                <div className="flex items-center justify-center gap-8 md:gap-12 py-2 px-2 bg-transparent text-black">
+                  {[
+                    { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsLegByes(val); } },
+                    { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => { resetScoringCheckboxes(); setIsWicketCheck(val); }, info: true },
+                  ].map(({ label, checked, set, info }) => (
+                    <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) => set(e.target.checked)}
+                        className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
+                      />
+                      <span className="text-black font-extrabold text-sm md:text-lg tracking-wide flex items-center gap-1">
+                        {label}
+                        {info && (
+                          <span className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-yellow-400 text-blue-800 flex items-center justify-center font-bold text-[8px] md:text-xs shadow-sm border border-yellow-300">
+                            i
+                          </span>
+                        )}
+                      </span>
+                    </label>
+                  ))}
+                </div>
 
-    {/* Number Pad */}
-    <div className={`flex flex-col gap-3 md:gap-4 mt-2 max-w-xs mx-auto w-full ${scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
-      }`}>
-      {/* Row 1: 0 1 2 3 */}
-      <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
-        {[0, 1, 2, 3].map((run) => (
-          <button
-            key={run}
-            onClick={() => handleScoringButton(run)}
-            className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-          >
-            {run}
-          </button>
-        ))}
-      </div>
+                {/* Number Pad */}
+                <div className={`flex flex-col gap-3 md:gap-4 mt-2 max-w-xs mx-auto w-full ${scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
+                  }`}>
+                  {/* Row 1: 0 1 2 3 */}
+                  <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
+                    {[0, 1, 2, 3].map((run) => (
+                      <button
+                        key={run}
+                        onClick={() => handleScoringButton(run)}
+                        className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+                      >
+                        {run}
+                      </button>
+                    ))}
+                  </div>
 
-      {/* Row 2: 4 5 6 ... */}
-      <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
-        {[4, 5, 6].map((run) => (
-          <button
-            key={run}
-            onClick={() => handleScoringButton(run)}
-            className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-          >
-            {run}
-          </button>
-        ))}
-        <button
-          onClick={() => {
-            const runInput = prompt("Enter custom runs:");
-            if (runInput !== null && !isNaN(Number(runInput))) {
-              handleScoringButton(Number(runInput));
-            }
-          }}
-          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-        >
-          •••
-        </button>
-      </div>
+                  {/* Row 2: 4 5 6 ... */}
+                  <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
+                    {[4, 5, 6].map((run) => (
+                      <button
+                        key={run}
+                        onClick={() => handleScoringButton(run)}
+                        className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+                      >
+                        {run}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => {
+                        const runInput = prompt("Enter custom runs:");
+                        if (runInput !== null && !isNaN(Number(runInput))) {
+                          handleScoringButton(Number(runInput));
+                        }
+                      }}
+                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+                    >
+                      •••
+                    </button>
+                  </div>
 
-      {/* Row 3: 1D | ? */}
-      <div className="flex justify-center gap-6 md:gap-8">
-        <button
-          onClick={() => {
-            recordBall("runs", 1);
-            resetScoringCheckboxes();
-          }}
-          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-        >
-          1D
-        </button>
-        <button
-          onClick={() => {
-            alert(
-              "Scoring Help:\n\n" +
-              "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
-              "• Tap '1D' to record 1 run Declared.\n" +
-              "• Tap '•••' to record custom runs.\n" +
-              "• Tap '?' to check help details."
-            );
-          }}
-          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-        >
-          ?
-        </button>
-      </div>
-    </div>
+                  {/* Row 3: 1D | ? */}
+                  <div className="flex justify-center gap-6 md:gap-8">
+                    <button
+                      onClick={() => {
+                        recordBall("runs", 1);
+                        resetScoringCheckboxes();
+                      }}
+                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+                    >
+                      1D
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert(
+                          "Scoring Help:\n\n" +
+                          "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
+                          "• Tap '1D' to record 1 run Declared.\n" +
+                          "• Tap '•••' to record custom runs.\n" +
+                          "• Tap '?' to check help details."
+                        );
+                      }}
+                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+                    >
+                      ?
+                    </button>
+                  </div>
+                </div>
 
-    {/* Edit Team Roster Panel */}
-   <div className="bg-[#121542] border border-zinc-700/40 rounded-xl p-3 md:p-4 flex flex-col gap-3 md:gap-4 mt-2">
-  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 md:gap-0">
-    <span className="text-[10px] md:text-xs font-black tracking-wider text-zinc-400 uppercase">Edit Team Roster 🔧</span>
-    <span className="text-[8px] md:text-[10px] text-zinc-500">Comma-separate for bulk add</span>
-  </div>
+                {/* Edit Team Roster Panel */}
+                <div className="bg-[#121542] border border-zinc-700/40 rounded-xl p-3 md:p-4 flex flex-col gap-3 md:gap-4 mt-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 md:gap-0">
+                    <span className="text-[10px] md:text-xs font-black tracking-wider text-zinc-400 uppercase">Edit Team Roster 🔧</span>
+                    <span className="text-[8px] md:text-[10px] text-zinc-500">Comma-separate for bulk add</span>
+                  </div>
 
-  {/* Team 1 add */}
-  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-    <div className="flex-1 flex gap-1 md:gap-2">
-      <input
-        type="text"
-        value={playerInput1}
-        onChange={(e) => setPlayerInput1(e.target.value)}
-        placeholder={`ADD PLAYER TO ${match.team1Name.toUpperCase()}`}
-        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
-      />
-      <button
-        onClick={() => handleAddPlayer("team1")}
-        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
-      >
-        ➕
-      </button>
-    </div>
-    <button
-      onClick={() => setShowPlayers1(!showPlayers1)}
-      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
-    >
-      {match.team1Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam1?.length || 0})
-    </button>
-  </div>
-  {showPlayers1 && (
-    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
-      {match.playersTeam1 && match.playersTeam1.length > 0 ? (
-        match.playersTeam1.map((p, idx) => (
-          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
-            <span className="truncate text-[10px] md:text-xs">{p}</span>
-            <button onClick={() => handleRemovePlayer("team1", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
-          </div>
-        ))
-      ) : (
-        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
-      )}
-    </div>
-  )}
+                  {/* Team 1 add */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                    <div className="flex-1 flex gap-1 md:gap-2">
+                      <input
+                        type="text"
+                        value={playerInput1}
+                        onChange={(e) => setPlayerInput1(e.target.value)}
+                        placeholder={`ADD PLAYER TO ${match.team1Name.toUpperCase()}`}
+                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                      <button
+                        onClick={() => handleAddPlayer("team1")}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
+                      >
+                        ➕
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => setShowPlayers1(!showPlayers1)}
+                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+                    >
+                      {match.team1Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam1?.length || 0})
+                    </button>
+                  </div>
+                  {showPlayers1 && (
+                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+                      {match.playersTeam1 && match.playersTeam1.length > 0 ? (
+                        match.playersTeam1.map((p, idx) => (
+                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
+                            <span className="truncate text-[10px] md:text-xs">{p}</span>
+                            <button onClick={() => handleRemovePlayer("team1", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+                      )}
+                    </div>
+                  )}
 
-  {/* Team 2 add */}
-  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-    <div className="flex-1 flex gap-1 md:gap-2">
-      <input
-        type="text"
-        value={playerInput2}
-        onChange={(e) => setPlayerInput2(e.target.value)}
-        placeholder={`ADD PLAYER TO ${match.team2Name.toUpperCase()}`}
-        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
-      />
-      <button
-        onClick={() => handleAddPlayer("team2")}
-        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
-      >
-        ➕
-      </button>
-    </div>
-    <button
-      onClick={() => setShowPlayers2(!showPlayers2)}
-      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
-    >
-      {match.team2Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam2?.length || 0})
-    </button>
-  </div>
-  {showPlayers2 && (
-    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
-      {match.playersTeam2 && match.playersTeam2.length > 0 ? (
-        match.playersTeam2.map((p, idx) => (
-          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
-            <span className="truncate text-[10px] md:text-xs">{p}</span>
-            <button onClick={() => handleRemovePlayer("team2", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
-          </div>
-        ))
-      ) : (
-        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
-      )}
-    </div>
-  )}
-</div>
+                  {/* Team 2 add */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                    <div className="flex-1 flex gap-1 md:gap-2">
+                      <input
+                        type="text"
+                        value={playerInput2}
+                        onChange={(e) => setPlayerInput2(e.target.value)}
+                        placeholder={`ADD PLAYER TO ${match.team2Name.toUpperCase()}`}
+                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                      <button
+                        onClick={() => handleAddPlayer("team2")}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
+                      >
+                        ➕
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => setShowPlayers2(!showPlayers2)}
+                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+                    >
+                      {match.team2Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam2?.length || 0})
+                    </button>
+                  </div>
+                  {showPlayers2 && (
+                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+                      {match.playersTeam2 && match.playersTeam2.length > 0 ? (
+                        match.playersTeam2.map((p, idx) => (
+                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
+                            <span className="truncate text-[10px] md:text-xs">{p}</span>
+                            <button onClick={() => handleRemovePlayer("team2", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
-  </div>
-</div>
+              </div>
+            </div>
 
             {/* Animations Panel */}
             <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
@@ -2016,6 +2090,12 @@ export default function MatchScoringPage() {
                     {mode}
                   </button>
                 ))}
+                <button
+                  onClick={() => handleTourStatsController(null)}
+                  className="px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-black text-[10px] tracking-wider rounded-lg active:scale-95 shadow-md shadow-rose-500/10 cursor-pointer uppercase"
+                >
+                  DEFAULT / OFF
+                </button>
               </div>
             </div>
           </div>
