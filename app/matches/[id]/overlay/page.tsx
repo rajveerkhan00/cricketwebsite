@@ -106,6 +106,7 @@ const getPointsTable = (match: Match, themeSlug: string, plusOne: boolean) => {
 
 const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Rubik:wght@400;500;700;900&display=swap');
+  html, body { background: transparent !important; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
   @keyframes slideUp { 0% { transform: translateY(40px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
@@ -595,7 +596,7 @@ export default function OverlayPage() {
   };
 
   if (loading || !accessChecked) return (
-    <div style={{ background: "#03041c", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontFamily: activeFont }}>
+    <div style={{ background: "transparent", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontFamily: activeFont }}>
       <style>{GLOBAL_CSS}</style>
       <div style={{ textAlign: "center" }}>
         <div style={{ width: 52, height: 52, border: "4px solid #f59e0b", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite", margin: "0 auto 16px" }} />
@@ -690,7 +691,7 @@ export default function OverlayPage() {
   }
 
   if (!match || !scoringState) return (
-    <div style={{ background: "#03041c", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#ef4444", fontWeight: 800, fontFamily: activeFont, fontSize: 18 }}>
+    <div style={{ background: "transparent", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#ef4444", fontWeight: 800, fontFamily: activeFont, fontSize: 18 }}>
       <style>{GLOBAL_CSS}</style>🏏 MATCH DATA NOT STARTED
     </div>
   );

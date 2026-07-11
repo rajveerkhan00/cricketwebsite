@@ -11,6 +11,9 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return NextResponse.json({ error: "Invalid match ID." }, { status: 400 });
+    }
     await connectDB();
     const match = await Match.findById(id).lean();
     if (!match) {
@@ -35,6 +38,9 @@ export async function PUT(
     }
 
     const { id } = await params;
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return NextResponse.json({ error: "Invalid match ID." }, { status: 400 });
+    }
     const body = await req.json();
     const {
       team1Name,
@@ -104,6 +110,9 @@ export async function DELETE(
     }
 
     const { id } = await params;
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return NextResponse.json({ error: "Invalid match ID." }, { status: 400 });
+    }
 
     await connectDB();
 

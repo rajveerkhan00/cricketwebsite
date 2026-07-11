@@ -9,7 +9,7 @@ export default function ThemePreviewPage() {
   return (
     <main style={{ minHeight: "100vh", background: "#000" }}>
       <iframe
-        src={`/matches/overlay?theme=${encodeURIComponent(slug)}&preview=true`}
+        src={`/matches/overlay/overlay?theme=${encodeURIComponent(slug)}&preview=true`}
         style={{
           width: "100%",
           height: "100vh",
