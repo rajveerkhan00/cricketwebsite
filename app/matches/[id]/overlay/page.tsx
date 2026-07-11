@@ -1533,6 +1533,19 @@ export default function OverlayPage() {
               <div style={{ fontSize: "11px", fontWeight: "800", color: "#e2e8f0", letterSpacing: "1px" }}>
                 FOURS: <span style={{ color: "#34d399" }}>{totalFours}</span> &nbsp;&nbsp;|&nbsp;&nbsp; SIXES: <span style={{ color: "#fbbf24" }}>{totalSixes}</span>
               </div>
+              {/* This Over strip */}
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span style={{ fontSize: "9px", color: theme.textSecondary, fontWeight: "900", letterSpacing: "1px" }}>THIS OVER:</span>
+                {(() => {
+                  const bpo = match?.ballsPerOver || 6;
+                  const thisOver = scoringState.thisOver || [];
+                  const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                  const totalCirclesCount = bpo + extrasCount;
+                  return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                    <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={18} />
+                  ));
+                })()}
+              </div>
               {rrr && (
                 <div style={{ fontSize: "11px", fontWeight: "900", color: "#fbbf24", letterSpacing: "1px" }}>
                   REQUIRED RR: {rrr}
@@ -1677,20 +1690,31 @@ export default function OverlayPage() {
 
                   {/* This Over outcomes (Square boxes) */}
                   <div style={{ display: "flex", gap: "4px" }}>
-                    {(scoringState.thisOver || []).slice(-6).map((ball, i) => {
-                      let val = ball || ".";
-                      let cellBg = "rgba(255, 255, 255, 0.15)";
-                      let cellColor = "#ffffff";
-                      if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
-                      else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
-                      else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                      else if (["1","2","3"].includes(val)) { cellBg = "rgba(0, 0, 0, 0.3)"; cellColor = "#ffffff"; }
-                      return (
-                        <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "900" }}>
-                          {val}
-                        </div>
-                      );
-                    })}
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        let cellBg = "rgba(255, 255, 255, 0.08)";
+                        let cellColor = "#ffffff";
+                        let borderStyle = "1px solid rgba(255,255,255,0.15)";
+                        if (val) {
+                          borderStyle = "none";
+                          if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
+                          else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
+                          else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#a855f7"; cellColor = "#ffffff"; }
+                          else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
+                        }
+                        return (
+                          <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "900" }}>
+                            {val || ""}
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
 
@@ -1845,20 +1869,31 @@ export default function OverlayPage() {
 
                   {/* Outcome circles */}
                   <div style={{ display: "flex", gap: "5px" }}>
-                    {(scoringState.thisOver || []).slice(-6).map((ball, i) => {
-                      let val = ball || ".";
-                      let cellBg = "#0a1128";
-                      let cellColor = "#ffffff";
-                      if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#000000"; }
-                      else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
-                      else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                      else if (val === ".") { cellBg = "rgba(0,0,0,0.05)"; cellColor = "#94a3b8"; }
-                      return (
-                        <div key={i} style={{ width: "18px", height: "18px", background: cellBg, color: cellColor, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {val}
-                        </div>
-                      );
-                    })}
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        let cellBg = "rgba(10, 17, 40, 0.08)";
+                        let cellColor = "#ffffff";
+                        let borderStyle = "1px solid rgba(10,17,40,0.12)";
+                        if (val) {
+                          borderStyle = "none";
+                          if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#000000"; }
+                          else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
+                          else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#c084fc"; cellColor = "#ffffff"; }
+                          else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
+                        }
+                        return (
+                          <div key={i} style={{ width: "18px", height: "18px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                            {val || ""}
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
@@ -2048,15 +2083,23 @@ export default function OverlayPage() {
 
                   {/* Underlined outcome details */}
                   <div style={{ display: "flex", gap: "10px", height: "18px", alignItems: "center" }}>
-                    {(scoringState.thisOver || []).slice(-6).map((ball, i) => {
-                      let val = ball || "_";
-                      return (
-                        <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                          <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: "900", lineHeight: 1 }}>{val}</span>
-                          {val !== "_" && <div style={{ width: "10px", height: "2px", background: "#ffffff", marginTop: "2px" }} />}
-                        </div>
-                      );
-                    })}
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        return (
+                          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "12px" }}>
+                            <span style={{ color: val ? "#ffffff" : "rgba(255,255,255,0.25)", fontSize: "12px", fontWeight: "900", lineHeight: 1 }}>
+                              {val || "•"}
+                            </span>
+                            {val && <div style={{ width: "10px", height: "2px", background: "#ffffff", marginTop: "2px" }} />}
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
@@ -2230,14 +2273,20 @@ export default function OverlayPage() {
                   </div>
                   {/* Outcome list */}
                   <div style={{ display: "flex", gap: "4px" }}>
-                    {(scoringState.thisOver || []).slice(-6).map((ball, i) => {
-                      let val = ball || ".";
-                      return (
-                        <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "16px", height: "16px", background: "rgba(255,255,255,0.08)", borderRadius: "2px" }}>
-                          <span style={{ color: "#ffffff", fontSize: "10px", fontWeight: "900" }}>{val}</span>
-                        </div>
-                      );
-                    })}
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        return (
+                          <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "16px", height: "16px", background: val ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.03)", border: val ? "none" : "1px solid rgba(255,255,255,0.08)", borderRadius: "2px" }}>
+                            <span style={{ color: val ? "#ffffff" : "transparent", fontSize: "10px", fontWeight: "900" }}>{val || ""}</span>
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
@@ -2439,21 +2488,34 @@ export default function OverlayPage() {
 
                   {/* Outcomes circular circles */}
                   <div style={{ display: "flex", gap: "4px" }}>
-                    {(scoringState.thisOver || []).slice(-6).map((ball, i) => {
-                      let val = ball || ".";
-                      let cellBg = "#080721";
-                      let cellColor = "#ffffff";
-                      let cellBorder = "1px solid rgba(255, 255, 255, 0.4)";
-                      if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
-                      else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
-                      else if (val === "W" || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
-                      else if (val === ".") { cellBg = "transparent"; cellColor = "transparent"; }
-                      return (
-                        <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "900" }}>
-                          {val === "." ? "" : val}
-                        </div>
-                      );
-                    })}
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        let cellBg = "#080721";
+                        let cellColor = "#ffffff";
+                        let cellBorder = "1px solid rgba(255, 255, 255, 0.4)";
+                        if (val) {
+                          if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else if (val === "W" || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else { cellBg = "#1f2937"; cellColor = "#ffffff"; cellBorder = "none"; }
+                        } else {
+                          cellBg = "rgba(255, 255, 255, 0.05)";
+                          cellColor = "transparent";
+                          cellBorder = "1px solid rgba(255, 255, 255, 0.15)";
+                        }
+                        return (
+                          <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "900" }}>
+                            {val || ""}
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
@@ -2940,16 +3002,25 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, idx) => (
-                    <div key={idx} style={{
-                      width: "18px", height: "18px",
-                      borderRadius: "4px",
-                      background: ball === "W" ? "#ef4444" : ["4", "6"].includes(ball) ? "#22c55e" : "rgba(255,255,255,0.1)",
-                      color: "#ffffff",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "10px", fontWeight: "900"
-                    }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{
+                          width: "18px", height: "18px",
+                          borderRadius: "4px",
+                          background: ball ? (ball === "W" ? "#ef4444" : ["4", "6"].includes(ball) ? "#22c55e" : "rgba(255,255,255,0.15)") : "rgba(255,255,255,0.03)",
+                          border: ball ? "none" : "1px solid rgba(255,255,255,0.1)",
+                          color: ball ? "#ffffff" : "transparent",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: "10px", fontWeight: "900"
+                        }}>{ball || ""}</div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -3058,9 +3129,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "#000", border: "1px solid #facc15", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "#000") : "transparent", border: ball ? "1px solid #facc15" : "1px dashed rgba(250,204,21,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -3158,9 +3239,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "4px", background: ball === "W" ? "#e11d48" : ["4", "6"].includes(ball) ? "#10b981" : "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "950" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "4px", background: ball ? (ball === "W" ? "#e11d48" : ["4", "6"].includes(ball) ? "#10b981" : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "950" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
             </div>
@@ -3253,9 +3344,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "#1e3a8a", border: "1.5px solid #eab308", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "#1e3a8a") : "transparent", border: ball ? "1.5px solid #eab308" : "1px dashed rgba(234,179,8,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -3363,9 +3464,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "transparent", border: "1px solid #ec4899", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(168,85,247,0.25)") : "transparent", border: ball ? "1px solid #ec4899" : "1px dashed rgba(236,72,153,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -3464,9 +3575,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "rgba(255,255,255,0.08)", border: "1px solid #cbd5e1", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #cbd5e1" : "1px dashed rgba(203,213,225,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -3562,9 +3683,19 @@ export default function OverlayPage() {
                 </div>
                 {/* Outcomes */}
                 <div style={{ display: "flex", gap: "4px" }}>
-                  {thisOver.slice(-5).map((ball, i) => (
-                    <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball === "W" ? "#ef4444" : "rgba(255,255,255,0.08)", border: "1px solid #fbbf24", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>{ball || "."}</div>
-                  ))}
+                  {(() => {
+                    const bpo = match?.ballsPerOver || 6;
+                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const totalCirclesCount = bpo + extrasCount;
+                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const ball = thisOver[i];
+                      return (
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #fbbf24" : "1px dashed rgba(251,191,36,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball || ""}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
             </div>
