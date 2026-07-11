@@ -19,14 +19,26 @@ interface ScoringState {
   tournamentStatsPlayer?: string;
   decision: "PENDING" | "OUT" | "NOT OUT" | null;
   displayStatsMode?: string | null;
+  history: Omit<ScoringState, "history">[];
   firstInnings?: { score: number; wickets: number; balls: number; overs: number; batsmen: BatsmanStats[]; bowlers: BowlerStats[]; fallOfWickets: FallOfWicket[]; };
 }
 interface Match {
-  _id: string; team1Name: string; team2Name: string;
-  overs: number; ballsPerOver: number; status: string;
+  _id: string;
+  tournamentId: string;
+  userId: string;
+  team1Name: string;
+  team2Name: string;
+  overs: number;
+  matchNo: number;
+  tossWonBy: "team1" | "team2";
+  optedTo: "Bat" | "Bowl";
+  matchTied: boolean;
+  ballsPerOver: number;
+  matchType: string;
+  status: "Not Started" | "Live" | "Completed";
+  playersTeam1?: string[];
+  playersTeam2?: string[];
   scoringState: ScoringState | null;
-  playersTeam1?: string[]; playersTeam2?: string[];
-  tossWonBy?: "team1" | "team2"; optedTo?: "Bat" | "Bowl";
 }
 
 const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: string; accent: string; accentText: string; textPrimary: string; textSecondary: string; scoreBg: string; scoreText: string; borderColor: string; headerBg: string; ballColors: { runs: string; four: string; six: string; wicket: string; extra: string }; bgUrl: string; }> = {
@@ -311,6 +323,61 @@ function BallCircle({ val, ballColors, borderColor, size = 28 }: { val?: string;
   return <div style={{ width: size, height: size, borderRadius: "50%", background: bg, color, boxShadow: shadow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.length > 1 ? size * 0.29 : size * 0.38, fontWeight: 900, border: val ? "none" : `1px solid ${borderColor}20`, flexShrink: 0 }}>{val || ""}</div>;
 }
 
+// Demo match and scoring state for preview mode
+const demoMatch: Match = {
+  _id: "demo-match-id",
+  tournamentId: "demo-tournament-id",
+  userId: "demo-user-id",
+  team1Name: "India",
+  team2Name: "Australia",
+  overs: 20,
+  matchNo: 1,
+  tossWonBy: "team1",
+  optedTo: "Bat",
+  matchTied: false,
+  ballsPerOver: 6,
+  matchType: "Group Stage",
+  status: "Live",
+  playersTeam1: ["Virat Kohli", "Rohit Sharma", "MS Dhoni"],
+  playersTeam2: ["Steve Smith", "David Warner", "Pat Cummins"],
+  scoringState: {
+    battingTeam: "team1",
+    bowlingTeam: "team2",
+    inningsStarted: true,
+    inningsNo: 1,
+    striker: "Virat Kohli",
+    nonStriker: "Rohit Sharma",
+    bowler: "Pat Cummins",
+    score: 125,
+    wickets: 2,
+    balls: 86,
+    overs: 14.2,
+    target: null,
+    thisOver: ["1", "2", "4", "6", "."],
+    batsmen: [
+      { name: "Virat Kohli", runs: 65, balls: 42, fours: 8, sixes: 3, out: false },
+      { name: "Rohit Sharma", runs: 45, balls: 35, fours: 6, sixes: 2, out: false },
+      { name: "MS Dhoni", runs: 15, balls: 10, fours: 2, sixes: 1, out: true },
+    ],
+    bowlers: [
+      { name: "Pat Cummins", runsConceded: 45, ballsBowled: 24, wickets: 1 },
+      { name: "Steve Smith", runsConceded: 30, ballsBowled: 18, wickets: 1 },
+    ],
+    fallOfWickets: [
+      { score: 45, wickets: 1, over: 5.3, batsman: "Rohit Sharma" },
+      { score: 80, wickets: 2, over: 9.5, batsman: "MS Dhoni" },
+    ],
+    animation: null,
+    displayScreen: "default",
+    customInputText: "",
+    momPlayer: "",
+    tournamentStatsPlayer: "",
+    decision: null,
+    displayStatsMode: null,
+    history: [],
+  },
+};
+
 export default function OverlayPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -422,22 +489,34 @@ export default function OverlayPage() {
     }
   };
 
+  // Helper to check valid ObjectId
+  const isValidObjectId = (id: string) => /^[0-9a-fA-F]{24}$/.test(id);
+
   const fetchMatch = async () => {
+    // Use demo match if preview, no matchId, invalid matchId, or matchId is "overlay"
+    if (isPreview || !matchId || matchId === "overlay" || !isValidObjectId(matchId)) {
+      setMatch(demoMatch);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`/api/matches/${matchId}`, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
       setMatch(data.match);
-    } catch (_) { } finally { setLoading(false); }
+    } catch (_) {
+    } finally { setLoading(false); }
   };
 
-  // Poll match details every 3 seconds
+  // Poll only if valid matchId and not preview
   useEffect(() => {
-    if (!matchId) return;
     fetchMatch();
-    const interval = setInterval(fetchMatch, 3000);
-    return () => clearInterval(interval);
-  }, [matchId]);
+    if (matchId && isValidObjectId(matchId) && !isPreview) {
+      const interval = setInterval(fetchMatch, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [matchId, isPreview]);
 
   // Poll access every 8 seconds — instantly picks up admin approve/reject
   useEffect(() => {

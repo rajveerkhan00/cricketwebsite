@@ -177,8 +177,6 @@ export default function MatchScoringPage() {
   };
 
   const isOwner = session?.user && match && (session.user as any).id === match.userId;
-  const isMatchCompleted = match?.status === "Completed";
-  const scoreboardLocked = isMatchCompleted;
 
   // Fetch match details
   const fetchMatch = async (initial = false) => {
@@ -358,10 +356,6 @@ export default function MatchScoringPage() {
   // Initialize Innings Modal
   const openStartInnings = () => {
     if (!match) return;
-    if (match.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     const { batName, bowlName } = getTeamsByToss();
     setStrikerInput("");
     setNonStrikerInput("");
@@ -372,10 +366,6 @@ export default function MatchScoringPage() {
   // Submit Start 1st Innings
   const handleStartInningsSubmit = () => {
     if (!match) return;
-    if (match.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!strikerInput.trim() || !nonStrikerInput.trim() || !bowlerInput.trim()) {
       showToast("Please enter Striker, Non-Striker, and Bowler names.", "error");
       return;
@@ -471,8 +461,8 @@ export default function MatchScoringPage() {
       tournamentStatsPlayer: "",
       decision: null,
       displayStatsMode: null,
-      history: isSecondInnings ? [...(scoringState.history || []), scoringState] : [],
-      firstInnings: isSecondInnings ? scoringState?.firstInnings : undefined,
+      history: [],
+      firstInnings: isSecondInnings ? scoringState.firstInnings : undefined,
     };
 
     setScoringState(initialState);
@@ -490,10 +480,6 @@ export default function MatchScoringPage() {
     wicketNewBatsmanName = ""
   ) => {
     if (!match || !scoringState) return;
-    if (match.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
 
     // Create history snapshot for undo
     const { history, ...currentWithoutHistory } = scoringState;
@@ -743,7 +729,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [...newHistory, scoringState],
+        history: [],
         firstInnings: {
           score: currentScore,
           wickets: currentWickets,
@@ -796,18 +782,12 @@ export default function MatchScoringPage() {
     };
 
     setScoringState(restoredState);
-    setMatch((prevMatch) => (prevMatch ? { ...prevMatch, status: "Live" } : null));
-
     saveScoringState(restoredState, "Live");
     showToast("Last action undone.");
   };
 
   // Swap striker and non-striker
   const handleSwapBatter = () => {
-    if (match?.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!scoringState) return;
     const updated = {
       ...scoringState,
@@ -830,10 +810,6 @@ export default function MatchScoringPage() {
 
   // Handle scoring button press using checkbox modifiers
   const handleScoringButton = (runs: number) => {
-    if (match?.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!scoringState || !scoringState.inningsStarted) return;
     if (!scoringState.bowler) {
       showToast("Select a bowler first!", "error");
@@ -856,10 +832,6 @@ export default function MatchScoringPage() {
 
   // Manually archive Innings 1 and transition to Innings 2
   const handleArchiveInnings1 = () => {
-    if (match?.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!scoringState) {
       showToast("No active scoring state to archive.", "error");
       return;
@@ -896,7 +868,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [...scoringState.history, scoringState],
+        history: [],
         firstInnings: {
           score: scoringState.score,
           wickets: scoringState.wickets,
@@ -922,10 +894,6 @@ export default function MatchScoringPage() {
 
   // Handle Wicket click
   const openWicketModal = () => {
-    if (match?.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!scoringState) return;
     setDismissedBatsman(scoringState.striker);
     setNewBatsmanInput("");
@@ -987,186 +955,7 @@ export default function MatchScoringPage() {
     showToast(`Display screen updated: ${screenName.toUpperCase()}`);
   };
 
-  const computeMatchResultText = () => {
-    if (!match || !scoringState || match.status !== "Completed") return "";
-    if (scoringState.target !== null) {
-      const battingTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
-      const bowlingTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
-      if (scoringState.score >= scoringState.target) {
-        const wicketsLeft = Math.max(0, 10 - scoringState.wickets);
-        const wicketsText = wicketsLeft === 1 ? "1 wicket" : `${wicketsLeft} wickets`;
-        return `${battingTeam} won by ${wicketsText}`;
-      }
-      const margin = Math.max(0, scoringState.target - scoringState.score - 1);
-      return `${bowlingTeam} won by ${margin} run${margin === 1 ? "" : "s"}`;
-    }
-    return "Match completed";
-  };
-
-  const renderBatsmenRows = (batsmen: BatsmanStats[]) => batsmen.map((b) => `
-      <tr>
-        <td>${b.name}</td>
-        <td>${b.runs}</td>
-        <td>${b.balls}</td>
-        <td>${b.fours}</td>
-        <td>${b.sixes}</td>
-        <td>${b.out ? "Out" : "Not Out"}</td>
-      </tr>
-    `).join("");
-
-  const renderBowlingRows = (bowlers: BowlerStats[]) => bowlers.map((bw) => `
-      <tr>
-        <td>${bw.name}</td>
-        <td>${bw.runsConceded}</td>
-        <td>${bw.ballsBowled}</td>
-        <td>${bw.wickets}</td>
-      </tr>
-    `).join("");
-
-  const buildInningsSection = (
-    label: string,
-    battingTeam: string,
-    bowlingTeam: string,
-    data: {
-      score: number;
-      wickets: number;
-      balls: number;
-      overs: number;
-      batsmen: BatsmanStats[];
-      bowlers: BowlerStats[];
-      fallOfWickets?: FallOfWicket[];
-    },
-    ballsPerOver: number
-  ) => `
-      <h2>${label}</h2>
-      <p><strong>Batting:</strong> ${battingTeam}</p>
-      <p><strong>Score:</strong> ${data.score}-${data.wickets} (${formatOvers(data.balls, ballsPerOver)} overs)</p>
-      <h3>Batting Scorecard</h3>
-      <table>
-        <thead><tr><th>Name</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th><th>Status</th></tr></thead>
-        <tbody>${renderBatsmenRows(data.batsmen)}</tbody>
-      </table>
-      <h3>Bowling Figures</h3>
-      <table>
-        <thead><tr><th>Name</th><th>Runs</th><th>Balls</th><th>Wickets</th></tr></thead>
-        <tbody>${renderBowlingRows(data.bowlers)}</tbody>
-      </table>
-      ${data.fallOfWickets && data.fallOfWickets.length > 0 ? `
-        <h3>Fall of Wickets</h3>
-        <table>
-          <thead><tr><th>Score</th><th>Wickets</th><th>Over</th><th>Batsman</th></tr></thead>
-          <tbody>
-            ${data.fallOfWickets.map((f) => `
-              <tr>
-                <td>${f.score}</td>
-                <td>${f.wickets}</td>
-                <td>${f.over}</td>
-                <td>${f.batsman}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      ` : ""}
-    `;
-
-  const handleDownloadSummaryPDF = () => {
-    if (!match || !scoringState) return;
-    const winnerText = computeMatchResultText() || "Match completed";
-    const firstInnings = scoringState.firstInnings;
-    const firstInningsBatTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
-    const firstInningsBowlTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
-    const secondInningsBatTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
-    const secondInningsBowlTeam = scoringState.bowlingTeam === "team1" ? match.team1Name : match.team2Name;
-
-    const html = `
-      <html>
-        <head>
-          <title>Match Summary</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 24px; color: #111; }
-            h1 { font-size: 28px; margin-bottom: 8px; }
-            h2 { font-size: 20px; margin-top: 24px; margin-bottom: 8px; }
-            h3 { font-size: 16px; margin-top: 18px; margin-bottom: 6px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-            th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-            th { background: #f0f0f0; }
-            .summary-line { margin: 8px 0; }
-            .section-divider { height: 1px; background: #ddd; margin: 18px 0; }
-          </style>
-        </head>
-        <body>
-          <h1>Match Summary</h1>
-          <p class="summary-line"><strong>Match:</strong> ${match.team1Name} vs ${match.team2Name}</p>
-          <p class="summary-line"><strong>Status:</strong> ${match.status}</p>
-          <p class="summary-line"><strong>Result:</strong> ${winnerText}</p>
-          ${scoringState.target !== null ? `<p class="summary-line"><strong>Target:</strong> ${scoringState.target}</p>` : ""}
-          ${firstInnings ? buildInningsSection("1st Innings", firstInningsBatTeam, firstInningsBowlTeam, firstInnings, match.ballsPerOver) : ""}
-          <div class="section-divider"></div>
-          ${buildInningsSection("2nd Innings", secondInningsBatTeam, secondInningsBowlTeam, scoringState, match.ballsPerOver)}
-        </body>
-      </html>`;
-
-    const printWindow = window.open("", "_blank");
-    if (!printWindow) return;
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-  };
-
-  const handleDownloadFullScorecardPDF = () => {
-    if (!match || !scoringState) return;
-    const winnerText = computeMatchResultText() || "Match completed";
-    const firstInnings = scoringState.firstInnings;
-    const firstInningsBatTeam = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
-    const firstInningsBowlTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
-    const secondInningsBatTeam = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name;
-    const secondInningsBowlTeam = scoringState.bowlingTeam === "team1" ? match.team1Name : match.team2Name;
-
-    const html = `
-      <html>
-        <head>
-          <title>Full Scorecard</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 24px; color: #111; }
-            h1 { font-size: 28px; margin-bottom: 8px; }
-            h2 { font-size: 22px; margin-top: 24px; margin-bottom: 10px; }
-            h3 { font-size: 16px; margin-top: 18px; margin-bottom: 6px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-            th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-            th { background: #f0f0f0; }
-            .summary-line { margin: 8px 0; }
-            .section-divider { height: 1px; background: #ddd; margin: 18px 0; }
-          </style>
-        </head>
-        <body>
-          <h1>Full Match Scorecard</h1>
-          <p class="summary-line"><strong>Match:</strong> ${match.team1Name} vs ${match.team2Name}</p>
-          <p class="summary-line"><strong>Status:</strong> ${match.status}</p>
-          <p class="summary-line"><strong>Result:</strong> ${winnerText}</p>
-          ${scoringState.target !== null ? `<p class="summary-line"><strong>Target:</strong> ${scoringState.target}</p>` : ""}
-          ${firstInnings ? buildInningsSection("1st Innings", firstInningsBatTeam, firstInningsBowlTeam, firstInnings, match.ballsPerOver) : `<h2>1st Innings</h2><p>First innings data not available.</p>`}
-          <div class="section-divider"></div>
-          ${buildInningsSection("2nd Innings", secondInningsBatTeam, secondInningsBowlTeam, scoringState, match.ballsPerOver)}
-          <div class="section-divider"></div>
-          <h2>Match Notes</h2>
-          <p>This scorecard includes both innings and all available batting and bowling figures.</p>
-        </body>
-      </html>`;
-
-    const printWindow = window.open("", "_blank");
-    if (!printWindow) return;
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-  };
-
   const handleNewBowlerSubmit = () => {
-    if (match?.status === "Completed") {
-      showToast("Match is completed. Scoreboard is locked.", "info");
-      return;
-    }
     if (!newBowlerInput.trim()) {
       showToast("Please enter or select a bowler name.", "error");
       return;
@@ -1410,40 +1199,6 @@ export default function MatchScoringPage() {
               {scoringState.target !== null && ` | TARGET: ${scoringState.target}`}
             </div>
 
-            {match?.status === "Completed" && (
-              <div className="flex flex-col items-center gap-3 pt-3">
-                <div className="w-full max-w-3xl px-4 py-3 bg-emerald-500/10 border border-emerald-400/20 rounded-2xl text-emerald-100 text-center font-bold">
-                  {computeMatchResultText()}
-                </div>
-                <div className="flex flex-wrap justify-center gap-3">
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("SUMMARY")}
-                    className="w-32 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-cyan-600 hover:bg-cyan-700"
-                  >
-                    SUMMARY
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
-                    className="w-40 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-slate-600 hover:bg-slate-700"
-                  >
-                    FULL SCORECARD
-                  </button>
-                  <button
-                    onClick={handleDownloadSummaryPDF}
-                    className="w-44 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-amber-500 hover:bg-amber-600"
-                  >
-                    DOWNLOAD SUMMARY PDF
-                  </button>
-                  <button
-                    onClick={handleDownloadFullScorecardPDF}
-                    className="w-44 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-violet-600 hover:bg-violet-700"
-                  >
-                    DOWNLOAD FULL SCORECARD PDF
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* Grid 3 boxes layout matching Image 3 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Left Box: Batsmen stats */}
@@ -1555,7 +1310,7 @@ export default function MatchScoringPage() {
               <p className="font-extrabold text-sm tracking-wider font-space">INNINGS NOT STARTED</p>
               <p className="text-xs text-zinc-500 mt-1">Setup teams and click Start 1st Innings to initialize scoreboard</p>
             </div>
-            {isOwner && !scoreboardLocked && (
+            {isOwner && (
               <button
                 onClick={openStartInnings}
                 className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-lg text-xs font-bold transition-all"
@@ -1597,469 +1352,434 @@ export default function MatchScoringPage() {
 
             {/* ── Unified Cricket Controller ─────────────────────────────────── */}
             <div className="relative w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/10" style={{ background: "linear-gradient(to bottom, #ca32e6 0%, #357ef7 55%, #05ccd9 100%)" }}>
-              {/* Colored top header block */}
-              <div className="pt-6 pb-2 flex flex-col items-center justify-center">
-                <h3 className="text-3xl font-black tracking-wider text-black font-sans uppercase">Controller</h3>
-              </div>
+  {/* Colored top header block */}
+  <div className="pt-6 pb-2 flex flex-col items-center justify-center">
+    <h3 className="text-3xl font-black tracking-wider text-black font-sans uppercase">Controller</h3>
+  </div>
 
-              <div className="p-4 flex flex-col gap-4">
+  <div className="p-4 flex flex-col gap-4">
 
-                {/* Row 1: SWAP BATTER | RETIRE BATTER */}
-                <div className="flex justify-center gap-4 px-2 w-120 mx-auto">
-                  <button
-                    onClick={handleSwapBatter}
-                    disabled={scoreboardLocked}
-                    className={`flex-1 py-3 px-4 rounded-full text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md border border-white/20 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
-                    style={{ background: "linear-gradient(90deg, #ca3ee6, #ea580c)" }}
-                  >
-                    ⇄ SWAP BATTER
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (scoreboardLocked) {
-                        showToast("Match is completed. Scoreboard is locked.", "info");
-                        return;
-                      }
-                      if (!scoringState || !match) return;
-                      const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
-                      if (target !== "1" && target !== "2") return;
-                      const newName = prompt("Enter new batsman name:");
-                      if (!newName || !newName.trim()) return;
+    {/* Row 1: SWAP BATTER | RETIRE BATTER */}
+    <div className="flex justify-around gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
+      <button
+        onClick={handleSwapBatter}
+        className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 md:gap-2 transition-all active:scale-95 shadow-md border border-white/20"
+        style={{ background: "linear-gradient(90deg, #ca3ee6, #ea580c)" }}
+      >
+        ⇄ SWAP
+      </button>
+      <button
+        onClick={() => {
+          if (!scoringState || !match) return;
+          const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
+          if (target !== "1" && target !== "2") return;
+          const newName = prompt("Enter new batsman name:");
+          if (!newName || !newName.trim()) return;
 
-                      const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
-                      const activeStriker = scoringState.striker;
-                      const activeNonStriker = scoringState.nonStriker;
-                      let retiredName = target === "1" ? activeStriker : activeNonStriker;
+          const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
+          const activeStriker = scoringState.striker;
+          const activeNonStriker = scoringState.nonStriker;
+          let retiredName = target === "1" ? activeStriker : activeNonStriker;
 
-                      const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
-                      if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
+          const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
+          if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
 
-                      const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
-                      if (newIdx === -1) {
-                        updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
-                      }
+          const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
+          if (newIdx === -1) {
+            updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
+          }
 
-                      // Check if new batsman is in team roster, and if not, add it
-                      const team = scoringState.battingTeam;
-                      let updatedT1 = match.playersTeam1 || [];
-                      let updatedT2 = match.playersTeam2 || [];
-                      let t1Changed = false;
-                      let t2Changed = false;
-                      const bName = newName.trim();
-                      if (team === "team1") {
-                        if (!updatedT1.some(p => p.toLowerCase() === bName.toLowerCase())) {
-                          updatedT1 = [...updatedT1, bName];
-                          t1Changed = true;
-                        }
-                      } else {
-                        if (!updatedT2.some(p => p.toLowerCase() === bName.toLowerCase())) {
-                          updatedT2 = [...updatedT2, bName];
-                          t2Changed = true;
-                        }
-                      }
+          // Check if new batsman is in team roster, and if not, add it
+          const team = scoringState.battingTeam;
+          let updatedT1 = match.playersTeam1 || [];
+          let updatedT2 = match.playersTeam2 || [];
+          let t1Changed = false;
+          let t2Changed = false;
+          const bName = newName.trim();
+          if (team === "team1") {
+            if (!updatedT1.some(p => p.toLowerCase() === bName.toLowerCase())) {
+              updatedT1 = [...updatedT1, bName];
+              t1Changed = true;
+            }
+          } else {
+            if (!updatedT2.some(p => p.toLowerCase() === bName.toLowerCase())) {
+              updatedT2 = [...updatedT2, bName];
+              t2Changed = true;
+            }
+          }
 
-                      if (t1Changed || t2Changed) {
-                        setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
-                      }
+          if (t1Changed || t2Changed) {
+            setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
+          }
 
-                      const { history: _, ...stateWithoutHistory } = scoringState;
-                      const updated: ScoringState = {
-                        ...(scoringState as ScoringState),
-                        striker: target === "1" ? bName : activeStriker,
-                        nonStriker: target === "2" ? bName : activeNonStriker,
-                        batsmen: updatedBatsmen,
-                        history: [...(scoringState.history || []), stateWithoutHistory]
-                      };
-                      setScoringState(updated);
-                      saveScoringState(
-                        updated,
-                        undefined,
-                        t1Changed ? updatedT1 : undefined,
-                        t2Changed ? updatedT2 : undefined
-                      );
-                      showToast(retiredName + " retired.");
-                    }}
-                    disabled={scoreboardLocked}
-                    className={`flex-1 py-3 px-4 rounded-full text-black font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
-                    style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
-                  >
-                    RETIRE BATTER
-                  </button>
-                </div>
+          const { history: _, ...stateWithoutHistory } = scoringState;
+          const updated: ScoringState = {
+            ...(scoringState as ScoringState),
+            striker: target === "1" ? bName : activeStriker,
+            nonStriker: target === "2" ? bName : activeNonStriker,
+            batsmen: updatedBatsmen,
+            history: [...(scoringState.history || []), stateWithoutHistory]
+          };
+          setScoringState(updated);
+          saveScoringState(
+            updated,
+            undefined,
+            t1Changed ? updatedT1 : undefined,
+            t2Changed ? updatedT2 : undefined
+          );
+          showToast(retiredName + " retired.");
+        }}
+        className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-black font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10"
+        style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
+      >
+        RETIRE
+      </button>
+    </div>
 
-                {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
-                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
-                  <button
-                    onClick={() => {
-                      if (scoreboardLocked) {
-                        showToast("Match is completed. Scoreboard is locked.", "info");
-                        return;
-                      }
-                      setNewBowlerInput(""); setShowNewBowlerModal(true);
-                    }}
-                    disabled={scoreboardLocked}
-                    className={`flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
-                    style={{ background: "linear-gradient(135deg, #0ea5e9, #2563eb)" }}
-                  >
-                    CHANGE BOWLER
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("default")}
-                    className="w-24 py-2.5 rounded-lg text-white font-extrabold text-sm transition-all active:scale-95 shadow-md border border-white/20"
-                    style={{ backgroundColor: "#00e600" }}
-                  >
-                    Default
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("MINI")}
-                    className="w-28 py-2.5 rounded-lg text-white font-extrabold text-xs transition-all active:scale-95 shadow-md border border-white/20"
-                    style={{ background: "linear-gradient(135deg, #0f1035, #1e1b4b)" }}
-                  >
-                    Mini-Score
-                  </button>
-                </div>
+    {/* Row 2: CHANGE BOWLER | Default | Mini-Score */}
+    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+      <button
+        onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
+        className="flex-1 py-2 md:py-2.5 px-1 md:px-3 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20"
+        style={{ background: "linear-gradient(135deg, #0ea5e9, #2563eb)" }}
+      >
+        CHANGE BOWLER
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen("default")}
+        className="w-16 md:w-24 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm transition-all active:scale-95 shadow-md border border-white/20"
+        style={{ backgroundColor: "#00e600" }}
+      >
+        Default
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen("MINI")}
+        className="w-20 md:w-28 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs transition-all active:scale-95 shadow-md border border-white/20"
+        style={{ background: "linear-gradient(135deg, #0f1035, #1e1b4b)" }}
+      >
+        Mini
+      </button>
+    </div>
 
-                {/* Row 2b: SUMMARY | FULL SCORECARD */}
-                <div className="flex justify-center gap-3 px-2 w-fit mx-auto">
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("SUMMARY")}
-                    className="w-32 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-cyan-600 hover:bg-cyan-700"
-                  >
-                    SUMMARY
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
-                    className="w-40 py-2 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/20 bg-slate-600 hover:bg-slate-700"
-                  >
-                    FULL SCORECARD
-                  </button>
-                </div>
+    {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
+    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+      {scoringState?.inningsNo === 2 && (
+        <button
+          onClick={() => handleUpdateDisplayScreen("TARGET")}
+          className="w-10 md:w-14 h-8 md:h-10 rounded-lg text-black font-black text-base md:text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
+        >
+          🎯
+        </button>
+      )}
+      <button
+        onClick={() => handleUpdateDisplayScreen("TOURNAME")}
+        className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700 ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
+      >
+        Tour
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen("B1")}
+        className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+        style={{ background: "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
+      >
+        B1
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen("B2")}
+        className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+        style={{ background: "linear-gradient(135deg, #d946ef, #701a75)" }}
+      >
+        B2
+      </button>
+    </div>
 
-                {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
-                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
-                  {scoringState?.inningsNo === 2 && (
-                    <button
-                      onClick={() => handleUpdateDisplayScreen("TARGET")}
-                      className="w-14 h-10 rounded-lg text-black font-black text-xl flex items-center justify-center transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
-                    >
-                      🎯
-                    </button>
-                  )}
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("TOURNAME")}
-                    className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700"
-                  >
-                    Tour Name
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("B1")}
-                    className="w-18 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
-                  >
-                    B1
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("B2")}
-                    className="w-18 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #d946ef, #701a75)" }}
-                  >
-                    B2
-                  </button>
-                </div>
+    {/* Row 4: Bowler | Batting | Bowling | PP+ */}
+    <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
+      <button
+        onClick={() => handleUpdateDisplayScreen("BOWLER")}
+        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+        style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
+      >
+        Bowler
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
+        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+        style={{ background: "linear-gradient(135deg, #ec4899, #db2777)" }}
+      >
+        Batting
+      </button>
+      <button
+        onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
+        className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+        style={{ background: "linear-gradient(135deg, #881337, #4c0519)" }}
+      >
+        Bowling
+      </button>
+      <button
+        onClick={() => handleTriggerAnimation("POWERPLAY")}
+        className="w-12 md:w-16 py-1.5 md:py-2 rounded-lg text-black font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
+      >
+        PP+
+      </button>
+    </div>
 
-                {/* Row 4: Bowler | Batting | Bowling | PP+ */}
-                <div className="flex justify-center gap-3 px-2 w-120 mx-auto">
-                  <button
-                    onClick={() => handleUpdateDisplayScreen("BOWLER")}
-                    className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
-                  >
-                    Bowler
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
-                    className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #ec4899, #db2777)" }}
-                  >
-                    Batting
-                  </button>
-                  <button
-                    onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
-                    className="flex-1 py-2 rounded-lg text-white font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #881337, #4c0519)" }}
-                  >
-                    Bowling
-                  </button>
-                  <button
-                    onClick={() => handleTriggerAnimation("POWERPLAY")}
-                    className="w-16 py-2 rounded-lg text-black font-extrabold text-xs uppercase transition-all active:scale-95 shadow-md border border-black/10 bg-yellow-400"
-                  >
-                    PP+
-                  </button>
-                </div>
+    {/* Row 5: END INNING (innings-aware) | UNDO */}
+    <div className="flex justify-between gap-2 md:gap-4 px-2 w-full max-w-[480px] mx-auto">
+      {scoringState?.inningsNo === 1 ? (
+        <button
+          onClick={handleArchiveInnings1}
+          className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+          style={{ backgroundColor: "#701a75" }}
+        >
+          END INN 1
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            if (!scoringState) return;
+            showConfirm("End Inning 2 and complete the match?", () => {
+              const { history: _, ...stateWithoutHistory } = scoringState;
+              const updated: ScoringState = {
+                ...(scoringState as ScoringState),
+                history: [...(scoringState.history || []), stateWithoutHistory]
+              };
+              setScoringState(updated);
+              setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
+              saveScoringState(updated, "Completed");
+              showToast("Inning 2 ended!");
+            });
+          }}
+          className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
+          style={{ backgroundColor: "#701a75" }}
+        >
+          END INN 2
+        </button>
+      )}
+      <button
+        onClick={handleUndo}
+        className="w-24 md:w-32 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600"
+      >
+        UNDO
+      </button>
+    </div>
 
-                {/* Row 5: END INNING (innings-aware) | UNDO */}
-                <div className="flex justify-center items-center gap-4 px-2 w-120 mx-auto">
-                  {scoringState?.inningsNo === 1 ? (
-                    <button
-                      onClick={handleArchiveInnings1}
-                      disabled={scoreboardLocked}
-                      className={`flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 ${scoreboardLocked ? "opacity-40 cursor-not-allowed" : ""}`}
-                      style={{ backgroundColor: "#701a75" }}
-                    >
-                      END INNING 1
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        if (scoreboardLocked) {
-                          showToast("Match is completed. Scoreboard is locked.", "info");
-                          return;
-                        }
-                        if (!scoringState) return;
-                        showConfirm("End Inning 2 and complete the match?", () => {
-                          const { history: _, ...stateWithoutHistory } = scoringState;
-                          const updated: ScoringState = {
-                            ...(scoringState as ScoringState),
-                            history: [...(scoringState.history || []), stateWithoutHistory]
-                          };
-                          setScoringState(updated);
-                          setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
-                          saveScoringState(updated, "Completed");
-                          showToast("Inning 2 ended!");
-                        });
-                      }}
-                      className="flex-1 py-2.5 rounded-lg text-white font-extrabold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
-                      style={{ backgroundColor: "#701a75" }}
-                    >
-                      END INNING 2
-                    </button>
-                  )}
-                  <button
-                    onClick={handleUndo}
-                    disabled={!scoringState?.history?.length}
-                    className={`w-32 py-2.5 rounded-lg text-white font-extrabold text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10 bg-red-600 ${!scoringState?.history?.length ? "opacity-40 cursor-not-allowed" : ""}`}
-                  >
-                    UNDO
-                  </button>
-                </div>
+    <div className="border-t border-black/20 my-1" />
 
-                <div className="border-t border-black/20 my-1" />
+    {/* No-bowler warning */}
+    {scoringState && scoringState.inningsStarted && !scoringState.bowler && (
+      <div
+        className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
+        onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
+      >
+        <span className="text-amber-400 text-lg">⚠️</span>
+        <div>
+          <p className="text-amber-300 font-black text-xs uppercase tracking-wider">No Bowler Selected</p>
+          <p className="text-amber-200/70 text-[10px]">Tap here to select the bowler before scoring</p>
+        </div>
+      </div>
+    )}
 
-                {/* No-bowler warning */}
-                {scoringState && scoringState.inningsStarted && !scoringState.bowler && !scoreboardLocked && (
-                  <div
-                    className="flex items-center gap-3 bg-amber-500/15 border border-amber-500/40 rounded-xl px-4 py-3 cursor-pointer"
-                    onClick={() => { setNewBowlerInput(""); setShowNewBowlerModal(true); }}
-                  >
-                    <span className="text-amber-400 text-lg">⚠️</span>
-                    <div>
-                      <p className="text-amber-300 font-black text-xs uppercase tracking-wider">No Bowler Selected</p>
-                      <p className="text-amber-200/70 text-[10px]">Tap here to select the bowler before scoring</p>
-                    </div>
-                  </div>
-                )}
+    {/* Checkboxes Row 1: Wide | No Ball | Byes */}
+    <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
+      {[
+        { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
+        { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
+        { label: "Byes", checked: isByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsByes(val); } },
+      ].map(({ label, checked, set }) => (
+        <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={(e) => set(e.target.checked)}
+            className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
+          />
+          <span className="text-black font-extrabold text-sm md:text-lg tracking-wide">{label}</span>
+        </label>
+      ))}
+    </div>
 
-                {/* Checkboxes Row 1: Wide | No Ball | Byes */}
-                <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black w-[60%] mx-auto">
-                  {[
-                    { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
-                    { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
-                    { label: "Byes", checked: isByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsByes(val); } },
-                  ].map(({ label, checked, set }) => (
-                    <label key={label} className="flex items-center gap-2 cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={(e) => set(e.target.checked)}
-                        className="w-6 h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
-                      />
-                      <span className="text-black font-extrabold text-lg tracking-wide">{label}</span>
-                    </label>
-                  ))}
-                </div>
+    {/* Checkboxes Row 2: Leg Byes | Wicket */}
+    <div className="flex items-center justify-center gap-8 md:gap-12 py-2 px-2 bg-transparent text-black">
+      {[
+        { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsLegByes(val); } },
+        { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => { resetScoringCheckboxes(); setIsWicketCheck(val); }, info: true },
+      ].map(({ label, checked, set, info }) => (
+        <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={(e) => set(e.target.checked)}
+            className="w-4 h-4 md:w-6 md:h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
+          />
+          <span className="text-black font-extrabold text-sm md:text-lg tracking-wide flex items-center gap-1">
+            {label}
+            {info && (
+              <span className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-yellow-400 text-blue-800 flex items-center justify-center font-bold text-[8px] md:text-xs shadow-sm border border-yellow-300">
+                i
+              </span>
+            )}
+          </span>
+        </label>
+      ))}
+    </div>
 
-                {/* Checkboxes Row 2: Leg Byes | Wicket */}
-                <div className="flex items-center justify-center gap-12 py-2 px-2 bg-transparent text-black">
-                  {[
-                    { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsLegByes(val); } },
-                    { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => { resetScoringCheckboxes(); setIsWicketCheck(val); }, info: true },
-                  ].map(({ label, checked, set, info }) => (
-                    <label key={label} className="flex items-center gap-2 cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={(e) => set(e.target.checked)}
-                        className="w-6 h-6 rounded border-2 border-black bg-white text-black cursor-pointer accent-black"
-                      />
-                      <span className="text-black font-extrabold text-lg tracking-wide flex items-center gap-1">
-                        {label}
-                        {info && (
-                          <span className="w-5 h-5 rounded-full bg-yellow-400 text-blue-800 flex items-center justify-center font-bold text-xs shadow-sm border border-yellow-300">
-                            i
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  ))}
-                </div>
+    {/* Number Pad */}
+    <div className={`flex flex-col gap-3 md:gap-4 mt-2 max-w-xs mx-auto w-full ${scoringState?.inningsStarted && !scoringState?.bowler ? "opacity-40 pointer-events-none" : ""
+      }`}>
+      {/* Row 1: 0 1 2 3 */}
+      <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
+        {[0, 1, 2, 3].map((run) => (
+          <button
+            key={run}
+            onClick={() => handleScoringButton(run)}
+            className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+          >
+            {run}
+          </button>
+        ))}
+      </div>
 
-                {/* Number Pad */}
-                <div className={`flex flex-col gap-4 mt-2 max-w-xs mx-auto w-full ${((scoringState?.inningsStarted && !scoringState?.bowler) || scoreboardLocked) ? "opacity-40 pointer-events-none" : ""}
-                  }`}>
-                  {/* Row 1: 0 1 2 3 */}
-                  <div className="grid grid-cols-4 gap-3 justify-items-center">
-                    {[0, 1, 2, 3].map((run) => (
-                      <button
-                        key={run}
-                        onClick={() => handleScoringButton(run)}
-                        className="w-16 h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                      >
-                        {run}
-                      </button>
-                    ))}
-                  </div>
+      {/* Row 2: 4 5 6 ... */}
+      <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
+        {[4, 5, 6].map((run) => (
+          <button
+            key={run}
+            onClick={() => handleScoringButton(run)}
+            className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+          >
+            {run}
+          </button>
+        ))}
+        <button
+          onClick={() => {
+            const runInput = prompt("Enter custom runs:");
+            if (runInput !== null && !isNaN(Number(runInput))) {
+              handleScoringButton(Number(runInput));
+            }
+          }}
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+        >
+          •••
+        </button>
+      </div>
 
-                  {/* Row 2: 4 5 6 ... */}
-                  <div className="grid grid-cols-4 gap-3 justify-items-center">
-                    {[4, 5, 6].map((run) => (
-                      <button
-                        key={run}
-                        onClick={() => handleScoringButton(run)}
-                        className="w-16 h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                      >
-                        {run}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => {
-                        const runInput = prompt("Enter custom runs:");
-                        if (runInput !== null && !isNaN(Number(runInput))) {
-                          handleScoringButton(Number(runInput));
-                        }
-                      }}
-                      className="w-16 h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      •••
-                    </button>
-                  </div>
+      {/* Row 3: 1D | ? */}
+      <div className="flex justify-center gap-6 md:gap-8">
+        <button
+          onClick={() => {
+            recordBall("runs", 1);
+            resetScoringCheckboxes();
+          }}
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+        >
+          1D
+        </button>
+        <button
+          onClick={() => {
+            alert(
+              "Scoring Help:\n\n" +
+              "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
+              "• Tap '1D' to record 1 run Declared.\n" +
+              "• Tap '•••' to record custom runs.\n" +
+              "• Tap '?' to check help details."
+            );
+          }}
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
+        >
+          ?
+        </button>
+      </div>
+    </div>
 
-                  {/* Row 3: 1D | ? */}
-                  <div className="flex justify-center gap-8">
-                    <button
-                      onClick={() => {
-                        recordBall("runs", 1);
-                        resetScoringCheckboxes();
-                      }}
-                      className="w-16 h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      1D
-                    </button>
-                    <button
-                      onClick={() => {
-                        alert(
-                          "Scoring Help:\n\n" +
-                          "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
-                          "• Tap '1D' to record 1 run Declared.\n" +
-                          "• Tap '•••' to record custom runs.\n" +
-                          "• Tap '?' to check help details."
-                        );
-                      }}
-                      className="w-16 h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      ?
-                    </button>
-                  </div>
-                </div>
+    {/* Edit Team Roster Panel */}
+   <div className="bg-[#121542] border border-zinc-700/40 rounded-xl p-3 md:p-4 flex flex-col gap-3 md:gap-4 mt-2">
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 md:gap-0">
+    <span className="text-[10px] md:text-xs font-black tracking-wider text-zinc-400 uppercase">Edit Team Roster 🔧</span>
+    <span className="text-[8px] md:text-[10px] text-zinc-500">Comma-separate for bulk add</span>
+  </div>
 
-                {/* Edit Team Roster Panel */}
-                <div className="bg-[#121542] border border-zinc-700/40 rounded-xl p-4 flex flex-col gap-4 mt-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-black tracking-wider text-zinc-400 uppercase">Edit Team Roster 🔧</span>
-                    <span className="text-[10px] text-zinc-500">Comma-separate for bulk add</span>
-                  </div>
+  {/* Team 1 add */}
+  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+    <div className="flex-1 flex gap-1 md:gap-2">
+      <input
+        type="text"
+        value={playerInput1}
+        onChange={(e) => setPlayerInput1(e.target.value)}
+        placeholder={`ADD PLAYER TO ${match.team1Name.toUpperCase()}`}
+        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+      />
+      <button
+        onClick={() => handleAddPlayer("team1")}
+        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
+      >
+        ➕
+      </button>
+    </div>
+    <button
+      onClick={() => setShowPlayers1(!showPlayers1)}
+      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+    >
+      {match.team1Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam1?.length || 0})
+    </button>
+  </div>
+  {showPlayers1 && (
+    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+      {match.playersTeam1 && match.playersTeam1.length > 0 ? (
+        match.playersTeam1.map((p, idx) => (
+          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
+            <span className="truncate text-[10px] md:text-xs">{p}</span>
+            <button onClick={() => handleRemovePlayer("team1", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+          </div>
+        ))
+      ) : (
+        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+      )}
+    </div>
+  )}
 
-                  {/* Team 1 add */}
-                  <div className="flex flex-col md:flex-row md:items-center gap-3">
-                    <div className="flex-1 flex gap-2">
-                      <input
-                        type="text"
-                        value={playerInput1}
-                        onChange={(e) => setPlayerInput1(e.target.value)}
-                        placeholder={`ADD PLAYER TO ${match.team1Name.toUpperCase()}`}
-                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
-                      />
-                      <button
-                        onClick={() => handleAddPlayer("team1")}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 flex items-center justify-center cursor-pointer"
-                      >
-                        ➕
-                      </button>
-                    </div>
-                    <button
-                      onClick={() => setShowPlayers1(!showPlayers1)}
-                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-xs px-4 py-2 rounded-lg"
-                    >
-                      {match.team1Name.substring(0, 10).toUpperCase()}... Players ({match.playersTeam1?.length || 0})
-                    </button>
-                  </div>
-                  {showPlayers1 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs max-h-[150px] overflow-y-auto">
-                      {match.playersTeam1 && match.playersTeam1.length > 0 ? (
-                        match.playersTeam1.map((p, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-2 py-1 rounded border border-zinc-700/40">
-                            <span className="truncate">{p}</span>
-                            <button onClick={() => handleRemovePlayer("team1", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1">×</button>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="col-span-4 text-center text-zinc-600">No players added</div>
-                      )}
-                    </div>
-                  )}
+  {/* Team 2 add */}
+  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+    <div className="flex-1 flex gap-1 md:gap-2">
+      <input
+        type="text"
+        value={playerInput2}
+        onChange={(e) => setPlayerInput2(e.target.value)}
+        placeholder={`ADD PLAYER TO ${match.team2Name.toUpperCase()}`}
+        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+      />
+      <button
+        onClick={() => handleAddPlayer("team2")}
+        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-2 md:px-3 flex items-center justify-center cursor-pointer text-sm md:text-base"
+      >
+        ➕
+      </button>
+    </div>
+    <button
+      onClick={() => setShowPlayers2(!showPlayers2)}
+      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+    >
+      {match.team2Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam2?.length || 0})
+    </button>
+  </div>
+  {showPlayers2 && (
+    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+      {match.playersTeam2 && match.playersTeam2.length > 0 ? (
+        match.playersTeam2.map((p, idx) => (
+          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
+            <span className="truncate text-[10px] md:text-xs">{p}</span>
+            <button onClick={() => handleRemovePlayer("team2", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+          </div>
+        ))
+      ) : (
+        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+      )}
+    </div>
+  )}
+</div>
 
-                  {/* Team 2 add */}
-                  <div className="flex flex-col md:flex-row md:items-center gap-3">
-                    <div className="flex-1 flex gap-2">
-                      <input
-                        type="text"
-                        value={playerInput2}
-                        onChange={(e) => setPlayerInput2(e.target.value)}
-                        placeholder={`ADD PLAYER TO ${match.team2Name.toUpperCase()}`}
-                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
-                      />
-                      <button
-                        onClick={() => handleAddPlayer("team2")}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-3 flex items-center justify-center cursor-pointer"
-                      >
-                        ➕
-                      </button>
-                    </div>
-                    <button
-                      onClick={() => setShowPlayers2(!showPlayers2)}
-                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-xs px-4 py-2 rounded-lg"
-                    >
-                      {match.team2Name.substring(0, 10).toUpperCase()}... Players ({match.playersTeam2?.length || 0})
-                    </button>
-                  </div>
-                  {showPlayers2 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs max-h-[150px] overflow-y-auto">
-                      {match.playersTeam2 && match.playersTeam2.length > 0 ? (
-                        match.playersTeam2.map((p, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-2 py-1 rounded border border-zinc-700/40">
-                            <span className="truncate">{p}</span>
-                            <button onClick={() => handleRemovePlayer("team2", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1">×</button>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="col-span-4 text-center text-zinc-600">No players added</div>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-              </div>
-            </div>
+  </div>
+</div>
 
             {/* Animations Panel */}
             <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
@@ -2128,7 +1848,6 @@ export default function MatchScoringPage() {
                   { label: "2BAT", color: "bg-indigo-600", hover: "hover:bg-indigo-700", selected: "bg-indigo-400/30 border-indigo-400 text-indigo-300" },
                   { label: "2BALL", color: "bg-rose-600", hover: "hover:bg-rose-700", selected: "bg-rose-400/30 border-rose-400 text-rose-300" },
                   { label: "SUMMARY", color: "bg-cyan-600", hover: "hover:bg-cyan-700", selected: "bg-cyan-400/30 border-cyan-400 text-cyan-300" },
-                  { label: "FULLSCORE", color: "bg-slate-600", hover: "hover:bg-slate-700", selected: "bg-slate-400/30 border-slate-400 text-slate-300" },
                   { label: "FOW", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
                   { label: "B1", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
                   { label: "B2", color: "bg-green-600", hover: "hover:bg-green-700", selected: "bg-green-400/30 border-green-400 text-green-300" },

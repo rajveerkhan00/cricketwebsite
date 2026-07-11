@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Head from "next/head";
 
 const FREE_THEME_SLUGS = new Set(["asia-cup", "cwc-19"]);
 
@@ -97,6 +100,8 @@ export default function ThemesPage() {
   const previewTitle = selectedTheme ? selectedTheme.name : "Select a scoreboard theme to preview";
 
   return (
+    <> 
+    <Header />
     <main className="min-h-screen bg-[#05072c] text-white">
       <section className="mx-auto max-w-7xl px-6 py-8">
         <div className="rounded-[2rem] border border-white/10 bg-[#0b1030]/90 p-8 shadow-2xl shadow-black/40">
@@ -245,5 +250,7 @@ export default function ThemesPage() {
         </div>
       </section>
     </main>
+    <Footer />
+    </>
   );
 }
