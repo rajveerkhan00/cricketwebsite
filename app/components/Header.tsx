@@ -48,7 +48,7 @@ export default function Header() {
         </Link>
 
         {/* Navigation Links - Desktop */}
-        <nav className="hidden md:flex items-center gap-6 font-semibold text-sm tracking-wider font-space">
+        <nav className="hidden lg:flex items-center gap-6 font-semibold text-sm tracking-wider font-space">
           {navLinks.map((link) => {
             if (link.type === "badge") {
               return (
@@ -85,7 +85,7 @@ export default function Header() {
         </nav>
 
         {/* Action Buttons - Desktop */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           {session ? (
             <>
               <span className="text-zinc-300 font-semibold text-sm mr-2">
@@ -113,7 +113,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex md:hidden flex-col gap-1.5 items-center justify-center w-8 h-8 rounded-lg hover:bg-white/5 transition-colors focus:outline-none"
+          className="flex lg:hidden flex-col gap-1.5 items-center justify-center w-8 h-8 rounded-lg hover:bg-white/5 transition-colors focus:outline-none"
           aria-label="Toggle Menu"
         >
           <span className={`h-0.5 w-6 bg-white rounded-full transition-transform duration-300 ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
@@ -124,7 +124,7 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? "max-h-[500px] opacity-100 py-6 mt-4 border-t border-white/10" : "max-h-0 opacity-0"
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? "max-h-[500px] opacity-100 py-6 mt-4 border-t border-white/10" : "max-h-0 opacity-0"
           }`}
       >
         <div className="flex flex-col gap-4">

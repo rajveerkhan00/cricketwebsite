@@ -758,30 +758,31 @@ export default function TourPage() {
             {matches.map((match, index) => (
               <div
                 key={match._id}
-                className="group relative flex flex-col sm:flex-row sm:items-center gap-4 bg-gradient-to-r from-amber-500 to-orange-500 border border-orange-100/70 rounded-2xl px-5 py-4 hover:border-orange-300 hover:shadow-[0_20px_50px_-24px_rgba(249,115,22,0.85)] transition-all duration-300 overflow-hidden"
+                className="group relative flex flex-col sm:flex-row sm:items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-500 border border-orange-100/70 rounded-2xl px-4 py-3 hover:border-orange-300 hover:shadow-[0_20px_50px_-24px_rgba(249,115,22,0.85)] transition-all duration-300 overflow-hidden"
               >
                 {/* Left gradient accent on hover */}
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#f59e0b] to-[#fb923c] rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* Match Number Badge */}
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white border border-orange-200/70 flex items-center justify-center ml-1 shadow-sm shadow-orange-200/30">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-white border border-orange-200/70 flex items-center justify-center ml-1 shadow-sm shadow-orange-200/30">
                   <span className="text-orange-700 font-black font-space text-sm">#{match.matchNo}</span>
                 </div>
 
                 {/* Match Info */}
-                <div className="flex flex-col gap-1.5 min-w-0 flex-1 text-slate-900">
-                  {/* Team names */}
+                <div className="flex flex-col gap-1 min-w-0 flex-1 text-slate-900">
+                  {/* Team names with badges */}
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base font-extrabold text-slate-900 font-space transition-colors">
+                    <h3 className="text-sm font-extrabold text-slate-900 font-space transition-colors">
                       {match.team1Name.toUpperCase()}
                       <span className="text-slate-600 font-normal mx-2">vs</span>
                       {match.team2Name.toUpperCase()}
                     </h3>
                     <TypeBadge type={match.matchType} />
+                    <StatusBadge status={match.status} />
                   </div>
 
                   {/* Toss & match details row */}
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-700 font-semibold">
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-700 font-semibold">
                     <span className="text-slate-700">{getTossDesc(match).toUpperCase()}</span>
                     <span className="text-slate-500">•</span>
                     <span>Overs: <span className="text-slate-800">{match.overs}</span></span>
@@ -793,11 +794,6 @@ export default function TourPage() {
                         <span className="text-orange-700">TIED</span>
                       </>
                     )}
-                  </div>
-
-                  {/* Status */}
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <StatusBadge status={match.status} />
                   </div>
                 </div>
 
