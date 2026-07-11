@@ -555,6 +555,45 @@ export default function OverlayPage() {
   const calcRR = (state: ScoringState) => (!match || state.balls === 0) ? "0.00" : (state.score / (state.balls / match.ballsPerOver)).toFixed(2);
   const scoringState = match?.scoringState;
 
+  // Active notification string resolution
+  let activeNotification = "";
+  if (scoringState) {
+    if (currentAnim) {
+      if (currentAnim === "FOUR") activeNotification = "✨ BOUNDARY: FOUR!";
+      else if (currentAnim === "SIX") activeNotification = "🚀 MAXIMUM: SIX!";
+      else if (currentAnim === "WICKET") activeNotification = "🔴 OUT! WICKET TAKEN";
+      else if (currentAnim === "FREE HIT") activeNotification = "⚡ FREE HIT!";
+      else if (currentAnim === "HAT-TRICK BALL") activeNotification = "🔥 HAT-TRICK BALL!";
+      else if (currentAnim === "INNINGS BREAK") activeNotification = "🏏 INNINGS BREAK";
+      else if (currentAnim === "TOUR BOUNDARIES") activeNotification = "🎇 TOURNAMENT BOUNDARIES";
+      else activeNotification = currentAnim.toUpperCase();
+    } else if (scoringState.decision) {
+      if (scoringState.decision === "PENDING") activeNotification = "⚖️ REVIEW IN PROGRESS";
+      else if (scoringState.decision === "OUT") activeNotification = "🔴 DECISION: OUT!";
+      else if (scoringState.decision === "NOT OUT") activeNotification = "🟢 DECISION: NOT OUT";
+      else activeNotification = `DECISION: ${scoringState.decision}`;
+    } else if (scoringState.customInputText) {
+      activeNotification = scoringState.customInputText.toUpperCase();
+    }
+  }
+
+  // Get dynamic background gradient & text color based on the type of notification
+  const getNotificationStyles = (text: string) => {
+    let bg = "linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%)";
+    let textColor = "#ffffff";
+    if (text.includes("WICKET") || text.includes("OUT")) {
+      bg = "linear-gradient(90deg, #7f1d1d 0%, #ef4444 50%, #7f1d1d 100%)";
+    } else if (text.includes("SIX") || text.includes("FOUR") || text.includes("BOUNDARY")) {
+      bg = "linear-gradient(90deg, #7c2d12 0%, #eab308 50%, #7c2d12 100%)";
+      textColor = "#000000";
+    } else if (text.includes("FREE HIT") || text.includes("NOT OUT")) {
+      bg = "linear-gradient(90deg, #064e3b 0%, #10b981 50%, #064e3b 100%)";
+    } else if (text.includes("REVIEW") || text.includes("PENDING")) {
+      bg = "linear-gradient(90deg, #78350f 0%, #d97706 50%, #78350f 100%)";
+    }
+    return { bg, textColor };
+  };
+
   if (loading || !accessChecked) return (
     <div style={{ background: "#03041c", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontFamily: activeFont }}>
       <style>{GLOBAL_CSS}</style>
@@ -677,11 +716,7 @@ export default function OverlayPage() {
     return role === "bat" ? bowlFirst : batFirst;
   };
 
-  const renderCustomOverlay = () => !scoringState.customInputText ? null : (
-    <div style={{ position: "fixed", top: isPreview ? 52 : 16, left: "50%", transform: "translateX(-50%)", background: theme.headerBg, border: `2px solid ${theme.borderColor}`, boxShadow: `0 8px 24px rgba(0,0,0,0.5)`, borderRadius: 12, padding: "10px 32px", color: theme.accent, fontWeight: 900, fontSize: 14, letterSpacing: 2.5, zIndex: 900, textAlign: "center", fontFamily: activeFont, whiteSpace: "nowrap" }}>
-      {scoringState.customInputText.split("-").map((c, i) => <div key={i} style={{ marginTop: i > 0 ? 4 : 0 }}>{c.trim().toUpperCase()}</div>)}
-    </div>
-  );
+  const renderCustomOverlay = () => null;
 
   const renderMom = () => !scoringState.momPlayer ? null : (
     <div style={{ position: "fixed", top: isPreview ? 120 : 64, right: 24, background: theme.headerBg, border: `2px solid ${theme.accent}`, boxShadow: `0 0 20px ${theme.accent}30`, borderRadius: 18, padding: "14px 26px", zIndex: 900, textAlign: "center", fontFamily: activeFont }}>
@@ -691,44 +726,10 @@ export default function OverlayPage() {
   );
 
   // ════════════════════ 1. ANIMATION ════════════════════
-  if (currentAnim) {
-    const anim = currentAnim;
-    let bg = "linear-gradient(135deg,#0f172a,#1e293b)", glow = theme.borderColor, label = "★", main = anim, sub = `${match.team1Name} vs ${match.team2Name}`;
-    if (anim === "FOUR") { bg = "linear-gradient(135deg,#7c2d12,#dc2626,#f97316,#fbbf24)"; glow = "#fbbf24"; label = "✨ BOUNDARY HIT"; main = "FOUR!"; sub = `${scoringState.striker} • ${striker?.runs ?? 0} runs`; }
-    else if (anim === "SIX") { bg = "linear-gradient(135deg,#1e1b4b,#1d4ed8,#06b6d4)"; glow = "#06b6d4"; label = "🚀 MAXIMUM SIX"; main = "SIX!"; sub = `${scoringState.striker} clears the rope!`; }
-    else if (anim === "WICKET") { bg = "linear-gradient(135deg,#450a0a,#991b1b,#ef4444)"; glow = "#ef4444"; label = "🔴 WICKET TAKEN"; main = "OUT!"; sub = `${scoringState.bowler} strikes • ${scoringState.wickets} down`; }
-    else if (anim === "FREE HIT") { bg = "linear-gradient(135deg,#052e16,#059669,#34d399)"; glow = "#34d399"; label = "⚡ NO BALL"; main = "FREE HIT!"; sub = "Next delivery is a FREE HIT!"; }
-    else if (anim === "HAT-TRICK BALL") { bg = "linear-gradient(135deg,#2e1065,#7e22ce,#a855f7)"; glow = "#c084fc"; label = "🔥 HAT-TRICK ALERT"; main = "HAT-TRICK BALL!"; sub = `${scoringState.bowler} is on a hat-trick!`; }
-    else if (anim === "INNINGS BREAK") { bg = "linear-gradient(135deg,#0c4a6e,#0ea5e9,#38bdf8)"; glow = "#38bdf8"; label = "🏏 END OF INNINGS 1"; main = "INNINGS BREAK"; sub = `${currentBatTeam} scored ${scoringState.firstInnings?.score ?? scoringState.score}/${scoringState.firstInnings?.wickets ?? scoringState.wickets}`; }
-    else if (anim === "TOUR BOUNDARIES") { bg = "linear-gradient(135deg,#4a044e,#d946ef,#f0abfc)"; glow = "#f0abfc"; label = "🎇 TOURNAMENT BOUNDARIES"; main = "TOP BOUNDARIES"; sub = "Tournament boundary leaders!"; }
-    return (
-      <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(2,3,16,0.88)", backdropFilter: "blur(8px)", zIndex: 1000, fontFamily: activeFont }}>
-        <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-        <div className="scale-in" style={{ background: bg, border: `4px solid ${glow}`, boxShadow: `0 0 80px ${glow}55,0 0 30px ${glow}30,inset 0 0 30px rgba(255,255,255,0.12)`, borderRadius: 40, padding: "44px 90px", textAlign: "center", animation: "pulseGlow 1.6s ease-in-out infinite alternate", position: "relative", zIndex: 1 }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: "rgba(255,255,255,0.9)", letterSpacing: 4, marginBottom: 8 }}>{label}</div>
-          <div style={{ fontSize: 76, fontWeight: 950, color: "#fff", letterSpacing: 4, textShadow: `0 4px 16px rgba(0,0,0,0.5),0 0 40px ${glow}60`, lineHeight: 1, margin: "8px 0" }}>{main}</div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 2, marginTop: 8 }}>{sub}</div>
-        </div>
-      </div>
-    );
-  }
+  // Bypassed: Animations are displayed inside the scoreboards' status bars/last sections
 
   // ════════════════════ 2. DECISION ════════════════════
-  if (scoringState.decision) {
-    const isOut = scoringState.decision === "OUT"; const isNO = scoringState.decision === "NOT OUT";
-    const bg = isOut ? "linear-gradient(135deg,#7f1d1d,#dc2626)" : isNO ? "linear-gradient(135deg,#14532d,#16a34a)" : "linear-gradient(135deg,#713f12,#d97706)";
-    const glow = isOut ? "#ef4444" : isNO ? "#22c55e" : "#fbbf24";
-    return (
-      <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)", zIndex: 999, fontFamily: activeFont }}>
-        <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-        <div className="scale-in" style={{ background: bg, boxShadow: `0 0 60px ${glow}60,0 16px 40px rgba(0,0,0,0.6)`, border: `3px solid ${glow}`, borderRadius: 28, padding: "28px 72px", textAlign: "center", position: "relative", zIndex: 1 }}>
-          <div style={{ fontSize: 11, fontWeight: 900, color: "rgba(255,255,255,0.85)", letterSpacing: 4, marginBottom: 6 }}>THIRD UMPIRE DECISION</div>
-          <div style={{ fontSize: 24, marginBottom: 4 }}>{isOut ? "🔴" : isNO ? "🟢" : "⚖️"}</div>
-          <div style={{ fontSize: 52, fontWeight: 950, color: "#fff", letterSpacing: 6 }}>{scoringState.decision === "PENDING" ? "⚖️ REVIEW IN PROGRESS" : scoringState.decision}</div>
-        </div>
-      </div>
-    );
-  }
+  // Bypassed: Decisions are displayed inside the scoreboards' status bars/last sections
 
   // ════════════════════ 3. PLAYER SPOTLIGHT ════════════════════
   if (scoringState.tournamentStatsPlayer) {
@@ -1529,27 +1530,45 @@ export default function OverlayPage() {
             </div>
 
             {/* Bottom blue strip */}
-            <div style={{ background: "linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%)", border: "1.5px solid rgba(255, 255, 255, 0.1)", borderTop: "none", borderRadius: "0 0 6px 6px", padding: "4px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div style={{ fontSize: "11px", fontWeight: "800", color: "#e2e8f0", letterSpacing: "1px" }}>
-                FOURS: <span style={{ color: "#34d399" }}>{totalFours}</span> &nbsp;&nbsp;|&nbsp;&nbsp; SIXES: <span style={{ color: "#fbbf24" }}>{totalSixes}</span>
-              </div>
-              {/* This Over strip */}
-              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                <span style={{ fontSize: "9px", color: theme.textSecondary, fontWeight: "900", letterSpacing: "1px" }}>THIS OVER:</span>
-                {(() => {
-                  const bpo = match?.ballsPerOver || 6;
-                  const thisOver = scoringState.thisOver || [];
-                  const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
-                  const totalCirclesCount = bpo + extrasCount;
-                  return Array.from({ length: totalCirclesCount }).map((_, i) => (
-                    <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={18} />
-                  ));
-                })()}
-              </div>
-              {rrr && (
-                <div style={{ fontSize: "11px", fontWeight: "900", color: "#fbbf24", letterSpacing: "1px" }}>
-                  REQUIRED RR: {rrr}
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%)",
+              border: "1.5px solid rgba(255, 255, 255, 0.1)",
+              borderTop: "none",
+              borderRadius: "0 0 6px 6px",
+              padding: "4px 24px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              transition: "all 0.3s ease"
+            }}>
+              {activeNotification ? (
+                <div style={{ width: "100%", textAlign: "center", color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff", fontWeight: "950", fontSize: "12px", letterSpacing: "2px", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
+                  {activeNotification}
                 </div>
+              ) : (
+                <>
+                  <div style={{ fontSize: "11px", fontWeight: "800", color: "#e2e8f0", letterSpacing: "1px" }}>
+                    FOURS: <span style={{ color: "#34d399" }}>{totalFours}</span> &nbsp;&nbsp;|&nbsp;&nbsp; SIXES: <span style={{ color: "#fbbf24" }}>{totalSixes}</span>
+                  </div>
+                  {/* This Over strip */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span style={{ fontSize: "9px", color: theme.textSecondary, fontWeight: "900", letterSpacing: "1px" }}>THIS OVER:</span>
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                        <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={18} />
+                      ));
+                    })()}
+                  </div>
+                  {rrr ? (
+                    <div style={{ fontSize: "11px", fontWeight: "900", color: "#fbbf24", letterSpacing: "1px" }}>
+                      REQUIRED RR: {rrr}
+                    </div>
+                  ) : <div style={{ width: 10 }} />}
+                </>
               )}
             </div>
 
@@ -1667,9 +1686,33 @@ export default function OverlayPage() {
               </div>
 
               {/* CENTER TRANSITION: Gradient Background with Status */}
-              <div style={{ background: "linear-gradient(90deg, #02b3e4 0%, #000000 35%, #000000 65%, #dc2626 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "180px", flexShrink: 0 }}>
-                <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine1}</span>
-                <span style={{ color: "#facc15", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine2}</span>
+              <div style={{
+                background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #02b3e4 0%, #000000 35%, #000000 65%, #dc2626 100%)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0 24px",
+                minWidth: "180px",
+                flexShrink: 0,
+                transition: "all 0.3s ease"
+              }}>
+                {activeNotification ? (
+                  <span style={{
+                    color: getNotificationStyles(activeNotification).textColor,
+                    fontSize: "11px",
+                    fontWeight: "900",
+                    letterSpacing: "0.5px",
+                    textAlign: "center",
+                    textTransform: "uppercase",
+                    animation: "pulseGlow 1s ease-in-out infinite alternate"
+                  }}>{activeNotification}</span>
+                ) : (
+                  <>
+                    <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine1}</span>
+                    <span style={{ color: "#facc15", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine2}</span>
+                  </>
+                )}
               </div>
 
               {/* RIGHT HALF: Red Background */}
@@ -1848,8 +1891,19 @@ export default function OverlayPage() {
                   </span>
                 </div>
                 {/* Bottom summary text in capsule */}
-                <div style={{ fontSize: "9px", fontWeight: "900", color: "#ffffff", letterSpacing: "0.5px", marginTop: "2px", textTransform: "uppercase" }}>
-                  {statusLine}
+                <div style={{
+                  fontSize: activeNotification ? "10px" : "9px",
+                  fontWeight: "900",
+                  color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                  padding: activeNotification ? "2px 8px" : "0",
+                  borderRadius: "4px",
+                  letterSpacing: "0.5px",
+                  marginTop: "2px",
+                  textTransform: "uppercase",
+                  animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                }}>
+                  {activeNotification || statusLine}
                 </div>
               </div>
 
@@ -2129,9 +2183,25 @@ export default function OverlayPage() {
             </div>
 
             {/* Bottom summary status line bar */}
-            <div style={{ background: "linear-gradient(90deg, #0284c7 0%, #0369a1 100%)", padding: "4px 20px", display: "flex", justifyContent: "center", borderRadius: "0 0 8px 8px", border: "1.5px solid rgba(255, 255, 255, 0.15)", borderTop: "none" }}>
-              <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase" }}>
-                {statusLine}
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #0284c7 0%, #0369a1 100%)",
+              padding: "4px 20px",
+              display: "flex",
+              justifyContent: "center",
+              borderRadius: "0 0 8px 8px",
+              border: "1.5px solid rgba(255, 255, 255, 0.15)",
+              borderTop: "none",
+              transition: "all 0.3s ease"
+            }}>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                fontSize: "11px",
+                fontWeight: "900",
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>
+                {activeNotification || statusLine}
               </span>
             </div>
 
@@ -2253,9 +2323,26 @@ export default function OverlayPage() {
               </div>
 
               {/* Purple/Indigo custom status box in middle */}
-              <div style={{ background: "#1e3a8a", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 16px", minWidth: "120px", flexShrink: 0 }}>
-                <span style={{ color: "#38bdf8", fontWeight: "900", fontSize: "11px", letterSpacing: "0.5px", textAlign: "center", textTransform: "uppercase" }}>
-                  {scoringState.customInputText ? scoringState.customInputText : (need !== null ? `NEED ${need}` : "LIVE")}
+              <div style={{
+                background: activeNotification ? getNotificationStyles(activeNotification).bg : "#1e3a8a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "0 16px",
+                minWidth: "120px",
+                flexShrink: 0,
+                transition: "all 0.3s ease"
+              }}>
+                <span style={{
+                  color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#38bdf8",
+                  fontWeight: "900",
+                  fontSize: "11px",
+                  letterSpacing: "0.5px",
+                  textAlign: "center",
+                  textTransform: "uppercase",
+                  animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                }}>
+                  {activeNotification || (need !== null ? `NEED ${need}` : "LIVE")}
                 </span>
               </div>
 
@@ -2543,6 +2630,30 @@ export default function OverlayPage() {
               </div>
 
             </div>
+            {activeNotification && (
+              <div style={{
+                background: getNotificationStyles(activeNotification).bg,
+                border: "2px solid #d946ef",
+                borderTop: "none",
+                borderRadius: "0 0 10px 10px",
+                padding: "4px 20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                transition: "all 0.3s ease"
+              }}>
+                <span style={{
+                  color: getNotificationStyles(activeNotification).textColor,
+                  fontSize: "11px",
+                  fontWeight: "900",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  animation: "pulseGlow 1s ease-in-out infinite alternate"
+                }}>
+                  {activeNotification}
+                </span>
+              </div>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -2676,8 +2787,24 @@ export default function OverlayPage() {
                   </span>
                 </div>
                 {/* Status bottom line */}
-                <div style={{ fontSize: "8px", fontWeight: "900", color: "rgba(255,255,255,0.65)", letterSpacing: "0.8px", textTransform: "uppercase", marginTop: "4px", textAlign: "center", maxWidth: "190px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-                  {statusLine}
+                <div style={{
+                  fontSize: activeNotification ? "9px" : "8px",
+                  fontWeight: "900",
+                  color: activeNotification ? getNotificationStyles(activeNotification).textColor : "rgba(255,255,255,0.65)",
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                  padding: activeNotification ? "2px 6px" : "0",
+                  borderRadius: "3px",
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  marginTop: "4px",
+                  textAlign: "center",
+                  maxWidth: "190px",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                }}>
+                  {activeNotification || statusLine}
                 </div>
               </div>
 
@@ -2841,9 +2968,29 @@ export default function OverlayPage() {
                     </span>
                   </div>
                   {/* Bottom Indigo row */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "2px 10px", height: "50%" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "10px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                      {statusLine}
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "2px 10px",
+                    height: "50%",
+                    background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                    transition: "all 0.3s ease"
+                  }}>
+                    <span style={{
+                      color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                      fontWeight: "900",
+                      fontSize: activeNotification ? "11px" : "10px",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      textAlign: "center",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "100%",
+                      animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                    }}>
+                      {activeNotification || statusLine}
                     </span>
                   </div>
                 </div>
@@ -3030,8 +3177,23 @@ export default function OverlayPage() {
               </div>
             </div>
             {/* Bottom Status bar */}
-            <div style={{ background: "rgba(6, 182, 212, 0.15)", border: "1.5px solid #0ea5e9", borderTop: "none", borderRadius: "0 0 8px 8px", padding: "3px 20px", display: "flex", justifyContent: "center" }}>
-              <span style={{ color: "#22d3ee", fontSize: "10px", fontWeight: "900", letterSpacing: "1px" }}>{statusLine}</span>
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "rgba(6, 182, 212, 0.15)",
+              border: "1.5px solid #0ea5e9",
+              borderTop: "none",
+              borderRadius: "0 0 8px 8px",
+              padding: "3px 20px",
+              display: "flex",
+              justifyContent: "center",
+              transition: "all 0.3s ease"
+            }}>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#22d3ee",
+                fontSize: "10px",
+                fontWeight: "900",
+                letterSpacing: "1px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
           </div>
         ) : (
@@ -3151,8 +3313,23 @@ export default function OverlayPage() {
               </div>
             </div>
             {/* Bottom Status bar */}
-            <div style={{ background: "#facc15", padding: "3px 20px", display: "flex", justifyContent: "center", border: "2px solid #facc15", borderTop: "none", borderRadius: "0 0 6px 6px" }}>
-              <span style={{ color: "#000", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "#facc15",
+              padding: "3px 20px",
+              display: "flex",
+              justifyContent: "center",
+              border: "2px solid #facc15",
+              borderTop: "none",
+              borderRadius: "0 0 6px 6px",
+              transition: "all 0.3s ease"
+            }}>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#000",
+                fontSize: "10px",
+                fontWeight: "950",
+                letterSpacing: "1px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
           </div>
         ) : (
@@ -3207,7 +3384,15 @@ export default function OverlayPage() {
                 <span style={{ background: "#ffffff", color: "#be123c", fontWeight: "950", fontSize: "10px", padding: "2px 8px", borderRadius: "4px", letterSpacing: "1px" }}>LIVE</span>
                 <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "12px", letterSpacing: "0.5px" }}>{currentBatTeam.toUpperCase()} VS {currentBowlTeam.toUpperCase()}</span>
               </div>
-              <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "12px" }}>{statusLine}</span>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                fontWeight: "900",
+                fontSize: "12px",
+                background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                padding: activeNotification ? "2px 8px" : "0",
+                borderRadius: "4px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
 
             {/* Main glass body */}
@@ -3365,6 +3550,28 @@ export default function OverlayPage() {
                 {bowlTeamShort}
               </div>
             </div>
+            {/* Notification / Status bar */}
+            {activeNotification && (
+              <div style={{
+                background: getNotificationStyles(activeNotification).bg,
+                border: "2px solid #eab308",
+                borderTop: "none",
+                borderRadius: "0 0 10px 10px",
+                padding: "4px 20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}>
+                <span style={{
+                  color: getNotificationStyles(activeNotification).textColor,
+                  fontSize: "11px",
+                  fontWeight: "950",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  animation: "pulseGlow 1s ease-in-out infinite alternate"
+                }}>{activeNotification}</span>
+              </div>
+            )}
           </div>
         ) : (
           <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#0c0a23", border: "2px solid #eab308", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
@@ -3489,8 +3696,21 @@ export default function OverlayPage() {
               </div>
             </div>
             {/* Bottom Status strip */}
-            <div style={{ background: "#ec4899", padding: "3px 20px", display: "flex", justifyContent: "center", borderRadius: "0 0 4px 4px" }}>
-              <span style={{ color: "#000", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "#ec4899",
+              padding: "3px 20px",
+              display: "flex",
+              justifyContent: "center",
+              borderRadius: "0 0 4px 4px",
+              transition: "all 0.3s ease"
+            }}>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#000",
+                fontSize: "10px",
+                fontWeight: "950",
+                letterSpacing: "1px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
           </div>
         ) : (
@@ -3597,8 +3817,21 @@ export default function OverlayPage() {
               </div>
             </div>
             {/* Status bottom ribbon */}
-            <div style={{ background: "#cbd5e1", padding: "4px 20px", display: "flex", justifyContent: "center", borderRadius: "0 0 8px 8px" }}>
-              <span style={{ color: "#064e3b", fontSize: "11px", fontWeight: "950", letterSpacing: "1px" }}>{statusLine}</span>
+            <div style={{
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "#cbd5e1",
+              padding: "4px 20px",
+              display: "flex",
+              justifyContent: "center",
+              borderRadius: "0 0 8px 8px",
+              transition: "all 0.3s ease"
+            }}>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#064e3b",
+                fontSize: "11px",
+                fontWeight: "950",
+                letterSpacing: "1px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
           </div>
         ) : (
@@ -3650,7 +3883,15 @@ export default function OverlayPage() {
             {/* Top gold bar */}
             <div style={{ background: "linear-gradient(90deg, #581c87 0%, #3b0764 100%)", borderTop: "3px solid #fbbf24", borderRadius: "12px 12px 0 0", padding: "6px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ color: "#fbbf24", fontWeight: "900", fontSize: "11px", letterSpacing: "1px" }}>IPL 2025 PLATINUM EDITION</span>
-              <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "11px" }}>{statusLine}</span>
+              <span style={{
+                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                fontWeight: "900",
+                fontSize: "11px",
+                background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                padding: activeNotification ? "2px 8px" : "0",
+                borderRadius: "4px",
+                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+              }}>{activeNotification || statusLine}</span>
             </div>
 
             {/* Main luxury body */}
@@ -3792,23 +4033,39 @@ export default function OverlayPage() {
             </div>
 
             {/* This over strip */}
-            <div style={{ padding:"8px 22px", display:"flex", alignItems:"center", gap:10, borderTop:`1px solid ${theme.borderColor}20`, background:"rgba(0,0,0,0.3)" }}>
-              <span style={{ fontSize:9, color:theme.textSecondary, fontWeight:800, letterSpacing:1.5, flexShrink:0 }}>THIS OVER</span>
-              <div style={{ display:"flex", gap:5 }}>
-                {(() => {
-                  const bpo = match?.ballsPerOver || 6;
-                  const thisOver = scoringState.thisOver || [];
-                  const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
-                  const totalCirclesCount = bpo + extrasCount;
-                  return Array.from({ length: totalCirclesCount }).map((_, i) => (
-                    <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
-                  ));
-                })()}
-              </div>
-              <div style={{ marginLeft:"auto", display:"flex", gap:16 }}>
-                <div style={{ fontSize:10, fontWeight:800, color:theme.textSecondary }}>CRR: <span style={{ color:theme.accent }}>{calcRR(scoringState)}</span></div>
-                {scoringState.target!==null&&<div style={{ fontSize:10, fontWeight:800, color:theme.textSecondary }}>RRR: <span style={{ color:"#4ade80" }}>{(((scoringState.target-scoringState.score)/Math.max(1,match.overs*match.ballsPerOver-scoringState.balls))*match.ballsPerOver).toFixed(2)}</span></div>}
-              </div>
+            <div style={{
+              padding: "8px 22px",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              borderTop: `1px solid ${theme.borderColor}20`,
+              background: activeNotification ? getNotificationStyles(activeNotification).bg : "rgba(0,0,0,0.3)",
+              transition: "all 0.3s ease"
+            }}>
+              {activeNotification ? (
+                <div style={{ width: "100%", textAlign: "center", color: getNotificationStyles(activeNotification).textColor, fontWeight: 950, fontSize: 13, letterSpacing: 2, animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
+                  {activeNotification}
+                </div>
+              ) : (
+                <>
+                  <span style={{ fontSize:9, color:theme.textSecondary, fontWeight:800, letterSpacing:1.5, flexShrink:0 }}>THIS OVER</span>
+                  <div style={{ display:"flex", gap:5 }}>
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const thisOver = scoringState.thisOver || [];
+                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                        <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
+                      ));
+                    })()}
+                  </div>
+                  <div style={{ marginLeft:"auto", display:"flex", gap:16 }}>
+                    <div style={{ fontSize:10, fontWeight:800, color:theme.textSecondary }}>CRR: <span style={{ color:theme.accent }}>{calcRR(scoringState)}</span></div>
+                    {scoringState.target!==null&&<div style={{ fontSize:10, fontWeight:800, color:theme.textSecondary }}>RRR: <span style={{ color:"#4ade80" }}>{(((scoringState.target-scoringState.score)/Math.max(1,match.overs*match.ballsPerOver-scoringState.balls))*match.ballsPerOver).toFixed(2)}</span></div>}
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
