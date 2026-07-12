@@ -116,6 +116,13 @@ export default function ScoreboardLinksModal({
     window.open(url, "_blank", "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no");
   };
 
+  const handlePrintPDF = (themeSlug: string, screen: "SUMMARY" | "FULLSCORE") => {
+    const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+    const url = `${origin}/matches/${matchId}/overlay?theme=${themeSlug}&screen=${screen}&print=true`;
+    window.open(url, "_blank", "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no");
+  };
+
+
   return (
     <>
       {/* Full-screen scrollable overlay */}
@@ -182,6 +189,7 @@ export default function ScoreboardLinksModal({
                       <th className="p-3">Theme</th>
                       <th className="p-3 text-center">Price (per day)</th>
                       <th className="p-3 text-center w-24">Preview</th>
+                      <th className="p-3 text-center w-48">Graphical PDFs (Themed)</th>
                       <th className="p-3 text-center w-48">Scoreboard Link (PC + Mobile)</th>
                       <th className="p-3 text-center w-48">CameraFi Mobile Link</th>
                     </tr>
@@ -235,6 +243,28 @@ export default function ScoreboardLinksModal({
                                 Preview
                               </button>
                             </td>
+                            {isUnlocked ? (
+                              <td className="p-3 text-center flex items-center gap-1 justify-center min-w-[170px]">
+                                <button
+                                  onClick={() => handlePrintPDF(theme.slug, "SUMMARY")}
+                                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[9px] uppercase py-1 px-2 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                  title="Download graphical themed Match Summary PDF"
+                                >
+                                  📄 Summary
+                                </button>
+                                <button
+                                  onClick={() => handlePrintPDF(theme.slug, "FULLSCORE")}
+                                  className="bg-[#008080] hover:bg-[#006666] text-white font-extrabold text-[9px] uppercase py-1 px-2 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                  title="Download graphical themed Full Scorecard PDF"
+                                >
+                                  📊 Scorecard
+                                </button>
+                              </td>
+                            ) : (
+                              <td className="p-3 text-center text-zinc-500 text-[10px] italic">
+                                🔒 Locked
+                              </td>
+                            )}
                             {isUnlocked ? (
                               <>
                                 <td className="p-3 text-center">

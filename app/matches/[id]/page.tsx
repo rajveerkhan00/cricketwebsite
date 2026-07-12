@@ -100,6 +100,7 @@ export default function MatchScoringPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showScoreboardLinks, setShowScoreboardLinks] = useState(false);
+  const [selectedPdfTheme, setSelectedPdfTheme] = useState("asia-cup");
 
   // Form states for adding players
   const [playerInput1, setPlayerInput1] = useState("");
@@ -1395,6 +1396,197 @@ export default function MatchScoringPage() {
           </div>
         )}
 
+        {/* ── MATCH COMPLETED — Summary, Scorecard & PDF ──────────────── */}
+        {match.status === "Completed" && scoringState && (() => {
+          const inn1 = scoringState.firstInnings;
+          const inn2 = { score: scoringState.score, wickets: scoringState.wickets, balls: scoringState.balls, batsmen: scoringState.batsmen, bowlers: scoringState.bowlers, fallOfWickets: scoringState.fallOfWickets };
+          const bat1Team = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name; // inn1 batting team
+          const bat2Team = scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name; // inn2 batting team
+          const fmtOv = (b: number) => `${Math.floor(b / (match.ballsPerOver || 6))}.${b % (match.ballsPerOver || 6)}`;
+          const winnerText = scoringState.target !== null
+            ? (scoringState.score >= scoringState.target
+              ? `${bat2Team} won by ${Math.max(0, 10 - scoringState.wickets)} wicket${Math.max(0, 10 - scoringState.wickets) === 1 ? "" : "s"}`
+              : `${bat1Team} won by ${Math.max(0, scoringState.target - scoringState.score - 1)} run${Math.max(0, scoringState.target - scoringState.score - 1) === 1 ? "" : "s"}`)
+            : "Match Completed";
+
+          const handleDownloadPDF = () => {
+            const printContent = document.getElementById("match-scorecard-print");
+            if (!printContent) return;
+            const win = window.open("", "_blank", "width=900,height=700");
+            if (!win) return;
+            win.document.write(`
+              <html><head><title>Scorecard - ${match.team1Name} vs ${match.team2Name}</title>
+              <style>
+                body{font-family:Arial,sans-serif;color:#111;background:#fff;padding:24px;font-size:13px}
+                h1{font-size:20px;font-weight:900;margin-bottom:4px}
+                h2{font-size:14px;font-weight:800;margin:20px 0 8px;text-transform:uppercase;border-bottom:2px solid #333;padding-bottom:4px}
+                h3{font-size:12px;font-weight:800;margin:12px 0 4px;color:#555}
+                table{width:100%;border-collapse:collapse;margin-bottom:8px}
+                th{text-align:left;font-size:10px;font-weight:800;padding:6px 8px;background:#f1f5f9;text-transform:uppercase;letter-spacing:1px}
+                td{padding:6px 8px;border-bottom:1px solid #e2e8f0;font-size:12px}
+                .winner{background:#d1fae5;padding:8px 16px;border-radius:6px;font-weight:900;font-size:15px;display:inline-block;margin-bottom:16px}
+                .score-big{font-size:22px;font-weight:900}
+                .inn-header{background:#0f172a;color:#fff;padding:8px 12px;border-radius:4px;margin-bottom:8px}
+                @media print{body{padding:12px}}
+              </style></head><body>
+              ${printContent.innerHTML}
+              </body></html>`);
+            win.document.close();
+            win.focus();
+            setTimeout(() => { win.print(); }, 500);
+          };
+
+          const InningsTable = ({ inn, batTeam, bowlTeam, innNo }: { inn: any, batTeam: string, bowlTeam: string, innNo: number }) => {
+            if (!inn) return <p className="text-xs text-zinc-500 italic">No data for innings {innNo}.</p>;
+            return (
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between bg-gradient-to-r from-emerald-900/40 to-emerald-800/20 border border-emerald-500/30 rounded-xl px-4 py-2.5">
+                  <span className="font-black text-sm text-emerald-300 uppercase tracking-wider">INN {innNo} — {batTeam}</span>
+                  <span className="font-black text-lg text-white">{inn.score}/{inn.wickets} <span className="text-xs text-zinc-400 font-medium">({fmtOv(inn.balls)}/{match.overs} Ov)</span></span>
+                </div>
+                {/* Batting */}
+                <div>
+                  <h4 className="text-[10px] font-black tracking-widest text-zinc-400 uppercase mb-2">🏏 Batting</h4>
+                  <table className="w-full text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-zinc-700/60">
+                        {["Batsman", "R", "B", "4s", "6s", "SR"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-zinc-500 uppercase tracking-wider">{h}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(inn.batsmen || []).map((b: any, i: number) => (
+                        <tr key={i} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                          <td className="py-2 px-2 font-bold text-white">{b.name}{b.out ? <span className="ml-2 text-[9px] text-red-400 font-black">OUT</span> : <span className="ml-2 text-[9px] text-green-400 font-black">N/O</span>}</td>
+                          <td className="py-2 px-2 font-black text-amber-300">{b.runs}</td>
+                          <td className="py-2 px-2 text-zinc-400">{b.balls}</td>
+                          <td className="py-2 px-2 text-yellow-400 font-bold">{b.fours}</td>
+                          <td className="py-2 px-2 text-sky-400 font-bold">{b.sixes}</td>
+                          <td className="py-2 px-2 text-zinc-300">{b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/* Bowling */}
+                <div>
+                  <h4 className="text-[10px] font-black tracking-widest text-zinc-400 uppercase mb-2">🎯 Bowling — {bowlTeam}</h4>
+                  <table className="w-full text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-zinc-700/60">
+                        {["Bowler", "O", "R", "W", "Eco"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-zinc-500 uppercase tracking-wider">{h}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(inn.bowlers || []).map((bw: any, i: number) => {
+                        const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * (match.ballsPerOver || 6)).toFixed(2) : "0.00";
+                        return (
+                          <tr key={i} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                            <td className="py-2 px-2 font-bold text-white">{bw.name}</td>
+                            <td className="py-2 px-2 text-zinc-400">{fmtOv(bw.ballsBowled)}</td>
+                            <td className="py-2 px-2 text-zinc-300">{bw.runsConceded}</td>
+                            <td className="py-2 px-2 font-black text-red-400">{bw.wickets}</td>
+                            <td className="py-2 px-2 text-zinc-300">{eco}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          };
+
+          return (
+            <div className="flex flex-col gap-4 mt-2">
+              {/* Trophy Banner */}
+              <div className="relative overflow-hidden bg-gradient-to-r from-amber-600/30 via-yellow-500/20 to-amber-600/30 border border-amber-500/40 rounded-2xl p-5 text-center shadow-lg shadow-amber-500/10">
+                <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(45deg, #fbbf24 0, #fbbf24 1px, transparent 0, transparent 50%)", backgroundSize: "10px 10px" }} />
+                <div className="text-4xl mb-2">🏆</div>
+                <div className="text-xs font-black tracking-widest text-amber-400 uppercase mb-1">Match Completed</div>
+                <div className="text-xl font-black text-white tracking-wide">{winnerText}</div>
+                <div className="flex items-center justify-center gap-6 mt-3 text-sm text-zinc-300">
+                  {inn1 && <span className="font-bold">{bat1Team}: <span className="text-amber-300 font-black">{inn1.score}/{inn1.wickets}</span> ({fmtOv(inn1.balls)})</span>}
+                  <span className="text-zinc-600">|</span>
+                  <span className="font-bold">{bat2Team}: <span className="text-amber-300 font-black">{inn2.score}/{inn2.wickets}</span> ({fmtOv(inn2.balls)})</span>
+                </div>
+              </div>
+
+              {/* Summary & Download button */}
+              <div className="flex flex-col gap-4 bg-[#0a0c2c] border border-zinc-800 rounded-2xl p-4 shadow-lg">
+                <div className="flex items-center justify-between border-b border-zinc-800 pb-2 flex-wrap gap-2">
+                  <h3 className="text-xs font-black tracking-widest text-zinc-400 uppercase">📋 Export Match Reports</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">PDF Theme Style:</span>
+                    <select
+                      value={selectedPdfTheme}
+                      onChange={(e) => setSelectedPdfTheme(e.target.value)}
+                      className="bg-[#121542] border border-zinc-700/60 rounded px-2 py-1 text-xs text-white cursor-pointer focus:outline-none font-bold"
+                    >
+                      <option value="asia-cup">Asia Cup</option>
+                      <option value="cwc-19">CWC 19</option>
+                      <option value="champions-trophy-2025">Champions Trophy 2025</option>
+                      <option value="cwc-25-india">CWC 25 India</option>
+                      <option value="wcl-fancode">WCL (Fancode)</option>
+                      <option value="cwc-23-india">CWC 23 India</option>
+                      <option value="ipl">IPL</option>
+                      <option value="t20-wc-2024">T20 World Cup 2024</option>
+                      <option value="legends-league-2024">Legends League 2024</option>
+                      <option value="asia-cup-2023">Asia Cup 2023</option>
+                      <option value="ct-17">Champions Trophy 2017</option>
+                      <option value="cwc-2011">CWC 2011</option>
+                      <option value="wt20-2024">WT20 2024</option>
+                      <option value="bbl-starsports">BBL (Star Sports)</option>
+                      <option value="ipl-2025">IPL 2025</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-end gap-3.5">
+                  <button
+                    onClick={handleDownloadPDF}
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer border border-zinc-700 uppercase"
+                  >
+                    ⬇️ Plain PDF
+                  </button>
+                  <button
+                    onClick={() => {
+                      const origin = window.location.origin;
+                      const url = `${origin}/matches/${matchId}/overlay?theme=${selectedPdfTheme}&screen=SUMMARY&print=true`;
+                      window.open(url, "_blank", "width=1280,height=720");
+                    }}
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer shadow-md uppercase"
+                  >
+                    📄 Graphical Summary PDF
+                  </button>
+                  <button
+                    onClick={() => {
+                      const origin = window.location.origin;
+                      const url = `${origin}/matches/${matchId}/overlay?theme=${selectedPdfTheme}&screen=FULLSCORE&print=true`;
+                      window.open(url, "_blank", "width=1280,height=720");
+                    }}
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer shadow-md uppercase"
+                  >
+                    📊 Graphical Scorecard PDF
+                  </button>
+                </div>
+              </div>
+
+
+              {/* Scorecard — printable target */}
+              <div id="match-scorecard-print" className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-6">
+                {/* Print-only header (hidden on screen) */}
+                <div className="hidden print:block text-center mb-4">
+                  <h1 className="text-2xl font-black">{match.team1Name} vs {match.team2Name}</h1>
+                  <p className="text-sm font-bold text-gray-600">{winnerText}</p>
+                </div>
+                <InningsTable inn={inn1} batTeam={bat1Team} bowlTeam={bat2Team} innNo={1} />
+                <div className="border-t border-zinc-700/50" />
+                <InningsTable inn={inn2} batTeam={bat2Team} bowlTeam={bat1Team} innNo={2} />
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ── Owner / Scorer Admin Panels ─────────────────────────────────── */}
         {isOwner && (
           <div className="flex flex-col gap-6 mt-2">
@@ -1914,6 +2106,46 @@ export default function MatchScoringPage() {
             {/* Display Controller Panel */}
             <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
               <h3 className="text-xs font-black tracking-wider text-zinc-400 uppercase">DISPLAY CONTROLLER</h3>
+
+              {/* ── Prominent Summary & Scorecard Broadcast Buttons ── */}
+              <div className="flex flex-col gap-2">
+                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">📡 Live Screen — shows on all scoreboards instantly:</p>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("SUMMARY")}
+                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
+                      scoringState?.displayScreen === "SUMMARY"
+                        ? "bg-cyan-500/30 border-cyan-400 text-cyan-200 shadow-cyan-500/20"
+                        : "bg-gradient-to-br from-cyan-600 to-teal-700 border-cyan-500/40 text-white hover:from-cyan-500 hover:to-teal-600 shadow-cyan-500/10"
+                    }`}
+                  >
+                    <span className="text-xl">📋</span>
+                    VIEW SUMMARY
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
+                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
+                      scoringState?.displayScreen === "FULLSCORE"
+                        ? "bg-blue-500/30 border-blue-400 text-blue-200 shadow-blue-500/20"
+                        : "bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500/40 text-white hover:from-blue-500 hover:to-indigo-600 shadow-blue-500/10"
+                    }`}
+                  >
+                    <span className="text-xl">📊</span>
+                    VIEW SCORECARD
+                  </button>
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("DEFAULT!")}
+                    className="flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider bg-gradient-to-br from-zinc-700 to-zinc-800 border-2 border-zinc-600/50 text-zinc-200 hover:from-zinc-600 hover:to-zinc-700 transition-all active:scale-95 cursor-pointer shadow-lg"
+                  >
+                    <span className="text-xl">🏏</span>
+                    LIVE SCORE
+                  </button>
+                </div>
+              </div>
+
+              <div className="border-t border-zinc-800/60" />
+
+              {/* Small screen buttons */}
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   { label: "DEFAULT!", color: "bg-blue-600", hover: "hover:bg-blue-700", selected: "bg-blue-400/30 border-blue-400 text-blue-300" },
@@ -1922,6 +2154,7 @@ export default function MatchScoringPage() {
                   { label: "2BAT", color: "bg-indigo-600", hover: "hover:bg-indigo-700", selected: "bg-indigo-400/30 border-indigo-400 text-indigo-300" },
                   { label: "2BALL", color: "bg-rose-600", hover: "hover:bg-rose-700", selected: "bg-rose-400/30 border-rose-400 text-rose-300" },
                   { label: "SUMMARY", color: "bg-cyan-600", hover: "hover:bg-cyan-700", selected: "bg-cyan-400/30 border-cyan-400 text-cyan-300" },
+                  { label: "FULLSCORE", color: "bg-blue-600", hover: "hover:bg-blue-700", selected: "bg-blue-400/30 border-blue-400 text-blue-300" },
                   { label: "FOW", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
                   { label: "B1", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
                   { label: "B2", color: "bg-green-600", hover: "hover:bg-green-700", selected: "bg-green-400/30 border-green-400 text-green-300" },
@@ -1938,11 +2171,12 @@ export default function MatchScoringPage() {
                       : `${screen.color} ${screen.hover} border-zinc-700/50 text-white`
                       }`}
                   >
-                    {screen.label}
+                    {screen.label === "FULLSCORE" ? "SCORECARD" : screen.label}
                   </button>
                 ))}
               </div>
             </div>
+
 
             {/* Umpire Decision Controller Row */}
             <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-4 shadow-xl flex items-center gap-4">
