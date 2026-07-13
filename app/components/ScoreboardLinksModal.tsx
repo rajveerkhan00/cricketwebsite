@@ -41,6 +41,9 @@ export default function ScoreboardLinksModal({
   const [planRemainingSeconds, setPlanRemainingSeconds] = useState(0);
   const [themeRemainingSeconds, setThemeRemainingSeconds] = useState<Record<string, number>>({});
 
+  // Inline Preview State
+  const [previewTheme, setPreviewTheme] = useState<ThemeItem | null>(null);
+
   const fetchPurchases = async () => {
     if (!userEmail) return;
     try {
@@ -153,10 +156,8 @@ export default function ScoreboardLinksModal({
       });
   };
 
-  const handlePreview = (themeSlug: string) => {
-    const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
-    const url = `${origin}/matches/${matchId}/overlay?theme=${themeSlug}&preview=true`;
-    window.open(url, "_blank", "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no");
+  const handlePreview = (theme: ThemeItem) => {
+    setPreviewTheme(theme);
   };
 
   const handlePrintPDF = (themeSlug: string, screen: "SUMMARY" | "FULLSCORE") => {
@@ -316,7 +317,7 @@ export default function ScoreboardLinksModal({
                             </td>
                             <td className="p-3 text-center">
                               <button
-                                onClick={() => handlePreview(theme.slug)}
+                                onClick={() => handlePreview(theme)}
                                 className="bg-zinc-900 hover:bg-zinc-800 text-white font-extrabold text-[10px] uppercase py-1 px-3.5 rounded-full active:scale-95 transition-all cursor-pointer border border-zinc-800"
                               >
                                 Preview
@@ -408,6 +409,52 @@ export default function ScoreboardLinksModal({
             fetchPurchases();
           }}
         />
+      )}
+
+      {/* ── Inline Scoreboard Preview Overlay ───────────────────────────── */}
+      {previewTheme && (
+        <div
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md"
+          onClick={(e) => { if (e.target === e.currentTarget) setPreviewTheme(null); }}
+        >
+          {/* Header bar */}
+          <div className="w-full max-w-5xl flex items-center justify-between px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-t-2xl">
+            <div className="flex items-center gap-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-white font-extrabold text-sm font-space uppercase tracking-widest">
+                Live Preview — {previewTheme.name}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-zinc-500 text-xs font-semibold">Demo match data (preview mode)</span>
+              <button
+                onClick={() => setPreviewTheme(null)}
+                className="bg-zinc-800 hover:bg-red-700/50 text-white border border-zinc-700 hover:border-red-500 rounded-lg px-3 py-1.5 text-xs font-bold cursor-pointer transition-all ml-2"
+              >
+                ✕ Close Preview
+              </button>
+            </div>
+          </div>
+
+          {/* iframe */}
+          <div className="w-full max-w-5xl bg-black border-x border-b border-zinc-700 rounded-b-2xl overflow-hidden shadow-2xl"
+            style={{ height: "calc(min(56.25vw, 600px))" }}
+          >
+            <iframe
+              key={previewTheme.slug}
+              src={`${typeof window !== "undefined" ? window.location.origin : ""}/matches/${matchId}/overlay?theme=${previewTheme.slug}&preview=true`}
+              className="w-full h-full border-none"
+              style={{ display: "block", background: "transparent" }}
+              title={`Preview: ${previewTheme.name}`}
+              allow="autoplay"
+            />
+          </div>
+
+          {/* Footer hint */}
+          <p className="mt-3 text-zinc-500 text-xs font-semibold">
+            Click outside the preview to close it
+          </p>
+        </div>
       )}
     </>
   );

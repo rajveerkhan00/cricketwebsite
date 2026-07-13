@@ -532,9 +532,10 @@ export default function OverlayPage() {
   }, [matchId, isPreview]);
 
   // Poll access every 8 seconds — instantly picks up admin approve/reject
+  // Always call once on mount (handles preview mode immediately too)
   useEffect(() => {
-    if (!matchId || isPreview) return;
-    checkAccess();
+    checkAccess(); // always run once — handles isPreview early-return inside
+    if (!matchId || isPreview) return; // skip polling in preview
     const interval = setInterval(() => checkAccess(), 8000);
     return () => clearInterval(interval);
   }, [matchId, themeSlug, userEmail, emailParam, isPreview]);
