@@ -25,6 +25,7 @@ interface PricingTierRecord {
   buttonText: string;
   featured: boolean;
   order: number;
+  planType?: "basic" | "professional" | "enterprise" | null;
 }
 
 interface ScoreboardThemeRecord {
@@ -415,6 +416,7 @@ function CreatePricingModal({
   const [buttonText, setButtonText] = useState("");
   const [featured, setFeatured] = useState(false);
   const [order, setOrder] = useState("0");
+  const [planType, setPlanType] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -434,6 +436,7 @@ function CreatePricingModal({
           buttonText,
           featured,
           order: Number(order) || 0,
+          planType: planType || null,
         }),
       });
       const data = await res.json();
@@ -547,6 +550,20 @@ function CreatePricingModal({
           </div>
 
           <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Type (Automatic 15 Scoreboard Unlock)</label>
+            <select
+              value={planType}
+              onChange={(e) => setPlanType(e.target.value)}
+              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-amber-500"
+            >
+              <option value="">None (Per-Theme / Custom)</option>
+              <option value="basic">Basic (1 Day Unlock)</option>
+              <option value="professional">Professional (1 Week Unlock)</option>
+              <option value="enterprise">Enterprise (1 Month Unlock)</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Description</label>
             <textarea
               placeholder="Enter plan brief description..."
@@ -613,6 +630,7 @@ function EditPricingModal({
   const [buttonText, setButtonText] = useState(tier.buttonText);
   const [featured, setFeatured] = useState(tier.featured);
   const [order, setOrder] = useState(String(tier.order || 0));
+  const [planType, setPlanType] = useState(tier.planType || "");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -632,6 +650,7 @@ function EditPricingModal({
           buttonText,
           featured,
           order: Number(order) || 0,
+          planType: planType || null,
         }),
       });
       const data = await res.json();
@@ -737,6 +756,20 @@ function EditPricingModal({
                 Featured / Popular Plan
               </label>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Type (Automatic 15 Scoreboard Unlock)</label>
+            <select
+              value={planType}
+              onChange={(e) => setPlanType(e.target.value)}
+              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
+            >
+              <option value="">None (Per-Theme / Custom)</option>
+              <option value="basic">Basic (1 Day Unlock)</option>
+              <option value="professional">Professional (1 Week Unlock)</option>
+              <option value="enterprise">Enterprise (1 Month Unlock)</option>
+            </select>
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -1982,7 +2015,14 @@ export default function AdminDashboard() {
                             {tier.order}
                           </td>
                           <td className="px-6 py-4">
-                            <p className="text-white text-sm font-semibold">{tier.name}</p>
+                            <div className="flex items-center gap-2">
+                              <p className="text-white text-sm font-semibold">{tier.name}</p>
+                              {tier.planType && (
+                                <span className="bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-emerald-500/20 uppercase tracking-wider">
+                                  {tier.planType}
+                                </span>
+                              )}
+                            </div>
                             <p className="text-zinc-500 text-[11px] truncate max-w-xs">{tier.description}</p>
                           </td>
                           <td className="px-6 py-4 font-mono font-extrabold text-amber-400 text-sm">
@@ -2242,13 +2282,23 @@ export default function AdminDashboard() {
                       filteredPayments.map((payment) => {
                         let expiryText = "";
                         let isActive = false;
-                        if (payment.status === "approved" && payment.matchId) {
-                          const expiryDate = new Date(new Date(payment.updatedAt || payment.createdAt).getTime() + 24 * 60 * 60 * 1000);
+                        if (payment.status === "approved") {
+                          const itemNameLower = payment.itemName.toLowerCase();
+                          let duration = 24 * 60 * 60 * 1000; // default 24h
+                          if (itemNameLower.includes("enterprise")) {
+                            duration = 30 * 24 * 60 * 60 * 1000; // 30 days
+                          } else if (itemNameLower.includes("professional") || itemNameLower.includes("pro")) {
+                            duration = 7 * 24 * 60 * 60 * 1000; // 7 days
+                          } else if (itemNameLower.includes("basic") || itemNameLower.includes("starter")) {
+                            duration = 24 * 60 * 60 * 1000; // 1 day
+                          }
+                          const expiryDate = new Date(new Date(payment.updatedAt || payment.createdAt).getTime() + duration);
                           const remainingMs = expiryDate.getTime() - Date.now();
                           if (remainingMs > 0) {
-                            const hours = Math.floor(remainingMs / (3600 * 1000));
+                            const days = Math.floor(remainingMs / (24 * 3600 * 1000));
+                            const hours = Math.floor((remainingMs % (24 * 3600 * 1000)) / (3600 * 1000));
                             const mins = Math.floor((remainingMs % (3600 * 1000)) / (60 * 1000));
-                            expiryText = `${hours}h ${mins}m left`;
+                            expiryText = days > 0 ? `${days}d ${hours}h left` : `${hours}h ${mins}m left`;
                             isActive = true;
                           } else {
                             expiryText = "Expired";

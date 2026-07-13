@@ -12,6 +12,26 @@ async function requireAdmin() {
   return session;
 }
 
+// ── Plan duration helper ───────────────────────────────────────────────────────
+function planDurationMs(planType: string | null | undefined): number {
+  switch (planType) {
+    case "basic":        return 1 * 24 * 60 * 60 * 1000;   // 1 day
+    case "professional": return 7 * 24 * 60 * 60 * 1000;   // 1 week
+    case "enterprise":   return 30 * 24 * 60 * 60 * 1000;  // 1 month
+    default:             return 24 * 60 * 60 * 1000;        // fallback 1 day
+  }
+}
+
+// ── Keyword-based planType detection ─────────────────────────────────────────
+function detectPlanTypeFromName(itemName: string): string | null {
+  const lower = itemName.toLowerCase();
+  if (lower.includes("enterprise")) return "enterprise";
+  if (lower.includes("professional") || lower.includes("pro")) return "professional";
+  if (lower.includes("basic") || lower.includes("starter")) return "basic";
+  return null;
+}
+
+// ── Per-theme slug resolver ───────────────────────────────────────────────────
 async function resolveThemeSlug(itemName: string): Promise<string | null> {
   try {
     const themes = await ScoreboardTheme.find({});
@@ -30,8 +50,8 @@ async function resolveThemeSlug(itemName: string): Promise<string | null> {
 }
 
 // PATCH /api/admin/payments/[id]
-// "approved" → create/restore ScoreboardAccess (24h)
-// "rejected"  → revoke ScoreboardAccess immediately
+// "approved" → create/restore ScoreboardAccess with correct duration
+// "rejected"  → revoke ScoreboardAccess immediately (all scoreboards lock)
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -54,29 +74,64 @@ export async function PATCH(
       return NextResponse.json({ message: "Payment not found." }, { status: 404 });
     }
 
-    const themeSlug = await resolveThemeSlug(payment.itemName);
     const email = payment.email?.toLowerCase().trim();
 
-    if (status === "approved" && themeSlug && email) {
-      const grantedAt = new Date();
-      const expiresAt = new Date(grantedAt.getTime() + 24 * 60 * 60 * 1000);
-      await ScoreboardAccess.findOneAndUpdate(
-        { email, themeSlug },
-        { email, themeSlug, paymentId: payment._id, trxId: payment.trxId, grantedAt, expiresAt, status: "active" },
-        { upsert: true, new: true }
-      );
-    } else if (status === "rejected" || status === "pending") {
-      // Revoke immediately — overlay will lock within seconds
-      await ScoreboardAccess.updateMany(
-        { paymentId: payment._id },
-        { status: "revoked" }
-      );
-      // Also revoke by email+theme if we can resolve it
-      if (themeSlug && email) {
+    // ── Is this a plan purchase? ──────────────────────────────────────────────
+    const planType = detectPlanTypeFromName(payment.itemName);
+
+    if (planType) {
+      // Plan payment — operate on "all-themes" record
+      if (status === "approved") {
+        const grantedAt = new Date();
+        const expiresAt = new Date(grantedAt.getTime() + planDurationMs(planType));
+        await ScoreboardAccess.findOneAndUpdate(
+          { email, themeSlug: "all-themes" },
+          {
+            email,
+            themeSlug: "all-themes",
+            paymentId: payment._id,
+            trxId: payment.trxId,
+            grantedAt,
+            expiresAt,
+            status: "active",
+          },
+          { upsert: true, new: true }
+        );
+      } else if (status === "rejected" || status === "pending") {
+        // Revoke ALL plan-level access for this user immediately
         await ScoreboardAccess.updateMany(
-          { email, themeSlug, status: "active" },
+          { email, themeSlug: "all-themes" },
           { status: "revoked" }
         );
+        // Also revoke access linked to this specific payment
+        await ScoreboardAccess.updateMany(
+          { paymentId: payment._id },
+          { status: "revoked" }
+        );
+      }
+    } else {
+      // ── Legacy per-theme payment ────────────────────────────────────────────
+      const themeSlug = await resolveThemeSlug(payment.itemName);
+
+      if (status === "approved" && themeSlug && email) {
+        const grantedAt = new Date();
+        const expiresAt = new Date(grantedAt.getTime() + 24 * 60 * 60 * 1000);
+        await ScoreboardAccess.findOneAndUpdate(
+          { email, themeSlug },
+          { email, themeSlug, paymentId: payment._id, trxId: payment.trxId, grantedAt, expiresAt, status: "active" },
+          { upsert: true, new: true }
+        );
+      } else if (status === "rejected" || status === "pending") {
+        await ScoreboardAccess.updateMany(
+          { paymentId: payment._id },
+          { status: "revoked" }
+        );
+        if (themeSlug && email) {
+          await ScoreboardAccess.updateMany(
+            { email, themeSlug, status: "active" },
+            { status: "revoked" }
+          );
+        }
       }
     }
 

@@ -132,6 +132,7 @@ export default function Pricing() {
           }}
           itemName={`${selectedPlan.name} Plan`}
           itemPrice={`${selectedPlan.price}`}
+          planType={selectedPlan.planType}
           onSuccess={() => {
             toast.success(`Successfully subscribed to ${selectedPlan.name} Plan!`);
           }}

@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { name, price, period, description, features, buttonText, featured, order } = await req.json();
+    const { name, price, period, description, features, buttonText, featured, order, planType } = await req.json();
 
     if (!name || !price || !period || !description || !buttonText) {
       return NextResponse.json(
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
       buttonText: buttonText.trim(),
       featured: !!featured,
       order: Number(order) || 0,
+      planType: planType || null,
     });
 
     return NextResponse.json(

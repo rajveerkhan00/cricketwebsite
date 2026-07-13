@@ -8,6 +8,7 @@ interface JazzCashPaymentModalProps {
   onClose: () => void;
   itemName: string;
   itemPrice: string | number;
+  planType?: string | null;
   onSuccess: () => void;
 }
 
@@ -16,6 +17,7 @@ export default function JazzCashPaymentModal({
   onClose,
   itemName,
   itemPrice,
+  planType,
   onSuccess,
 }: JazzCashPaymentModalProps) {
   const [activeTab, setActiveTab] = useState<"till" | "iban">("till");
@@ -64,6 +66,7 @@ export default function JazzCashPaymentModal({
           trxId,
           itemName,
           itemPrice,
+          planType,
         }),
       });
 

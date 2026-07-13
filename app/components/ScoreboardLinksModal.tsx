@@ -35,6 +35,12 @@ export default function ScoreboardLinksModal({
   const [approvedSlugs, setApprovedSlugs] = useState<string[]>([]);
   const [loadingPurchases, setLoadingPurchases] = useState(false);
 
+  // Active Plan States
+  const [isPlanActive, setIsPlanActive] = useState(false);
+  const [planName, setPlanName] = useState("");
+  const [planRemainingSeconds, setPlanRemainingSeconds] = useState(0);
+  const [themeRemainingSeconds, setThemeRemainingSeconds] = useState<Record<string, number>>({});
+
   const fetchPurchases = async () => {
     if (!userEmail) return;
     try {
@@ -43,6 +49,10 @@ export default function ScoreboardLinksModal({
       if (res.ok) {
         const data = await res.json();
         setApprovedSlugs(data.approvedSlugs || []);
+        setIsPlanActive(!!data.isPlanActive);
+        setPlanName(data.planName || "");
+        setPlanRemainingSeconds(data.planRemainingSeconds || 0);
+        setThemeRemainingSeconds(data.themeRemainingSeconds || {});
       }
     } catch (error) {
       console.error("Failed to load purchases:", error);
@@ -84,7 +94,40 @@ export default function ScoreboardLinksModal({
     loadThemes();
   }, [isOpen]);
 
+  // Live countdown timer ticker effect
+  useEffect(() => {
+    if (!isOpen) return;
+    const interval = setInterval(() => {
+      setPlanRemainingSeconds((prev) => Math.max(0, prev - 1));
+      setThemeRemainingSeconds((prev) => {
+        const next = { ...prev };
+        let updated = false;
+        for (const k in next) {
+          if (next[k] > 0) {
+            next[k] = next[k] - 1;
+            updated = true;
+          }
+        }
+        return updated ? next : prev;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const formatTimeRemaining = (seconds: number) => {
+    if (seconds <= 0) return "";
+    const days = Math.floor(seconds / (24 * 3600));
+    const hours = Math.floor((seconds % (24 * 3600)) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (days > 0) {
+      return `${days}d ${hours}h ${mins}m ${secs}s`;
+    }
+    return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleCopyLink = (themeSlug: string, isCameraFi = false) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
@@ -122,7 +165,6 @@ export default function ScoreboardLinksModal({
     window.open(url, "_blank", "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no");
   };
 
-
   return (
     <>
       {/* Full-screen scrollable overlay */}
@@ -136,10 +178,10 @@ export default function ScoreboardLinksModal({
           onClick={onClose}
         />
 
-        {/* Content wrapper — pushes modal into view, allows outer-div scrolling */}
+        {/* Content wrapper */}
         <div className="relative flex min-h-full items-start justify-center p-4 py-8">
           {/* Modal card */}
-          <div className="w-full max-w-4xl bg-[#eaecfa] text-zinc-800 rounded-3xl shadow-2xl border border-zinc-300 font-sans">
+          <div className="w-full max-w-5xl bg-[#eaecfa] text-zinc-800 rounded-3xl shadow-2xl border border-zinc-300 font-sans">
             {/* Close Button */}
             <div className="relative">
               <button
@@ -178,16 +220,29 @@ export default function ScoreboardLinksModal({
                     {approvedSlugs.length} / {themes.length}
                   </span>
                 </div>
+
+                {/* Plan Unlock Active Timer Banner */}
+                {isPlanActive && planRemainingSeconds > 0 && (
+                  <div className="mt-2 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-400/40 rounded-xl p-3 w-full text-center">
+                    <span className="text-xs font-black text-emerald-800 tracking-wide block uppercase font-space">
+                      🚀 {planName.toUpperCase()} ACTIVE
+                    </span>
+                    <span className="text-[10px] font-black text-teal-700 block mt-0.5 font-mono">
+                      All 15 scoreboards unlocked! Remaining time: {formatTimeRemaining(planRemainingSeconds)}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Themes Table */}
               <div className="w-full mt-6 border border-zinc-300 rounded-xl overflow-x-auto shadow-lg bg-white">
-                <table className="w-full text-left border-collapse min-w-[700px]">
+                <table className="w-full text-left border-collapse min-w-[850px]">
                   <thead>
                     <tr className="bg-[#008080] text-white text-xs font-bold uppercase tracking-wider">
                       <th className="p-3 w-12 text-center">No.</th>
                       <th className="p-3">Theme</th>
                       <th className="p-3 text-center">Price (per day)</th>
+                      <th className="p-3 text-center w-28">Status / Timer</th>
                       <th className="p-3 text-center w-24">Preview</th>
                       <th className="p-3 text-center w-48">Graphical PDFs (Themed)</th>
                       <th className="p-3 text-center w-48">Scoreboard Link (PC + Mobile)</th>
@@ -197,7 +252,7 @@ export default function ScoreboardLinksModal({
                   <tbody className="divide-y divide-zinc-200">
                     {loadingThemes ? (
                       <tr>
-                        <td colSpan={6} className="p-8 text-center text-zinc-500 font-semibold">
+                        <td colSpan={8} className="p-8 text-center text-zinc-500 font-semibold">
                           <div className="flex items-center justify-center gap-2">
                             <div className="w-4 h-4 border-2 border-[#008080] border-t-transparent rounded-full animate-spin" />
                             Loading themes...
@@ -206,7 +261,7 @@ export default function ScoreboardLinksModal({
                       </tr>
                     ) : themes.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="p-8 text-center text-zinc-500 font-semibold">
+                        <td colSpan={8} className="p-8 text-center text-zinc-500 font-semibold">
                           No themes found.
                         </td>
                       </tr>
@@ -214,6 +269,7 @@ export default function ScoreboardLinksModal({
                       themes.map((theme, idx) => {
                         const isFreeTheme = theme.id <= 2 || FREE_THEME_SLUGS.has(theme.slug.toLowerCase().trim());
                         const isUnlocked = isFreeTheme || approvedSlugs.includes(theme.slug);
+                        const remainingSec = themeRemainingSeconds[theme.slug] || 0;
                         return (
                           <tr
                             key={theme.id}
@@ -234,6 +290,29 @@ export default function ScoreboardLinksModal({
                             </td>
                             <td className="p-3 text-center font-bold text-emerald-700">
                               {isFreeTheme ? "FREE" : `PKR ${theme.price}`}
+                            </td>
+                            {/* Status and Active Live Timer */}
+                            <td className="p-3 text-center">
+                              {isFreeTheme ? (
+                                <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[9px] font-bold px-2.5 py-0.5 rounded">
+                                  Free Theme
+                                </span>
+                              ) : isUnlocked ? (
+                                <div className="flex flex-col items-center gap-0.5">
+                                  <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-extrabold px-2 py-0.5 rounded">
+                                    ✓ Unlocked
+                                  </span>
+                                  {remainingSec > 0 && (
+                                    <span className="text-indigo-600 font-mono text-[9px] font-bold tracking-tight whitespace-nowrap">
+                                      ⏳ {formatTimeRemaining(remainingSec)}
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="bg-zinc-100 text-zinc-400 border border-zinc-200 text-[9px] font-bold px-2 py-0.5 rounded">
+                                  🔒 Locked
+                                </span>
+                              )}
                             </td>
                             <td className="p-3 text-center">
                               <button

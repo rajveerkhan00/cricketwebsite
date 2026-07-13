@@ -39,6 +39,14 @@ const PricingTierSchema = new Schema(
       type: Number,
       default: 0,
     },
+    // planType: when set, buying this tier unlocks ALL 15 scoreboards for the given duration
+    // basic = 1 day, professional = 1 week, enterprise = 1 month
+    // null = per-theme purchase (legacy behaviour)
+    planType: {
+      type: String,
+      enum: ["basic", "professional", "enterprise", null],
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -46,3 +54,4 @@ const PricingTierSchema = new Schema(
 );
 
 export const PricingTier = models.PricingTier || model("PricingTier", PricingTierSchema);
+

@@ -22,7 +22,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   try {
     const { id } = await params;
     const body = await req.json();
-    const { name, price, period, description, features, buttonText, featured, order } = body;
+    const { name, price, period, description, features, buttonText, featured, order, planType } = body;
 
     if (!name || !price || !period || !description || !buttonText) {
       return NextResponse.json(
@@ -44,6 +44,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         buttonText: buttonText.trim(),
         featured: !!featured,
         order: Number(order) || 0,
+        planType: planType || null,
       },
       { new: true }
     );
