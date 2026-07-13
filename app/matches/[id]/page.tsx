@@ -108,6 +108,10 @@ export default function MatchScoringPage() {
   const [showPlayers1, setShowPlayers1] = useState(false);
   const [showPlayers2, setShowPlayers2] = useState(false);
 
+  // Inline player editing
+  const [editingPlayer, setEditingPlayer] = useState<{ team: "team1" | "team2"; idx: number } | null>(null);
+  const [editPlayerValue, setEditPlayerValue] = useState("");
+
   // Start Innings Modal
   const [showStartInningsModal, setShowStartInningsModal] = useState(false);
   const [strikerInput, setStrikerInput] = useState("");
@@ -322,6 +326,45 @@ export default function MatchScoringPage() {
       saveScoringState(scoringState, undefined, undefined, updatedRoster);
     }
     showToast("Player removed.");
+  };
+
+  // Rename player (save inline edit)
+  const handleEditPlayer = (team: "team1" | "team2", index: number, newName: string) => {
+    if (!match || !newName.trim()) return;
+    const trimmed = newName.trim();
+    const currentRoster = team === "team1" ? match.playersTeam1 || [] : match.playersTeam2 || [];
+    const oldName = currentRoster[index];
+    const updatedRoster = currentRoster.map((p, i) => (i === index ? trimmed : p));
+
+    // Also update live scoring state references if any
+    let updatedScoringState = scoringState;
+    if (scoringState && oldName) {
+      const s = { ...scoringState };
+      if (s.striker === oldName) s.striker = trimmed;
+      if (s.nonStriker === oldName) s.nonStriker = trimmed;
+      if (s.bowler === oldName) s.bowler = trimmed;
+      s.batsmen = s.batsmen.map((b) => b.name === oldName ? { ...b, name: trimmed } : b);
+      s.bowlers = s.bowlers.map((bw) => bw.name === oldName ? { ...bw, name: trimmed } : bw);
+      updatedScoringState = s;
+      setScoringState(s);
+    }
+
+    setMatch((prev) => {
+      if (!prev) return null;
+      return team === "team1"
+        ? { ...prev, playersTeam1: updatedRoster }
+        : { ...prev, playersTeam2: updatedRoster };
+    });
+
+    if (team === "team1") {
+      saveScoringState(updatedScoringState, undefined, updatedRoster, undefined);
+    } else {
+      saveScoringState(updatedScoringState, undefined, undefined, updatedRoster);
+    }
+
+    setEditingPlayer(null);
+    setEditPlayerValue("");
+    showToast(`Player renamed to "${trimmed}".`);
   };
 
   // Get Batting & Bowling Team names based on toss
@@ -1990,16 +2033,53 @@ export default function MatchScoringPage() {
                     </button>
                   </div>
                   {showPlayers1 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
                       {match.playersTeam1 && match.playersTeam1.length > 0 ? (
                         match.playersTeam1.map((p, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
-                            <span className="truncate text-[10px] md:text-xs">{p}</span>
-                            <button onClick={() => handleRemovePlayer("team1", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+                          <div key={idx} className="flex items-center gap-1.5 bg-[#121542] px-2 py-1.5 rounded border border-zinc-700/40">
+                            {editingPlayer?.team === "team1" && editingPlayer?.idx === idx ? (
+                              <>
+                                <input
+                                  autoFocus
+                                  type="text"
+                                  value={editPlayerValue}
+                                  onChange={(e) => setEditPlayerValue(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") handleEditPlayer("team1", idx, editPlayerValue);
+                                    if (e.key === "Escape") { setEditingPlayer(null); setEditPlayerValue(""); }
+                                  }}
+                                  className="flex-1 min-w-0 bg-[#07092e] border border-amber-500/60 rounded px-1.5 py-0.5 text-white text-[10px] focus:outline-none focus:border-amber-400"
+                                />
+                                <button
+                                  onClick={() => handleEditPlayer("team1", idx, editPlayerValue)}
+                                  className="text-emerald-400 hover:text-emerald-300 font-black text-xs px-1 cursor-pointer flex-shrink-0"
+                                  title="Save"
+                                >✓</button>
+                                <button
+                                  onClick={() => { setEditingPlayer(null); setEditPlayerValue(""); }}
+                                  className="text-zinc-500 hover:text-zinc-300 font-bold text-xs px-0.5 cursor-pointer flex-shrink-0"
+                                  title="Cancel"
+                                >✕</button>
+                              </>
+                            ) : (
+                              <>
+                                <span className="flex-1 truncate text-[10px] md:text-xs text-zinc-200">{p}</span>
+                                <button
+                                  onClick={() => { setEditingPlayer({ team: "team1", idx }); setEditPlayerValue(p); }}
+                                  className="text-amber-400 hover:text-amber-300 font-bold ml-1 text-xs cursor-pointer flex-shrink-0"
+                                  title="Edit player name"
+                                >✏️</button>
+                                <button
+                                  onClick={() => handleRemovePlayer("team1", idx)}
+                                  className="text-red-400 hover:text-red-300 font-bold ml-0.5 text-sm cursor-pointer flex-shrink-0"
+                                  title="Remove player"
+                                >×</button>
+                              </>
+                            )}
                           </div>
                         ))
                       ) : (
-                        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+                        <div className="text-center text-zinc-600 text-[10px] md:text-xs py-2">No players added</div>
                       )}
                     </div>
                   )}
@@ -2029,16 +2109,53 @@ export default function MatchScoringPage() {
                     </button>
                   </div>
                   {showPlayers2 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2 text-[10px] md:text-xs max-h-[120px] md:max-h-[150px] overflow-y-auto">
+                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
                       {match.playersTeam2 && match.playersTeam2.length > 0 ? (
                         match.playersTeam2.map((p, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-[#121542] px-1.5 md:px-2 py-1 rounded border border-zinc-700/40">
-                            <span className="truncate text-[10px] md:text-xs">{p}</span>
-                            <button onClick={() => handleRemovePlayer("team2", idx)} className="text-red-400 hover:text-red-300 font-bold ml-1 text-sm md:text-base">×</button>
+                          <div key={idx} className="flex items-center gap-1.5 bg-[#121542] px-2 py-1.5 rounded border border-zinc-700/40">
+                            {editingPlayer?.team === "team2" && editingPlayer?.idx === idx ? (
+                              <>
+                                <input
+                                  autoFocus
+                                  type="text"
+                                  value={editPlayerValue}
+                                  onChange={(e) => setEditPlayerValue(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") handleEditPlayer("team2", idx, editPlayerValue);
+                                    if (e.key === "Escape") { setEditingPlayer(null); setEditPlayerValue(""); }
+                                  }}
+                                  className="flex-1 min-w-0 bg-[#07092e] border border-amber-500/60 rounded px-1.5 py-0.5 text-white text-[10px] focus:outline-none focus:border-amber-400"
+                                />
+                                <button
+                                  onClick={() => handleEditPlayer("team2", idx, editPlayerValue)}
+                                  className="text-emerald-400 hover:text-emerald-300 font-black text-xs px-1 cursor-pointer flex-shrink-0"
+                                  title="Save"
+                                >✓</button>
+                                <button
+                                  onClick={() => { setEditingPlayer(null); setEditPlayerValue(""); }}
+                                  className="text-zinc-500 hover:text-zinc-300 font-bold text-xs px-0.5 cursor-pointer flex-shrink-0"
+                                  title="Cancel"
+                                >✕</button>
+                              </>
+                            ) : (
+                              <>
+                                <span className="flex-1 truncate text-[10px] md:text-xs text-zinc-200">{p}</span>
+                                <button
+                                  onClick={() => { setEditingPlayer({ team: "team2", idx }); setEditPlayerValue(p); }}
+                                  className="text-amber-400 hover:text-amber-300 font-bold ml-1 text-xs cursor-pointer flex-shrink-0"
+                                  title="Edit player name"
+                                >✏️</button>
+                                <button
+                                  onClick={() => handleRemovePlayer("team2", idx)}
+                                  className="text-red-400 hover:text-red-300 font-bold ml-0.5 text-sm cursor-pointer flex-shrink-0"
+                                  title="Remove player"
+                                >×</button>
+                              </>
+                            )}
                           </div>
                         ))
                       ) : (
-                        <div className="col-span-4 text-center text-zinc-600 text-[10px] md:text-xs">No players added</div>
+                        <div className="text-center text-zinc-600 text-[10px] md:text-xs py-2">No players added</div>
                       )}
                     </div>
                   )}
