@@ -1101,23 +1101,10 @@ export default function MatchScoringPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden" suppressHydrationWarning={true}>
-        {/* Hex mesh */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="hex-grid-load-m" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hex-grid-load-m)" />
-          </svg>
-        </div>
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-white text-slate-900 relative overflow-hidden" suppressHydrationWarning={true}>
         <div className="flex flex-col items-center gap-3 relative z-10" suppressHydrationWarning={true}>
           <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" suppressHydrationWarning={true} />
-          <p className="text-zinc-400 font-semibold tracking-wider font-space" suppressHydrationWarning={true}>LOADING MATCH SCOREBOARD...</p>
+          <p className="text-slate-500 font-semibold tracking-wider font-space" suppressHydrationWarning={true}>LOADING MATCH SCOREBOARD...</p>
         </div>
       </div>
     );
@@ -1126,29 +1113,16 @@ export default function MatchScoringPage() {
   // Error state
   if (error || !match) {
     return (
-      <div className="flex min-h-screen flex-col bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
-        {/* Hex mesh */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="hex-grid-err-m" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hex-grid-err-m)" />
-          </svg>
-        </div>
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+      <div className="flex min-h-screen flex-col bg-white text-slate-900 relative overflow-hidden">
         <Header />
         <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8 relative z-10">
-          <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+          <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <p className="text-xl font-bold font-space">{error || "Match not found"}</p>
-          <Link href="/tournaments" className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 rounded-lg text-sm font-bold transition-all">
+          <p className="text-xl font-bold font-space text-slate-900">{error || "Match not found"}</p>
+          <Link href="/tournaments" className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 rounded-lg text-sm font-bold text-white transition-all">
             Back to Tournaments
           </Link>
         </div>
@@ -1173,7 +1147,7 @@ export default function MatchScoringPage() {
   const activeBowlerStats = scoringState?.bowlers.find((bw) => bw.name === scoringState.bowler);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white select-none relative overflow-hidden font-sans">
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 select-none font-sans">
       <style>{`
         /* Super small, professional top-right notifications for controller page */
         .Toastify__toast-container {
@@ -1189,10 +1163,10 @@ export default function MatchScoringPage() {
           border-radius: 6px !important;
           padding: 6px 10px !important;
           margin-bottom: 6px !important;
-          background: rgba(12, 15, 79, 0.95) !important;
-          border: 1px solid rgba(255, 255, 255, 0.1) !important;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
-          color: #fff !important;
+          background: rgba(255, 255, 255, 0.95) !important;
+          border: 1px solid rgba(0, 0, 0, 0.1) !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+          color: #000 !important;
           font-family: inherit !important;
         }
         .Toastify__toast--success {
@@ -1221,7 +1195,7 @@ export default function MatchScoringPage() {
         .Toastify__close-button {
           align-self: center !important;
           opacity: 0.6 !important;
-          color: #fff !important;
+          color: #000 !important;
           padding: 0 !important;
           width: 10px !important;
           height: 10px !important;
@@ -1244,33 +1218,18 @@ export default function MatchScoringPage() {
           background: #06b6d4 !important;
         }
       `}</style>
-      {/* Hexagonal Mesh Overlay */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="hex-grid-ctrl" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-              <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hex-grid-ctrl)" />
-        </svg>
-      </div>
-      {/* Background glows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
 
       <Header />
 
-
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 px-4 md:px-6 z-10 flex flex-col gap-6">
         {/* ── Breadcrumb & Links ─────────────────────────────────────────── */}
-        <div className="flex items-center justify-between text-xs text-zinc-500 font-semibold border-b border-zinc-800/60 pb-3">
+        <div className="flex items-center justify-between text-xs text-slate-400 font-semibold border-b border-slate-200 pb-3">
           <div className="flex items-center gap-2">
-            <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-400 transition-colors">
+            <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-500 transition-colors">
               Tournament Details
             </Link>
             <span>/</span>
-            <span className="text-zinc-300 font-bold">Match Scoreboard</span>
+            <span className="text-slate-800 font-bold">Match Scoreboard</span>
           </div>
           <button
             onClick={() => setShowScoreboardLinks(true)}
@@ -1307,7 +1266,7 @@ export default function MatchScoringPage() {
         {scoringState && scoringState.inningsStarted ? (
           <div className="flex flex-col gap-3">
             {/* VS Title banner inside scoreboard */}
-            <div className="text-center font-black text-sm text-zinc-400 tracking-wider">
+            <div className="text-center font-black text-sm text-slate-500 tracking-wider">
               {currentBowlingTeamLabel.toUpperCase()} VS {currentBattingTeamLabel.toUpperCase()}
             </div>
 
@@ -1320,23 +1279,23 @@ export default function MatchScoringPage() {
             {/* Grid 3 boxes layout matching Image 3 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Left Box: Batsmen stats */}
-              <div className="bg-[#0b0c20]/90 border border-zinc-800/80 rounded-2xl p-4 flex flex-col justify-center min-h-[120px] shadow-lg">
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col justify-center min-h-[120px] shadow-sm">
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="font-extrabold flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
+                    <span className="font-extrabold flex items-center gap-1.5 text-slate-800">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
                       {scoringState.striker || "Striker"}
                     </span>
-                    <span className="font-bold text-zinc-300">
+                    <span className="font-bold text-slate-900">
                       {activeStrikerStats?.runs || 0}{" "}
-                      <span className="text-xs text-zinc-500 font-medium font-mono">({activeStrikerStats?.balls || 0})</span>
+                      <span className="text-xs text-slate-400 font-medium font-mono">({activeStrikerStats?.balls || 0})</span>
                     </span>
                   </div>
-                  <div className="flex justify-between items-center text-sm text-zinc-400">
+                  <div className="flex justify-between items-center text-sm text-slate-600">
                     <span className="font-bold pl-4">{scoringState.nonStriker || "Non-Striker"}</span>
-                    <span className="font-semibold">
+                    <span className="font-semibold text-slate-800">
                       {activeNonStrikerStats?.runs || 0}{" "}
-                      <span className="text-xs text-zinc-600 font-medium font-mono">({activeNonStrikerStats?.balls || 0})</span>
+                      <span className="text-xs text-slate-400 font-medium font-mono">({activeNonStrikerStats?.balls || 0})</span>
                     </span>
                   </div>
                 </div>
@@ -1422,16 +1381,16 @@ export default function MatchScoringPage() {
             )}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center p-8 border border-dashed border-zinc-800 rounded-2xl bg-[#0b0c20]/60 gap-4">
-            <span className="w-10 h-10 rounded-full bg-zinc-800/80 flex items-center justify-center border border-zinc-700/60">🏏</span>
+          <div className="flex flex-col items-center justify-center p-8 border border-dashed border-slate-300 rounded-2xl bg-slate-50/50 gap-4">
+            <span className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">🏏</span>
             <div className="text-center">
-              <p className="font-extrabold text-sm tracking-wider font-space">INNINGS NOT STARTED</p>
-              <p className="text-xs text-zinc-500 mt-1">Setup teams and click Start 1st Innings to initialize scoreboard</p>
+              <p className="font-extrabold text-sm tracking-wider font-space text-slate-800">INNINGS NOT STARTED</p>
+              <p className="text-xs text-slate-500 mt-1">Setup teams and click Start 1st Innings to initialize scoreboard</p>
             </div>
             {isOwner && (
               <button
                 onClick={openStartInnings}
-                className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-lg text-xs font-bold transition-all"
+                className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-lg text-xs font-bold text-white transition-all"
               >
                 START 1ST INNINGS
               </button>
@@ -1480,31 +1439,31 @@ export default function MatchScoringPage() {
           };
 
           const InningsTable = ({ inn, batTeam, bowlTeam, innNo }: { inn: any, batTeam: string, bowlTeam: string, innNo: number }) => {
-            if (!inn) return <p className="text-xs text-zinc-500 italic">No data for innings {innNo}.</p>;
+            if (!inn) return <p className="text-xs text-slate-500 italic">No data for innings {innNo}.</p>;
             return (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between bg-gradient-to-r from-emerald-900/40 to-emerald-800/20 border border-emerald-500/30 rounded-xl px-4 py-2.5">
-                  <span className="font-black text-sm text-emerald-300 uppercase tracking-wider">INN {innNo} — {batTeam}</span>
-                  <span className="font-black text-lg text-white">{inn.score}/{inn.wickets} <span className="text-xs text-zinc-400 font-medium">({fmtOv(inn.balls)}/{match.overs} Ov)</span></span>
+              <div className="flex flex-col gap-4 text-slate-900">
+                <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5">
+                  <span className="font-black text-sm text-emerald-800 uppercase tracking-wider">INN {innNo} — {batTeam}</span>
+                  <span className="font-black text-lg text-emerald-900">{inn.score}/{inn.wickets} <span className="text-xs text-slate-500 font-medium">({fmtOv(inn.balls)}/{match.overs} Ov)</span></span>
                 </div>
                 {/* Batting */}
                 <div>
-                  <h4 className="text-[10px] font-black tracking-widest text-zinc-400 uppercase mb-2">🏏 Batting</h4>
+                  <h4 className="text-[10px] font-black tracking-widest text-slate-500 uppercase mb-2">🏏 Batting</h4>
                   <table className="w-full text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-zinc-700/60">
-                        {["Batsman", "R", "B", "4s", "6s", "SR"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-zinc-500 uppercase tracking-wider">{h}</th>)}
+                      <tr className="border-b border-slate-200">
+                        {["Batsman", "R", "B", "4s", "6s", "SR"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">{h}</th>)}
                       </tr>
                     </thead>
                     <tbody>
                       {(inn.batsmen || []).map((b: any, i: number) => (
-                        <tr key={i} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                          <td className="py-2 px-2 font-bold text-white">{b.name}{b.out ? <span className="ml-2 text-[9px] text-red-400 font-black">OUT</span> : <span className="ml-2 text-[9px] text-green-400 font-black">N/O</span>}</td>
-                          <td className="py-2 px-2 font-black text-amber-300">{b.runs}</td>
-                          <td className="py-2 px-2 text-zinc-400">{b.balls}</td>
-                          <td className="py-2 px-2 text-yellow-400 font-bold">{b.fours}</td>
-                          <td className="py-2 px-2 text-sky-400 font-bold">{b.sixes}</td>
-                          <td className="py-2 px-2 text-zinc-300">{b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0"}</td>
+                        <tr key={i} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                          <td className="py-2 px-2 font-bold text-slate-900">{b.name}{b.out ? <span className="ml-2 text-[9px] text-red-600 font-black">OUT</span> : <span className="ml-2 text-[9px] text-green-600 font-black">N/O</span>}</td>
+                          <td className="py-2 px-2 font-black text-amber-600">{b.runs}</td>
+                          <td className="py-2 px-2 text-slate-600">{b.balls}</td>
+                          <td className="py-2 px-2 text-amber-600 font-bold">{b.fours}</td>
+                          <td className="py-2 px-2 text-sky-600 font-bold">{b.sixes}</td>
+                          <td className="py-2 px-2 text-slate-700">{b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0"}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1512,23 +1471,23 @@ export default function MatchScoringPage() {
                 </div>
                 {/* Bowling */}
                 <div>
-                  <h4 className="text-[10px] font-black tracking-widest text-zinc-400 uppercase mb-2">🎯 Bowling — {bowlTeam}</h4>
+                  <h4 className="text-[10px] font-black tracking-widest text-slate-500 uppercase mb-2">🎯 Bowling — {bowlTeam}</h4>
                   <table className="w-full text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-zinc-700/60">
-                        {["Bowler", "O", "R", "W", "Eco"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-zinc-500 uppercase tracking-wider">{h}</th>)}
+                      <tr className="border-b border-slate-200">
+                        {["Bowler", "O", "R", "W", "Eco"].map(h => <th key={h} className="py-1.5 px-2 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">{h}</th>)}
                       </tr>
                     </thead>
                     <tbody>
                       {(inn.bowlers || []).map((bw: any, i: number) => {
                         const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * (match.ballsPerOver || 6)).toFixed(2) : "0.00";
                         return (
-                          <tr key={i} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                            <td className="py-2 px-2 font-bold text-white">{bw.name}</td>
-                            <td className="py-2 px-2 text-zinc-400">{fmtOv(bw.ballsBowled)}</td>
-                            <td className="py-2 px-2 text-zinc-300">{bw.runsConceded}</td>
-                            <td className="py-2 px-2 font-black text-red-400">{bw.wickets}</td>
-                            <td className="py-2 px-2 text-zinc-300">{eco}</td>
+                          <tr key={i} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td className="py-2 px-2 font-bold text-slate-900">{bw.name}</td>
+                            <td className="py-2 px-2 text-slate-600">{fmtOv(bw.ballsBowled)}</td>
+                            <td className="py-2 px-2 text-slate-600">{bw.runsConceded}</td>
+                            <td className="py-2 px-2 font-black text-red-600">{bw.wickets}</td>
+                            <td className="py-2 px-2 text-slate-700">{eco}</td>
                           </tr>
                         );
                       })}
@@ -1542,28 +1501,28 @@ export default function MatchScoringPage() {
           return (
             <div className="flex flex-col gap-4 mt-2">
               {/* Trophy Banner */}
-              <div className="relative overflow-hidden bg-gradient-to-r from-amber-600/30 via-yellow-500/20 to-amber-600/30 border border-amber-500/40 rounded-2xl p-5 text-center shadow-lg shadow-amber-500/10">
+              <div className="relative overflow-hidden bg-amber-50/50 border border-amber-200 rounded-2xl p-5 text-center shadow-md">
                 <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(45deg, #fbbf24 0, #fbbf24 1px, transparent 0, transparent 50%)", backgroundSize: "10px 10px" }} />
                 <div className="text-4xl mb-2">🏆</div>
-                <div className="text-xs font-black tracking-widest text-amber-400 uppercase mb-1">Match Completed</div>
-                <div className="text-xl font-black text-white tracking-wide">{winnerText}</div>
-                <div className="flex items-center justify-center gap-6 mt-3 text-sm text-zinc-300">
-                  {inn1 && <span className="font-bold">{bat1Team}: <span className="text-amber-300 font-black">{inn1.score}/{inn1.wickets}</span> ({fmtOv(inn1.balls)})</span>}
-                  <span className="text-zinc-600">|</span>
-                  <span className="font-bold">{bat2Team}: <span className="text-amber-300 font-black">{inn2.score}/{inn2.wickets}</span> ({fmtOv(inn2.balls)})</span>
+                <div className="text-xs font-black tracking-widest text-amber-600 uppercase mb-1">Match Completed</div>
+                <div className="text-xl font-black text-slate-900 tracking-wide">{winnerText}</div>
+                <div className="flex items-center justify-center gap-6 mt-3 text-sm text-slate-700">
+                  {inn1 && <span className="font-bold">{bat1Team}: <span className="text-amber-600 font-black">{inn1.score}/{inn1.wickets}</span> ({fmtOv(inn1.balls)})</span>}
+                  <span className="text-slate-300">|</span>
+                  <span className="font-bold">{bat2Team}: <span className="text-amber-600 font-black">{inn2.score}/{inn2.wickets}</span> ({fmtOv(inn2.balls)})</span>
                 </div>
               </div>
 
               {/* Summary & Download button */}
-              <div className="flex flex-col gap-4 bg-[#0a0c2c] border border-zinc-800 rounded-2xl p-4 shadow-lg">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-2 flex-wrap gap-2">
-                  <h3 className="text-xs font-black tracking-widest text-zinc-400 uppercase">📋 Export Match Reports</h3>
+              <div className="flex flex-col gap-4 bg-slate-50 border border-slate-200 rounded-2xl p-4 shadow-sm">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2 flex-wrap gap-2">
+                  <h3 className="text-xs font-black tracking-widest text-slate-800 uppercase">📋 Export Match Reports</h3>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">PDF Theme Style:</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">PDF Theme Style:</span>
                     <select
                       value={selectedPdfTheme}
                       onChange={(e) => setSelectedPdfTheme(e.target.value)}
-                      className="bg-[#121542] border border-zinc-700/60 rounded px-2 py-1 text-xs text-white cursor-pointer focus:outline-none font-bold"
+                      className="bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-900 cursor-pointer focus:outline-none font-bold"
                     >
                       <option value="asia-cup">Asia Cup</option>
                       <option value="cwc-19">CWC 19</option>
@@ -1587,7 +1546,7 @@ export default function MatchScoringPage() {
                 <div className="flex flex-wrap items-center justify-end gap-3.5">
                   <button
                     onClick={handleDownloadPDF}
-                    className="flex items-center gap-1.5 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer border border-zinc-700 uppercase"
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer border border-slate-300 uppercase"
                   >
                     ⬇️ Plain PDF
                   </button>
@@ -1616,7 +1575,7 @@ export default function MatchScoringPage() {
 
 
               {/* Scorecard — printable target */}
-              <div id="match-scorecard-print" className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-6">
+              <div id="match-scorecard-print" className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-6">
                 {/* Print-only header (hidden on screen) */}
                 <div className="hidden print:block text-center mb-4">
                   <h1 className="text-2xl font-black">{match.team1Name} vs {match.team2Name}</h1>
@@ -1660,10 +1619,10 @@ export default function MatchScoringPage() {
             </div> */}
 
             {/* ── Unified Cricket Controller ─────────────────────────────────── */}
-            <div className="relative w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/10" style={{ background: "linear-gradient(to bottom, #ca32e6 0%, #357ef7 55%, #05ccd9 100%)" }}>
+            <div className="relative w-full rounded-[32px] overflow-hidden bg-white border border-slate-200 shadow-xl">
               {/* Colored top header block */}
-              <div className="pt-6 pb-2 flex flex-col items-center justify-center">
-                <h3 className="text-3xl font-black tracking-wider text-black font-sans uppercase">Controller</h3>
+              <div className="pt-6 pb-2 flex flex-col items-center justify-center border-b border-slate-100">
+                <h3 className="text-3xl font-black tracking-wider text-slate-800 font-sans uppercase">Controller</h3>
               </div>
 
               <div className="p-4 flex flex-col gap-4">
@@ -2002,10 +1961,10 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Edit Team Roster Panel */}
-                <div className="bg-[#121542] border border-zinc-700/40 rounded-xl p-3 md:p-4 flex flex-col gap-3 md:gap-4 mt-2">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 md:p-4 flex flex-col gap-3 md:gap-4 mt-2">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 md:gap-0">
-                    <span className="text-[10px] md:text-xs font-black tracking-wider text-zinc-400 uppercase">Edit Team Roster 🔧</span>
-                    <span className="text-[8px] md:text-[10px] text-zinc-500">Comma-separate for bulk add</span>
+                    <span className="text-[10px] md:text-xs font-black tracking-wider text-slate-700 uppercase">Edit Team Roster 🔧</span>
+                    <span className="text-[8px] md:text-[10px] text-slate-400">Comma-separate for bulk add</span>
                   </div>
 
                   {/* Team 1 add */}
@@ -2016,7 +1975,7 @@ export default function MatchScoringPage() {
                         value={playerInput1}
                         onChange={(e) => setPlayerInput1(e.target.value)}
                         placeholder={`ADD PLAYER TO ${match.team1Name.toUpperCase()}`}
-                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+                        className="flex-1 bg-white border border-slate-300 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                       />
                       <button
                         onClick={() => handleAddPlayer("team1")}
@@ -2027,16 +1986,16 @@ export default function MatchScoringPage() {
                     </div>
                     <button
                       onClick={() => setShowPlayers1(!showPlayers1)}
-                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+                      className="bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap hover:bg-slate-300"
                     >
                       {match.team1Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam1?.length || 0})
                     </button>
                   </div>
                   {showPlayers1 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
+                    <div className="bg-white border border-slate-200 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
                       {match.playersTeam1 && match.playersTeam1.length > 0 ? (
                         match.playersTeam1.map((p, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 bg-[#121542] px-2 py-1.5 rounded border border-zinc-700/40">
+                          <div key={idx} className="flex items-center gap-1.5 bg-slate-50 px-2 py-1.5 rounded border border-slate-200">
                             {editingPlayer?.team === "team1" && editingPlayer?.idx === idx ? (
                               <>
                                 <input
@@ -2048,7 +2007,7 @@ export default function MatchScoringPage() {
                                     if (e.key === "Enter") handleEditPlayer("team1", idx, editPlayerValue);
                                     if (e.key === "Escape") { setEditingPlayer(null); setEditPlayerValue(""); }
                                   }}
-                                  className="flex-1 min-w-0 bg-[#07092e] border border-amber-500/60 rounded px-1.5 py-0.5 text-white text-[10px] focus:outline-none focus:border-amber-400"
+                                  className="flex-1 min-w-0 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-slate-900 text-[10px] focus:outline-none focus:border-amber-500"
                                 />
                                 <button
                                   onClick={() => handleEditPlayer("team1", idx, editPlayerValue)}
@@ -2063,7 +2022,7 @@ export default function MatchScoringPage() {
                               </>
                             ) : (
                               <>
-                                <span className="flex-1 truncate text-[10px] md:text-xs text-zinc-200">{p}</span>
+                                <span className="flex-1 truncate text-[10px] md:text-xs text-slate-800">{p}</span>
                                 <button
                                   onClick={() => { setEditingPlayer({ team: "team1", idx }); setEditPlayerValue(p); }}
                                   className="text-amber-400 hover:text-amber-300 font-bold ml-1 text-xs cursor-pointer flex-shrink-0"
@@ -2079,7 +2038,7 @@ export default function MatchScoringPage() {
                           </div>
                         ))
                       ) : (
-                        <div className="text-center text-zinc-600 text-[10px] md:text-xs py-2">No players added</div>
+                        <div className="text-center text-slate-400 text-[10px] md:text-xs py-2">No players added</div>
                       )}
                     </div>
                   )}
@@ -2092,7 +2051,7 @@ export default function MatchScoringPage() {
                         value={playerInput2}
                         onChange={(e) => setPlayerInput2(e.target.value)}
                         placeholder={`ADD PLAYER TO ${match.team2Name.toUpperCase()}`}
-                        className="flex-1 bg-[#07092e] border border-zinc-700/60 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-white focus:outline-none focus:border-amber-500"
+                        className="flex-1 bg-white border border-slate-300 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-[10px] md:text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                       />
                       <button
                         onClick={() => handleAddPlayer("team2")}
@@ -2103,16 +2062,16 @@ export default function MatchScoringPage() {
                     </div>
                     <button
                       onClick={() => setShowPlayers2(!showPlayers2)}
-                      className="bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap"
+                      className="bg-slate-200 border border-slate-300 text-slate-800 font-bold text-[9px] md:text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-lg whitespace-nowrap hover:bg-slate-300"
                     >
                       {match.team2Name.substring(0, 8).toUpperCase()}... Players ({match.playersTeam2?.length || 0})
                     </button>
                   </div>
                   {showPlayers2 && (
-                    <div className="bg-[#07092e] border border-zinc-800 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
+                    <div className="bg-white border border-slate-200 rounded-lg p-2 md:p-3 flex flex-col gap-1.5 text-[10px] md:text-xs max-h-[180px] overflow-y-auto">
                       {match.playersTeam2 && match.playersTeam2.length > 0 ? (
                         match.playersTeam2.map((p, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 bg-[#121542] px-2 py-1.5 rounded border border-zinc-700/40">
+                          <div key={idx} className="flex items-center gap-1.5 bg-slate-50 px-2 py-1.5 rounded border border-slate-200">
                             {editingPlayer?.team === "team2" && editingPlayer?.idx === idx ? (
                               <>
                                 <input
@@ -2124,7 +2083,7 @@ export default function MatchScoringPage() {
                                     if (e.key === "Enter") handleEditPlayer("team2", idx, editPlayerValue);
                                     if (e.key === "Escape") { setEditingPlayer(null); setEditPlayerValue(""); }
                                   }}
-                                  className="flex-1 min-w-0 bg-[#07092e] border border-amber-500/60 rounded px-1.5 py-0.5 text-white text-[10px] focus:outline-none focus:border-amber-400"
+                                  className="flex-1 min-w-0 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-slate-900 text-[10px] focus:outline-none focus:border-amber-500"
                                 />
                                 <button
                                   onClick={() => handleEditPlayer("team2", idx, editPlayerValue)}
@@ -2139,7 +2098,7 @@ export default function MatchScoringPage() {
                               </>
                             ) : (
                               <>
-                                <span className="flex-1 truncate text-[10px] md:text-xs text-zinc-200">{p}</span>
+                                <span className="flex-1 truncate text-[10px] md:text-xs text-slate-800">{p}</span>
                                 <button
                                   onClick={() => { setEditingPlayer({ team: "team2", idx }); setEditPlayerValue(p); }}
                                   className="text-amber-400 hover:text-amber-300 font-bold ml-1 text-xs cursor-pointer flex-shrink-0"
@@ -2155,7 +2114,7 @@ export default function MatchScoringPage() {
                           </div>
                         ))
                       ) : (
-                        <div className="text-center text-zinc-600 text-[10px] md:text-xs py-2">No players added</div>
+                        <div className="text-center text-slate-400 text-[10px] md:text-xs py-2">No players added</div>
                       )}
                     </div>
                   )}
@@ -2165,8 +2124,8 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Animations Panel */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
-              <h3 className="text-xs font-black tracking-wider text-zinc-400 uppercase">Animations</h3>
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+              <h3 className="text-xs font-black tracking-wider text-slate-700 uppercase">Animations</h3>
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => handleTriggerAnimation("FREE HIT")}
@@ -2221,8 +2180,8 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Display Controller Panel */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
-              <h3 className="text-xs font-black tracking-wider text-zinc-400 uppercase">DISPLAY CONTROLLER</h3>
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+              <h3 className="text-xs font-black tracking-wider text-slate-700 uppercase">DISPLAY CONTROLLER</h3>
 
               {/* ── Prominent Summary & Scorecard Broadcast Buttons ── */}
               <div className="flex flex-col gap-2">
@@ -2260,7 +2219,7 @@ export default function MatchScoringPage() {
                 </div>
               </div>
 
-              <div className="border-t border-zinc-800/60" />
+              <div className="border-t border-slate-200" />
 
               {/* Small screen buttons */}
               <div className="flex flex-wrap items-center gap-2">
@@ -2296,8 +2255,8 @@ export default function MatchScoringPage() {
 
 
             {/* Umpire Decision Controller Row */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-4 shadow-xl flex items-center gap-4">
-              <span className="text-xs font-black tracking-wider text-cyan-400 uppercase">Decision :</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex items-center gap-4">
+              <span className="text-xs font-black tracking-wider text-slate-800 uppercase">Decision :</span>
               <button
                 onClick={() => handleSetDecision("PENDING")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "PENDING"
@@ -2328,7 +2287,7 @@ export default function MatchScoringPage() {
               {scoringState?.decision && (
                 <button
                   onClick={() => handleSetDecision(null)}
-                  className="text-xs text-zinc-500 hover:text-zinc-400 font-semibold"
+                  className="text-xs text-slate-400 hover:text-slate-600 font-semibold"
                 >
                   Clear
                 </button>
@@ -2336,14 +2295,14 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Custom Input Display */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center gap-3">
-              <span className="text-xs font-black tracking-wider text-zinc-400 uppercase min-w-[120px]">Custom Input :</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center gap-3">
+              <span className="text-xs font-black tracking-wider text-slate-700 uppercase min-w-[120px]">Custom Input :</span>
               <input
                 type="text"
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
                 placeholder="Custom Input (use - for split text to next line)"
-                className="flex-1 bg-[#121542] border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                className="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
               />
               <button
                 onClick={handleSendCustomInput}
@@ -2354,12 +2313,12 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Select MOM Player */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center gap-3">
-              <span className="text-xs font-black tracking-wider text-zinc-400 uppercase min-w-[120px]">Select MOM Player:</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center gap-3">
+              <span className="text-xs font-black tracking-wider text-slate-700 uppercase min-w-[120px]">Select MOM Player:</span>
               <select
                 value={selectedMom}
                 onChange={(e) => setSelectedMom(e.target.value)}
-                className="flex-1 bg-[#121542] border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500 cursor-pointer"
+                className="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-500 cursor-pointer font-bold"
               >
                 <option value="">Select MOM Player</option>
                 {[...(match.playersTeam1 || []), ...(match.playersTeam2 || [])].map((p, idx) => (
@@ -2397,12 +2356,12 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Tournament Stats Player */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center gap-3">
-              <span className="text-xs font-black tracking-wider text-zinc-400 uppercase min-w-[150px]">Tournament Stats Player:</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center gap-3">
+              <span className="text-xs font-black tracking-wider text-slate-700 uppercase min-w-[150px]">Tournament Stats Player:</span>
               <select
                 value={selectedStatsPlayer}
                 onChange={(e) => setSelectedStatsPlayer(e.target.value)}
-                className="flex-1 bg-[#121542] border border-zinc-700/60 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500 cursor-pointer"
+                className="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-500 cursor-pointer font-bold"
               >
                 <option value="">Select Player</option>
                 {[...(match.playersTeam1 || []), ...(match.playersTeam2 || [])].map((p, idx) => (
@@ -2420,9 +2379,9 @@ export default function MatchScoringPage() {
             </div>
 
             {/* Tour Stats Controller */}
-            <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
-              <h3 className="text-xs font-black tracking-wider text-zinc-500 uppercase">
-                TOUR STATS CONTROLLER <span className="text-red-500 font-bold">(ONLY FOR THEME 10 to 15)</span>
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+              <h3 className="text-xs font-black tracking-wider text-slate-500 uppercase">
+                TOUR STATS CONTROLLER <span className="text-red-600 font-bold">(ONLY FOR THEME 10 to 15)</span>
               </h3>
               <div className="flex flex-wrap items-center gap-2">
                 {[
@@ -2454,12 +2413,12 @@ export default function MatchScoringPage() {
 
         {/* ── Spectator read-only info section ─────────────────────────────── */}
         {!isOwner && (
-          <div className="bg-[#07092e] border border-zinc-800/60 rounded-2xl p-5 shadow-xl text-center flex flex-col gap-2">
-            <div className="flex items-center justify-center gap-2 text-xs font-bold text-emerald-400">
-              <span className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping" />
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm text-center flex flex-col gap-2">
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-emerald-600">
+              <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
               LIVE SPECTATOR VIEW
             </div>
-            <p className="text-xs text-zinc-500 leading-relaxed">
+            <p className="text-xs text-slate-500 leading-relaxed">
               This scoreboard is viewing in live spectator mode. Roster additions, ball outcomes, and display triggers will synchronize automatically in real-time as the match referee scores the game.
             </p>
           </div>
@@ -2473,27 +2432,27 @@ export default function MatchScoringPage() {
           <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => setShowStartInningsModal(false)} />
 
           {/* Dialog Body */}
-          <div className="relative w-full max-w-md bg-[#0c7081] rounded-3xl shadow-2xl overflow-hidden text-white border border-cyan-400/20">
+          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 text-slate-800">
             <div className="p-7 flex flex-col gap-5">
               {/* Batting Team Header */}
               <div className="text-center">
-                <h3 className="text-amber-300 font-extrabold text-xl tracking-wider font-space">
+                <h3 className="text-amber-600 font-extrabold text-xl tracking-wider font-space">
                   {currentBattingTeamLabel || "Batting Team"}
                 </h3>
-                <p className="text-[11px] text-cyan-100 uppercase tracking-widest font-black mt-1">Striker Setup</p>
+                <p className="text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Striker Setup</p>
               </div>
 
               {/* Form Input fields */}
               <div className="flex flex-col gap-4">
                 {/* Striker */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-black uppercase tracking-wider text-cyan-100">Striker</label>
+                  <label className="text-xs font-black uppercase tracking-wider text-slate-600">Striker</label>
                   <input
                     type="text"
                     value={strikerInput}
                     onChange={(e) => setStrikerInput(e.target.value)}
                     placeholder="Enter Striker"
-                    className="w-full bg-[#135d6b] border border-cyan-400/30 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-white placeholder:text-cyan-200/50"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
                   />
                   {/* Suggestions list from added players */}
                   {battingRoster && battingRoster.length > 0 && (
@@ -2502,7 +2461,7 @@ export default function MatchScoringPage() {
                         <button
                           key={i}
                           onClick={() => setStrikerInput(p)}
-                          className="px-2 py-0.5 bg-[#0e515d] hover:bg-cyan-900 border border-cyan-400/20 text-[10px] rounded text-cyan-100 cursor-pointer"
+                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
                         >
                           {p}
                         </button>
@@ -2513,13 +2472,13 @@ export default function MatchScoringPage() {
 
                 {/* Non-Striker */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-black uppercase tracking-wider text-cyan-100">Non-Striker</label>
+                  <label className="text-xs font-black uppercase tracking-wider text-slate-600">Non-Striker</label>
                   <input
                     type="text"
                     value={nonStrikerInput}
                     onChange={(e) => setNonStrikerInput(e.target.value)}
                     placeholder="Enter Non-Striker"
-                    className="w-full bg-[#135d6b] border border-cyan-400/30 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-white placeholder:text-cyan-200/50"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
                   />
                   {battingRoster && battingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
@@ -2527,7 +2486,7 @@ export default function MatchScoringPage() {
                         <button
                           key={i}
                           onClick={() => setNonStrikerInput(p)}
-                          className="px-2 py-0.5 bg-[#0e515d] hover:bg-cyan-900 border border-cyan-400/20 text-[10px] rounded text-cyan-100 cursor-pointer"
+                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
                         >
                           {p}
                         </button>
@@ -2537,22 +2496,22 @@ export default function MatchScoringPage() {
                 </div>
 
                 {/* Bowling Team Header */}
-                <div className="text-center pt-2 border-t border-cyan-600/40">
-                  <h3 className="text-blue-200 font-extrabold text-lg tracking-wider font-space">
+                <div className="text-center pt-2 border-t border-slate-200">
+                  <h3 className="text-blue-600 font-extrabold text-lg tracking-wider font-space">
                     {currentBowlingTeamLabel || "Bowling Team"}
                   </h3>
-                  <p className="text-[11px] text-cyan-100 uppercase tracking-widest font-black mt-1">Bowler Setup</p>
+                  <p className="text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Bowler Setup</p>
                 </div>
 
                 {/* Bowler */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-black uppercase tracking-wider text-cyan-100">Bowler</label>
+                  <label className="text-xs font-black uppercase tracking-wider text-slate-600">Bowler</label>
                   <input
                     type="text"
                     value={bowlerInput}
                     onChange={(e) => setBowlerInput(e.target.value)}
                     placeholder="Enter Bowler"
-                    className="w-full bg-[#135d6b] border border-cyan-400/30 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-white placeholder:text-cyan-200/50"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
                   />
                   {bowlingRoster && bowlingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
@@ -2560,7 +2519,7 @@ export default function MatchScoringPage() {
                         <button
                           key={i}
                           onClick={() => setBowlerInput(p)}
-                          className="px-2 py-0.5 bg-[#0e515d] hover:bg-cyan-900 border border-cyan-400/20 text-[10px] rounded text-cyan-100 cursor-pointer"
+                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
                         >
                           {p}
                         </button>
@@ -2580,7 +2539,7 @@ export default function MatchScoringPage() {
                 </button>
                 <button
                   onClick={() => setShowStartInningsModal(false)}
-                  className="px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-lg text-sm transition-all cursor-pointer"
+                  className="px-5 py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-lg text-sm transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -2594,21 +2553,21 @@ export default function MatchScoringPage() {
       {showWicketModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => setShowWicketModal(false)} />
-          <div className="relative w-full max-w-sm bg-[#07092e] border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
             <div className="h-1 bg-red-500 w-full" />
             <div className="p-7 flex flex-col gap-4 text-center">
               <div>
-                <h3 className="text-lg font-black tracking-wider text-red-500">Batsman Out!</h3>
-                <p className="text-xs text-zinc-400 mt-1">Select dismissal details and replacement</p>
+                <h3 className="text-lg font-black tracking-wider text-red-600">Batsman Out!</h3>
+                <p className="text-xs text-slate-500 mt-1">Select dismissal details and replacement</p>
               </div>
 
               <div className="flex flex-col gap-3 text-left">
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 tracking-wider">Dismissed Batsman</label>
+                  <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Dismissed Batsman</label>
                   <select
                     value={dismissedBatsman}
                     onChange={(e) => setDismissedBatsman(e.target.value)}
-                    className="w-full bg-[#121542] border border-zinc-800 rounded-lg p-2 text-xs text-white"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-900 font-bold"
                   >
                     <option value={scoringState?.striker}>{scoringState?.striker} (Striker)</option>
                     <option value={scoringState?.nonStriker}>{scoringState?.nonStriker} (Non-Striker)</option>
@@ -2616,11 +2575,11 @@ export default function MatchScoringPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 tracking-wider">Wicket Type</label>
+                  <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Wicket Type</label>
                   <select
                     value={wicketType}
                     onChange={(e) => setWicketType(e.target.value as any)}
-                    className="w-full bg-[#121542] border border-zinc-800 rounded-lg p-2 text-xs text-white"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-900 font-bold"
                   >
                     <option value="Bowled">Bowled</option>
                     <option value="Caught">Caught</option>
@@ -2631,13 +2590,13 @@ export default function MatchScoringPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 tracking-wider">New Batsman Name</label>
+                  <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">New Batsman Name</label>
                   <input
                     type="text"
                     value={newBatsmanInput}
                     onChange={(e) => setNewBatsmanInput(e.target.value)}
                     placeholder="Enter New Batsman name"
-                    className="w-full bg-[#121542] border border-zinc-800 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                   {battingRoster && battingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
@@ -2651,7 +2610,7 @@ export default function MatchScoringPage() {
                           <button
                             key={i}
                             onClick={() => setNewBatsmanInput(p)}
-                            className="px-2 py-0.5 bg-[#121542] hover:bg-[#1b1f63] border border-zinc-700/50 text-[10px] rounded text-zinc-300 cursor-pointer"
+                            className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
                           >
                             {p}
                           </button>
@@ -2670,7 +2629,7 @@ export default function MatchScoringPage() {
                 </button>
                 <button
                   onClick={() => setShowWicketModal(false)}
-                  className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-extrabold rounded-lg text-xs"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-lg text-xs"
                 >
                   Cancel
                 </button>
@@ -2684,10 +2643,10 @@ export default function MatchScoringPage() {
       {showNewBowlerModal && scoringState && isOwner && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowNewBowlerModal(false)} />
-          <div className="relative w-full max-w-sm bg-gradient-to-br from-[#0c4a6e] to-[#0c7081] rounded-3xl shadow-2xl border border-cyan-400/30 text-white overflow-hidden">
+          <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 text-slate-900 overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 text-center">
-              <h3 className="text-lg font-black tracking-wider font-space uppercase">🏏 Select New Bowler</h3>
+              <h3 className="text-lg font-black tracking-wider font-space uppercase text-white">🏏 Select New Bowler</h3>
               <p className="text-emerald-100 text-[10px] font-bold uppercase tracking-widest mt-0.5">
                 Over Complete — Pick next bowler
               </p>
@@ -2695,13 +2654,13 @@ export default function MatchScoringPage() {
 
             <div className="p-6 flex flex-col gap-4">
               {/* Bowling team label */}
-              <p className="text-[10px] font-black uppercase tracking-wider text-cyan-200 text-center">
+              <p className="text-[10px] font-black uppercase tracking-wider text-slate-500 text-center">
                 {currentBowlingTeamLabel} Bowling
               </p>
 
               {/* Input */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-black uppercase tracking-wider text-cyan-100">Bowler Name</label>
+                <label className="text-xs font-black uppercase tracking-wider text-slate-600">Bowler Name</label>
                 <input
                   type="text"
                   value={newBowlerInput}
@@ -2709,7 +2668,7 @@ export default function MatchScoringPage() {
                   onKeyDown={(e) => { if (e.key === "Enter") handleNewBowlerSubmit(); }}
                   placeholder="Type or select bowler"
                   autoFocus
-                  className="w-full bg-[#083d5a] border border-cyan-400/30 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white placeholder:text-cyan-300/40"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
                 />
               </div>
 
@@ -2727,8 +2686,8 @@ export default function MatchScoringPage() {
                           key={i}
                           onClick={() => setNewBowlerInput(p)}
                           className={`px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all cursor-pointer ${scoringState.bowlers.some((bw) => bw.name.toLowerCase() === p.toLowerCase())
-                            ? "bg-teal-700/60 border-teal-400/40 text-teal-100"
-                            : "bg-[#083d5a] hover:bg-[#0c5a7a] border-cyan-400/20 text-cyan-100"
+                            ? "bg-emerald-50 border-emerald-300 text-emerald-800"
+                            : "bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-800"
                             }`}
                         >
                           {p}
@@ -2751,7 +2710,7 @@ export default function MatchScoringPage() {
                 </button>
                 <button
                   onClick={() => setShowNewBowlerModal(false)}
-                  className="px-4 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-zinc-300 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
                 >
                   Skip
                 </button>

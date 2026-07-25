@@ -98,42 +98,42 @@ export default function JazzCashPaymentModal({
       <div className="fixed inset-0" onClick={onClose} />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#090b26] border border-red-500/20 text-white rounded-3xl shadow-2xl font-sans animate-scale-up-fade">
+      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white border border-slate-200 text-slate-900 rounded-3xl shadow-2xl font-sans animate-scale-up-fade">
         
         {/* Top JazzCash Brand bar */}
         <div className="bg-gradient-to-r from-[#d22630] to-[#ffb612] h-2 w-full" />
 
         {/* Modal Header */}
-        <div className="p-6 pb-4 border-b border-white/5 flex items-center justify-between">
+        <div className="p-6 pb-4 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             {/* Mock JazzCash Logo Icon */}
             <div className="w-8 h-8 rounded-lg bg-[#d22630] flex items-center justify-center font-extrabold text-xs tracking-tighter text-white shadow-lg border border-[#ffb612]/30">
               JC
             </div>
             <div>
-              <h2 className="text-base font-black tracking-wide text-white font-space uppercase">
-                JazzCash <span className="text-[#ffb612]">Pay</span>
+              <h2 className="text-base font-black tracking-wide text-slate-900 font-space uppercase">
+                JazzCash <span className="text-[#d22630]">Pay</span>
               </h2>
-              <p className="text-[10px] text-zinc-500 font-semibold uppercase">Secure Checkout</p>
+              <p className="text-[10px] text-slate-500 font-semibold uppercase">Secure Checkout</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-zinc-500 hover:text-white font-extrabold text-lg w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors cursor-pointer"
+            className="text-slate-400 hover:text-slate-800 font-extrabold text-lg w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer"
           >
             ×
           </button>
         </div>
 
         {/* Item & Price details */}
-        <div className="px-6 py-4 bg-white/[0.02] border-b border-white/5 flex justify-between items-center">
+        <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
           <div className="min-w-0">
-            <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Product</p>
-            <p className="text-sm font-extrabold truncate text-zinc-200">{itemName}</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Product</p>
+            <p className="text-sm font-extrabold truncate text-slate-900">{itemName}</p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Amount</p>
-            <p className="text-base font-black text-[#ffb612] font-mono">{priceDisplay}</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Amount</p>
+            <p className="text-base font-black text-[#d22630] font-mono">{priceDisplay}</p>
           </div>
         </div>
 

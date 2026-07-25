@@ -105,7 +105,7 @@ function MatchModal({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden my-8">
+      <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-300/40 overflow-hidden my-8">
         {/* Top accent bar */}
         <div className="h-1 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500" />
 
@@ -117,17 +117,17 @@ function MatchModal({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
-            <h2 className="text-xl font-extrabold text-white font-space tracking-wide">
+            <h2 className="text-xl font-extrabold text-slate-900 font-space tracking-wide">
               {mode === "create" ? "Create Match" : "Edit Match"}
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-500">
               {mode === "create" ? "Set up a new match for this tournament" : "Update the match details"}
             </p>
           </div>
 
           {/* Error */}
           {error && (
-            <div className="bg-red-500/10 border border-red-500/30 text-red-300 text-xs rounded-xl p-3 text-center font-semibold">
+            <div className="bg-red-50 border border-red-300 text-red-700 text-xs rounded-xl p-3 text-center font-semibold">
               {error}
             </div>
           )}
@@ -136,14 +136,14 @@ function MatchModal({
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Team 1 Name */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Team 1 Name</label>
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 1 Name</label>
               <input
                 ref={firstRef}
                 type="text"
                 value={form.team1Name}
                 onChange={(e) => set("team1Name", e.target.value)}
                 placeholder="Enter Team 1 Name"
-                className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                 required
                 disabled={loading}
               />
@@ -151,13 +151,13 @@ function MatchModal({
 
             {/* Team 2 Name */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Team 2 Name</label>
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 2 Name</label>
               <input
                 type="text"
                 value={form.team2Name}
                 onChange={(e) => set("team2Name", e.target.value)}
                 placeholder="Enter Team 2 Name"
-                className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                 required
                 disabled={loading}
               />
@@ -166,27 +166,27 @@ function MatchModal({
             {/* Overs & Match No — side by side */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Overs</label>
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Overs</label>
                 <input
                   type="number"
                   value={form.overs === 0 ? "" : form.overs}
                   onChange={(e) => set("overs", Number(e.target.value))}
                   placeholder="0"
                   min={1}
-                  className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                   required
                   disabled={loading}
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Match No.</label>
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Match No.</label>
                 <input
                   type="number"
                   value={form.matchNo === 0 ? "" : form.matchNo}
                   onChange={(e) => set("matchNo", Number(e.target.value))}
                   placeholder="0"
                   min={1}
-                  className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                   required
                   disabled={loading}
                 />
@@ -195,7 +195,7 @@ function MatchModal({
 
             {/* Toss Won By */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Toss Won By?</label>
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Toss Won By?</label>
               <div className="flex gap-3">
                 {(["team1", "team2"] as const).map((val) => (
                   <label
@@ -203,7 +203,7 @@ function MatchModal({
                     className={`flex-1 flex items-center justify-center gap-2 cursor-pointer px-3 py-2.5 rounded-lg border text-sm font-semibold transition-all duration-200 ${
                       form.tossWonBy === val
                         ? "bg-amber-500/15 border-amber-500/50 text-amber-300"
-                        : "bg-[#121542] border-zinc-700/60 text-zinc-400 hover:border-zinc-600"
+                        : "bg-slate-50 border-slate-300 text-slate-500 hover:border-slate-400"
                     }`}
                   >
                     <input
@@ -225,7 +225,7 @@ function MatchModal({
 
             {/* Opted To */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Opted To?</label>
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Opted To?</label>
               <div className="flex gap-3">
                 {(["Bat", "Bowl"] as const).map((val) => (
                   <label
@@ -233,7 +233,7 @@ function MatchModal({
                     className={`flex-1 flex items-center justify-center gap-2 cursor-pointer px-3 py-2.5 rounded-lg border text-sm font-semibold transition-all duration-200 ${
                       form.optedTo === val
                         ? "bg-blue-500/15 border-blue-500/50 text-blue-300"
-                        : "bg-[#121542] border-zinc-700/60 text-zinc-400 hover:border-zinc-600"
+                        : "bg-slate-50 border-slate-300 text-slate-500 hover:border-slate-400"
                     }`}
                   >
                     <input
@@ -253,7 +253,7 @@ function MatchModal({
 
             {/* Match Tied */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Match Tied?</label>
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Match Tied?</label>
               <div className="flex gap-3">
                 {[{ label: "Yes", value: true }, { label: "No", value: false }].map(({ label, value }) => (
                   <label
@@ -261,7 +261,7 @@ function MatchModal({
                     className={`flex-1 flex items-center justify-center gap-2 cursor-pointer px-3 py-2.5 rounded-lg border text-sm font-semibold transition-all duration-200 ${
                       form.matchTied === value
                         ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300"
-                        : "bg-[#121542] border-zinc-700/60 text-zinc-400 hover:border-zinc-600"
+                        : "bg-slate-50 border-slate-300 text-slate-500 hover:border-slate-400"
                     }`}
                   >
                     <input
@@ -281,11 +281,11 @@ function MatchModal({
             {/* Balls Per Over & Match Type — side by side */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Balls Per Over</label>
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Balls Per Over</label>
                 <select
                   value={form.ballsPerOver}
                   onChange={(e) => set("ballsPerOver", Number(e.target.value))}
-                  className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all cursor-pointer"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all cursor-pointer"
                   disabled={loading}
                 >
                   {BALLS_PER_OVER_OPTIONS.map((b) => (
@@ -295,11 +295,11 @@ function MatchModal({
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">Match Type</label>
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Match Type</label>
                 <select
                   value={form.matchType}
                   onChange={(e) => set("matchType", e.target.value)}
-                  className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all cursor-pointer"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all cursor-pointer"
                   disabled={loading}
                 >
                   {MATCH_TYPES.map((t) => (
@@ -332,7 +332,7 @@ function MatchModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-5 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/60 text-zinc-300 font-bold rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
+                className="px-5 py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
               >
                 CANCEL
               </button>
@@ -359,18 +359,18 @@ function DeleteModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
         <div className="h-1 w-full bg-gradient-to-r from-red-500 to-rose-600" />
         <div className="p-7 flex flex-col items-center gap-5 text-center">
           <div className="w-13 h-13 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center p-3">
-            <svg className="w-7 h-7 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-extrabold text-white font-space">Delete Match?</h3>
-            <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-              Delete <span className="text-white font-bold">"{matchLabel}"</span>?<br />This cannot be undone.
+            <h3 className="text-lg font-extrabold text-slate-900 font-space">Delete Match?</h3>
+            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+              Delete <span className="text-slate-900 font-bold">"{matchLabel}"</span>?<br />This cannot be undone.
             </p>
           </div>
           <div className="flex gap-3 w-full">
@@ -384,7 +384,7 @@ function DeleteModal({
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/60 text-zinc-300 font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
+              className="flex-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
             >
               CANCEL
             </button>
@@ -413,7 +413,7 @@ function StatusBadge({ status }: { status: string }) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-zinc-700 text-white border border-zinc-600 shadow-sm shadow-zinc-600/20">
+    <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 shadow-sm">
       NOT STARTED
     </span>
   );
@@ -427,7 +427,7 @@ function TypeBadge({ type }: { type: string }) {
     type.includes("Semi") ? "from-purple-500/20 to-violet-500/20 border-purple-500/30 text-purple-300" :
     type.includes("Quarter") || type.includes("Qualifier") || type === "Eliminator"
       ? "from-blue-500/20 to-cyan-500/20 border-blue-500/30 text-blue-300" :
-    "from-zinc-500/10 to-zinc-600/10 border-zinc-600/30 text-zinc-400";
+    "from-slate-100 to-slate-200 border-slate-300 text-slate-700";
 
   return (
     <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-gradient-to-r border ${color}`}>
@@ -576,23 +576,10 @@ export default function TourPage() {
   // ─── Loading ───────────────────────────────────────────────────────────────
   if (status === "loading" || status === "unauthenticated" || pageLoading) {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
-        {/* Hex mesh */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="hex-grid-load-t" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hex-grid-load-t)" />
-          </svg>
-        </div>
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-white text-slate-900 relative overflow-hidden">
         <div className="flex flex-col items-center gap-4 relative z-10">
           <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-400 text-sm font-semibold tracking-wider font-space animate-pulse">
+          <p className="text-slate-500 text-sm font-semibold tracking-wider font-space animate-pulse">
             LOADING TOURNAMENT...
           </p>
         </div>
@@ -603,34 +590,21 @@ export default function TourPage() {
   // ─── Error ─────────────────────────────────────────────────────────────────
   if (fetchError) {
     return (
-      <div className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
-        {/* Hex mesh */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="hex-grid-err" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hex-grid-err)" />
-          </svg>
-        </div>
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+      <div className="flex min-h-screen w-full flex-col bg-white text-slate-900 relative overflow-hidden">
         <Header />
         <div className="flex-1 flex flex-col items-center justify-center gap-6 p-8 relative z-10">
           <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-            <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div className="text-center">
-            <p className="text-white font-bold font-space text-lg">Something went wrong</p>
-            <p className="text-zinc-400 text-sm mt-1">{fetchError}</p>
+            <p className="text-slate-900 font-bold font-space text-lg">Something went wrong</p>
+            <p className="text-slate-500 text-sm mt-1">{fetchError}</p>
           </div>
           <div className="flex gap-3">
             <button onClick={loadPage} className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg text-sm cursor-pointer">Retry</button>
-            <Link href="/tournaments" className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 font-bold rounded-lg text-sm">← Back</Link>
+            <Link href="/tournaments" className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-lg text-sm">← Back</Link>
           </div>
         </div>
         <Footer />
@@ -639,36 +613,21 @@ export default function TourPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white font-sans select-none relative overflow-hidden">
-      {/* Hexagonal Mesh Overlay */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="hex-grid-tid" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-              <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hex-grid-tid)" />
-        </svg>
-      </div>
-      {/* Background glows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
-
+    <div className="flex flex-col min-h-screen w-full bg-white text-slate-900 font-sans select-none">
       <Header />
 
-      <main className="flex-1 py-12 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col gap-10 font-outfit z-10">
+      <main className="flex-1 py-12 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col gap-10 font-outfit">
 
         {/* ── Breadcrumb ──────────────────────────────────────────────────── */}
-        <div className="flex items-center gap-2 text-xs text-zinc-500">
-          <Link href="/tournaments" className="hover:text-amber-400 transition-colors font-semibold flex items-center gap-1">
+        <div className="flex items-center gap-2 text-xs text-slate-400">
+          <Link href="/tournaments" className="hover:text-amber-500 transition-colors font-semibold flex items-center gap-1">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             My Tournaments
           </Link>
-          <span className="text-zinc-700">/</span>
-          <span className="text-zinc-300 font-semibold truncate max-w-[200px]">{tournament?.name}</span>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-800 font-semibold truncate max-w-[200px]">{tournament?.name}</span>
         </div>
 
         {/* ── Page Header ─────────────────────────────────────────────────── */}
@@ -677,11 +636,11 @@ export default function TourPage() {
             <span className="text-amber-500 text-xs font-bold uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full w-fit border border-amber-500/20">
               Tournament
             </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight font-space">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight font-space text-slate-900">
               {tournament?.name}
             </h1>
-            <div className="flex items-center gap-2 text-zinc-400 text-sm">
-              <svg className="w-4 h-4 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex items-center gap-2 text-slate-500 text-sm">
+              <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -690,27 +649,27 @@ export default function TourPage() {
           </div>
 
           {/* Stats */}
-          <div className="hidden lg:flex items-center gap-6 bg-[#07092e] border border-zinc-800/60 rounded-xl p-4">
+          <div className="hidden lg:flex items-center gap-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Total Matches</span>
-              <span className="text-2xl font-black font-space text-amber-400">{matches.length}</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Matches</span>
+              <span className="text-2xl font-black font-space text-amber-500">{matches.length}</span>
             </div>
-            <div className="w-[1px] h-8 bg-zinc-800" />
+            <div className="w-[1px] h-8 bg-slate-200" />
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Live</span>
-              <span className="text-2xl font-black font-space text-red-400">{matches.filter(m => m.status === "Live").length}</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Live</span>
+              <span className="text-2xl font-black font-space text-red-500">{matches.filter(m => m.status === "Live").length}</span>
             </div>
-            <div className="w-[1px] h-8 bg-zinc-800" />
+            <div className="w-[1px] h-8 bg-slate-200" />
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Completed</span>
-              <span className="text-2xl font-black font-space text-emerald-400">{matches.filter(m => m.status === "Completed").length}</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Completed</span>
+              <span className="text-2xl font-black font-space text-emerald-500">{matches.filter(m => m.status === "Completed").length}</span>
             </div>
           </div>
         </div>
 
         {/* ── Controls Bar ────────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between gap-4 border-b border-zinc-800/60 pb-6">
-          <div className="flex items-center gap-2 text-zinc-500 text-sm">
+        <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-6">
+          <div className="flex items-center gap-2 text-slate-400 text-sm font-semibold">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
             </svg>
@@ -731,15 +690,15 @@ export default function TourPage() {
 
         {/* ── Empty State ──────────────────────────────────────────────────── */}
         {matches.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-24 border border-dashed border-zinc-800 rounded-2xl bg-[#07092e]/30 gap-5">
+          <div className="flex flex-col items-center justify-center py-24 border border-dashed border-slate-300 rounded-2xl bg-slate-50/50 gap-5">
             <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
               <svg className="w-8 h-8 text-amber-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
             <div className="flex flex-col items-center gap-1.5">
-              <p className="text-zinc-300 font-bold tracking-wider font-space text-base">NO MATCHES YET</p>
-              <p className="text-zinc-500 text-xs text-center max-w-xs">
+              <p className="text-slate-700 font-bold tracking-wider font-space text-base">NO MATCHES YET</p>
+              <p className="text-slate-500 text-xs text-center max-w-xs">
                 Create your first match to start managing this tournament.
               </p>
             </div>

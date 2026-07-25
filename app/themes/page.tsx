@@ -79,24 +79,24 @@ export default function ThemesPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#05072c] text-white">
+      <main className="min-h-screen bg-white text-slate-900">
         <section className="mx-auto max-w-7xl px-6 py-8">
-          <div className="rounded-[2rem] border border-white/10 bg-[#0b1030]/90 p-8 shadow-2xl shadow-black/40">
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
 
             {/* ── Header ── */}
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-3">
-                <p className="text-sm uppercase tracking-widest text-amber-400">Scoreboard Themes</p>
-                <h1 className="text-4xl font-black tracking-tight">Your unlocked scoreboard cards</h1>
-                <p className="max-w-2xl text-sm text-zinc-300">
-                  Browse all scoreboard themes, click <span className="font-bold text-amber-300">Preview</span> on any card to see a live scoreboard preview right here on the page.
+                <p className="text-sm uppercase tracking-widest text-amber-600 font-bold">Scoreboard Themes</p>
+                <h1 className="text-4xl font-black tracking-tight text-slate-900">Your unlocked scoreboard cards</h1>
+                <p className="max-w-2xl text-sm text-slate-600">
+                  Browse all scoreboard themes, click <span className="font-bold text-amber-600">Preview</span> on any card to see a live scoreboard preview right here on the page.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <div className="rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 font-semibold">
                   {status === "authenticated" ? (
                     <>
-                      Logged in as <span className="font-semibold text-white">{session?.user?.name || session?.user?.email}</span>
+                      Logged in as <span className="font-bold text-slate-900">{session?.user?.name || session?.user?.email}</span>
                     </>
                   ) : (
                     "Login to view your unlocked themes."
@@ -104,7 +104,7 @@ export default function ThemesPage() {
                 </div>
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition hover:scale-[1.01]"
+                  className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-3 text-sm font-bold text-white shadow-md transition hover:scale-[1.01]"
                 >
                   Unlock more themes
                 </Link>
@@ -114,7 +114,7 @@ export default function ThemesPage() {
             {/* ── Theme Cards Grid ── */}
             <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {loadingThemes ? (
-                <div className="col-span-full rounded-3xl border border-zinc-700/80 bg-[#081020]/80 p-8 text-center text-zinc-400">
+                <div className="col-span-full rounded-3xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-500">
                   Loading themes...
                 </div>
               ) : (

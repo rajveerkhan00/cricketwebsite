@@ -2,10 +2,10 @@
 
 export default function Integrations() {
   return (
-    <section className="bg-[#03041c] pb-16 pt-8 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none border-t border-zinc-800/40">
+    <section className="bg-white pb-16 pt-8 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none border-t border-slate-200/80">
       
       {/* Copyright Text */}
-      <div className="text-zinc-400 text-xs md:text-sm tracking-wider font-semibold mb-12 text-center">
+      <div className="text-slate-500 text-xs md:text-sm tracking-wider font-semibold mb-12 text-center">
         &copy; 2026 CricOverlay- Live Cricket Scoring Overlay App | ALL RIGHTS RESERVED
       </div>
 

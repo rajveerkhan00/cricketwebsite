@@ -50,7 +50,7 @@ function TournamentModal({
       />
 
       {/* Modal Panel */}
-      <div className="relative w-full max-w-md bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden animate-fade-in">
+      <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-300/40 overflow-hidden animate-fade-in">
         {/* Top gradient bar */}
         <div className="h-1 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500" />
 
@@ -68,10 +68,10 @@ function TournamentModal({
                 </svg>
               )}
             </div>
-            <h2 className="text-xl font-extrabold text-white font-space tracking-wide">
+            <h2 className="text-xl font-extrabold text-slate-900 font-space tracking-wide">
               {mode === "create" ? "Create Tournament" : "Edit Tournament"}
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-500">
               {mode === "create"
                 ? "Set up a new tournament for your cricket league"
                 : "Update your tournament details"}
@@ -81,7 +81,7 @@ function TournamentModal({
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">
                 Tournament Name
               </label>
               <input
@@ -90,14 +90,14 @@ function TournamentModal({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. KSL Premier League"
-                className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                 required
                 disabled={loading}
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-zinc-400 uppercase">
+              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">
                 Tournament Location
               </label>
               <input
@@ -105,7 +105,7 @@ function TournamentModal({
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="e.g. Dhaka, Bangladesh"
-                className="w-full bg-[#121542] border border-zinc-700/60 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-zinc-600"
+                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                 required
                 disabled={loading}
               />
@@ -133,7 +133,7 @@ function TournamentModal({
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-5 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/60 text-zinc-300 font-bold rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
+                className="px-5 py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
               >
                 CANCEL
               </button>
@@ -160,7 +160,7 @@ function DeleteModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden animate-fade-in">
+      <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-300/40 overflow-hidden animate-fade-in">
         <div className="h-1 w-full bg-gradient-to-r from-red-500 to-rose-600" />
         <div className="p-7 flex flex-col items-center gap-5 text-center">
           <div className="w-14 h-14 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
@@ -169,9 +169,9 @@ function DeleteModal({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-extrabold text-white font-space">Delete Tournament?</h3>
-            <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-              Are you sure you want to delete <span className="text-white font-bold">"{name}"</span>?<br />This action cannot be undone.
+            <h3 className="text-lg font-extrabold text-slate-900 font-space">Delete Tournament?</h3>
+            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+              Are you sure you want to delete <span className="text-slate-900 font-bold">"{name}"</span>?<br />This action cannot be undone.
             </p>
           </div>
           <div className="flex gap-3 w-full">
@@ -190,7 +190,7 @@ function DeleteModal({
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700/60 text-zinc-300 font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
+              className="flex-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
             >
               CANCEL
             </button>
@@ -320,23 +320,10 @@ export default function Tournaments() {
   // ─── Loading / Auth Gate ───────────────────────────────────────────────────
   if (status === "loading" || status === "unauthenticated") {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white relative overflow-hidden">
-        {/* Hex mesh */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="hex-grid-load" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hex-grid-load)" />
-          </svg>
-        </div>
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-white text-slate-900 relative overflow-hidden">
         <div className="flex flex-col items-center gap-4 relative z-10">
           <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-zinc-400 text-sm font-semibold tracking-wider font-space animate-pulse">
+          <p className="text-slate-500 text-sm font-semibold tracking-wider font-space animate-pulse">
             LOADING TOURNAMENTS...
           </p>
         </div>
@@ -345,25 +332,10 @@ export default function Tournaments() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-gradient-to-b from-[#0c0f4f] via-[#05072c] to-[#02041c] text-white font-sans select-none relative overflow-hidden">
-      {/* Hexagonal Mesh Overlay */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="hex-grid-t" width="45" height="77.942" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-              <path d="M 45 0 L 22.5 12.99 M 22.5 12.99 L 0 0 M 0 0 L 0 25.98 M 0 25.98 L 22.5 38.97 M 22.5 38.97 L 45 25.98 M 45 25.98 L 45 0 M 0 38.97 L 22.5 51.96 M 22.5 51.96 L 0 64.95 M 0 64.95 L 0 90.93 M 0 90.93 L 22.5 103.92 M 22.5 103.92 L 45 90.93 M 45 90.93 L 45 64.95 L 22.5 51.96" fill="none" stroke="#2d359c" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hex-grid-t)" />
-        </svg>
-      </div>
-      {/* Background glows */}
-      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-600/30 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/15 blur-[130px] pointer-events-none" />
-
+    <div className="flex flex-col min-h-screen w-full bg-white text-slate-900 font-sans select-none">
       <Header />
 
-      <main className="flex-1 py-12 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col gap-10 font-outfit z-10">
+      <main className="flex-1 py-12 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col gap-10 font-outfit">
 
         {/* ── Page Header ─────────────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -371,31 +343,31 @@ export default function Tournaments() {
             <span className="text-amber-500 text-xs font-bold uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full w-fit border border-amber-500/20">
               CricOverlay Arena
             </span>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight font-space">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight font-space text-slate-900">
               My <span className="text-amber-500">Tournaments</span>
             </h1>
-            <p className="text-zinc-400 text-sm md:text-base max-w-2xl leading-relaxed">
+            <p className="text-slate-500 text-sm md:text-base max-w-2xl leading-relaxed">
               Create and manage your cricket tournaments. Each tournament is private to your account.
             </p>
           </div>
 
           {/* Stats panel */}
-          <div className="hidden lg:flex items-center gap-6 bg-[#07092e] border border-zinc-800/60 rounded-xl p-4">
+          <div className="hidden lg:flex items-center gap-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Total</span>
-              <span className="text-2xl font-black font-space text-amber-400">{tournaments.length}</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total</span>
+              <span className="text-2xl font-black font-space text-amber-500">{tournaments.length}</span>
             </div>
-            <div className="w-[1px] h-8 bg-zinc-800" />
+            <div className="w-[1px] h-8 bg-slate-200" />
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Logged In As</span>
-              <span className="text-sm font-bold text-white truncate max-w-[140px]">{session?.user?.name}</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Logged In As</span>
+              <span className="text-sm font-bold text-slate-900 truncate max-w-[140px]">{session?.user?.name}</span>
             </div>
           </div>
         </div>
 
         {/* ── Controls Bar ────────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between gap-4 border-b border-zinc-800/60 pb-6">
-          <div className="flex items-center gap-2 text-zinc-500 text-sm">
+        <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-6">
+          <div className="flex items-center gap-2 text-slate-400 text-sm">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>

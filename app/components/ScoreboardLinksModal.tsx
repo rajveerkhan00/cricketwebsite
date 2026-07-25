@@ -182,7 +182,7 @@ export default function ScoreboardLinksModal({
         {/* Content wrapper */}
         <div className="relative flex min-h-full items-start justify-center p-4 py-8">
           {/* Modal card */}
-          <div className="w-full max-w-5xl bg-[#eaecfa] text-zinc-800 rounded-3xl shadow-2xl border border-zinc-300 font-sans">
+          <div className="w-full max-w-5xl bg-white text-slate-800 rounded-3xl shadow-2xl border border-slate-200 font-sans">
             {/* Close Button */}
             <div className="relative">
               <button
@@ -204,8 +204,8 @@ export default function ScoreboardLinksModal({
               </p>
 
               {/* Theme store instruction panel */}
-              <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-xl text-center bg-white/40 border border-zinc-300 rounded-2xl p-4">
-                <p className="text-zinc-700 font-extrabold text-xs font-space uppercase">
+              <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-xl text-center bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                <p className="text-slate-800 font-extrabold text-xs font-space uppercase">
                   ⚡ Theme Store (JazzCash Checkout Only)
                 </p>
                 <p className="text-zinc-500 text-[10px] md:text-xs max-w-md">

@@ -32,18 +32,18 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="bg-[#03041c] py-24 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none">
+    <section id="services" className="bg-white py-24 px-6 md:px-12 w-full flex flex-col items-center justify-center font-outfit select-none">
       
       {/* Small Category Pill */}
       <div className="mb-4">
-        <span className="px-5 py-2 rounded-full border border-zinc-700/60 bg-[#0e1138] text-xs font-semibold tracking-wider text-zinc-300">
+        <span className="px-5 py-2 rounded-full border border-slate-200 bg-slate-50 text-xs font-bold tracking-wider text-slate-700 shadow-xs">
           Our Professional Services
         </span>
       </div>
 
       {/* Title */}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-16 text-center font-space">
-        <span className="text-orange-500">Best</span> Services You Get
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-16 text-center font-space">
+        <span className="text-orange-600">Best</span> Services You Get
       </h2>
 
       {/* Services Grid */}
@@ -51,25 +51,27 @@ export default function Services() {
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex flex-col items-center text-center bg-[#07092e] hover:bg-[#0a0c3a] border border-zinc-800/40 rounded-xl p-8 transition-colors duration-300 relative group"
+            className="flex flex-col items-center text-center bg-white hover:bg-slate-50/80 border border-slate-200/90 rounded-2xl p-8 transition-all duration-300 relative group shadow-sm hover:shadow-md hover:border-orange-400"
           >
             {/* Icon Bubble */}
-            <div className="w-16 h-16 rounded-full bg-[#12154a] flex items-center justify-center mb-8 border border-zinc-700/40 group-hover:bg-[#191d63] transition-colors duration-300">
-              {service.icon}
+            <div className="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-8 border border-orange-200 group-hover:bg-orange-500 transition-colors duration-300">
+              <div className="text-orange-600 group-hover:text-white transition-colors duration-300">
+                {service.icon}
+              </div>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-bold text-white mb-4 tracking-wide font-space">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-wide font-space">
               {service.title}
             </h3>
 
             {/* Description */}
-            <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-8 font-light flex-1">
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-8 font-normal flex-1">
               {service.description}
             </p>
 
             {/* Button */}
-            <button className="px-6 py-2.5 rounded border border-zinc-700/80 hover:border-orange-500 text-xs font-bold text-orange-500 tracking-wider transition-colors duration-300">
+            <button className="px-6 py-2.5 rounded-lg border border-slate-300 hover:border-orange-500 hover:bg-orange-500 hover:text-white text-xs font-bold text-orange-600 tracking-wider transition-all duration-300 cursor-pointer">
               READ MORE &rarr;
             </button>
           </div>
