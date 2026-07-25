@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const FREE_THEME_SLUGS = new Set(["asia-cup", "cwc-19"]);
 
 interface ThemeItem {
   id: number;
@@ -119,7 +118,7 @@ export default function ThemesPage() {
                 </div>
               ) : (
                 themes.map((theme) => {
-                  const isFree = theme.id <= 2 || FREE_THEME_SLUGS.has(theme.slug.toLowerCase().trim());
+                  const isFree = theme.price <= 0;
                   const isUnlocked = isFree || approvedSlugs.includes(theme.slug);
                   const isActivePrev = previewTheme?.slug === theme.slug;
 

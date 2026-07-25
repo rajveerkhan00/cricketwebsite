@@ -1519,6 +1519,34 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  const toggleFreeStatus = async (theme: ScoreboardThemeRecord) => {
+    const isCurrentlyFree = theme.price <= 0;
+    const newPrice = isCurrentlyFree ? 150 : 0;
+    const newBadge = isCurrentlyFree ? "" : "FREE";
+    try {
+      const res = await fetch(`/api/admin/scoreboard-themes/${theme._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          themeId: theme.themeId,
+          name: theme.name,
+          slug: theme.slug,
+          price: newPrice,
+          badge: newBadge || undefined,
+        }),
+      });
+      if (res.ok) {
+        toast.success(`Theme "${theme.name}" is now ${isCurrentlyFree ? "PAID (PKR 150/day)" : "FREE"}!`);
+        fetchScoreboardThemes();
+      } else {
+        const data = await res.json();
+        toast.error(data.message || "Failed to update status.");
+      }
+    } catch {
+      toast.error("Network error.");
+    }
+  };
+
   const fetchPayments = useCallback(async () => {
     setLoadingPayments(true);
     try {
@@ -2135,7 +2163,13 @@ export default function AdminDashboard() {
                             {theme.slug}
                           </td>
                           <td className="px-6 py-4 text-emerald-400 font-extrabold text-sm">
-                            PKR {theme.price}
+                            {theme.price <= 0 ? (
+                              <span className="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded text-xs font-black">
+                                FREE
+                              </span>
+                            ) : (
+                              `PKR ${theme.price}`
+                            )}
                           </td>
                           <td className="px-6 py-4">
                             {theme.badge ? (
@@ -2147,6 +2181,16 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex items-center justify-end gap-2">
+                              <button
+                                onClick={() => toggleFreeStatus(theme)}
+                                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border cursor-pointer transition-colors ${
+                                  theme.price <= 0
+                                    ? "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border-amber-500/20"
+                                    : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border-emerald-500/20"
+                                }`}
+                              >
+                                {theme.price <= 0 ? "Make Paid" : "Make Free"}
+                              </button>
                               <button
                                 onClick={() => setEditScoreboardTarget(theme)}
                                 className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"

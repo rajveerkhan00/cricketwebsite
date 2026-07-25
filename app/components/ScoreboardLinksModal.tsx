@@ -11,7 +11,6 @@ interface ThemeItem {
   badge?: string;
 }
 
-const FREE_THEME_SLUGS = new Set(["asia-cup", "cwc-19"]);
 
 interface ScoreboardLinksModalProps {
   isOpen: boolean;
@@ -268,7 +267,7 @@ export default function ScoreboardLinksModal({
                       </tr>
                     ) : (
                       themes.map((theme, idx) => {
-                        const isFreeTheme = theme.id <= 2 || FREE_THEME_SLUGS.has(theme.slug.toLowerCase().trim());
+                        const isFreeTheme = theme.price <= 0;
                         const isUnlocked = isFreeTheme || approvedSlugs.includes(theme.slug);
                         const remainingSec = themeRemainingSeconds[theme.slug] || 0;
                         return (

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { ScoreboardAccess } from "@/models/ScoreboardAccess";
 import { Payment } from "@/models/Payment";
+import { ScoreboardTheme } from "@/models/ScoreboardTheme";
 
 // GET /api/scoreboard-access?email=xxx&themeSlug=ipl
 // Called by the overlay every few seconds to check if user has active access.
@@ -13,14 +14,38 @@ export async function GET(req: Request) {
     const email = searchParams.get("email")?.toLowerCase().trim();
     const themeSlug = searchParams.get("themeSlug")?.trim();
 
-    if (!email || !themeSlug) {
+    if (!themeSlug) {
       return NextResponse.json(
-        { hasAccess: false, message: "email and themeSlug are required." },
+        { hasAccess: false, message: "themeSlug is required." },
         { status: 400 }
       );
     }
 
     await connectDB();
+
+    // 0. Check if the scoreboard is dynamically configured as FREE (price <= 0) in the database
+    const dbTheme = await ScoreboardTheme.findOne({ slug: themeSlug });
+    if (dbTheme && dbTheme.price <= 0) {
+      const farExpiration = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+      return NextResponse.json(
+        {
+          hasAccess: true,
+          expiresAt: farExpiration.toISOString(),
+          grantedAt: new Date().toISOString(),
+          remainingSeconds: 365 * 24 * 60 * 60,
+          trxId: "FREE",
+          planAccess: false,
+        },
+        { status: 200 }
+      );
+    }
+
+    if (!email) {
+      return NextResponse.json(
+        { hasAccess: false, message: "email is required." },
+        { status: 400 }
+      );
+    }
 
     const now = new Date();
 

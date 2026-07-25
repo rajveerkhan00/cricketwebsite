@@ -3,8 +3,8 @@ import { connectDB } from "@/lib/mongodb";
 import { ScoreboardTheme } from "@/models/ScoreboardTheme";
 
 const DEFAULT_THEMES = [
-  { themeId: 1, name: "Asia Cup", slug: "asia-cup", price: 35 },
-  { themeId: 2, name: "CWC 19", slug: "cwc-19", price: 45 },
+  { themeId: 1, name: "Asia Cup", slug: "asia-cup", price: 0 },
+  { themeId: 2, name: "CWC 19", slug: "cwc-19", price: 0 },
   { themeId: 3, name: "Champions Trophy 2025", slug: "champions-trophy-2025", price: 60 },
   { themeId: 4, name: "CWC 25 India ♻️", slug: "cwc-25-india", price: 70 },
   { themeId: 5, name: "WCL (Fancode)", slug: "wcl-fancode", price: 60 },
@@ -18,6 +18,7 @@ const DEFAULT_THEMES = [
   { themeId: 13, name: "WT20 2024", slug: "wt20-2024", price: 140 },
   { themeId: 14, name: "BBL Star Sports", slug: "bbl-starsports", price: 150 },
   { themeId: 15, name: "IPL 2025", slug: "ipl-2025", price: 150 },
+  { themeId: 16, name: "CriOverlay Green", slug: "crioverlay-green", price: 0, badge: "FREE" },
 ];
 
 export async function GET() {
