@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   description:
     "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
   icons: {
-    icon: [{ url: "/criclogo.jpeg", type: "image/jpeg" }],
-    shortcut: "/criclogo.jpeg",
-    apple: "/criclogo.jpeg",
+    icon: [{ url: "/criclogo-round.png", type: "image/png" }],
+    shortcut: "/criclogo-round.png",
+    apple: "/criclogo-round.png",
   },
 };
 
