@@ -92,7 +92,7 @@ export default function Contact() {
             </div>
 
             <div className="text-[10px] text-slate-400 font-semibold tracking-wider">
-              CricOverlay TEAM CO.
+              CriOverlay TEAM CO.
             </div>
           </div>
 

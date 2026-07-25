@@ -12,7 +12,7 @@ export default function About() {
         {/* Title */}
         <div className="text-center flex flex-col gap-4">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-space text-slate-900">
-            About <span className="text-amber-600">CricOverlay</span>
+            About <span className="text-amber-600">CriOverlay</span>
           </h1>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
             Empowering sports broadcasters, commentators, and fans with real-time scoring overlay technologies.
@@ -45,7 +45,7 @@ export default function About() {
               Our Mission
             </h2>
             <p className="text-slate-600 leading-relaxed font-normal">
-              At CricOverlay, we believe sports broadcasting should be accessible, professional, and visually engaging for everyone. We design tools that allow local leagues, tournament organizers, and content creators to stream matches with broadcast-quality graphics instantly.
+              At CriOverlay, we believe sports broadcasting should be accessible, professional, and visually engaging for everyone. We design tools that allow local leagues, tournament organizers, and content creators to stream matches with broadcast-quality graphics instantly.
             </p>
             <p className="text-slate-600 leading-relaxed font-normal">
               Whether you are commentating on a local club tournament or streaming a school league, our live scorecard overlays bring the premium feel of international sports channels straight to your audience.

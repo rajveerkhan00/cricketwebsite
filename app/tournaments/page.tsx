@@ -341,7 +341,7 @@ export default function Tournaments() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex flex-col gap-3">
             <span className="text-amber-500 text-xs font-bold uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full w-fit border border-amber-500/20">
-              CricOverlay Arena
+              CriOverlay Arena
             </span>
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight font-space text-slate-900">
               My <span className="text-amber-500">Tournaments</span>

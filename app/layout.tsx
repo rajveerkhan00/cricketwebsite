@@ -24,7 +24,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "CricOverlay | Live Cricket Scoring Overlay App",
+  title: "CriOverlay | Live Cricket Scoring Overlay App",
   description:
     "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
   icons: {

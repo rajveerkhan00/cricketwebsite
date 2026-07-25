@@ -20,7 +20,7 @@ export default function Pricing() {
 
   const handlePlanCheckout = (tier: any) => {
     if (isFreePrice(tier.price)) {
-      toast.success(`Welcome to CricOverlay! You are now subscribed to the ${tier.name} Plan.`);
+      toast.success(`Welcome to CriOverlay! You are now subscribed to the ${tier.name} Plan.`);
       return;
     }
     setSelectedPlan(tier);

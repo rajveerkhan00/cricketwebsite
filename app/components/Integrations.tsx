@@ -6,7 +6,7 @@ export default function Integrations() {
       
       {/* Copyright Text */}
       <div className="text-slate-500 text-xs md:text-sm tracking-wider font-semibold mb-12 text-center">
-        &copy; 2026 CricOverlay- Live Cricket Scoring Overlay App | ALL RIGHTS RESERVED
+        &copy; 2026 CriOverlay- Live Cricket Scoring Overlay App | ALL RIGHTS RESERVED
       </div>
 
       {/* Brand Logos Row */}

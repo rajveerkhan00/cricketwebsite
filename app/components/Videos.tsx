@@ -5,12 +5,12 @@ import Image from "next/image";
 export default function Videos() {
   const videos = [
     {
-      title: "CricOverlay PhotoShow",
+      title: "CriOverlay PhotoShow",
       thumbnail: "/thumb-scoreboard.png",
       link: "#",
     },
     {
-      title: "CricOverlay Tutorial",
+      title: "CriOverlay Tutorial",
       thumbnail: "/thumb-control.png",
       link: "#",
     },

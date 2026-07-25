@@ -37,13 +37,13 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3 cursor-pointer select-none group">
           <Image
             src="/criclogo.jpeg"
-            alt="CricOverlay Logo"
+            alt="CriOverlay Logo"
             width={38}
             height={38}
             className="rounded-full border border-slate-200 shadow-sm transition-all duration-300 group-hover:rotate-[15deg] group-hover:scale-105"
           />
           <span className="text-2xl font-extrabold tracking-tight text-slate-900 transition-transform duration-300 group-hover:scale-[1.02] font-space">
-            Cric<span className="text-amber-500 font-black">Over</span>lay
+            Cri<span className="text-amber-500 font-black">Over</span>lay
           </span>
         </Link>
 

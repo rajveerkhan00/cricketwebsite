@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
           <section className="flex flex-col gap-3">
             <h2 className="text-2xl font-bold font-space text-slate-900">Contact Us</h2>
             <p className="text-slate-600 leading-relaxed font-normal">
-              If you have any questions about this Privacy Policy or how we handle your data, please contact us at support@CricOverlay.com.
+              If you have any questions about this Privacy Policy or how we handle your data, please contact us at support@crioverlay.com.
             </p>
           </section>
         </div>
