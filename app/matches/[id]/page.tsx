@@ -618,7 +618,11 @@ export default function MatchScoringPage() {
     } else if (type === "wide") {
       currentScore += 1 + runsVal; // Wide counts as +1 extra, plus any runs run
       updatedBowlers[bowlerIdx].runsConceded += 1 + runsVal;
-      updatedThisOver.push("Wd");
+      updatedThisOver.push(runsVal > 0 ? `Wd+${runsVal}` : "Wd");
+      if (runsVal % 2 !== 0) {
+        activeStrikerName = scoringState.nonStriker;
+        activeNonStrikerName = scoringState.striker;
+      }
       // Ball does not count towards bowler overs
     } else if (type === "noball") {
       currentScore += 1 + runsVal; // No ball counts as +1, plus runs scored by batsman
@@ -631,13 +635,21 @@ export default function MatchScoringPage() {
         if (runsVal === 6) updatedBatsmen[strikerIdx].sixes += 1;
       }
 
-      updatedThisOver.push("Nb");
+      updatedThisOver.push(runsVal > 0 ? `Nb+${runsVal}` : "Nb");
+      if (runsVal % 2 !== 0) {
+        activeStrikerName = scoringState.nonStriker;
+        activeNonStrikerName = scoringState.striker;
+      }
       anim = "FREE HIT";
     } else if (type === "widenoball") {
       // Wide + No Ball: 2 extras (1 wide + 1 noball), ball does NOT count
       currentScore += 2 + runsVal;
       updatedBowlers[bowlerIdx].runsConceded += 2 + runsVal;
-      updatedThisOver.push("WNb");
+      updatedThisOver.push(runsVal > 0 ? `WNb+${runsVal}` : "WNb");
+      if (runsVal % 2 !== 0) {
+        activeStrikerName = scoringState.nonStriker;
+        activeNonStrikerName = scoringState.striker;
+      }
       anim = "FREE HIT";
     } else if (type === "bye" || type === "legbye") {
       currentScore += runsVal;
@@ -1337,7 +1349,7 @@ export default function MatchScoringPage() {
                     const thisOver = scoringState.thisOver || [];
                     // Each NB / WD / WNb is a free ball → adds +1 extra circle slot
                     const extrasCount = thisOver.filter(
-                      (b) => b && (b === "Nb" || b === "WNb" || b === "Wd")
+                      (b) => b && (b.startsWith("Nb") || b.startsWith("WNb") || b.startsWith("Wd"))
                     ).length;
                     const totalCirclesCount = ballsPerOver + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, idx) => {
@@ -1346,15 +1358,30 @@ export default function MatchScoringPage() {
                       if (outcome) {
                         if (outcome === "W") bgClass = "bg-red-600 text-white border border-red-500";
                         else if (outcome === "6" || outcome === "4") bgClass = "bg-amber-500 text-black";
-                        else if (outcome === "Nb") bgClass = "bg-blue-500 text-white";
-                        else if (outcome === "WNb") bgClass = "bg-purple-500 text-white";
-                        else if (outcome === "Wd") bgClass = "bg-orange-600 text-white";
+                        else if (outcome.startsWith("Nb")) bgClass = "bg-blue-500 text-white";
+                        else if (outcome.startsWith("WNb")) bgClass = "bg-purple-500 text-white";
+                        else if (outcome.startsWith("Wd")) bgClass = "bg-orange-600 text-white";
                         else bgClass = "bg-white text-zinc-800";
                       }
+                      const getControllerStyle = (text: string) => {
+                        if (!text) return { fontSize: "11px", letterSpacing: "normal" };
+                        if (text.length >= 5) return { fontSize: "6.5px", letterSpacing: "-0.8px" };
+                        if (text.length === 4) return { fontSize: "7.5px", letterSpacing: "-0.6px" };
+                        if (text.length === 3) return { fontSize: "8.5px", letterSpacing: "-0.4px" };
+                        if (text.length === 2) return { fontSize: "9.5px", letterSpacing: "normal" };
+                        return { fontSize: "11px", letterSpacing: "normal" };
+                      };
+                      const styleObj = getControllerStyle(outcome || "");
                       return (
                         <div
                           key={idx}
-                          className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-inner ${bgClass}`}
+                          className={`w-7 h-7 rounded-full flex items-center justify-center font-bold shadow-inner ${bgClass}`}
+                          style={{
+                            fontSize: styleObj.fontSize,
+                            letterSpacing: styleObj.letterSpacing,
+                            lineHeight: 1,
+                            whiteSpace: "nowrap"
+                          }}
                         >
                           {outcome || ""}
                         </div>

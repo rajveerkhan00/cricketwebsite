@@ -57,7 +57,7 @@ const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: 
   "wt20-2024": { name: "WT20 2024", primaryBg: "rgba(8,0,22,0.96)", secondaryBg: "rgba(16,4,40,0.85)", accent: "#a78bfa", accentText: "#c4b5fd", textPrimary: "#ffffff", textSecondary: "#ede9fe", scoreBg: "rgba(167,139,250,0.15)", scoreText: "#c4b5fd", borderColor: "#7c3aed", headerBg: "rgba(4,0,12,0.99)", ballColors: { runs: "#6d28d9", four: "#4ade80", six: "#a78bfa", wicket: "#ef4444", extra: "#38bdf8" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
   "bbl-starsports": { name: "BBL Star Sports", primaryBg: "rgba(0,30,10,0.95)", secondaryBg: "rgba(0,50,20,0.85)", accent: "#ef4444", accentText: "#fca5a5", textPrimary: "#ffffff", textSecondary: "#dcfce7", scoreBg: "rgba(239,68,68,0.15)", scoreText: "#fca5a5", borderColor: "#dc2626", headerBg: "rgba(0,18,6,0.98)", ballColors: { runs: "#16a34a", four: "#fbbf24", six: "#ef4444", wicket: "#7f1d1d", extra: "#60a5fa" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
   "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(4,6,35,0.96)", secondaryBg: "rgba(8,12,55,0.85)", accent: "#fbbf24", accentText: "#fde68a", textPrimary: "#ffffff", textSecondary: "#e0e7ff", scoreBg: "linear-gradient(135deg, rgba(251,191,36,0.18), rgba(79,70,229,0.18))", scoreText: "#fde68a", borderColor: "#f59e0b", headerBg: "rgba(2,3,20,0.99)", ballColors: { runs: "#4338ca", four: "#fbbf24", six: "#f59e0b", wicket: "#ef4444", extra: "#34d399" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
-  "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(0,0,0,0)", secondaryBg: "rgba(0,0,0,0)", accent: "#76ff03", accentText: "#b2ff59", textPrimary: "#ffffff", textSecondary: "#ccff90", scoreBg: "rgba(118,255,3,0.15)", scoreText: "#76ff03", borderColor: "#76ff03", headerBg: "rgba(9,13,22,0.98)", ballColors: { runs: "#76ff03", four: "#fbbf24", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "" },
+  "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(9,13,22,0.97)", secondaryBg: "rgba(15,22,38,0.95)", accent: "#76ff03", accentText: "#b2ff59", textPrimary: "#ffffff", textSecondary: "#ccff90", scoreBg: "rgba(118,255,3,0.15)", scoreText: "#76ff03", borderColor: "#76ff03", headerBg: "rgba(5,10,18,0.99)", ballColors: { runs: "#76ff03", four: "#fbbf24", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "" },
 };
 const DEFAULT_THEME = THEME_MAP["ipl"];
 const THEME_FONTS: Record<string, string> = {
@@ -121,6 +121,9 @@ const GLOBAL_CSS = `
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     zoom: 1.35 !important;
     width: 73vw !important;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .scale-in { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   .fade-in { animation: fadeIn 0.4s ease forwards; }
@@ -324,6 +327,25 @@ function GroundBG({ bgUrl }: { bgUrl: string }) {
   );
 }
 
+const isExtraBall = (b: string | undefined | null) => {
+  if (!b) return false;
+  return b.startsWith("Wd") || b.startsWith("Nb") || b.startsWith("WNb");
+};
+
+const renderOutcomeText = (val: string | undefined | null, size: number) => {
+  if (!val) return "";
+  if (val.includes("+")) {
+    const [extra, runs] = val.split("+");
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", lineHeight: 0.95 }}>
+        <span style={{ fontSize: size * 0.31, fontWeight: 950 }}>{extra}</span>
+        <span style={{ fontSize: size * 0.23, fontWeight: 950 }}>{runs}</span>
+      </div>
+    );
+  }
+  return val;
+};
+
 // ── Ball outcome circle ─────────────────────────────────────────────────────
 function BallCircle({ val, ballColors, borderColor, size = 28 }: { val?: string; ballColors: Record<string, string>; borderColor: string; size?: number }) {
   let bg = `${borderColor}18`, color = "#64748b", shadow = "none";
@@ -331,10 +353,43 @@ function BallCircle({ val, ballColors, borderColor, size = 28 }: { val?: string;
     if (val === "W") { bg = ballColors.wicket; color = "#fff"; shadow = `0 0 10px ${ballColors.wicket}`; }
     else if (val === "6") { bg = ballColors.six; color = "#000"; shadow = `0 0 10px ${ballColors.six}`; }
     else if (val === "4") { bg = ballColors.four; color = "#000"; shadow = `0 0 10px ${ballColors.four}`; }
-    else if (val === "Wd" || val === "Nb" || val === "WNb") { bg = ballColors.extra; color = "#fff"; }
+    else if (isExtraBall(val)) { bg = ballColors.extra; color = "#fff"; }
     else { bg = ballColors.runs; color = "#fff"; }
   }
-  return <div style={{ width: size, height: size, borderRadius: "50%", background: bg, color, boxShadow: shadow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.length > 1 ? size * 0.29 : size * 0.38, fontWeight: 900, border: val ? "none" : `1px solid ${borderColor}20`, flexShrink: 0 }}>{val || ""}</div>;
+
+  const getStyle = (text: string) => {
+    if (!text) return { fontSize: size * 0.38, letterSpacing: "normal" };
+    if (text.length >= 5) return { fontSize: size * 0.17, letterSpacing: "-0.8px" };
+    if (text.length === 4) return { fontSize: size * 0.20, letterSpacing: "-0.6px" };
+    if (text.length === 3) return { fontSize: size * 0.24, letterSpacing: "-0.4px" };
+    if (text.length === 2) return { fontSize: size * 0.30, letterSpacing: "normal" };
+    return { fontSize: size * 0.38, letterSpacing: "normal" };
+  };
+
+  const { fontSize, letterSpacing } = getStyle(val || "");
+
+  return (
+    <div style={{
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: bg,
+      color,
+      boxShadow: shadow,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: val && val.includes("+") ? undefined : fontSize,
+      letterSpacing: val && val.includes("+") ? undefined : letterSpacing,
+      fontWeight: 900,
+      border: val ? "none" : `1px solid ${borderColor}20`,
+      flexShrink: 0,
+      whiteSpace: "nowrap",
+      lineHeight: 1
+    }}>
+      {renderOutcomeText(val, size)}
+    </div>
+  );
 }
 
 // Demo match and scoring state for preview mode
@@ -769,145 +824,7 @@ export default function OverlayPage() {
     </div>
   );
 
-  // ════════════════════ THEME 16: CRIOVERLAY GREEN ════════════════════
-  if (themeSlug === "crioverlay-green") {
-    const tossWinner = match.tossWonBy === "team1" ? match.team1Name : match.team2Name;
-    const tossChoice = match.optedTo;
-    const bpo = match.ballsPerOver || 6;
-    const striker = scoringState.batsmen.find(b => b.name === scoringState.striker);
-    const nonStriker = scoringState.batsmen.find(b => b.name === scoringState.nonStriker);
-    const bowler = scoringState.bowlers.find(bw => bw.name === scoringState.bowler);
-    const oversBowled = bowler ? `${Math.floor(bowler.ballsBowled / bpo)}.${bowler.ballsBowled % bpo}` : "0.0";
-    const currentScore = `${scoringState.score}-${scoringState.wickets}`;
-    const currentOvers = `${Math.floor(scoringState.balls / bpo)}.${scoringState.balls % bpo} (${match.overs})`;
-    const teamsHeader = `${match.team1Name} v ${match.team2Name}`;
-    // Determine top-capsule mode
-    let topBarMode = "";
-    let animTextContent = "";
-    if (currentAnim === "WICKET") { topBarMode = "mode-out"; animTextContent = "WICKET!"; }
-    else if (currentAnim === "FREE HIT") { topBarMode = "mode-freehit"; animTextContent = "FREE HIT!"; }
-    else if (scoringState.decision === "PENDING") { topBarMode = "mode-pending"; animTextContent = "REVIEW..."; }
-    else if (currentAnim === "FOUR") { animTextContent = "FOUR!"; }
-    else if (currentAnim === "SIX") { animTextContent = "SIX!"; }
-    // Team badge abbreviations
-    const abbr = (name: string) => name.slice(0, 3).toUpperCase();
-    // Ball colour helpers
-    const ballBg = (v: string | undefined) => {
-      if (!v) return "rgba(0,0,0,0.7)";
-      if (v === "W") return "#dc2626";
-      if (v === "4") return "#ca8a04";
-      if (v === "6") return "#7c3aed";
-      if (v === "Wd" || v === "Nb" || v === "WNb") return "#0e7490";
-      return "rgba(0,0,0,0.7)";
-    };
 
-    const GREEN_CSS = `
-      @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Montserrat:wght@700;800;900&display=swap');
-      html,body{background:transparent!important;overflow:hidden;}
-      *{box-sizing:border-box;margin:0;padding:0;}
-      .g-canvas{position:relative;width:100vw;height:100vh;background:transparent;display:flex;flex-direction:column;justify-content:flex-end;padding:20px 16px;overflow:hidden;font-family:'Montserrat',sans-serif;}
-      .g-bar{display:flex;align-items:flex-end;justify-content:stretch;width:100%;}
-      .g-badge{width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;z-index:30;margin-bottom:3px;flex-shrink:0;}
-      .g-badge-l{background:radial-gradient(circle,#eab308 0%,#854d0e 70%,#000 100%);margin-right:-16px;}
-      .g-badge-r{background:radial-gradient(circle,#b2ff59 0%,#4d7c0f 70%,#000 100%);margin-left:-16px;}
-      .g-main-box{display:flex;flex-direction:column;gap:4px;z-index:20;flex:0 0 auto;}
-      .g-top-bar{background:linear-gradient(180deg,#b2ff59 0%,#76ff03 50%,#64dd17 100%);color:#000;border-radius:14px;border:2px solid #000;padding:4px 18px;display:flex;align-items:center;justify-content:space-between;width:480px;height:46px;box-shadow:inset 0 2px 0 rgba(255,255,255,0.6);overflow:hidden;position:relative;}
-      .g-top-bar.mode-out{background:linear-gradient(180deg,#dc2626 0%,#991b1b 100%);color:#fff;border-color:#ef4444;}
-      .g-top-bar.mode-freehit{background:linear-gradient(180deg,#16a34a 0%,#052e16 100%);color:#76ff03;border-color:#22c55e;}
-      .g-top-bar.mode-pending{background:linear-gradient(180deg,#d97706 0%,#78350f 100%);color:#fff;border-color:#f59e0b;}
-      .g-teams{font-size:15px;font-weight:900;}
-      .g-runs{font-size:30px;font-weight:900;font-family:'Teko',sans-serif;letter-spacing:1px;}
-      .g-overs{font-size:14px;font-weight:900;}
-      .g-anim{width:100%;text-align:center;font-size:22px;font-weight:900;letter-spacing:3px;animation:gBlink 0.6s infinite alternate ease-in-out;}
-      @keyframes gBlink{0%{transform:scale(0.88);opacity:0.3;}100%{transform:scale(1.1);opacity:1;}}
-      .g-bat-bar{display:flex;gap:4px;width:480px;height:32px;}
-      .g-pill{background:linear-gradient(180deg,#0b0f19 0%,#172033 100%);border:1.5px solid #76ff03;border-radius:14px;flex:1;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:13px;color:#fff;font-weight:800;}
-      .g-pill.active{background:linear-gradient(180deg,#facc15 0%,#ca8a04 100%);color:#000;border-color:#fff;}
-      .g-navy{background:linear-gradient(180deg,#050b14 0%,#0b1324 100%);border:2px solid #1e293b;border-radius:0 16px 16px 0;margin-left:-18px;padding-left:28px;padding-right:14px;min-height:72px;display:flex;align-items:center;gap:14px;z-index:10;color:#fff;flex:1;min-width:0;}
-      .g-toss{display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1e293b;padding-right:12px;min-width:80px;flex-shrink:0;}
-      .g-toss-l{font-size:10px;color:#94a3b8;font-weight:800;letter-spacing:1px;}
-      .g-toss-v{font-size:13px;color:#00e5ff;font-weight:900;}
-      .g-bowl-sec{flex:1;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:4px 0;min-width:0;}
-      .g-bowl-row{background:linear-gradient(180deg,#b2ff59 0%,#76ff03 100%);color:#000;border-radius:10px;padding:3px 10px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:900;}
-      .g-over-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;color:#fff;}
-      .g-balls{display:flex;gap:3px;flex-wrap:wrap;flex:1;align-items:center;}
-      .g-ball{min-width:18px;height:18px;padding:0 3px;border:1.5px solid #38bdf8;border-radius:4px;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:800;white-space:nowrap;}
-    `;
-
-    return (
-      <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 15, overflow: "hidden" }}>
-        <style>{GREEN_CSS}</style>
-        <div className="g-canvas">
-          <div className="g-bar">
-            {/* Left badge */}
-            <div className="g-badge g-badge-l">{abbr(match.team1Name)}</div>
-
-            {/* Main score box */}
-            <div className="g-main-box">
-              {/* Top green bar */}
-              <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
-                {animTextContent ? (
-                  <div className="g-anim" style={{ display: "block" }}>{animTextContent}</div>
-                ) : (
-                  <>
-                    <span className="g-teams">{teamsHeader}</span>
-                    <span className="g-runs">{currentScore}</span>
-                    <span className="g-overs">{currentOvers}</span>
-                  </>
-                )}
-              </div>
-
-              {/* Batsmen strip */}
-              <div className="g-bat-bar">
-                <div className="g-pill active">
-                  <span>🏏 {scoringState.striker || "STRIKER"}</span>
-                  <span>{striker ? `${striker.runs} ${striker.balls}` : "0 0"}</span>
-                </div>
-                <div className="g-pill">
-                  <span>{scoringState.nonStriker || "NON-STRIKER"}</span>
-                  <span>{nonStriker ? `${nonStriker.runs} ${nonStriker.balls}` : "0 0"}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right navy panel */}
-            <div className="g-navy">
-              <div className="g-toss">
-                <span className="g-toss-l">TOSS</span>
-                <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
-              </div>
-              <div className="g-bowl-sec">
-                <div className="g-bowl-row">
-                  <span>● {(scoringState.bowler || "BOWLER").toUpperCase()}</span>
-                  <span>{bowler ? `${bowler.wickets}-${bowler.runsConceded} ${oversBowled}` : "0-0 0.0"}</span>
-                </div>
-                <div className="g-over-row">
-                  <span>THIS OVER</span>
-                  <div className="g-balls">
-                    {(() => {
-                      const extrasCount = (scoringState.thisOver || []).filter(b => b === "Nb" || b === "WNb" || b === "Wd").length;
-                      const total = bpo + extrasCount;
-                      return Array.from({ length: total }).map((_, i) => {
-                        const v = scoringState.thisOver[i];
-                        return (
-                          <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
-                            {v ?? ""}
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right badge */}
-            <div className="g-badge g-badge-r">{abbr(match.team2Name)}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   // ════════════════════════════════════════════════════════════════
 
   // ════════════════════ 1. ANIMATION ════════════════════
@@ -920,33 +837,32 @@ export default function OverlayPage() {
   if (scoringState.tournamentStatsPlayer) {
     const pName = scoringState.tournamentStatsPlayer;
     const pStats = getPlayerTournamentStats(pName);
-    const goldColor = "#fbbf24";
     return (
       <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
         <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
         <div style={{ position: "relative", zIndex: 1, width: "72vw" }}>
           {renderCustomOverlay()}{renderMom()}
           {/* Unique: Trophy banner header + 2-col layout */}
-          <div className="slide-up" style={{ background: `linear-gradient(135deg, #d97706, #fbbf24)`, border: `3px solid ${goldColor}`, borderRadius: "40px 10px 0 0", padding: "20px 36px", display: "flex", alignItems: "center", gap: 24, boxShadow: `0 4px 20px rgba(217,119,6,0.3)` }}>
+          <div className="animate-slide-up" style={{ background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, border: `3px solid ${theme.borderColor}`, borderRadius: "40px 10px 0 0", padding: "20px 36px", display: "flex", alignItems: "center", gap: 24, boxShadow: `0 4px 20px ${theme.accent}30` }}>
             <div style={{ fontSize: 48, filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }}>🏆</div>
             <div>
-              <div style={{ fontSize: 10, color: "rgba(0,0,0,0.7)", fontWeight: 900, letterSpacing: 3, marginBottom: 2 }}>PLAYER SPOTLIGHT · TOURNAMENT STATS</div>
-              <div style={{ fontSize: 32, fontWeight: 950, color: "#000", textShadow: "0 1px 2px rgba(255,255,255,0.4)" }}>{pName.toUpperCase()}</div>
+              <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 2 }}>PLAYER SPOTLIGHT · TOURNAMENT STATS</div>
+              <div style={{ fontSize: 32, fontWeight: 950, color: theme.accentText }}>{pName.toUpperCase()}</div>
             </div>
-            <div style={{ marginLeft: "auto", background: "#000", color: goldColor, fontSize: 9, fontWeight: 900, padding: "5px 14px", borderRadius: 8, letterSpacing: 2, display: "flex", alignItems: "center", gap: 6, border: `1.5px solid ${goldColor}` }}>
-              <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: goldColor, display: "inline-block" }} />LIVE
+            <div style={{ marginLeft: "auto", background: "rgba(0,0,0,0.5)", color: theme.accent, fontSize: 9, fontWeight: 900, padding: "5px 14px", borderRadius: 8, letterSpacing: 2, display: "flex", alignItems: "center", gap: 6, border: `1.5px solid ${theme.borderColor}` }}>
+              <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: theme.accent, display: "inline-block" }} />LIVE
             </div>
           </div>
-          <div style={{ background: "rgba(12, 10, 5, 0.98)", border: `3px solid ${goldColor}`, borderTop: "none", borderRadius: "0 0 10px 40px", padding: "32px 36px", boxShadow: `0 20px 50px rgba(0,0,0,0.8)` }}>
+          <div style={{ background: theme.primaryBg, border: `3px solid ${theme.borderColor}`, borderTop: "none", borderRadius: "0 0 10px 40px", padding: "32px 36px", boxShadow: `0 20px 50px rgba(0,0,0,0.8)` }}>
             {pStats ? (
               <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 32 }}>
-                <div style={{ textAlign: "center", background: "rgba(217,119,6,0.06)", border: `1px solid rgba(217,119,6,0.25)`, borderRadius: "20px 8px 20px 8px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <TeamLogo name={pName} isBatting={false} isBowling={false} accentColor={goldColor} borderColor={goldColor} size={110} />
-                  <div style={{ marginTop: 20, background: "linear-gradient(135deg, #d97706, #fbbf24)", border: "none", borderRadius: 12, padding: "8px 16px", fontSize: 12, color: "#000", fontWeight: 900, boxShadow: "0 4px 12px rgba(217,119,6,0.2)" }}>{pStats.matches} Matches</div>
+                <div style={{ textAlign: "center", background: `${theme.accent}08`, border: `1px solid ${theme.borderColor}30`, borderRadius: "20px 8px 20px 8px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <TeamLogo name={pName} isBatting={false} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={110} />
+                  <div style={{ marginTop: 20, background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, border: `1px solid ${theme.borderColor}`, borderRadius: 12, padding: "8px 16px", fontSize: 12, color: theme.accentText, fontWeight: 900 }}>{pStats.matches} Matches</div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
-                  {[{ l: "Total Runs", v: pStats.runs, c: goldColor }, { l: "Highest", v: pStats.hs, c: "#fff" }, { l: "Batting Avg", v: pStats.avg, c: "#4ade80" }, { l: "Strike Rate", v: pStats.sr, c: "#38bdf8" }, { l: "Fours", v: pStats.fours, c: "#fbbf24" }, { l: "Sixes", v: pStats.sixes, c: "#f97316" }, { l: "Wickets", v: pStats.wickets || "—", c: "#f87171" }, { l: "Economy", v: pStats.economy, c: "#a78bfa" }, { l: "Best Spell", v: pStats.best, c: "#4ade80" }].map((item, i) => (
-                    <div key={i} className="table-row-animated" style={{ animationDelay: `${i * 0.05}s`, background: "rgba(255,255,255,0.03)", border: `1px solid rgba(217,119,6,0.15)`, borderRadius: 12, padding: "16px 12px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+                  {[{ l: "Total Runs", v: pStats.runs, c: theme.accent }, { l: "Highest", v: pStats.hs, c: "#fff" }, { l: "Batting Avg", v: pStats.avg, c: "#4ade80" }, { l: "Strike Rate", v: pStats.sr, c: "#38bdf8" }, { l: "Fours", v: pStats.fours, c: "#fbbf24" }, { l: "Sixes", v: pStats.sixes, c: "#f97316" }, { l: "Wickets", v: pStats.wickets || "—", c: "#f87171" }, { l: "Economy", v: pStats.economy, c: "#a78bfa" }, { l: "Best Spell", v: pStats.best, c: "#4ade80" }].map((item, i) => (
+                    <div key={i} className="table-row-animated" style={{ animationDelay: `${i * 0.05}s`, background: "rgba(255,255,255,0.03)", border: `1px solid ${theme.borderColor}20`, borderRadius: 12, padding: "16px 12px", textAlign: "center", position: "relative", overflow: "hidden" }}>
                       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: item.c, opacity: 0.6 }} />
                       <div style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", fontWeight: 800, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 8 }}>{item.l}</div>
                       <div style={{ fontSize: 24, fontWeight: 950, color: item.c }}>{item.v}</div>
@@ -973,17 +889,17 @@ export default function OverlayPage() {
         <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
         <div style={{ position: "relative", zIndex: 1, width: "84vw" }}>
           {renderCustomOverlay()}{renderMom()}
-          <div className="slide-up" style={{ background: `linear-gradient(90deg,#4c1d95,#7c3aed)`, borderTop: `4px solid #a78bfa`, borderRadius: "16px 16px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 20px rgba(124,58,237,0.3)" }}>
+          <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}30` }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{ fontSize: 26 }}>📊</div>
               <div>
-                <div style={{ fontSize: 10, color: "#ddd6fe", fontWeight: 800, letterSpacing: 3 }}>TOURNAMENT STATS</div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#fff" }}>{mode.toUpperCase()}</div>
+                <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3 }}>TOURNAMENT STATS</div>
+                <div style={{ fontSize: 22, fontWeight: 950, color: theme.accentText }}>{mode.toUpperCase()}</div>
               </div>
             </div>
-            <div style={{ fontSize: 12, color: "#ddd6fe", fontWeight: 700 }}>{match.team1Name} vs {match.team2Name}</div>
+            <div style={{ fontSize: 12, color: theme.textSecondary, fontWeight: 700 }}>{match.team1Name} vs {match.team2Name}</div>
           </div>
-          <div style={{ background: "rgba(10,8,20,0.98)", border: `2px solid rgba(124,58,237,0.3)`, borderTop: "none", borderRadius: "0 0 16px 16px", padding: "28px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.7)" }}>
+          <div style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}30`, borderTop: "none", borderRadius: "0 0 16px 16px", padding: "28px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.7)" }}>
             {isPT && (
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead><tr style={{ background: `${theme.borderColor}18`, borderBottom: `2px solid ${theme.borderColor}50` }}>
@@ -1047,11 +963,11 @@ export default function OverlayPage() {
   }
 
   // ════════════════════ 5. FULL-SCREEN CARDS ════════════════════
-  const isFS = scoringState.displayScreen && scoringState.displayScreen.toUpperCase() !== "DEFAULT!" && scoringState.displayScreen !== "default";
+  const isFS = scoringState.displayScreen && scoringState.displayScreen.toUpperCase() !== "DEFAULT!" && scoringState.displayScreen !== "default" && scoringState.displayScreen.toUpperCase() !== "MINI";
   if (isFS) {
     const ds = scoringState.displayScreen.toUpperCase();
-    const isY1Bat = ds === "Y1BAT"; const isY2Bat = ds === "Y2BAT";
-    const isY1Ball = ds === "Y1BALL"; const isY2Ball = ds === "Y2BALL";
+    const isY1Bat = ds === "Y1BAT" || ds === "1BAT"; const isY2Bat = ds === "Y2BAT" || ds === "2BAT";
+    const isY1Ball = ds === "Y1BALL" || ds === "1BALL"; const isY2Ball = ds === "Y2BALL" || ds === "2BALL";
     const isSummary = ds === "SUMMARY"; const isFullScore = ds === "FULLSCORE"; const isFow = ds === "FOW";
     const isBowlerSp = ds === "BOWLER"; const isTarget = ds === "TARGET";
     const isPartner = ds === "PARTNERSHIP";
@@ -1067,21 +983,21 @@ export default function OverlayPage() {
           <div style={{ position: "relative", zIndex: 1, width: "95vw" }}>
             {renderCustomOverlay()}{renderMom()}
             {/* Header: team logo left, score right, accent left-border */}
-            <div className="slide-up" style={{ background: `linear-gradient(135deg,#064e3b,#047857)`, borderLeft: `8px solid #10b981`, border: `2px solid rgba(16,185,129,0.4)`, borderRadius: "16px 16px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 25px rgba(6,78,59,0.3)" }}>
+            <div className="animate-slide-up" style={{ background: `linear-gradient(135deg,${theme.headerBg},${theme.primaryBg})`, borderLeft: `8px solid ${theme.borderColor}`, border: `2px solid ${theme.borderColor}40`, borderRadius: "16px 16px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 25px ${theme.accent}30` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                <TeamLogo name={batTeam} isBatting={scoringState.inningsNo === inn} isBowling={false} accentColor="#10b981" borderColor="#10b981" size={80} />
+                <TeamLogo name={batTeam} isBatting={scoringState.inningsNo === inn} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={80} />
                 <div>
-                  <div style={{ fontSize: 10, color: "#a7f3d0", fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>INNINGS {inn} · BATTING SCORECARD</div>
+                  <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>INNINGS {inn} · BATTING SCORECARD</div>
                   <div style={{ fontSize: 26, fontWeight: 950, color: "#fff" }}>{batTeam.toUpperCase()}</div>
-                  <div style={{ fontSize: 11, color: "#a7f3d0", marginTop: 3 }}>vs {bowlTeam.toUpperCase()}</div>
+                  <div style={{ fontSize: 11, color: theme.textSecondary, marginTop: 3 }}>vs {bowlTeam.toUpperCase()}</div>
                 </div>
               </div>
               {innData && <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 52, fontWeight: 950, color: "#10b981", lineHeight: 1 }}>{innData.score}/{innData.wickets}</div>
-                <div style={{ fontSize: 12, color: "#a7f3d0", fontWeight: 700, marginTop: 4 }}>{fmtOv(innData.balls, match.ballsPerOver)} / {match.overs} OVERS</div>
+                <div style={{ fontSize: 52, fontWeight: 950, color: theme.accent, lineHeight: 1 }}>{innData.score}/{innData.wickets}</div>
+                <div style={{ fontSize: 12, color: theme.textSecondary, fontWeight: 700, marginTop: 4 }}>{fmtOv(innData.balls, match.ballsPerOver)} / {match.overs} OVERS</div>
               </div>}
             </div>
-            <div className="scroll-vertical" style={{ background: "rgba(2,15,10,0.98)", border: `2px solid rgba(16,185,129,0.25)`, borderTop: "none", borderRadius: "0 0 16px 16px", overflowY: "auto", maxHeight: "460px", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div className="scroll-vertical" style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 16px 16px", overflowY: "auto", maxHeight: "460px", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {innData ? <>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead><tr style={{ background: `${theme.accent}12`, borderBottom: `2px solid ${theme.accent}30` }}>
@@ -1129,21 +1045,21 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "86vw" }}>
             {renderCustomOverlay()}{renderMom()}
-            {/* Header: red accent top border */}
-            <div className="slide-up" style={{ background: `linear-gradient(135deg,rgba(120,15,15,0.96),rgba(40,10,10,0.98))`, borderTop: "5px solid #ef4444", border: `2px solid rgba(239,68,68,0.4)`, borderRadius: "12px 12px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 25px rgba(220,38,38,0.3)" }}>
+            {/* Header: bowling accent top border */}
+            <div className="animate-slide-up" style={{ background: `linear-gradient(135deg,${theme.headerBg},${theme.primaryBg})`, borderTop: `5px solid #ef4444`, border: `2px solid rgba(239,68,68,0.4)`, borderRadius: "12px 12px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 25px ${theme.accent}30` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                <TeamLogo name={bowlTeam} isBatting={false} isBowling={scoringState.inningsNo === inn} accentColor="#ef4444" borderColor="#ef4444" size={80} />
+                <TeamLogo name={bowlTeam} isBatting={false} isBowling={scoringState.inningsNo === inn} accentColor={theme.accent} borderColor={theme.borderColor} size={80} />
                 <div>
-                  <div style={{ fontSize: 10, color: "#fca5a5", fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>INNINGS {inn} · BOWLING FIGURES</div>
+                  <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>INNINGS {inn} · BOWLING FIGURES</div>
                   <div style={{ fontSize: 26, fontWeight: 950, color: "#fff" }}>{bowlTeam.toUpperCase()} BOWLING</div>
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 12, color: "#fca5a5", fontWeight: 700 }}>vs {batTeam.toUpperCase()}</div>
-                {innData && <div style={{ fontSize: 22, fontWeight: 950, color: "#fff", marginTop: 4 }}>{innData.score}/{innData.wickets} ({fmtOv(innData.balls, match.ballsPerOver)})</div>}
+                <div style={{ fontSize: 12, color: theme.textSecondary, fontWeight: 700 }}>vs {batTeam.toUpperCase()}</div>
+                {innData && <div style={{ fontSize: 22, fontWeight: 950, color: theme.accentText, marginTop: 4 }}>{innData.score}/{innData.wickets} ({fmtOv(innData.balls, match.ballsPerOver)})</div>}
               </div>
             </div>
-            <div className="scroll-vertical" style={{ background: "rgba(15,4,4,0.99)", border: `2px solid rgba(239,68,68,0.25)`, borderTop: "none", borderRadius: "0 0 12px 12px", padding: "28px 24px", maxHeight: "460px", overflowY: "auto", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div className="scroll-vertical" style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 12px 12px", padding: "28px 24px", maxHeight: "460px", overflowY: "auto", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {innData ? (
                 <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(innData.bowlers.length, 4)},1fr)`, gap: 20 }}>
                   {innData.bowlers.map((bw, idx) => {
@@ -1195,7 +1111,7 @@ export default function OverlayPage() {
           <div style={{ position: "relative", zIndex: 1, width: "80vw" }}>
             {renderCustomOverlay()}{renderMom()}
             {/* Central match title */}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "16px 32px", textAlign: "center" }}>
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "16px 32px", textAlign: "center" }}>
               <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>MATCH SUMMARY · {theme.name.toUpperCase()}</div>
               <div style={{ fontSize: 18, fontWeight: 900, color: theme.accentText, marginTop: 4 }}>{match.team1Name.toUpperCase()} <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 12px" }}>vs</span> {match.team2Name.toUpperCase()}</div>
             </div>
@@ -1246,17 +1162,17 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "78vw" }}>
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg,rgba(120,20,20,0.96),#450a0a,rgba(120,20,20,0.96))`, border: `2px solid #ef4444`, borderRadius: "12px 12px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 20px rgba(220,38,38,0.25)" }}>
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid #ef4444`, borderRadius: "12px 12px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}25` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                 <div style={{ fontSize: 32 }}>⚰️</div>
                 <div>
-                  <div style={{ fontSize: 10, color: "#fca5a5", fontWeight: 800, letterSpacing: 3, marginBottom: 2 }}>FALL OF WICKETS</div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#fff" }}>{currentBatTeam.toUpperCase()} · INN {scoringState.inningsNo}</div>
+                  <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 2 }}>FALL OF WICKETS</div>
+                  <div style={{ fontSize: 22, fontWeight: 950, color: theme.accentText }}>{currentBatTeam.toUpperCase()} · INN {scoringState.inningsNo}</div>
                 </div>
               </div>
-              <div style={{ fontSize: 32, fontWeight: 950, color: "#ef4444" }}>{fowList.length} / 10</div>
+              <div style={{ fontSize: 32, fontWeight: 950, color: theme.accent }}>{fowList.length} / 10</div>
             </div>
-            <div style={{ background: "rgba(10,4,4,0.99)", border: `2px solid rgba(239,68,68,0.25)`, borderTop: "none", borderRadius: "0 0 12px 12px", padding: "36px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 12px 12px", padding: "36px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {fowList.length > 0 ? <>
                 {/* Timeline row 1 */}
                 <div style={{ position: "relative", marginBottom: row2.length > 0 ? 32 : 16 }}>
@@ -1303,14 +1219,14 @@ export default function OverlayPage() {
       return (
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "radial-gradient(ellipse 60% 50% at 50% 50%,rgba(6,182,212,0.15),transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 60% 50% at 50% 50%,${theme.accent}20,transparent 70%)`, pointerEvents: "none" }} />
           <div style={{ position: "relative", zIndex: 1, width: "62vw", display: "flex", flexDirection: "column", alignItems: "center" }}>
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ marginBottom: 20 }}>
-              <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor="#06b6d4" borderColor="#06b6d4" size={88} />
+            <div className="animate-slide-up" style={{ marginBottom: 20 }}>
+              <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor={theme.accent} borderColor={theme.borderColor} size={88} />
             </div>
-            <div className="scale-in" style={{ background: "linear-gradient(180deg,rgba(8,30,40,0.7),rgba(4,6,15,0.98) 50%)", border: `2px solid #06b6d4`, borderTop: "6px solid #06b6d4", borderRadius: 20, padding: "40px 48px", textAlign: "center", minWidth: "100%", boxShadow: "0 32px 80px rgba(6,182,212,0.25)" }}>
-              <div style={{ fontSize: 11, color: "#22d3ee", fontWeight: 800, letterSpacing: 4, marginBottom: 8 }}>⚡ BOWLING SPOTLIGHT · CURRENT SPELL</div>
+            <div className="scale-in" style={{ background: `linear-gradient(180deg,${theme.headerBg}B0,${theme.primaryBg} 50%)`, border: `2px solid ${theme.borderColor}`, borderTop: `6px solid ${theme.borderColor}`, borderRadius: 20, padding: "40px 48px", textAlign: "center", minWidth: "100%", boxShadow: `0 32px 80px ${theme.accent}25` }}>
+              <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4, marginBottom: 8 }}>⚡ BOWLING SPOTLIGHT · CURRENT SPELL</div>
               <div style={{ fontSize: 48, fontWeight: 950, color: "#fff", letterSpacing: 1, marginBottom: 4, textShadow: "0 0 30px rgba(239,68,68,0.4)" }}>{scoringState.bowler || "No Bowler"}</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 28, marginBottom: scoringState.thisOver.length > 0 ? 28 : 0 }}>
                 {[{ l: "WICKETS", v: bowler?.wickets ?? 0, c: "#ef4444" }, { l: "RUNS", v: bowler?.runsConceded ?? 0, c: "#fff" }, { l: "OVERS", v: fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver), c: theme.accentText }, { l: "ECONOMY", v: eco, c: parseFloat(eco) < 8 ? "#4ade80" : "#f87171" }].map((st, i) => (
@@ -1326,7 +1242,7 @@ export default function OverlayPage() {
                   {(() => {
                     const bpo = match.ballsPerOver || 6;
                     const thisOver = scoringState.thisOver || [];
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCircles = bpo + extrasCount;
                     return Array.from({ length: totalCircles }).map((_, i) => (
                       <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={40} />
@@ -1351,15 +1267,15 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "68vw" }}>
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg, #ea580c, #f97316)`, borderTop: `4px solid #fdba74`, borderRadius: "16px 16px 0 0", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 20px rgba(234,88,12,0.3)" }}>
-              <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor="#ea580c" borderColor="#ea580c" size={70} />
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg, ${theme.headerBg}, ${theme.primaryBg})`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}30` }}>
+              <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={70} />
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 10, color: "#ffedd5", fontWeight: 800, letterSpacing: 4 }}>MATCH EQUATION</div>
-                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginTop: 4 }}>CHASING {scoringState.target} RUNS</div>
+                <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>MATCH EQUATION</div>
+                <div style={{ fontSize: 16, fontWeight: 900, color: theme.accentText, marginTop: 4 }}>CHASING {scoringState.target} RUNS</div>
               </div>
-              <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor="#ea580c" borderColor="#ea580c" size={70} />
+              <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor={theme.accent} borderColor={theme.borderColor} size={70} />
             </div>
-            <div style={{ background: "rgba(18,8,2,0.99)", border: `2px solid rgba(249,115,22,0.35)`, borderTop: "none", borderRadius: "0 0 16px 16px", padding: "40px 56px", textAlign: "center", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}35`, borderTop: "none", borderRadius: "0 0 16px 16px", padding: "40px 56px", textAlign: "center", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {scoringState.target !== null ? <>
                 <div style={{ fontSize: 13, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4, marginBottom: 8 }}>{currentBatTeam.toUpperCase()} REQUIRE</div>
                 <div style={{ fontSize: 110, fontWeight: 950, color: theme.accentText, lineHeight: 1, textShadow: `0 0 60px ${theme.accent}50,0 8px 24px rgba(0,0,0,0.8)`, marginBottom: 4 }}>{need}</div>
@@ -1397,22 +1313,22 @@ export default function OverlayPage() {
       return (
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "radial-gradient(ellipse 70% 50% at 50% 50%,rgba(16,185,129,0.15),transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 70% 50% at 50% 50%,${theme.accent}18,transparent 70%)`, pointerEvents: "none" }} />
           <div style={{ position: "relative", zIndex: 1, width: "75vw" }}>
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg,rgba(2,44,23,0.96),#064e3b,rgba(2,44,23,0.96))`, border: `2px solid #10b981`, borderRadius: "16px 16px 0 0", padding: "18px 36px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 20px rgba(16,185,129,0.25)" }}>
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "18px 36px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}25` }}>
               <div>
-                <div style={{ fontSize: 9, color: "#34d399", fontWeight: 800, letterSpacing: 3, marginBottom: 2 }}>ACTIVE PARTNERSHIP</div>
+                <div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 2 }}>ACTIVE PARTNERSHIP</div>
                 <div style={{ fontSize: 20, fontWeight: 900, color: "#fff" }}>{currentBatTeam.toUpperCase()} BATTING</div>
               </div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 11, color: "#a7f3d0", fontWeight: 700 }}>PARTNERSHIP</div>
-                <div style={{ fontSize: 40, fontWeight: 950, color: "#10b981", lineHeight: 1 }}>{pRuns}</div>
-                <div style={{ fontSize: 10, color: "#a7f3d0" }}>{pBalls} balls · SR {pSR}</div>
+                <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 700 }}>PARTNERSHIP</div>
+                <div style={{ fontSize: 40, fontWeight: 950, color: theme.accent, lineHeight: 1 }}>{pRuns}</div>
+                <div style={{ fontSize: 10, color: theme.textSecondary }}>{pBalls} balls · SR {pSR}</div>
               </div>
-              <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor="#10b981" borderColor="#10b981" size={70} />
+              <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={70} />
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 1fr", background: "rgba(2,12,6,0.98)", border: `2px solid rgba(16,185,129,0.2)`, borderTop: "none", borderRadius: "0 0 16px 16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 1fr", background: theme.primaryBg, border: `2px solid ${theme.borderColor}20`, borderTop: "none", borderRadius: "0 0 16px 16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {/* Striker */}
               <div style={{ padding: "36px 32px", borderRight: "1px solid rgba(74,222,128,0.1)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
@@ -1475,7 +1391,7 @@ export default function OverlayPage() {
           <div style={{ position: "relative", zIndex: 1, width: "96vw", maxWidth: "1480px" }}>
 
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "18px 28px", textAlign: "center" }}>
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "18px 28px", textAlign: "center" }}>
               <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>FULL SCORECARD · {theme.name.toUpperCase()}</div>
               <div style={{ fontSize: 20, fontWeight: 900, color: theme.accentText, marginTop: 6 }}>{match.team1Name.toUpperCase()} vs {match.team2Name.toUpperCase()}</div>
               <div style={{ fontSize: 12, color: theme.textSecondary, marginTop: 6 }}>{winnerText}</div>
@@ -1569,17 +1485,17 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "92vw" }}>
             {renderCustomOverlay()}{renderMom()}
-            <div className="slide-up" style={{ background: `linear-gradient(90deg,#1e3a8a,#0f172a,#1e3a8a)`, border: `2px solid rgba(59,130,246,0.4)`, borderRadius: "16px 16px 0 0", padding: "20px 36px", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", boxShadow: "0 4px 20px rgba(30,58,138,0.3)" }}>
-              <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor="#3b82f6" borderColor="#3b82f6" size={80} />
+            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid ${theme.borderColor}40`, borderRadius: "16px 16px 0 0", padding: "20px 36px", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", boxShadow: `0 4px 20px ${theme.accent}30` }}>
+              <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={80} />
               <div style={{ textAlign: "center", padding: "0 24px" }}>
-                <div style={{ fontSize: 10, color: "#93c5fd", fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>PLAYING SQUADS</div>
-                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>PLAYING XI</div>
+                <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 4 }}>PLAYING SQUADS</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: theme.accentText }}>PLAYING XI</div>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <TeamLogo name={match.team2Name} isBatting={!team1IsBatting} isBowling={team1IsBatting} accentColor="#3b82f6" borderColor="#3b82f6" size={80} />
+                <TeamLogo name={match.team2Name} isBatting={!team1IsBatting} isBowling={team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={80} />
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", background: "rgba(10,15,30,0.99)", border: `2px solid rgba(59,130,246,0.25)`, borderTop: "none", borderRadius: "0 0 16px 16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", background: theme.primaryBg, border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 16px 16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.8)" }}>
               {[{ name: match.team1Name, players: match.playersTeam1 || [], isBat: team1IsBatting }, { name: match.team2Name, players: match.playersTeam2 || [], isBat: !team1IsBatting }].map((team, ti) => (
                 <div key={ti} style={{ padding: "24px 28px", borderRight: ti === 0 ? `1px solid ${theme.borderColor}20` : "none" }}>
                   <div style={{ fontSize: 11, fontWeight: 900, color: team.isBat ? "#4ade80" : "#f87171", letterSpacing: 2, marginBottom: 16 }}>{team.name.toUpperCase()} · {team.isBat ? "🏏 BATTING" : "🎯 BOWLING"}</div>
@@ -1602,9 +1518,171 @@ export default function OverlayPage() {
         </div>
       );
     }
+
+    // ── TOURNAMENT NAME BANNER ─────────────────────────────────────────────
+    if (ds === "TOURNAME") {
+      const tourName = (match as any).tournamentName || match.team1Name + " vs " + match.team2Name;
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "80vw", textAlign: "center" }}>
+            {renderCustomOverlay()}{renderMom()}
+            <div className="animate-slide-up" style={{ background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, border: `3px solid ${theme.borderColor}`, borderRadius: 24, padding: "48px 64px", boxShadow: `0 8px 40px ${theme.accent}40` }}>
+              <div style={{ fontSize: 13, color: theme.textSecondary, fontWeight: 900, letterSpacing: 5, textTransform: "uppercase", marginBottom: 16 }}>🏏 TOURNAMENT</div>
+              <div style={{ fontSize: 44, fontWeight: 950, color: theme.accentText, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: 2, textShadow: `0 0 30px ${theme.accent}60` }}>{tourName}</div>
+              <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 20 }}>
+                <div style={{ background: `${theme.accent}20`, border: `1px solid ${theme.borderColor}`, borderRadius: 12, padding: "10px 28px", fontSize: 16, fontWeight: 900, color: theme.accentText }}>{match.team1Name}</div>
+                <div style={{ fontSize: 20, color: theme.textSecondary, alignSelf: "center" }}>vs</div>
+                <div style={{ background: `${theme.accent}20`, border: `1px solid ${theme.borderColor}`, borderRadius: 12, padding: "10px 28px", fontSize: 16, fontWeight: 900, color: theme.accentText }}>{match.team2Name}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   // ════════════════════ 6. DEFAULT LOWER THIRD ════════════════════
+  // ════════════════════ THEME 16: CRIOVERLAY GREEN ════════════════════
+  if (themeSlug === "crioverlay-green") {
+    const tossWinner = match.tossWonBy === "team1" ? match.team1Name : match.team2Name;
+    const tossChoice = match.optedTo;
+    const bpo = match.ballsPerOver || 6;
+    const striker = scoringState.batsmen.find(b => b.name === scoringState.striker);
+    const nonStriker = scoringState.batsmen.find(b => b.name === scoringState.nonStriker);
+    const bowler = scoringState.bowlers.find(bw => bw.name === scoringState.bowler);
+    const oversBowled = bowler ? `${Math.floor(bowler.ballsBowled / bpo)}.${bowler.ballsBowled % bpo}` : "0.0";
+    const currentScore = `${scoringState.score}-${scoringState.wickets}`;
+    const currentOvers = `${Math.floor(scoringState.balls / bpo)}.${scoringState.balls % bpo} (${match.overs})`;
+    const teamsHeader = `${match.team1Name} v ${match.team2Name}`;
+    // Determine top-capsule mode
+    let topBarMode = "";
+    let animTextContent = "";
+    if (currentAnim === "WICKET") { topBarMode = "mode-out"; animTextContent = "WICKET!"; }
+    else if (currentAnim === "FREE HIT") { topBarMode = "mode-freehit"; animTextContent = "FREE HIT!"; }
+    else if (scoringState.decision === "PENDING") { topBarMode = "mode-pending"; animTextContent = "REVIEW..."; }
+    else if (currentAnim === "FOUR") { animTextContent = "FOUR!"; }
+    else if (currentAnim === "SIX") { animTextContent = "SIX!"; }
+    // Team badge abbreviations
+    const abbr = (name: string) => name.slice(0, 3).toUpperCase();
+    // Ball colour helpers
+    const ballBg = (v: string | undefined) => {
+      if (!v) return "rgba(0,0,0,0.7)";
+      if (v === "W") return "#dc2626";
+      if (v === "4") return "#ca8a04";
+      if (v === "6") return "#7c3aed";
+      if (isExtraBall(v)) return "#0e7490";
+      return "rgba(0,0,0,0.7)";
+    };
+
+    const GREEN_CSS = `
+      @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Montserrat:wght@700;800;900&display=swap');
+      html,body{background:transparent!important;overflow:hidden;}
+      *{box-sizing:border-box;margin:0;padding:0;}
+      .g-canvas{position:relative;width:100vw;height:100vh;background:transparent;display:flex;flex-direction:column;justify-content:flex-end;padding:20px 16px;overflow:hidden;font-family:'Montserrat',sans-serif;}
+      .g-bar{display:flex;align-items:flex-end;justify-content:stretch;width:100%;}
+      .g-badge{width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;z-index:30;margin-bottom:3px;flex-shrink:0;}
+      .g-badge-l{background:radial-gradient(circle,#eab308 0%,#854d0e 70%,#000 100%);margin-right:-16px;}
+      .g-badge-r{background:radial-gradient(circle,#b2ff59 0%,#4d7c0f 70%,#000 100%);margin-left:-16px;}
+      .g-main-box{display:flex;flex-direction:column;gap:4px;z-index:20;flex:0 0 auto;}
+      .g-top-bar{background:linear-gradient(180deg,#b2ff59 0%,#76ff03 50%,#64dd17 100%);color:#000;border-radius:14px;border:2px solid #000;padding:4px 18px;display:flex;align-items:center;justify-content:space-between;width:480px;height:46px;box-shadow:inset 0 2px 0 rgba(255,255,255,0.6);overflow:hidden;position:relative;}
+      .g-top-bar.mode-out{background:linear-gradient(180deg,#dc2626 0%,#991b1b 100%);color:#fff;border-color:#ef4444;}
+      .g-top-bar.mode-freehit{background:linear-gradient(180deg,#16a34a 0%,#052e16 100%);color:#76ff03;border-color:#22c55e;}
+      .g-top-bar.mode-pending{background:linear-gradient(180deg,#d97706 0%,#78350f 100%);color:#fff;border-color:#f59e0b;}
+      .g-teams{font-size:15px;font-weight:900;}
+      .g-runs{font-size:30px;font-weight:900;font-family:'Teko',sans-serif;letter-spacing:1px;}
+      .g-overs{font-size:14px;font-weight:900;}
+      .g-anim{width:100%;text-align:center;font-size:22px;font-weight:900;letter-spacing:3px;animation:gBlink 0.6s infinite alternate ease-in-out;}
+      @keyframes gBlink{0%{transform:scale(0.88);opacity:0.3;}100%{transform:scale(1.1);opacity:1;}}
+      .g-bat-bar{display:flex;gap:4px;width:480px;height:32px;}
+      .g-pill{background:linear-gradient(180deg,#0b0f19 0%,#172033 100%);border:1.5px solid #76ff03;border-radius:14px;flex:1;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:13px;color:#fff;font-weight:800;}
+      .g-pill.active{background:linear-gradient(180deg,#facc15 0%,#ca8a04 100%);color:#000;border-color:#fff;}
+      .g-navy{background:linear-gradient(180deg,#050b14 0%,#0b1324 100%);border:2px solid #1e293b;border-radius:0 16px 16px 0;margin-left:-18px;padding-left:28px;padding-right:14px;min-height:72px;display:flex;align-items:center;gap:14px;z-index:10;color:#fff;flex:1;min-width:0;}
+      .g-toss{display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1e293b;padding-right:12px;min-width:80px;flex-shrink:0;}
+      .g-toss-l{font-size:10px;color:#94a3b8;font-weight:800;letter-spacing:1px;}
+      .g-toss-v{font-size:13px;color:#00e5ff;font-weight:900;}
+      .g-bowl-sec{flex:1;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:4px 0;min-width:0;}
+      .g-bowl-row{background:linear-gradient(180deg,#b2ff59 0%,#76ff03 100%);color:#000;border-radius:10px;padding:3px 10px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:900;}
+      .g-over-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;color:#fff;}
+      .g-balls{display:flex;gap:3px;flex-wrap:wrap;flex:1;align-items:center;}
+      .g-ball{min-width:18px;height:18px;padding:0 3px;border:1.5px solid #38bdf8;border-radius:4px;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:800;white-space:nowrap;}
+    `;
+
+    return (
+      <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 15, overflow: "hidden" }}>
+        <style>{GREEN_CSS}</style>
+        <div className="g-canvas">
+          <div className="g-bar">
+            {/* Left badge */}
+            <div className="g-badge g-badge-l">{abbr(match.team1Name)}</div>
+
+            {/* Main score box */}
+            <div className="g-main-box">
+              {/* Top green bar */}
+              <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
+                {animTextContent ? (
+                  <div className="g-anim" style={{ display: "block" }}>{animTextContent}</div>
+                ) : (
+                  <>
+                    <span className="g-teams">{teamsHeader}</span>
+                    <span className="g-runs">{currentScore}</span>
+                    <span className="g-overs">{currentOvers}</span>
+                  </>
+                )}
+              </div>
+
+              {/* Batsmen strip */}
+              <div className="g-bat-bar">
+                <div className="g-pill active">
+                  <span>🏏 {scoringState.striker || "STRIKER"}</span>
+                  <span>{striker ? `${striker.runs} ${striker.balls}` : "0 0"}</span>
+                </div>
+                <div className="g-pill">
+                  <span>{scoringState.nonStriker || "NON-STRIKER"}</span>
+                  <span>{nonStriker ? `${nonStriker.runs} ${nonStriker.balls}` : "0 0"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right navy panel */}
+            <div className="g-navy">
+              <div className="g-toss">
+                <span className="g-toss-l">TOSS</span>
+                <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
+              </div>
+              <div className="g-bowl-sec">
+                <div className="g-bowl-row">
+                  <span>● {(scoringState.bowler || "BOWLER").toUpperCase()}</span>
+                  <span>{bowler ? `${bowler.wickets}-${bowler.runsConceded} ${oversBowled}` : "0-0 0.0"}</span>
+                </div>
+                <div className="g-over-row">
+                  <span>THIS OVER</span>
+                  <div className="g-balls">
+                    {(() => {
+                      const extrasCount = (scoringState.thisOver || []).filter(isExtraBall).length;
+                      const total = bpo + extrasCount;
+                      return Array.from({ length: total }).map((_, i) => {
+                        const v = scoringState.thisOver[i];
+                        return (
+                          <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
+                            {v ?? ""}
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right badge */}
+            <div className="g-badge g-badge-r">{abbr(match.team2Name)}</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (themeSlug === "asia-cup") {
     const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
     const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
@@ -1753,7 +1831,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => (
                         <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={18} />
@@ -1933,7 +2011,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => {
                         const val = thisOver[i];
@@ -1945,12 +2023,12 @@ export default function OverlayPage() {
                           if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
                           else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
                           else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#a855f7"; cellColor = "#ffffff"; }
+                          else if (isExtraBall(val)) { cellBg = "#a855f7"; cellColor = "#ffffff"; }
                           else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
                         }
                         return (
-                          <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "900" }}>
-                            {val || ""}
+                          <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "7px" : (val && val.length > 1 ? "9px" : "11px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                            {renderOutcomeText(val, 20)}
                           </div>
                         );
                       });
@@ -2123,7 +2201,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => {
                         const val = thisOver[i];
@@ -2135,12 +2213,12 @@ export default function OverlayPage() {
                           if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#000000"; }
                           else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
                           else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#c084fc"; cellColor = "#ffffff"; }
+                          else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
                           else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
                         }
                         return (
-                          <div key={i} style={{ width: "18px", height: "18px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                            {val || ""}
+                          <div key={i} style={{ width: "18px", height: "18px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "10px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                            {renderOutcomeText(val, 18)}
                           </div>
                         );
                       });
@@ -2337,13 +2415,13 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => {
                         const val = thisOver[i];
                         return (
                           <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "12px" }}>
-                            <span style={{ color: val ? "#ffffff" : "rgba(255,255,255,0.25)", fontSize: "12px", fontWeight: "900", lineHeight: 1 }}>
+                            <span style={{ color: val ? "#ffffff" : "rgba(255,255,255,0.25)", fontSize: val && val.length > 3 ? "8px" : (val && val.length > 1 ? "10px" : "12px"), fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
                               {val || "•"}
                             </span>
                             {val && <div style={{ width: "10px", height: "2px", background: "#ffffff", marginTop: "2px" }} />}
@@ -2560,7 +2638,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => {
                         const val = thisOver[i];
@@ -2613,7 +2691,7 @@ export default function OverlayPage() {
   }
 
   // ── T20 WORLD CUP / 6th Theme: Neon purple slash splits with pink score box (matches image) ──
-  if (themeSlug === "t20-world-cup") {
+  if (themeSlug === "cwc-23-india") {
     const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
     const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
     const rrr = (need !== null && bLeft !== null && bLeft > 0) ? ((need / bLeft) * match.ballsPerOver).toFixed(2) : null;
@@ -2775,7 +2853,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => {
                         const val = thisOver[i];
@@ -2786,7 +2864,7 @@ export default function OverlayPage() {
                           if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else if (val === "W" || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else if (val === "Wd" || val === "Nb" || val === "WNb") { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else if (isExtraBall(val)) { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else { cellBg = "#1f2937"; cellColor = "#ffffff"; cellBorder = "none"; }
                         } else {
                           cellBg = "rgba(255, 255, 255, 0.05)";
@@ -2794,8 +2872,8 @@ export default function OverlayPage() {
                           cellBorder = "1px solid rgba(255, 255, 255, 0.15)";
                         }
                         return (
-                          <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: "900" }}>
-                            {val || ""}
+                          <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "5.5px" : (val && val.length > 1 ? "7px" : "9px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                            {renderOutcomeText(val, 16)}
                           </div>
                         );
                       });
@@ -2894,7 +2972,7 @@ export default function OverlayPage() {
     // Current over balls display
     const thisOver = scoringState.thisOver || [];
     const bpo = match.ballsPerOver || 6;
-    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+    const extrasCount = thisOver.filter(isExtraBall).length;
     const totalBallSlots = bpo + extrasCount;
 
     // Ball coloring for this scoreboard style
@@ -2903,7 +2981,7 @@ export default function OverlayPage() {
       if (val === "W") return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid #ffffff" };
       if (val === "6") return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid #ffffff" };
       if (val === "4") return { bg: "#facc15", color: "#000000" };
-      if (val === "Wd" || val === "Nb" || val === "WNb") return { bg: "#9333ea", color: "#ffffff" };
+      if (isExtraBall(val)) return { bg: "#9333ea", color: "#ffffff" };
       return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid rgba(255,255,255,0.4)" };
     };
 
@@ -3092,7 +3170,7 @@ export default function OverlayPage() {
 
     const thisOver = scoringState.thisOver || [];
     const bpo = match.ballsPerOver || 6;
-    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+    const extrasCount = thisOver.filter(isExtraBall).length;
     const totalBallSlots = bpo + extrasCount;
 
     const getBallStyle = (val?: string): { bg: string; color: string; border?: string } => {
@@ -3224,11 +3302,14 @@ export default function OverlayPage() {
                         border: bs.border || "none",
                         borderRadius: "50%",
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: val && val.length > 1 ? "8px" : "10px",
+                        fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6.5px" : (val && val.length > 1 ? "8px" : "10px")),
+                        letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
                         fontWeight: "900",
-                        flexShrink: 0
+                        flexShrink: 0,
+                        whiteSpace: "nowrap",
+                        lineHeight: 1
                       }}>
-                        {val === "." ? "" : val || ""}
+                        {val === "." ? "" : renderOutcomeText(val, 20)}
                       </div>
                     );
                   })}
@@ -3282,7 +3363,7 @@ export default function OverlayPage() {
 
     const thisOver = scoringState.thisOver || [];
     const bpo = match.ballsPerOver || 6;
-    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+    const extrasCount = thisOver.filter(isExtraBall).length;
     const totalBallSlots = bpo + extrasCount;
 
     return (
@@ -3348,7 +3429,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -3360,8 +3441,12 @@ export default function OverlayPage() {
                           border: ball ? "none" : "1px solid rgba(255,255,255,0.1)",
                           color: ball ? "#ffffff" : "transparent",
                           display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: "10px", fontWeight: "900"
-                        }}>{ball || ""}</div>
+                          fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 3 ? "6.5px" : (ball && ball.length > 1 ? "8px" : "10px")),
+                          letterSpacing: ball && ball.length > 2 ? "-0.5px" : "normal",
+                          fontWeight: "900",
+                          whiteSpace: "nowrap",
+                          lineHeight: 1
+                        }}>{renderOutcomeText(ball, 18)}</div>
                       );
                     });
                   })()}
@@ -3490,7 +3575,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -3623,7 +3708,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -3728,7 +3813,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -3870,7 +3955,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -3994,7 +4079,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -4123,7 +4208,7 @@ export default function OverlayPage() {
                 <div style={{ display: "flex", gap: "4px" }}>
                   {(() => {
                     const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                    const extrasCount = thisOver.filter(isExtraBall).length;
                     const totalCirclesCount = bpo + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
@@ -4250,7 +4335,7 @@ export default function OverlayPage() {
                     {(() => {
                       const bpo = match?.ballsPerOver || 6;
                       const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter((b) => b === "Nb" || b === "WNb" || b === "Wd").length;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
                       const totalCirclesCount = bpo + extrasCount;
                       return Array.from({ length: totalCirclesCount }).map((_, i) => (
                         <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
