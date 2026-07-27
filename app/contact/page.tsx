@@ -21,7 +21,7 @@ export default function Contact() {
 
         {/* Contact info + form grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-stretch mt-6">
-          
+
           {/* Info Side */}
           <div className="md:col-span-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl p-8 gap-8">
             <div className="flex flex-col gap-6">
@@ -70,8 +70,8 @@ export default function Contact() {
                 </span>
                 <div className="flex flex-col text-sm">
                   <span className="text-slate-500 font-normal">Email Us</span>
-                  <a href="mailto:cricovelay@gmail.com" className="font-semibold text-slate-900 hover:text-orange-600 transition-colors">
-                    cricovelay@gmail.com
+                  <a href="mailto:crioverlay@gmail.com" className="font-semibold text-slate-900 hover:text-orange-600 transition-colors">
+                    crioverlay@gmail.com
                   </a>
                 </div>
               </div>

@@ -143,7 +143,7 @@ export async function sendResetPasswordEmail(
       <body>
         <div class="container">
           <div class="header">
-            <span class="logo">Crick<span class="accent">pro</span>BD</span>
+            <span class="logo">Cri<span class="accent">Overlay</span></span>
           </div>
           <div class="content">
             <h1>Password Reset Request</h1>
@@ -296,7 +296,7 @@ export async function sendPaymentReceivedConfirmationEmail(
       <body>
         <div class="container">
           <div class="header">
-            <span class="logo">Crick<span class="accent">pro</span>BD</span>
+            <span class="logo">Cri<span class="accent">Overlay</span></span>
           </div>
           <div class="content">
             <h1>Payment Received!</h1>
@@ -459,7 +459,7 @@ export async function sendAdminPaymentNotificationEmail(
       <body>
         <div class="container">
           <div class="header">
-            <span class="logo">Crick<span class="accent">pro</span>BD Admin</span>
+            <span class="logo">Cri<span class="accent">Overlay</span> Admin</span>
           </div>
           <div class="content">
             <h1>New JazzCash Transaction Received</h1>
@@ -593,7 +593,7 @@ export async function sendAdminCustomEmail(
       <body>
         <div class="container">
           <div class="header">
-            <span class="logo">Crick<span class="accent">pro</span>BD</span>
+            <span class="logo">Cri<span class="accent">Overlay</span></span>
           </div>
           <div class="content">
             ${formattedBody}

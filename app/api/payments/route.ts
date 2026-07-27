@@ -13,10 +13,10 @@ import {
 // Returns ms to add to Date.now() based on planType
 function planDurationMs(planType: string | null | undefined): number {
   switch (planType) {
-    case "basic":        return 1 * 24 * 60 * 60 * 1000;   // 1 day
+    case "basic": return 1 * 24 * 60 * 60 * 1000;   // 1 day
     case "professional": return 7 * 24 * 60 * 60 * 1000;   // 1 week
-    case "enterprise":   return 30 * 24 * 60 * 60 * 1000;  // 1 month
-    default:             return 24 * 60 * 60 * 1000;        // fallback 1 day
+    case "enterprise": return 30 * 24 * 60 * 60 * 1000;  // 1 month
+    default: return 24 * 60 * 60 * 1000;        // fallback 1 day
   }
 }
 
@@ -121,8 +121,8 @@ export async function POST(req: Request) {
         resolvedPlanType === "enterprise"
           ? "1 month"
           : resolvedPlanType === "professional"
-          ? "1 week"
-          : "1 day";
+            ? "1 week"
+            : "1 day";
 
       try {
         await sendPaymentReceivedConfirmationEmail(normalizedEmail, {
@@ -131,7 +131,7 @@ export async function POST(req: Request) {
           senderNumber,
           trxId,
         });
-        const adminEmail = process.env.SMTP_USER || "cricovelay@gmail.com";
+        const adminEmail = process.env.SMTP_USER || "crioverlay@gmail.com";
         await sendAdminPaymentNotificationEmail(adminEmail, {
           userEmail: normalizedEmail,
           itemName,
@@ -183,7 +183,7 @@ export async function POST(req: Request) {
         senderNumber,
         trxId,
       });
-      const adminEmail = process.env.SMTP_USER || "cricovelay@gmail.com";
+      const adminEmail = process.env.SMTP_USER || "crioverlay@gmail.com";
       await sendAdminPaymentNotificationEmail(adminEmail, {
         userEmail: normalizedEmail,
         itemName,
