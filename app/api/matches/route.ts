@@ -81,6 +81,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Tournament not found." }, { status: 404 });
     }
 
+    // Enforce 10000 KB storage limit
+    const { getUserStorageUsage } = await import("@/lib/storage");
+    const usedKB = await getUserStorageUsage(userId);
+    const limitKB = 10000;
+    if (usedKB >= limitKB) {
+      return NextResponse.json(
+        {
+          error: `Storage limit exceeded (${usedKB.toFixed(1)} KB / ${limitKB} KB). Please delete existing tournaments/matches to free up space.`,
+        },
+        { status: 403 }
+      );
+    }
+
     const match = await Match.create({
       tournamentId,
       userId,

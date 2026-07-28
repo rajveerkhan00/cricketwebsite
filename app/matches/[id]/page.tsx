@@ -6,6 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
+import StorageIndicator from "../../components/StorageIndicator";
 import ScoreboardLinksModal from "../../components/ScoreboardLinksModal";
 import { toast } from "react-toastify";
 
@@ -1234,6 +1235,11 @@ export default function MatchScoringPage() {
       <Header />
 
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 px-4 md:px-6 z-10 flex flex-col gap-6">
+        {/* Storage Indicator */}
+        <div className="flex justify-start">
+          <StorageIndicator />
+        </div>
+
         {/* ── Breadcrumb & Links ─────────────────────────────────────────── */}
         <div className="flex items-center justify-between text-xs text-slate-400 font-semibold border-b border-slate-200 pb-3">
           <div className="flex items-center gap-2">

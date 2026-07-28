@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import StorageIndicator from "../components/StorageIndicator";
 
 interface Tournament {
   _id: string;
@@ -21,12 +22,14 @@ function TournamentModal({
   onClose,
   onSubmit,
   loading,
+  storageExceeded = false,
 }: {
   mode: "create" | "edit";
   initial?: { name: string; location: string };
   onClose: () => void;
   onSubmit: (name: string, location: string) => void;
   loading: boolean;
+  storageExceeded?: boolean;
 }) {
   const [name, setName] = useState(initial?.name ?? "");
   const [location, setLocation] = useState(initial?.location ?? "");
@@ -111,10 +114,21 @@ function TournamentModal({
               />
             </div>
 
+            {mode === "create" && storageExceeded && (
+              <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-xs font-semibold flex items-start gap-2 leading-relaxed animate-pulse">
+                <svg className="w-4.5 h-4.5 flex-shrink-0 mt-0.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>
+                  Storage limit of 10000 KB exceeded! Please delete existing tournaments/matches to free up space.
+                </span>
+              </div>
+            )}
+
             <div className="flex gap-3 mt-2">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || (mode === "create" && storageExceeded)}
                 className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white font-bold py-3 rounded-lg text-sm tracking-wide transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? (
@@ -216,6 +230,19 @@ export default function Tournaments() {
   const [deleteTarget, setDeleteTarget] = useState<Tournament | null>(null);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState<string | null>(null);
+  const [storageExceeded, setStorageExceeded] = useState(false);
+
+  const checkStorage = async () => {
+    try {
+      const res = await fetch("/api/user/storage");
+      if (res.ok) {
+        const data = await res.json();
+        setStorageExceeded(data.usedKB >= data.limitKB);
+      }
+    } catch (err) {
+      console.error("Failed to check storage:", err);
+    }
+  };
 
   // Redirect if not logged in
   useEffect(() => {
@@ -228,6 +255,7 @@ export default function Tournaments() {
   useEffect(() => {
     if (status !== "authenticated") return;
     fetchTournaments();
+    checkStorage();
   }, [status]);
 
   const fetchTournaments = async () => {
@@ -259,6 +287,8 @@ export default function Tournaments() {
       if (!res.ok) throw new Error(data.error || "Failed to create.");
       setTournaments((prev) => [data.tournament, ...prev]);
       setShowCreate(false);
+      checkStorage();
+      window.dispatchEvent(new Event("storage-update"));
     } catch (err: any) {
       setModalError(err.message || "Something went wrong.");
     } finally {
@@ -302,6 +332,8 @@ export default function Tournaments() {
       if (!res.ok) throw new Error(data.error || "Failed to delete.");
       setTournaments((prev) => prev.filter((t) => t._id !== deleteTarget._id));
       setDeleteTarget(null);
+      checkStorage();
+      window.dispatchEvent(new Event("storage-update"));
     } catch (err: any) {
       setModalError(err.message || "Something went wrong.");
     } finally {
@@ -336,6 +368,11 @@ export default function Tournaments() {
       <Header />
 
       <main className="flex-1 py-12 px-6 md:px-12 max-w-7xl mx-auto w-full flex flex-col gap-10 font-outfit">
+
+        {/* Storage Indicator */}
+        <div className="flex justify-start">
+          <StorageIndicator />
+        </div>
 
         {/* ── Page Header ─────────────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -523,6 +560,7 @@ export default function Tournaments() {
           onClose={() => { setShowCreate(false); setModalError(null); }}
           onSubmit={handleCreate}
           loading={modalLoading}
+          storageExceeded={storageExceeded}
         />
       )}
 
