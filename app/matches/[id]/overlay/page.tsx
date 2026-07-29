@@ -649,8 +649,8 @@ export default function OverlayPage() {
       const bowl2 = scoringState.battingTeam === "team1" ? match.team2Name : match.team1Name;
       const winnerBanner = scoringState.target !== null
         ? (scoringState.score >= scoringState.target
-            ? `🏆 ${bat2} WON BY ${Math.max(0, 10 - scoringState.wickets)} WICKETS`
-            : `🏆 ${bowl2} WON BY ${Math.max(0, (scoringState.target ?? 0) - scoringState.score - 1)} RUNS`)
+          ? `🏆 ${bat2} WON BY ${Math.max(0, 10 - scoringState.wickets)} WICKETS`
+          : `🏆 ${bowl2} WON BY ${Math.max(0, (scoringState.target ?? 0) - scoringState.score - 1)} RUNS`)
         : "🏆 MATCH COMPLETED";
       activeNotification = winnerBanner;
     }
@@ -1555,6 +1555,8 @@ export default function OverlayPage() {
     const currentScore = `${scoringState.score}-${scoringState.wickets}`;
     const currentOvers = `${Math.floor(scoringState.balls / bpo)}.${scoringState.balls % bpo} (${match.overs})`;
     const teamsHeader = `${match.team1Name} v ${match.team2Name}`;
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * bpo - scoringState.balls) : null;
     // Determine top-capsule mode
     let topBarMode = "";
     let animTextContent = "";
@@ -1617,7 +1619,25 @@ export default function OverlayPage() {
             <div className="g-badge g-badge-l">{abbr(match.team1Name)}</div>
 
             {/* Main score box */}
-            <div className="g-main-box">
+            <div className="g-main-box" style={{ position: "relative" }}>
+              {scoringState.target !== null && (
+                <div style={{
+                  position: "absolute",
+                  top: "-22px",
+                  left: "18px",
+                  background: "#000",
+                  border: "1.5px solid #76ff03",
+                  borderRadius: "6px 6px 0 0",
+                  padding: "1px 10px",
+                  color: "#76ff03",
+                  fontSize: "9px",
+                  fontWeight: 900,
+                  letterSpacing: "1px",
+                  zIndex: 10
+                }}>
+                  TARGET: {scoringState.target} {need !== null && bLeft !== null && `| NEED ${need} OFF ${bLeft} BALLS`}
+                </div>
+              )}
               {/* Top green bar */}
               <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
                 {animTextContent ? (
@@ -1646,10 +1666,17 @@ export default function OverlayPage() {
 
             {/* Right navy panel */}
             <div className="g-navy">
-              <div className="g-toss">
-                <span className="g-toss-l">TOSS</span>
-                <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
-              </div>
+              {scoringState.target !== null ? (
+                <div className="g-toss">
+                  <span className="g-toss-l" style={{ color: "#76ff03" }}>TARGET</span>
+                  <span className="g-toss-v" style={{ color: "#fff" }}>{scoringState.target}</span>
+                </div>
+              ) : (
+                <div className="g-toss">
+                  <span className="g-toss-l">TOSS</span>
+                  <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
+                </div>
+              )}
               <div className="g-bowl-sec">
                 <div className="g-bowl-row">
                   <span>● {(scoringState.bowler || "BOWLER").toUpperCase()}</span>
