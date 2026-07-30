@@ -525,7 +525,7 @@ export default function MatchScoringPage() {
 
   // Record outcome of a ball
   const recordBall = (
-    type: "runs" | "wide" | "noball" | "widenoball" | "wicket" | "bye" | "legbye",
+    type: "runs" | "wide" | "noball" | "widenoball" | "wicket" | "bye" | "legbye" | "wicketnoball" | "wicketwide" | "wicketbye" | "wicketlegbye",
     runsVal = 0,
     wicketDismissedName = "",
     wicketNewBatsmanName = ""
@@ -665,7 +665,7 @@ export default function MatchScoringPage() {
       // Bowler does not concede these as earned runs in some formats, but gets the ball count
       updatedBowlers[bowlerIdx].ballsBowled += 1;
       currentBalls += 1;
-      updatedThisOver.push(`${runsVal}B`);
+      updatedThisOver.push(type === "legbye" ? `${runsVal}Lb` : `${runsVal}B`);
 
       if (runsVal % 2 !== 0) {
         activeStrikerName = scoringState.nonStriker;
@@ -724,11 +724,75 @@ export default function MatchScoringPage() {
 
       // Pre-add new batsman stats
       getOrAddBatsman(wicketNewBatsmanName);
+    } else if (type === "wicketnoball") {
+      // Wicket on a No Ball — usually a run-out. NB does NOT count as legal delivery.
+      currentWickets += 1;
+      anim = "WICKET";
+      currentScore += 1 + runsVal;
+      updatedBowlers[bowlerIdx].runsConceded += 1 + runsVal;
+      const dnIdx = getOrAddBatsman(wicketDismissedName);
+      updatedBatsmen[dnIdx].out = true;
+      updatedBatsmen[dnIdx].balls += 1;
+      // Wicket on NB is NEVER credited to the bowler
+      updatedThisOver.push(runsVal > 0 ? `W+Nb+${runsVal}` : "W+Nb");
+      updatedFow.push({ score: currentScore, wickets: currentWickets, over: Math.floor(currentBalls / match.ballsPerOver) + (currentBalls % match.ballsPerOver) / 10, batsman: wicketDismissedName });
+      if (wicketDismissedName.toLowerCase() === activeStrikerName.toLowerCase()) activeStrikerName = wicketNewBatsmanName;
+      else activeNonStrikerName = wicketNewBatsmanName;
+      if (runsVal % 2 !== 0) { const t = activeStrikerName; activeStrikerName = activeNonStrikerName; activeNonStrikerName = t; }
+      getOrAddBatsman(wicketNewBatsmanName);
+    } else if (type === "wicketwide") {
+      // Wicket on a Wide — usually a run-out stumping/wide. Wide does NOT count as legal delivery.
+      currentWickets += 1;
+      anim = "WICKET";
+      currentScore += 1 + runsVal;
+      updatedBowlers[bowlerIdx].runsConceded += 1 + runsVal;
+      const dwIdx = getOrAddBatsman(wicketDismissedName);
+      updatedBatsmen[dwIdx].out = true;
+      updatedThisOver.push(runsVal > 0 ? `W+Wd+${runsVal}` : "W+Wd");
+      updatedFow.push({ score: currentScore, wickets: currentWickets, over: Math.floor(currentBalls / match.ballsPerOver) + (currentBalls % match.ballsPerOver) / 10, batsman: wicketDismissedName });
+      if (wicketDismissedName.toLowerCase() === activeStrikerName.toLowerCase()) activeStrikerName = wicketNewBatsmanName;
+      else activeNonStrikerName = wicketNewBatsmanName;
+      if (runsVal % 2 !== 0) { const t = activeStrikerName; activeStrikerName = activeNonStrikerName; activeNonStrikerName = t; }
+      getOrAddBatsman(wicketNewBatsmanName);
+    } else if (type === "wicketbye") {
+      // Wicket + Byes — legal delivery; byes credited as extras
+      currentWickets += 1;
+      anim = "WICKET";
+      currentScore += runsVal;
+      updatedBowlers[bowlerIdx].ballsBowled += 1;
+      currentBalls += 1;
+      const dbIdx = getOrAddBatsman(wicketDismissedName);
+      updatedBatsmen[dbIdx].out = true;
+      updatedBatsmen[dbIdx].balls += 1;
+      if (wicketType !== "Run Out") updatedBowlers[bowlerIdx].wickets += 1;
+      updatedThisOver.push(runsVal > 0 ? `W+By+${runsVal}` : "W+By");
+      updatedFow.push({ score: currentScore, wickets: currentWickets, over: Math.floor(currentBalls / match.ballsPerOver) + (currentBalls % match.ballsPerOver) / 10, batsman: wicketDismissedName });
+      if (wicketDismissedName.toLowerCase() === activeStrikerName.toLowerCase()) activeStrikerName = wicketNewBatsmanName;
+      else activeNonStrikerName = wicketNewBatsmanName;
+      if (runsVal % 2 !== 0) { const t = activeStrikerName; activeStrikerName = activeNonStrikerName; activeNonStrikerName = t; }
+      getOrAddBatsman(wicketNewBatsmanName);
+    } else if (type === "wicketlegbye") {
+      // Wicket + Leg Byes — legal delivery; leg-byes credited as extras
+      currentWickets += 1;
+      anim = "WICKET";
+      currentScore += runsVal;
+      updatedBowlers[bowlerIdx].ballsBowled += 1;
+      currentBalls += 1;
+      const dlIdx = getOrAddBatsman(wicketDismissedName);
+      updatedBatsmen[dlIdx].out = true;
+      updatedBatsmen[dlIdx].balls += 1;
+      if (wicketType !== "Run Out") updatedBowlers[bowlerIdx].wickets += 1;
+      updatedThisOver.push(runsVal > 0 ? `W+Lb+${runsVal}` : "W+Lb");
+      updatedFow.push({ score: currentScore, wickets: currentWickets, over: Math.floor(currentBalls / match.ballsPerOver) + (currentBalls % match.ballsPerOver) / 10, batsman: wicketDismissedName });
+      if (wicketDismissedName.toLowerCase() === activeStrikerName.toLowerCase()) activeStrikerName = wicketNewBatsmanName;
+      else activeNonStrikerName = wicketNewBatsmanName;
+      if (runsVal % 2 !== 0) { const t = activeStrikerName; activeStrikerName = activeNonStrikerName; activeNonStrikerName = t; }
+      getOrAddBatsman(wicketNewBatsmanName);
     }
 
     // Check if over completed
     let isOverEnd = false;
-    if (type !== "wide" && type !== "noball" && type !== "widenoball") {
+    if (type !== "wide" && type !== "noball" && type !== "widenoball" && type !== "wicketnoball" && type !== "wicketwide") {
       if (currentBalls % match.ballsPerOver === 0) {
         isOverEnd = true;
         currentOvers = Math.floor(currentBalls / match.ballsPerOver);
@@ -898,7 +962,6 @@ export default function MatchScoringPage() {
     if (isWicketCheck) {
       setWicketRuns(runs);
       openWicketModal();
-      resetScoringCheckboxes();
       return;
     }
     let ballType: "runs" | "wide" | "noball" | "widenoball" | "bye" | "legbye" = "runs";
@@ -989,8 +1052,15 @@ export default function MatchScoringPage() {
       return;
     }
     setShowWicketModal(false);
-    recordBall("wicket", wicketRuns, dismissedBatsman, newBatsmanInput.trim());
+    // Determine the ball type based on which extra checkboxes are also active
+    let type: "wicket" | "wicketnoball" | "wicketwide" | "wicketbye" | "wicketlegbye" = "wicket";
+    if (isNoBall) type = "wicketnoball";
+    else if (isWide) type = "wicketwide";
+    else if (isByes) type = "wicketbye";
+    else if (isLegByes) type = "wicketlegbye";
+    recordBall(type, wicketRuns, dismissedBatsman, newBatsmanInput.trim());
     setWicketRuns(0);
+    resetScoringCheckboxes();
   };
 
   // Reset Scoring State (Default! button)
@@ -1448,9 +1518,8 @@ export default function MatchScoringPage() {
                   {(() => {
                     const ballsPerOver = match?.ballsPerOver || 6;
                     const thisOver = scoringState.thisOver || [];
-                    // Each NB / WD / WNb is a free ball → adds +1 extra circle slot
                     const extrasCount = thisOver.filter(
-                      (b) => b && (b.startsWith("Nb") || b.startsWith("WNb") || b.startsWith("Wd"))
+                      (b) => b && (b.includes("Nb") || b.includes("WNb") || b.includes("Wd"))
                     ).length;
                     const totalCirclesCount = ballsPerOver + extrasCount;
                     return Array.from({ length: totalCirclesCount }).map((_, idx) => {
@@ -1473,14 +1542,16 @@ export default function MatchScoringPage() {
                         return { fontSize: "11px", letterSpacing: "normal" };
                       };
                       const styleObj = getControllerStyle(outcome || "");
-                      // Render W+N as stacked two-line text
+                      // Render W+N or W+Nb or W+Nb+2 as stacked two-line text
                       const renderBallText = (val: string) => {
                         if (val && val.includes("+")) {
-                          const [a, b] = val.split("+");
+                          const parts = val.split("+");
+                          const top = parts[0];
+                          const bottom = parts.slice(1).join("+");
                           return (
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 0.95 }}>
-                              <span style={{ fontSize: "7px", fontWeight: 900 }}>{a}</span>
-                              <span style={{ fontSize: "6px", fontWeight: 900 }}>{b}</span>
+                              <span style={{ fontSize: "7px", fontWeight: 900 }}>{top}</span>
+                              <span style={{ fontSize: "5.5px", fontWeight: 900 }}>{bottom}</span>
                             </div>
                           );
                         }
@@ -1938,9 +2009,22 @@ export default function MatchScoringPage() {
                 {/* Checkboxes Row 1: Wide | No Ball | Byes */}
                 <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
                   {[
-                    { label: "Wide", checked: isWide, set: (val: boolean) => { resetScoringCheckboxes(); setIsWide(val); } },
-                    { label: "No Ball", checked: isNoBall, set: (val: boolean) => { resetScoringCheckboxes(); setIsNoBall(val); } },
-                    { label: "Byes", checked: isByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsByes(val); } },
+                    { label: "Wide", checked: isWide, set: (val: boolean) => {
+                        // Wide and NoBall are mutually exclusive; Byes/LegByes also off when Wide
+                        if (val) { setIsNoBall(false); setIsByes(false); setIsLegByes(false); }
+                        setIsWide(val);
+                      }
+                    },
+                    { label: "No Ball", checked: isNoBall, set: (val: boolean) => {
+                        if (val) { setIsWide(false); setIsByes(false); setIsLegByes(false); }
+                        setIsNoBall(val);
+                      }
+                    },
+                    { label: "Byes", checked: isByes, set: (val: boolean) => {
+                        if (val) { setIsWide(false); setIsNoBall(false); setIsLegByes(false); }
+                        setIsByes(val);
+                      }
+                    },
                   ].map(({ label, checked, set }) => (
                     <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
                       <input
@@ -1957,8 +2041,16 @@ export default function MatchScoringPage() {
                 {/* Checkboxes Row 2: Leg Byes | Wicket */}
                 <div className="flex items-center justify-center gap-8 md:gap-12 py-2 px-2 bg-transparent text-black">
                   {[
-                    { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => { resetScoringCheckboxes(); setIsLegByes(val); } },
-                    { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => { resetScoringCheckboxes(); setIsWicketCheck(val); }, info: true },
+                    { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => {
+                        if (val) { setIsWide(false); setIsNoBall(false); setIsByes(false); }
+                        setIsLegByes(val);
+                      }
+                    },
+                    { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => {
+                        // Wicket can be combined with Wide/NoBall/Byes/LegByes
+                        setIsWicketCheck(val);
+                      }, info: true
+                    },
                   ].map(({ label, checked, set, info }) => (
                     <label key={label} className="flex items-center gap-1 md:gap-2 cursor-pointer select-none">
                       <input
@@ -2639,19 +2731,22 @@ export default function MatchScoringPage() {
       {/* ── Dismissal / Wicket replacement modal ─────────────────────── */}
       {showWicketModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => { setShowWicketModal(false); setWicketRuns(0); }} />
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => { setShowWicketModal(false); setWicketRuns(0); resetScoringCheckboxes(); }} />
           <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
             <div className="h-1 bg-red-500 w-full" />
             <div className="p-7 flex flex-col gap-4 text-center">
               <div>
                 <h3 className="text-lg font-black tracking-wider text-red-600">Batsman Out!</h3>
                 <p className="text-xs text-slate-500 mt-1">Select dismissal details and replacement</p>
-                {wicketRuns > 0 && (
-                  <div className="mt-2 inline-flex items-center gap-1.5 bg-amber-50 border border-amber-300 text-amber-800 rounded-full px-3 py-1 text-xs font-black">
-                    <span className="text-red-600">W</span>
-                    <span>+</span>
-                    <span className="text-emerald-700">{wicketRuns} run{wicketRuns !== 1 ? "s" : ""}</span>
-                    <span className="text-slate-500 font-normal">will be added to the score</span>
+                {/* Show active modifiers badge */}
+                {(wicketRuns > 0 || isNoBall || isWide || isByes || isLegByes) && (
+                  <div className="mt-2 inline-flex items-center gap-1 bg-red-50 border border-red-200 text-red-800 rounded-full px-3 py-1 text-xs font-black flex-wrap justify-center">
+                    <span className="text-red-600 font-black">WICKET</span>
+                    {isNoBall && <span className="bg-blue-500 text-white rounded-full px-1.5 py-0.5 text-[10px]">+ No Ball</span>}
+                    {isWide && <span className="bg-orange-500 text-white rounded-full px-1.5 py-0.5 text-[10px]">+ Wide</span>}
+                    {isByes && <span className="bg-purple-500 text-white rounded-full px-1.5 py-0.5 text-[10px]">+ Byes</span>}
+                    {isLegByes && <span className="bg-purple-500 text-white rounded-full px-1.5 py-0.5 text-[10px]">+ Leg Byes</span>}
+                    {wicketRuns > 0 && <span className="bg-emerald-600 text-white rounded-full px-1.5 py-0.5 text-[10px]">+ {wicketRuns} run{wicketRuns !== 1 ? "s" : ""}</span>}
                   </div>
                 )}
               </div>
@@ -2723,7 +2818,7 @@ export default function MatchScoringPage() {
                   Confirm Out
                 </button>
                 <button
-                  onClick={() => { setShowWicketModal(false); setWicketRuns(0); }}
+                  onClick={() => { setShowWicketModal(false); setWicketRuns(0); resetScoringCheckboxes(); }}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-lg text-xs"
                 >
                   Cancel

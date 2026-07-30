@@ -329,17 +329,19 @@ function GroundBG({ bgUrl }: { bgUrl: string }) {
 
 const isExtraBall = (b: string | undefined | null) => {
   if (!b) return false;
-  return b.startsWith("Wd") || b.startsWith("Nb") || b.startsWith("WNb");
+  return b.includes("Wd") || b.includes("Nb") || b.includes("WNb");
 };
 
 const renderOutcomeText = (val: string | undefined | null, size: number) => {
   if (!val) return "";
   if (val.includes("+")) {
-    const [extra, runs] = val.split("+");
+    const parts = val.split("+");
+    const top = parts[0];
+    const bottom = parts.slice(1).join("+"); // handles W+Nb+2 → bottom = "Nb+2"
     return (
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", lineHeight: 0.95 }}>
-        <span style={{ fontSize: size * 0.31, fontWeight: 950 }}>{extra}</span>
-        <span style={{ fontSize: size * 0.23, fontWeight: 950 }}>{runs}</span>
+        <span style={{ fontSize: size * 0.31, fontWeight: 950 }}>{top}</span>
+        <span style={{ fontSize: size * 0.20, fontWeight: 950 }}>{bottom}</span>
       </div>
     );
   }
