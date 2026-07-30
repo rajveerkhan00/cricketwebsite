@@ -350,7 +350,7 @@ const renderOutcomeText = (val: string | undefined | null, size: number) => {
 function BallCircle({ val, ballColors, borderColor, size = 28 }: { val?: string; ballColors: Record<string, string>; borderColor: string; size?: number }) {
   let bg = `${borderColor}18`, color = "#64748b", shadow = "none";
   if (val) {
-    if (val === "W") { bg = ballColors.wicket; color = "#fff"; shadow = `0 0 10px ${ballColors.wicket}`; }
+    if (val === "W" || val.startsWith("W+")) { bg = ballColors.wicket; color = "#fff"; shadow = `0 0 10px ${ballColors.wicket}`; }
     else if (val === "6") { bg = ballColors.six; color = "#000"; shadow = `0 0 10px ${ballColors.six}`; }
     else if (val === "4") { bg = ballColors.four; color = "#000"; shadow = `0 0 10px ${ballColors.four}`; }
     else if (isExtraBall(val)) { bg = ballColors.extra; color = "#fff"; }
@@ -1570,7 +1570,7 @@ export default function OverlayPage() {
     // Ball colour helpers
     const ballBg = (v: string | undefined) => {
       if (!v) return "rgba(0,0,0,0.7)";
-      if (v === "W") return "#dc2626";
+      if (v === "W" || v.startsWith("W+")) return "#dc2626";
       if (v === "4") return "#ca8a04";
       if (v === "6") return "#7c3aed";
       if (isExtraBall(v)) return "#0e7490";
@@ -1691,8 +1691,8 @@ export default function OverlayPage() {
                       return Array.from({ length: total }).map((_, i) => {
                         const v = scoringState.thisOver[i];
                         return (
-                          <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
-                            {v ?? ""}
+                          <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" || v?.startsWith("W+") ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
+                            {v && v.includes("+") ? renderOutcomeText(v, 20) : (v ?? "")}
                           </div>
                         );
                       });
@@ -2049,7 +2049,7 @@ export default function OverlayPage() {
                           borderStyle = "none";
                           if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
                           else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
-                          else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
                           else if (isExtraBall(val)) { cellBg = "#a855f7"; cellColor = "#ffffff"; }
                           else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
                         }
@@ -2239,7 +2239,7 @@ export default function OverlayPage() {
                           borderStyle = "none";
                           if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#000000"; }
                           else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
-                          else if (val === "W" || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
                           else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
                           else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
                         }
@@ -2890,7 +2890,7 @@ export default function OverlayPage() {
                         if (val) {
                           if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else if (val === "W" || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
+                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else if (isExtraBall(val)) { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
                           else { cellBg = "#1f2937"; cellColor = "#ffffff"; cellBorder = "none"; }
                         } else {
@@ -3005,7 +3005,7 @@ export default function OverlayPage() {
     // Ball coloring for this scoreboard style
     const getBallStyle = (val?: string): { bg: string; color: string; border?: string } => {
       if (!val) return { bg: "transparent", color: "transparent", border: "2px solid rgba(255,255,255,0.25)" };
-      if (val === "W") return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid #ffffff" };
+      if (val === "W" || val.startsWith("W+")) return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid #ffffff" };
       if (val === "6") return { bg: "#1a1a1a", color: "#ffffff", border: "2px solid #ffffff" };
       if (val === "4") return { bg: "#facc15", color: "#000000" };
       if (isExtraBall(val)) return { bg: "#9333ea", color: "#ffffff" };
@@ -3202,7 +3202,7 @@ export default function OverlayPage() {
 
     const getBallStyle = (val?: string): { bg: string; color: string; border?: string } => {
       if (!val) return { bg: "transparent", color: "transparent", border: "1px solid rgba(0,0,0,0.15)" };
-      if (val === "W" || val === "Wk") return { bg: "#dc2626", color: "#ffffff" };
+      if (val === "W" || val?.startsWith("W+") || val === "Wk") return { bg: "#dc2626", color: "#ffffff" };
       if (val === "6" || val === "6s" || val === "4" || val === "4s") return { bg: "#15803d", color: "#ffffff" };
       return { bg: "#ffffff", color: "#000000", border: "1px solid #1a1a1a" };
     };
@@ -3464,7 +3464,7 @@ export default function OverlayPage() {
                         <div key={i} style={{
                           width: "18px", height: "18px",
                           borderRadius: "4px",
-                          background: ball ? (ball === "W" ? "#ef4444" : ["4", "6"].includes(ball) ? "#22c55e" : "rgba(255,255,255,0.15)") : "rgba(255,255,255,0.03)",
+                          background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : ["4", "6"].includes(ball) ? "#22c55e" : "rgba(255,255,255,0.15)") : "rgba(255,255,255,0.03)",
                           border: ball ? "none" : "1px solid rgba(255,255,255,0.1)",
                           color: ball ? "#ffffff" : "transparent",
                           display: "flex", alignItems: "center", justifyContent: "center",
@@ -3607,8 +3607,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "#000") : "transparent", border: ball ? "1px solid #facc15" : "1px dashed rgba(250,204,21,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "#000") : "transparent", border: ball ? "1px solid #facc15" : "1px dashed rgba(250,204,21,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 20) : (ball || "")}
                         </div>
                       );
                     });
@@ -3740,8 +3740,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "4px", background: ball ? (ball === "W" ? "#e11d48" : ["4", "6"].includes(ball) ? "#10b981" : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "950" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "4px", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#e11d48" : ["4", "6"].includes(ball) ? "#10b981" : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "950" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 20) : (ball || "")}
                         </div>
                       );
                     });
@@ -3845,8 +3845,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "#1e3a8a") : "transparent", border: ball ? "1.5px solid #eab308" : "1px dashed rgba(234,179,8,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "20px", height: "20px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "#1e3a8a") : "transparent", border: ball ? "1.5px solid #eab308" : "1px dashed rgba(234,179,8,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 20) : (ball || "")}
                         </div>
                       );
                     });
@@ -3987,8 +3987,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(168,85,247,0.25)") : "transparent", border: ball ? "1px solid #ec4899" : "1px dashed rgba(236,72,153,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "rgba(168,85,247,0.25)") : "transparent", border: ball ? "1px solid #ec4899" : "1px dashed rgba(236,72,153,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
                         </div>
                       );
                     });
@@ -4111,8 +4111,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #cbd5e1" : "1px dashed rgba(203,213,225,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #cbd5e1" : "1px dashed rgba(203,213,225,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
                         </div>
                       );
                     });
@@ -4240,8 +4240,8 @@ export default function OverlayPage() {
                     return Array.from({ length: totalCirclesCount }).map((_, i) => {
                       const ball = thisOver[i];
                       return (
-                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #fbbf24" : "1px dashed rgba(251,191,36,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball || ""}
+                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #fbbf24" : "1px dashed rgba(251,191,36,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
+                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
                         </div>
                       );
                     });

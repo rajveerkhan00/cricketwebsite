@@ -133,6 +133,7 @@ export default function MatchScoringPage() {
   const [wicketType, setWicketType] = useState<"Bowled" | "Caught" | "LBW" | "Run Out" | "Stumped">("Bowled");
   const [dismissedBatsman, setDismissedBatsman] = useState("");
   const [newBatsmanInput, setNewBatsmanInput] = useState("");
+  const [wicketRuns, setWicketRuns] = useState(0);
 
   // Custom Input & MOM states
   const [customText, setCustomText] = useState("");
@@ -674,6 +675,14 @@ export default function MatchScoringPage() {
       currentWickets += 1;
       anim = "WICKET";
 
+      // Add any runs scored on the wicket ball
+      if (runsVal > 0) {
+        currentScore += runsVal;
+        updatedBowlers[bowlerIdx].runsConceded += runsVal;
+        // Runs on a wicket delivery credit to the dismissed batsman (run-out scenario)
+        // or to the striker — we credit the striker (common for run-outs, last-ball runs)
+      }
+
       // Mark the dismissed batsman as out
       const dismissedIdx = getOrAddBatsman(wicketDismissedName);
       updatedBatsmen[dismissedIdx].out = true;
@@ -686,7 +695,8 @@ export default function MatchScoringPage() {
       }
 
       currentBalls += 1;
-      updatedThisOver.push("W");
+      // Record wicket+runs in thisOver so scoreboards can display W+1, W+2 etc.
+      updatedThisOver.push(runsVal > 0 ? `W+${runsVal}` : "W");
 
       // Record Fall of Wickets
       const displayOver = Math.floor(currentBalls / match.ballsPerOver) + (currentBalls % match.ballsPerOver) / 10;
@@ -702,6 +712,14 @@ export default function MatchScoringPage() {
         activeStrikerName = wicketNewBatsmanName;
       } else {
         activeNonStrikerName = wicketNewBatsmanName;
+      }
+
+      // Swap strike on odd runs (e.g. 1 run before wicket)
+      if (runsVal % 2 !== 0) {
+        // After swap above, the non-striker became the new striker — correct for odd runs
+        const tmp = activeStrikerName;
+        activeStrikerName = activeNonStrikerName;
+        activeNonStrikerName = tmp;
       }
 
       // Pre-add new batsman stats
@@ -878,6 +896,7 @@ export default function MatchScoringPage() {
       return;
     }
     if (isWicketCheck) {
+      setWicketRuns(runs);
       openWicketModal();
       resetScoringCheckboxes();
       return;
@@ -970,7 +989,8 @@ export default function MatchScoringPage() {
       return;
     }
     setShowWicketModal(false);
-    recordBall("wicket", 0, dismissedBatsman, newBatsmanInput.trim());
+    recordBall("wicket", wicketRuns, dismissedBatsman, newBatsmanInput.trim());
+    setWicketRuns(0);
   };
 
   // Reset Scoring State (Default! button)
@@ -1437,7 +1457,7 @@ export default function MatchScoringPage() {
                       const outcome = thisOver[idx];
                       let bgClass = "bg-white/20 border border-white/10"; // empty slot
                       if (outcome) {
-                        if (outcome === "W") bgClass = "bg-red-600 text-white border border-red-500";
+                        if (outcome === "W" || outcome.startsWith("W+")) bgClass = "bg-red-600 text-white border border-red-500";
                         else if (outcome === "6" || outcome === "4") bgClass = "bg-amber-500 text-black";
                         else if (outcome.startsWith("Nb")) bgClass = "bg-blue-500 text-white";
                         else if (outcome.startsWith("WNb")) bgClass = "bg-purple-500 text-white";
@@ -1453,18 +1473,31 @@ export default function MatchScoringPage() {
                         return { fontSize: "11px", letterSpacing: "normal" };
                       };
                       const styleObj = getControllerStyle(outcome || "");
+                      // Render W+N as stacked two-line text
+                      const renderBallText = (val: string) => {
+                        if (val && val.includes("+")) {
+                          const [a, b] = val.split("+");
+                          return (
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 0.95 }}>
+                              <span style={{ fontSize: "7px", fontWeight: 900 }}>{a}</span>
+                              <span style={{ fontSize: "6px", fontWeight: 900 }}>{b}</span>
+                            </div>
+                          );
+                        }
+                        return val || "";
+                      };
                       return (
                         <div
                           key={idx}
                           className={`w-7 h-7 rounded-full flex items-center justify-center font-bold shadow-inner ${bgClass}`}
                           style={{
-                            fontSize: styleObj.fontSize,
-                            letterSpacing: styleObj.letterSpacing,
+                            fontSize: outcome?.includes("+") ? undefined : styleObj.fontSize,
+                            letterSpacing: outcome?.includes("+") ? undefined : styleObj.letterSpacing,
                             lineHeight: 1,
                             whiteSpace: "nowrap"
                           }}
                         >
-                          {outcome || ""}
+                          {renderBallText(outcome || "")}
                         </div>
                       );
                     });
@@ -2606,13 +2639,21 @@ export default function MatchScoringPage() {
       {/* ── Dismissal / Wicket replacement modal ─────────────────────── */}
       {showWicketModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => setShowWicketModal(false)} />
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => { setShowWicketModal(false); setWicketRuns(0); }} />
           <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
             <div className="h-1 bg-red-500 w-full" />
             <div className="p-7 flex flex-col gap-4 text-center">
               <div>
                 <h3 className="text-lg font-black tracking-wider text-red-600">Batsman Out!</h3>
                 <p className="text-xs text-slate-500 mt-1">Select dismissal details and replacement</p>
+                {wicketRuns > 0 && (
+                  <div className="mt-2 inline-flex items-center gap-1.5 bg-amber-50 border border-amber-300 text-amber-800 rounded-full px-3 py-1 text-xs font-black">
+                    <span className="text-red-600">W</span>
+                    <span>+</span>
+                    <span className="text-emerald-700">{wicketRuns} run{wicketRuns !== 1 ? "s" : ""}</span>
+                    <span className="text-slate-500 font-normal">will be added to the score</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-3 text-left">
@@ -2682,7 +2723,7 @@ export default function MatchScoringPage() {
                   Confirm Out
                 </button>
                 <button
-                  onClick={() => setShowWicketModal(false)}
+                  onClick={() => { setShowWicketModal(false); setWicketRuns(0); }}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-lg text-xs"
                 >
                   Cancel
