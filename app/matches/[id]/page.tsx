@@ -483,6 +483,11 @@ export default function MatchScoringPage() {
       }
     }
 
+    const stateWithoutHistory = scoringState ? (() => {
+      const { history: _, ...rest } = scoringState;
+      return rest;
+    })() : null;
+
     const initialState: ScoringState = {
       battingTeam: batting,
       bowlingTeam: bowling,
@@ -512,7 +517,7 @@ export default function MatchScoringPage() {
       tournamentStatsPlayer: "",
       decision: null,
       displayStatsMode: null,
-      history: [],
+      history: isSecondInnings && scoringState && stateWithoutHistory ? [...(scoringState.history || []), stateWithoutHistory] : [],
       firstInnings: isSecondInnings ? scoringState.firstInnings : undefined,
     };
 
@@ -849,6 +854,8 @@ export default function MatchScoringPage() {
       const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
       const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
 
+      const { history: _, ...nextStateWithoutHistory } = nextState;
+
       const nextInningsState: ScoringState = {
         battingTeam: secondInningsBatting,
         bowlingTeam: secondInningsBowling,
@@ -873,7 +880,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [],
+        history: [...newHistory, nextStateWithoutHistory],
         firstInnings: {
           score: currentScore,
           wickets: currentWickets,
@@ -927,6 +934,13 @@ export default function MatchScoringPage() {
 
     setScoringState(restoredState);
     saveScoringState(restoredState, "Live");
+    setMatch((prev) => (prev ? { ...prev, status: "Live" } : null));
+
+    // Close startup modal if we restored 1st innings or break state
+    if (restoredState.inningsNo === 1 || restoredState.animation === "INNINGS BREAK" || !restoredState.inningsStarted) {
+      setShowStartInningsModal(false);
+    }
+
     showToast("Last action undone.");
   };
 
@@ -988,6 +1002,8 @@ export default function MatchScoringPage() {
       const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
       const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
 
+      const { history: currentHistory, ...stateWithoutHistory } = scoringState;
+
       const nextInningsState: ScoringState = {
         battingTeam: secondInningsBatting,
         bowlingTeam: secondInningsBowling,
@@ -1012,7 +1028,7 @@ export default function MatchScoringPage() {
         tournamentStatsPlayer: "",
         decision: null,
         displayStatsMode: null,
-        history: [],
+        history: [...(currentHistory || []), stateWithoutHistory],
         firstInnings: {
           score: scoringState.score,
           wickets: scoringState.wickets,
