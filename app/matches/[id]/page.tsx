@@ -123,6 +123,11 @@ export default function MatchScoringPage() {
   const [showNewBowlerModal, setShowNewBowlerModal] = useState(false);
   const [newBowlerInput, setNewBowlerInput] = useState("");
 
+  // Retire Batter Modal
+  const [showRetireModal, setShowRetireModal] = useState(false);
+  const [retireTarget, setRetireTarget] = useState<"1" | "2">("1"); // "1" = Striker, "2" = Non-Striker
+  const [retireNewBatsmanInput, setRetireNewBatsmanInput] = useState("");
+
   // Dismissal Modal
   const [showWicketModal, setShowWicketModal] = useState(false);
   const [wicketType, setWicketType] = useState<"Bowled" | "Caught" | "LBW" | "Run Out" | "Stumped">("Bowled");
@@ -1054,6 +1059,76 @@ export default function MatchScoringPage() {
     showToast(`Bowler updated to ${bName}`);
   };
 
+  const handleRetireBatterSubmit = () => {
+    if (!scoringState || !match) return;
+    if (retireTarget !== "1" && retireTarget !== "2") return;
+    const newName = retireNewBatsmanInput.trim();
+    if (!newName) {
+      showToast("Please enter a batsman name.", "error");
+      return;
+    }
+
+    const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
+    const activeStriker = scoringState.striker;
+    const activeNonStriker = scoringState.nonStriker;
+    let retiredName = retireTarget === "1" ? activeStriker : activeNonStriker;
+
+    // Check if new batsman is already on the field
+    if (newName.toLowerCase() === activeStriker.toLowerCase() || newName.toLowerCase() === activeNonStriker.toLowerCase()) {
+      showToast("Batter is already on the field.", "error");
+      return;
+    }
+
+    const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
+    if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
+
+    const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.toLowerCase());
+    if (newIdx === -1) {
+      updatedBatsmen.push({ name: newName, runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
+    }
+
+    // Check if new batsman is in team roster, and if not, add it
+    const team = scoringState.battingTeam;
+    let updatedT1 = match.playersTeam1 || [];
+    let updatedT2 = match.playersTeam2 || [];
+    let t1Changed = false;
+    let t2Changed = false;
+    if (team === "team1") {
+      if (!updatedT1.some(p => p.toLowerCase() === newName.toLowerCase())) {
+        updatedT1 = [...updatedT1, newName];
+        t1Changed = true;
+      }
+    } else {
+      if (!updatedT2.some(p => p.toLowerCase() === newName.toLowerCase())) {
+        updatedT2 = [...updatedT2, newName];
+        t2Changed = true;
+      }
+    }
+
+    if (t1Changed || t2Changed) {
+      setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
+    }
+
+    const { history: _, ...stateWithoutHistory } = scoringState;
+    const updated: ScoringState = {
+      ...(scoringState as ScoringState),
+      striker: retireTarget === "1" ? newName : activeStriker,
+      nonStriker: retireTarget === "2" ? newName : activeNonStriker,
+      batsmen: updatedBatsmen,
+      history: [...(scoringState.history || []), stateWithoutHistory]
+    };
+    setScoringState(updated);
+    saveScoringState(
+      updated,
+      undefined,
+      t1Changed ? updatedT1 : undefined,
+      t2Changed ? updatedT2 : undefined
+    );
+    showToast(retiredName + " retired.");
+    setShowRetireModal(false);
+    setRetireNewBatsmanInput("");
+  };
+
   const handleSendCustomInput = () => {
     if (!scoringState) return;
     const updated = { ...scoringState, customInputText: customText };
@@ -1672,63 +1747,9 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => {
                       if (!scoringState || !match) return;
-                      const target = prompt("Type '1' to retire Striker (" + scoringState.striker + ") or '2' to retire Non-Striker (" + scoringState.nonStriker + "):");
-                      if (target !== "1" && target !== "2") return;
-                      const newName = prompt("Enter new batsman name:");
-                      if (!newName || !newName.trim()) return;
-
-                      const updatedBatsmen = scoringState.batsmen.map(b => ({ ...b }));
-                      const activeStriker = scoringState.striker;
-                      const activeNonStriker = scoringState.nonStriker;
-                      let retiredName = target === "1" ? activeStriker : activeNonStriker;
-
-                      const retIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === retiredName.toLowerCase());
-                      if (retIdx !== -1) updatedBatsmen[retIdx].out = true;
-
-                      const newIdx = updatedBatsmen.findIndex(b => b.name.toLowerCase() === newName.trim().toLowerCase());
-                      if (newIdx === -1) {
-                        updatedBatsmen.push({ name: newName.trim(), runs: 0, balls: 0, fours: 0, sixes: 0, out: false });
-                      }
-
-                      // Check if new batsman is in team roster, and if not, add it
-                      const team = scoringState.battingTeam;
-                      let updatedT1 = match.playersTeam1 || [];
-                      let updatedT2 = match.playersTeam2 || [];
-                      let t1Changed = false;
-                      let t2Changed = false;
-                      const bName = newName.trim();
-                      if (team === "team1") {
-                        if (!updatedT1.some(p => p.toLowerCase() === bName.toLowerCase())) {
-                          updatedT1 = [...updatedT1, bName];
-                          t1Changed = true;
-                        }
-                      } else {
-                        if (!updatedT2.some(p => p.toLowerCase() === bName.toLowerCase())) {
-                          updatedT2 = [...updatedT2, bName];
-                          t2Changed = true;
-                        }
-                      }
-
-                      if (t1Changed || t2Changed) {
-                        setMatch(prev => prev ? { ...prev, playersTeam1: updatedT1, playersTeam2: updatedT2 } : null);
-                      }
-
-                      const { history: _, ...stateWithoutHistory } = scoringState;
-                      const updated: ScoringState = {
-                        ...(scoringState as ScoringState),
-                        striker: target === "1" ? bName : activeStriker,
-                        nonStriker: target === "2" ? bName : activeNonStriker,
-                        batsmen: updatedBatsmen,
-                        history: [...(scoringState.history || []), stateWithoutHistory]
-                      };
-                      setScoringState(updated);
-                      saveScoringState(
-                        updated,
-                        undefined,
-                        t1Changed ? updatedT1 : undefined,
-                        t2Changed ? updatedT2 : undefined
-                      );
-                      showToast(retiredName + " retired.");
+                      setRetireTarget("1");
+                      setRetireNewBatsmanInput("");
+                      setShowRetireModal(true);
                     }}
                     className="flex-1 py-2 md:py-3 px-2 md:px-4 rounded-full text-black font-extrabold text-[10px] md:text-sm uppercase tracking-wider transition-all active:scale-95 shadow-md border border-black/10"
                     style={{ background: "linear-gradient(90deg, #6ee7b7, #bef264)" }}
@@ -2746,6 +2767,114 @@ export default function MatchScoringPage() {
                   className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
                 >
                   Skip
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Retire Batter Modal ──────── */}
+      {showRetireModal && scoringState && isOwner && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowRetireModal(false)} />
+          <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 text-slate-900 overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-amber-600 to-orange-600 px-6 py-4 text-center">
+              <h3 className="text-lg font-black tracking-wider font-space uppercase text-white">🔄 Retire Batter</h3>
+              <p className="text-amber-100 text-[10px] font-bold uppercase tracking-widest mt-0.5">
+                Select batter to retire & enter replacement
+              </p>
+            </div>
+
+            <div className="p-6 flex flex-col gap-4">
+              {/* Select Batter to Retire */}
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-black uppercase tracking-wider text-slate-600">Select Batter to Retire</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setRetireTarget("1")}
+                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
+                      retireTarget === "1"
+                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                    }`}
+                  >
+                    <span className="block text-[9px] uppercase opacity-75">Striker</span>
+                    <span className="truncate block mt-0.5">{scoringState.striker}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRetireTarget("2")}
+                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
+                      retireTarget === "2"
+                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                    }`}
+                  >
+                    <span className="block text-[9px] uppercase opacity-75">Non-Striker</span>
+                    <span className="truncate block mt-0.5">{scoringState.nonStriker}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Input for New Batsman */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-black uppercase tracking-wider text-slate-600">New Batsman Name</label>
+                <input
+                  type="text"
+                  value={retireNewBatsmanInput}
+                  onChange={(e) => setRetireNewBatsmanInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleRetireBatterSubmit(); }}
+                  placeholder="Type or select new batsman"
+                  autoFocus
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
+                />
+              </div>
+
+              {/* Quick-pick from batting roster */}
+              {battingRoster && battingRoster.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-600">
+                    Quick Pick — {scoringState.battingTeam === "team1" ? match.team1Name : match.team2Name}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 max-h-[110px] overflow-y-auto">
+                    {battingRoster
+                      .filter((p) => 
+                        p.toLowerCase() !== scoringState.striker.toLowerCase() &&
+                        p.toLowerCase() !== scoringState.nonStriker.toLowerCase() &&
+                        p.toLowerCase() !== retireNewBatsmanInput.toLowerCase()
+                      )
+                      .map((p, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setRetireNewBatsmanInput(p)}
+                          className="px-2.5 py-1 rounded-lg text-[10px] font-bold border bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-800 transition-all cursor-pointer"
+                        >
+                          {p}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Action buttons */}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={handleRetireBatterSubmit}
+                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-black py-2.5 rounded-xl text-sm tracking-wider active:scale-95 transition-all cursor-pointer shadow-lg shadow-amber-500/20"
+                >
+                  ✓ Confirm
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowRetireModal(false)}
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
+                >
+                  Cancel
                 </button>
               </div>
             </div>
