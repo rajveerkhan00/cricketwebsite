@@ -555,8 +555,29 @@ export default function OverlayPage() {
   const isValidObjectId = (id: string) => /^[0-9a-fA-F]{24}$/.test(id);
 
   const fetchMatch = async () => {
-    // Use demo match if preview, no matchId, invalid matchId, or matchId is "overlay"
-    if (isPreview || !matchId || matchId === "overlay" || !isValidObjectId(matchId)) {
+    // Use demo match if preview, no matchId, or matchId is "overlay"
+    if (isPreview || !matchId || matchId === "overlay") {
+      setMatch(demoMatch);
+      setLoading(false);
+      return;
+    }
+
+    if (matchId === "active") {
+      try {
+        const res = await fetch(`/api/matches/active?email=${encodeURIComponent(userEmail)}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.match) {
+          setMatch(data.match);
+        }
+      } catch (_) {
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (!isValidObjectId(matchId)) {
       setMatch(demoMatch);
       setLoading(false);
       return;
@@ -574,11 +595,11 @@ export default function OverlayPage() {
   // Poll only if valid matchId and not preview
   useEffect(() => {
     fetchMatch();
-    if (matchId && isValidObjectId(matchId) && !isPreview) {
+    if (matchId && (isValidObjectId(matchId) || matchId === "active") && !isPreview) {
       const interval = setInterval(fetchMatch, 3000);
       return () => clearInterval(interval);
     }
-  }, [matchId, isPreview]);
+  }, [matchId, isPreview, userEmail]);
 
   // Poll access every 8 seconds — instantly picks up admin approve/reject
   // Always call once on mount (handles preview mode immediately too)

@@ -7,6 +7,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
 import StorageIndicator from "../components/StorageIndicator";
+import ScoreboardLinksModal from "../components/ScoreboardLinksModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Tournament {
   _id: string;
@@ -232,6 +235,49 @@ export default function Tournaments() {
   const [modalError, setModalError] = useState<string | null>(null);
   const [storageExceeded, setStorageExceeded] = useState(false);
 
+  // Scoreboard links
+  const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
+  const [sendLoading, setSendLoading] = useState<string | null>(null); // tournamentId being loaded
+
+  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
+    if (type === "success") toast.success(message);
+    else if (type === "error") toast.error(message);
+    else toast.info(message);
+  };
+
+  // Fetch first/live match of a tournament and link it directly to all scoreboards
+  const handleTournamentSend = async (tournamentId: string) => {
+    setSendLoading(tournamentId);
+    try {
+      const res = await fetch(`/api/matches?tournamentId=${tournamentId}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load matches.");
+      const matches = data.matches || [];
+      if (matches.length === 0) {
+        showToast("No matches in this tournament yet.", "info");
+        return;
+      }
+      // Prefer live match, otherwise use latest
+      const live = matches.find((m: any) => m.status === "Live");
+      const chosen = live || matches[matches.length - 1];
+      
+      // Post to active match endpoint
+      const activeRes = await fetch("/api/matches/active", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId: chosen._id }),
+      });
+      const activeData = await activeRes.json();
+      if (!activeRes.ok) throw new Error(activeData.error || "Failed to link match.");
+
+      showToast("Tournament's active match sent to all scoreboards!", "success");
+    } catch (err: any) {
+      showToast(err.message || "Failed to load matches.", "error");
+    } finally {
+      setSendLoading(null);
+    }
+  };
+
   const checkStorage = async () => {
     try {
       const res = await fetch("/api/user/storage");
@@ -413,15 +459,31 @@ export default function Tournaments() {
             </span>
           </div>
 
-          <button
-            onClick={() => { setShowCreate(true); setModalError(null); }}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-lg shadow-md shadow-amber-500/10 transition-all duration-200 cursor-pointer flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-            </svg>
-            CREATE TOURNAMENT
-          </button>
+          <div className="flex items-center gap-2">
+            {/* SCOREBOARD LINKS button */}
+            <button
+              onClick={() => {
+                if (tournaments.length === 0) { showToast("No tournaments yet. Create one first.", "info"); return; }
+                handleTournamentSend(tournaments[0]._id);
+              }}
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 hover:text-cyan-300 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+              SCOREBOARD LINKS
+            </button>
+
+            <button
+              onClick={() => { setShowCreate(true); setModalError(null); }}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-lg shadow-md shadow-amber-500/10 transition-all duration-200 cursor-pointer flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+              </svg>
+              CREATE TOURNAMENT
+            </button>
+          </div>
         </div>
 
         {/* ── Error State ──────────────────────────────────────────────────── */}
@@ -504,6 +566,26 @@ export default function Tournaments() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 flex-shrink-0 sm:ml-auto">
+                  {/* SEND TO SCOREBOARDS */}
+                  <button
+                    onClick={() => handleTournamentSend(tournament._id)}
+                    disabled={sendLoading === tournament._id}
+                    className="flex items-center gap-1.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 active:scale-95 disabled:opacity-60 border border-indigo-500/40 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap cursor-pointer shadow-sm shadow-indigo-500/30"
+                    title="Send to scoreboards"
+                  >
+                    {sendLoading === tournament._id ? (
+                      <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    )}
+                    SEND
+                  </button>
+
                   {/* TOUR PAGE */}
                   <Link
                     href={`/tournaments/${tournament._id}`}
@@ -582,6 +664,18 @@ export default function Tournaments() {
           loading={modalLoading}
         />
       )}
+
+      {selectedMatchIdForLinks && (
+        <ScoreboardLinksModal
+          isOpen={!!selectedMatchIdForLinks}
+          onClose={() => setSelectedMatchIdForLinks(null)}
+          matchId={selectedMatchIdForLinks}
+          showToast={showToast}
+          userEmail={session?.user?.email || ""}
+        />
+      )}
+
+      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss={false} draggable pauseOnHover theme="light" />
     </div>
   );
 }

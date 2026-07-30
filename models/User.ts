@@ -26,6 +26,10 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    activeMatchId: {
+      type: Schema.Types.ObjectId,
+      ref: "Match",
+    },
     resetPasswordToken: {
       type: String,
     },

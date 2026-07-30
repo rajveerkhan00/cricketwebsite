@@ -218,6 +218,17 @@ export default function MatchScoringPage() {
     }
   }, [matchId]);
 
+  // Auto-send match to scoreboard on controller load
+  useEffect(() => {
+    if (isOwner && matchId) {
+      fetch("/api/matches/active", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId }),
+      }).catch(err => console.error("Auto-linking match failed:", err));
+    }
+  }, [isOwner, matchId]);
+
   // Spectator Polling
   useEffect(() => {
     if (!matchId) return;
@@ -1415,28 +1426,45 @@ export default function MatchScoringPage() {
 
       <Header />
 
+      {/* ── SCOREBOARD LINKS Bar – right below header ───────────────────── */}
+      <div className="w-full bg-slate-900 border-b border-slate-800">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold">
+            <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-400 transition-colors flex items-center gap-1">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Tournaments
+            </Link>
+            <span className="text-slate-600">/</span>
+            <span className="text-slate-300 font-bold truncate max-w-[200px]">{match.team1Name} vs {match.team2Name}</span>
+          </div>
+          <button
+            onClick={() => setShowScoreboardLinks(true)}
+            id="scoreboard-links"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 active:scale-95 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 cursor-pointer shadow-sm shadow-cyan-500/20"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            SCOREBOARD LINKS
+          </button>
+        </div>
+      </div>
+
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 px-4 md:px-6 z-10 flex flex-col gap-6">
         {/* Storage Indicator */}
         <div className="flex justify-start">
           <StorageIndicator />
         </div>
 
-        {/* ── Breadcrumb & Links ─────────────────────────────────────────── */}
-        <div className="flex items-center justify-between text-xs text-slate-400 font-semibold border-b border-slate-200 pb-3">
-          <div className="flex items-center gap-2">
-            <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-500 transition-colors">
-              Tournament Details
-            </Link>
-            <span>/</span>
-            <span className="text-slate-800 font-bold">Match Scoreboard</span>
-          </div>
-          <button
-            onClick={() => setShowScoreboardLinks(true)}
-            id="scoreboard-links"
-            className="text-cyan-400 hover:text-cyan-300 underline font-bold tracking-wider bg-transparent border-none cursor-pointer text-xs uppercase"
-          >
-            SCOREBOARD LINKS
-          </button>
+        {/* ── Breadcrumb ──────────────────────────────────────────────────── */}
+        <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold border-b border-slate-200 pb-3">
+          <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-500 transition-colors">
+            Tournament Details
+          </Link>
+          <span>/</span>
+          <span className="text-slate-800 font-bold">Match Scoreboard</span>
         </div>
 
         {/* ── Team VS Banner (Matching Image 1) ─────────────────────────── */}

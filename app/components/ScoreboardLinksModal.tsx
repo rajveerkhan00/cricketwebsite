@@ -133,7 +133,7 @@ export default function ScoreboardLinksModal({
 
   const handleCopyLink = (themeSlug: string, isCameraFi = false) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
-    let url = `${origin}/matches/${matchId}/overlay?theme=${themeSlug}`;
+    let url = `${origin}/matches/active/overlay?theme=${themeSlug}`;
     if (userEmail) {
       url += `&email=${encodeURIComponent(userEmail)}`;
     }
