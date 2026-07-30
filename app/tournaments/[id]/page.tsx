@@ -7,6 +7,8 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 import StorageIndicator from "../../components/StorageIndicator";
+import { toast } from "react-toastify";
+import ScoreboardLinksModal from "../../components/ScoreboardLinksModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Tournament {
@@ -469,6 +471,17 @@ export default function TourPage() {
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState<string | null>(null);
   const [storageExceeded, setStorageExceeded] = useState(false);
+  const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
+
+  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
+    } else {
+      toast.info(message);
+    }
+  };
 
   const checkStorage = async () => {
     try {
@@ -795,6 +808,17 @@ export default function TourPage() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 flex-shrink-0 sm:ml-auto">
+                  {/* SCOREBOARD LINKS */}
+                  <button
+                    onClick={() => setSelectedMatchIdForLinks(match._id)}
+                    className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800/80 text-cyan-400 hover:text-cyan-300 font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap cursor-pointer shadow-sm shadow-black/25"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>
+                    SCOREBOARD LINKS
+                  </button>
+
                   {/* MATCH PAGE */}
                   <Link
                     href={`/matches/${match._id}`}
@@ -867,6 +891,16 @@ export default function TourPage() {
           onConfirm={handleDelete}
           onClose={() => { setDeleteTarget(null); setModalError(null); }}
           loading={modalLoading}
+        />
+      )}
+
+      {selectedMatchIdForLinks && (
+        <ScoreboardLinksModal
+          isOpen={!!selectedMatchIdForLinks}
+          onClose={() => setSelectedMatchIdForLinks(null)}
+          matchId={selectedMatchIdForLinks}
+          showToast={showToast}
+          userEmail={session?.user?.email || ""}
         />
       )}
     </div>
