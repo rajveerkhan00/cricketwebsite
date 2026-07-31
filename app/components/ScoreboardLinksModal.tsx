@@ -228,7 +228,7 @@ export default function ScoreboardLinksModal({
                       🚀 {planName.toUpperCase()} ACTIVE
                     </span>
                     <span className="text-[10px] font-black text-teal-700 block mt-0.5 font-mono">
-                      All 15 scoreboards unlocked! Remaining time: {formatTimeRemaining(planRemainingSeconds)}
+                      All 16 scoreboards unlocked! Remaining time: {formatTimeRemaining(planRemainingSeconds)}
                     </span>
                   </div>
                 )}
@@ -268,7 +268,7 @@ export default function ScoreboardLinksModal({
                     ) : (
                       themes.map((theme, idx) => {
                         const isFreeTheme = theme.price <= 0;
-                        const isUnlocked = isFreeTheme || approvedSlugs.includes(theme.slug);
+                        const isUnlocked = isFreeTheme || isPlanActive || approvedSlugs.includes(theme.slug);
                         const remainingSec = themeRemainingSeconds[theme.slug] || 0;
                         return (
                           <tr

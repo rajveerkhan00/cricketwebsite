@@ -238,6 +238,7 @@ export default function Tournaments() {
   // Scoreboard links
   const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
   const [sendLoading, setSendLoading] = useState<string | null>(null); // tournamentId being loaded
+  const [linksLoading, setLinksLoading] = useState<string | null>(null); // tournamentId being loaded for links modal
 
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
     if (type === "success") toast.success(message);
@@ -245,7 +246,36 @@ export default function Tournaments() {
     else toast.info(message);
   };
 
-  // Fetch first/live match of a tournament and link it directly to all scoreboards
+  // Open scoreboard links modal for a specific tournament's match
+  const handleOpenScoreboardLinks = async (tournamentId?: string) => {
+    // If no tournamentId provided (top-level button), use first tournament
+    const tid = tournamentId || (tournaments.length > 0 ? tournaments[0]._id : null);
+    if (!tid) {
+      showToast("No tournaments yet. Create one first.", "info");
+      return;
+    }
+    setLinksLoading(tid);
+    try {
+      const res = await fetch(`/api/matches?tournamentId=${tid}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load matches.");
+      const matches = data.matches || [];
+      if (matches.length === 0) {
+        showToast("No matches in this tournament yet. Create a match first.", "info");
+        return;
+      }
+      // Prefer live match, otherwise use latest
+      const live = matches.find((m: any) => m.status === "Live");
+      const chosen = live || matches[matches.length - 1];
+      setSelectedMatchIdForLinks(chosen._id);
+    } catch (err: any) {
+      showToast(err.message || "Failed to load matches.", "error");
+    } finally {
+      setLinksLoading(null);
+    }
+  };
+
+  // Fetch first/live match of a tournament and link it directly to all scoreboards (SEND button)
   const handleTournamentSend = async (tournamentId: string) => {
     setSendLoading(tournamentId);
     try {
@@ -462,15 +492,20 @@ export default function Tournaments() {
           <div className="flex items-center gap-2">
             {/* SCOREBOARD LINKS button */}
             <button
-              onClick={() => {
-                if (tournaments.length === 0) { showToast("No tournaments yet. Create one first.", "info"); return; }
-                handleTournamentSend(tournaments[0]._id);
-              }}
-              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 hover:text-cyan-300 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer"
+              onClick={() => handleOpenScoreboardLinks()}
+              disabled={!!linksLoading}
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-cyan-400 hover:text-cyan-300 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer disabled:opacity-60"
             >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
+              {linksLoading ? (
+                <svg className="animate-spin w-3.5 h-3.5" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              ) : (
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+              )}
               SCOREBOARD LINKS
             </button>
 
