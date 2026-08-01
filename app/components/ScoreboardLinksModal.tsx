@@ -3,6 +3,29 @@
 import { useState, useEffect } from "react";
 import JazzCashPaymentModal from "./JazzCashPaymentModal";
 
+// ── Theme color palette (mirrors overlay THEME_MAP) ──────────────────────────
+const THEME_COLORS: Record<string, { accent: string; bg: string; border: string; text: string }> = {
+  "asia-cup":              { accent: "#fbbf24", bg: "rgba(0,40,20,0.95)",    border: "#fbbf24", text: "#fbbf24" },
+  "cwc-19":                { accent: "#38bdf8", bg: "rgba(10,40,90,0.95)",   border: "#38bdf8", text: "#7dd3fc" },
+  "champions-trophy-2025": { accent: "#34d399", bg: "rgba(2,30,15,0.95)",   border: "#10b981", text: "#34d399" },
+  "cwc-25-india":          { accent: "#fb923c", bg: "rgba(12,10,35,0.95)",  border: "#f97316", text: "#fb923c" },
+  "wcl-fancode":           { accent: "#e879f9", bg: "rgba(50,0,50,0.95)",   border: "#d946ef", text: "#f0abfc" },
+  "cwc-23-india":          { accent: "#f97316", bg: "rgba(8,12,40,0.95)",   border: "#ea580c", text: "#fb923c" },
+  "bbl-black":             { accent: "#4ade80", bg: "rgba(5,5,5,0.97)",     border: "#22c55e", text: "#4ade80" },
+  "cricfusion":            { accent: "#f97316", bg: "rgba(20,4,40,0.95)",   border: "#c026d3", text: "#f97316" },
+  "t20-emerging-asia-cup": { accent: "#ef4444", bg: "rgba(15,18,25,0.97)",  border: "#dc2626", text: "#fca5a5" },
+  "sa20":                  { accent: "#facc15", bg: "rgba(4,20,12,0.95)",   border: "#eab308", text: "#facc15" },
+  "jiocinema":             { accent: "#60a5fa", bg: "rgba(100,0,0,0.95)",   border: "#3b82f6", text: "#93c5fd" },
+  "ipl":                   { accent: "#fbbf24", bg: "rgba(5,5,40,0.97)",    border: "#f59e0b", text: "#fde68a" },
+  "wt20-2024":             { accent: "#a78bfa", bg: "rgba(8,0,22,0.97)",    border: "#7c3aed", text: "#c4b5fd" },
+  "bbl-starsports":        { accent: "#ef4444", bg: "rgba(0,30,10,0.97)",   border: "#dc2626", text: "#fca5a5" },
+  "ipl-2025":              { accent: "#fbbf24", bg: "rgba(4,6,35,0.97)",    border: "#f59e0b", text: "#fde68a" },
+  "crioverlay-green":      { accent: "#76ff03", bg: "rgba(9,13,22,0.97)",   border: "#76ff03", text: "#b2ff59" },
+};
+
+const getFallbackColors = (slug: string) =>
+  THEME_COLORS[slug] ?? { accent: "#94a3b8", bg: "rgba(15,23,42,0.95)", border: "#475569", text: "#cbd5e1" };
+
 interface ThemeItem {
   id: number;
   name: string;
@@ -159,7 +182,7 @@ export default function ScoreboardLinksModal({
     setPreviewTheme(theme);
   };
 
-  const handlePrintPDF = (themeSlug: string, screen: "SUMMARY" | "FULLSCORE") => {
+  const handlePrintPDF = (themeSlug: string, screen: string) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
     const url = `${origin}/matches/${matchId}/overlay?theme=${themeSlug}&screen=${screen}&print=true`;
     window.open(url, "_blank", "width=1280,height=720,menubar=no,toolbar=no,location=no,status=no");
@@ -244,7 +267,7 @@ export default function ScoreboardLinksModal({
                       <th className="p-3 text-center">Price (per day)</th>
                       <th className="p-3 text-center w-28">Status / Timer</th>
                       <th className="p-3 text-center w-24">Preview</th>
-                      <th className="p-3 text-center w-48">Graphical PDFs (Themed)</th>
+                      <th className="p-3 text-center w-64">Graphical PDFs (Themed)</th>
                       <th className="p-3 text-center w-48">Scoreboard Link (PC + Mobile)</th>
                       <th className="p-3 text-center w-48">CameraFi Mobile Link</th>
                     </tr>
@@ -270,6 +293,7 @@ export default function ScoreboardLinksModal({
                         const isFreeTheme = theme.price <= 0;
                         const isUnlocked = isFreeTheme || isPlanActive || approvedSlugs.includes(theme.slug);
                         const remainingSec = themeRemainingSeconds[theme.slug] || 0;
+                        const colors = getFallbackColors(theme.slug);
                         return (
                           <tr
                             key={theme.id}
@@ -280,6 +304,7 @@ export default function ScoreboardLinksModal({
                             <td className="p-3 text-center text-zinc-500">{theme.id}</td>
                             <td className="p-3 font-bold text-zinc-950">
                               <div className="flex items-center gap-2">
+                                <span style={{ width: '12px', height: '12px', borderRadius: '3px', backgroundColor: colors.accent, display: 'inline-block', border: '1px solid rgba(0,0,0,0.1)' }} />
                                 {theme.name}
                                 {theme.badge && (
                                   <span className="bg-amber-500 text-white font-extrabold text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm">
@@ -323,20 +348,42 @@ export default function ScoreboardLinksModal({
                               </button>
                             </td>
                             {isUnlocked ? (
-                              <td className="p-3 text-center flex items-center gap-1 justify-center min-w-[170px]">
+                              <td className="p-3 text-center flex items-center gap-1.5 justify-center min-w-[250px]">
                                 <button
                                   onClick={() => handlePrintPDF(theme.slug, "SUMMARY")}
-                                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[9px] uppercase py-1 px-2 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                  className="font-extrabold text-[9px] uppercase py-1 px-2.5 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap border"
+                                  style={{
+                                    backgroundColor: colors.bg,
+                                    color: colors.accent,
+                                    borderColor: colors.accent,
+                                  }}
                                   title="Download graphical themed Match Summary PDF"
                                 >
                                   📄 Summary
                                 </button>
                                 <button
                                   onClick={() => handlePrintPDF(theme.slug, "FULLSCORE")}
-                                  className="bg-[#008080] hover:bg-[#006666] text-white font-extrabold text-[9px] uppercase py-1 px-2 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                  className="font-extrabold text-[9px] uppercase py-1 px-2.5 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap border"
+                                  style={{
+                                    backgroundColor: colors.bg,
+                                    color: colors.accent,
+                                    borderColor: colors.accent,
+                                  }}
                                   title="Download graphical themed Full Scorecard PDF"
                                 >
                                   📊 Scorecard
+                                </button>
+                                <button
+                                  onClick={() => handlePrintPDF(theme.slug, "TEAMS PLAYERS")}
+                                  className="font-extrabold text-[9px] uppercase py-1 px-2.5 rounded active:scale-95 transition-all cursor-pointer whitespace-nowrap border"
+                                  style={{
+                                    backgroundColor: colors.bg,
+                                    color: colors.accent,
+                                    borderColor: colors.accent,
+                                  }}
+                                  title="Download graphical themed Teams Squads PDF"
+                                >
+                                  👥 Teams
                                 </button>
                               </td>
                             ) : (

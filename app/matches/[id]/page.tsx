@@ -2533,6 +2533,20 @@ export default function MatchScoringPage() {
               >
                 Display Input
               </button>
+              <button
+                onClick={() => {
+                  setCustomText("");
+                  if (scoringState) {
+                    const updated = { ...scoringState, customInputText: "" };
+                    setScoringState(updated);
+                    saveScoringState(updated);
+                  }
+                  showToast("Custom input cleared.");
+                }}
+                className="bg-zinc-600 hover:bg-zinc-700 text-white text-xs font-bold px-4 py-2 rounded-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+              >
+                Default / Off
+              </button>
             </div>
 
             {/* Select MOM Player */}
@@ -2555,6 +2569,20 @@ export default function MatchScoringPage() {
                 className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-lg active:scale-95 transition-all cursor-pointer"
               >
                 Display MOM
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedMom("");
+                  if (scoringState) {
+                    const updated = { ...scoringState, momPlayer: "" };
+                    setScoringState(updated);
+                    saveScoringState(updated);
+                  }
+                  showToast("MOM display cleared.");
+                }}
+                className="bg-zinc-600 hover:bg-zinc-700 text-white text-xs font-bold px-4 py-2 rounded-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+              >
+                Default / Off
               </button>
               <div className="flex gap-2">
                 <button
@@ -2598,6 +2626,20 @@ export default function MatchScoringPage() {
                 className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-lg active:scale-95 transition-all cursor-pointer"
               >
                 Display Player Stats
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedStatsPlayer("");
+                  if (scoringState) {
+                    const updated = { ...scoringState, tournamentStatsPlayer: "" };
+                    setScoringState(updated);
+                    saveScoringState(updated);
+                  }
+                  showToast("Player stats display cleared.");
+                }}
+                className="bg-zinc-600 hover:bg-zinc-700 text-white text-xs font-bold px-4 py-2 rounded-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+              >
+                Default / Off
               </button>
             </div>
 
