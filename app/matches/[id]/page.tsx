@@ -128,6 +128,11 @@ export default function MatchScoringPage() {
   const [retireTarget, setRetireTarget] = useState<"1" | "2">("1"); // "1" = Striker, "2" = Non-Striker
   const [retireNewBatsmanInput, setRetireNewBatsmanInput] = useState("");
 
+  // Custom Runs Modal
+  const [showCustomRunsModal, setShowCustomRunsModal] = useState(false);
+  const [customRunsInput, setCustomRunsInput] = useState("");
+
+
   // Dismissal Modal
   const [showWicketModal, setShowWicketModal] = useState(false);
   const [wicketType, setWicketType] = useState<"Bowled" | "Caught" | "LBW" | "Run Out" | "Stumped">("Bowled");
@@ -541,7 +546,7 @@ export default function MatchScoringPage() {
 
   // Record outcome of a ball
   const recordBall = (
-    type: "runs" | "wide" | "noball" | "widenoball" | "wicket" | "bye" | "legbye" | "wicketnoball" | "wicketwide" | "wicketbye" | "wicketlegbye",
+    type: "runs" | "wide" | "noball" | "widenoball" | "wicket" | "bye" | "legbye" | "wicketnoball" | "wicketwide" | "wicketbye" | "wicketlegbye" | "custom_byes",
     runsVal = 0,
     wicketDismissedName = "",
     wicketNewBatsmanName = ""
@@ -674,6 +679,16 @@ export default function MatchScoringPage() {
         activeNonStrikerName = scoringState.striker;
       }
       anim = "FREE HIT";
+    } else if (type === "custom_byes") {
+      currentScore += runsVal;
+      // Runs go to extras, not to batsman, and batsman does NOT face ball (no increase)
+      // Bowler does not concede these, and does NOT get ball count (no increase)
+      // currentBalls is NOT increased
+
+      if (runsVal % 2 !== 0) {
+        activeStrikerName = scoringState.nonStriker;
+        activeNonStrikerName = scoringState.striker;
+      }
     } else if (type === "bye" || type === "legbye") {
       currentScore += runsVal;
       // Runs go to extras, not to batsman, but batsman faces ball
@@ -808,7 +823,14 @@ export default function MatchScoringPage() {
 
     // Check if over completed
     let isOverEnd = false;
-    if (type !== "wide" && type !== "noball" && type !== "widenoball" && type !== "wicketnoball" && type !== "wicketwide") {
+    if (
+      type !== "wide" &&
+      type !== "noball" &&
+      type !== "widenoball" &&
+      type !== "wicketnoball" &&
+      type !== "wicketwide" &&
+      type !== "custom_byes"
+    ) {
       if (currentBalls % match.ballsPerOver === 0) {
         isOverEnd = true;
         currentOvers = Math.floor(currentBalls / match.ballsPerOver);
@@ -1174,6 +1196,27 @@ export default function MatchScoringPage() {
     saveScoringState(updated, undefined, t1Changed ? updatedT1 : undefined, t2Changed ? updatedT2 : undefined);
     setShowNewBowlerModal(false);
     showToast(`Bowler updated to ${bName}`);
+  };
+
+  const handleCustomRunsSubmit = () => {
+    const val = Number(customRunsInput.trim());
+    if (isNaN(val) || customRunsInput.trim() === "") {
+      showToast("Please enter a valid number.", "error");
+      return;
+    }
+    if (val < 0) {
+      showToast("Runs cannot be negative.", "error");
+      return;
+    }
+    if (!scoringState || !scoringState.inningsStarted) return;
+    if (!scoringState.bowler) {
+      showToast("Select a bowler first!", "error");
+      return;
+    }
+    recordBall("custom_byes", val);
+    resetScoringCheckboxes();
+    setShowCustomRunsModal(false);
+    setCustomRunsInput("");
   };
 
   const handleRetireBatterSubmit = () => {
@@ -2144,10 +2187,8 @@ export default function MatchScoringPage() {
                     ))}
                     <button
                       onClick={() => {
-                        const runInput = prompt("Enter custom runs:");
-                        if (runInput !== null && !isNaN(Number(runInput))) {
-                          handleScoringButton(Number(runInput));
-                        }
+                        setCustomRunsInput("");
+                        setShowCustomRunsModal(true);
                       }}
                       className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
                     >
@@ -3094,6 +3135,77 @@ export default function MatchScoringPage() {
                 <button
                   type="button"
                   onClick={() => setShowRetireModal(false)}
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Custom Runs Modal ──────── */}
+      {showCustomRunsModal && scoringState && isOwner && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowCustomRunsModal(false)} />
+          <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 text-slate-900 overflow-hidden">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 text-center">
+              <h3 className="text-lg font-black tracking-wider font-space uppercase text-white">➕ Custom Byes</h3>
+              <p className="text-blue-100 text-[10px] font-bold uppercase tracking-widest mt-0.5">
+                Add runs directly to scoreboard (does not count as ball)
+              </p>
+            </div>
+
+            <div className="p-6 flex flex-col gap-4">
+              {/* Input for Custom Runs */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-black uppercase tracking-wider text-slate-600">Enter Runs</label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={customRunsInput}
+                  onChange={(e) => setCustomRunsInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleCustomRunsSubmit(); }}
+                  placeholder="e.g. 4"
+                  autoFocus
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-slate-500 placeholder:text-slate-400"
+                />
+              </div>
+
+              {/* Quick-pick number pad */}
+              <div className="flex flex-col gap-1.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600">
+                  Quick Pick
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 4, 5, 6].map((num) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => setCustomRunsInput(num.toString())}
+                      className="flex-1 min-w-[40px] py-2 rounded-lg text-xs font-bold border bg-slate-50 hover:bg-slate-100 border-slate-300 text-slate-800 transition-all cursor-pointer text-center"
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={handleCustomRunsSubmit}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-black py-2.5 rounded-xl text-sm tracking-wider active:scale-95 transition-all cursor-pointer shadow-lg shadow-indigo-600/20"
+                >
+                  ✓ Confirm
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowCustomRunsModal(false)}
                   className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
                 >
                   Cancel
