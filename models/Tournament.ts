@@ -18,6 +18,11 @@ const TournamentSchema = new Schema(
       required: true,
       index: true,
     },
+    status: {
+      type: String,
+      enum: ["Active", "Completed"],
+      default: "Active",
+    },
   },
   {
     timestamps: true,

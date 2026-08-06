@@ -61,6 +61,8 @@ export async function POST(req: Request) {
       matchTied,
       ballsPerOver,
       matchType,
+      playersTeam1,
+      playersTeam2,
     } = body;
 
     if (!tournamentId) return NextResponse.json({ error: "tournamentId is required." }, { status: 400 });
@@ -107,6 +109,8 @@ export async function POST(req: Request) {
       ballsPerOver: Number(ballsPerOver) || 6,
       matchType: matchType || "Group Stage",
       status: "Not Started",
+      playersTeam1: Array.isArray(playersTeam1) ? playersTeam1 : [],
+      playersTeam2: Array.isArray(playersTeam2) ? playersTeam2 : [],
     });
 
     return NextResponse.json({ match }, { status: 201 });
@@ -115,3 +119,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create match." }, { status: 500 });
   }
 }
+

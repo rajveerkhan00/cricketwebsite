@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
 import Header from "../../components/Header";
@@ -16,6 +16,7 @@ interface Tournament {
   name: string;
   location: string;
   createdAt: string;
+  status: "Active" | "Completed";
 }
 
 interface Match {
@@ -32,6 +33,8 @@ interface Match {
   matchType: string;
   status: string;
   createdAt: string;
+  playersTeam1?: string[];
+  playersTeam2?: string[];
 }
 
 const MATCH_TYPES = [
@@ -60,6 +63,115 @@ const defaultForm = {
   matchType: "Group Stage",
 };
 
+// ─── Team Autocomplete Input ──────────────────────────────────────────────────
+function TeamAutocompleteInput({
+  label,
+  value,
+  onChange,
+  onSelectTeam,
+  disabled,
+  inputRef,
+  teamRegistry,
+  placeholder,
+  required,
+}: {
+  label: string;
+  value: string;
+  onChange: (val: string) => void;
+  onSelectTeam: (name: string, players: string[]) => void;
+  disabled: boolean;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
+
+  teamRegistry: Map<string, string[]>;
+  placeholder: string;
+  required?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const [touched, setTouched] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  const suggestions = touched && value.trim().length > 0
+    ? Array.from(teamRegistry.entries()).filter(([name]) =>
+        name.toLowerCase().includes(value.toLowerCase().trim())
+      )
+    : [];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div className="flex flex-col gap-1.5" ref={wrapRef}>
+      <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">{label}</label>
+      <div className="relative">
+        <input
+          ref={inputRef as any}
+          type="text"
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            setTouched(true);
+            setOpen(true);
+          }}
+          onFocus={() => { if (touched) setOpen(true); }}
+          placeholder={placeholder}
+          className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
+          required={required}
+          disabled={disabled}
+          autoComplete="off"
+        />
+
+        {/* Autocomplete Dropdown */}
+        {open && suggestions.length > 0 && (
+          <div className="absolute left-0 right-0 top-full mt-1 z-[60] bg-white border border-amber-200 rounded-xl shadow-xl shadow-amber-100/40 overflow-hidden">
+            <div className="px-3 py-2 border-b border-slate-100 bg-amber-50/60">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-600 flex items-center gap-1.5">
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                </svg>
+                Teams from this tournament
+              </p>
+            </div>
+            <ul className="max-h-48 overflow-y-auto py-1">
+              {suggestions.map(([name, players]) => (
+                <li key={name}>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      onSelectTeam(name, players);
+                      onChange(name);
+                      setOpen(false);
+                      setTouched(false);
+                    }}
+                    className="w-full text-left px-4 py-2.5 hover:bg-amber-50 transition-colors cursor-pointer flex flex-col gap-0.5 group"
+                  >
+                    <span className="text-sm font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{name}</span>
+                    {players.length > 0 ? (
+                      <span className="text-[11px] text-slate-400">
+                        {players.length} player{players.length !== 1 ? "s" : ""} will be auto-filled
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-slate-400">No players saved yet</span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Create / Edit Match Modal ────────────────────────────────────────────────
 function MatchModal({
   mode,
@@ -71,19 +183,23 @@ function MatchModal({
   loading,
   error,
   storageExceeded = false,
+  teamRegistry,
 }: {
   mode: "create" | "edit";
   initial?: typeof defaultForm;
   team1Label?: string;
   team2Label?: string;
   onClose: () => void;
-  onSubmit: (form: typeof defaultForm) => void;
+  onSubmit: (form: typeof defaultForm, prefillTeam1?: string[], prefillTeam2?: string[]) => void;
   loading: boolean;
   error: string | null;
   storageExceeded?: boolean;
+  teamRegistry: Map<string, string[]>;
 }) {
   const [form, setForm] = useState<typeof defaultForm>(initial ?? defaultForm);
   const firstRef = useRef<HTMLInputElement>(null);
+  const [prefillTeam1, setPrefillTeam1] = useState<string[]>([]);
+  const [prefillTeam2, setPrefillTeam2] = useState<string[]>([]);
 
   useEffect(() => {
     firstRef.current?.focus();
@@ -94,7 +210,7 @@ function MatchModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(form);
+    onSubmit(form, prefillTeam1, prefillTeam2);
   };
 
   // Derive the actual team name for toss label
@@ -150,34 +266,97 @@ function MatchModal({
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Team 1 Name */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 1 Name</label>
-              <input
-                ref={firstRef}
-                type="text"
+            {/* Team 1 Name with autocomplete */}
+            {mode === "create" ? (
+              <TeamAutocompleteInput
+                label="Team 1 Name"
                 value={form.team1Name}
-                onChange={(e) => set("team1Name", e.target.value)}
+                onChange={(val) => {
+                  set("team1Name", val);
+                  if (prefillTeam1.length > 0) setPrefillTeam1([]);
+                }}
+                onSelectTeam={(name, players) => {
+                  set("team1Name", name);
+                  setPrefillTeam1(players);
+                }}
+                disabled={loading}
+                inputRef={firstRef}
+                teamRegistry={teamRegistry}
                 placeholder="Enter Team 1 Name"
-                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
                 required
-                disabled={loading}
               />
-            </div>
+            ) : (
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 1 Name</label>
+                <input
+                  ref={firstRef}
+                  type="text"
+                  value={form.team1Name}
+                  onChange={(e) => set("team1Name", e.target.value)}
+                  placeholder="Enter Team 1 Name"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
+                  required
+                  disabled={loading}
+                />
+              </div>
+            )}
 
-            {/* Team 2 Name */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 2 Name</label>
-              <input
-                type="text"
+            {/* Prefill Team 1 indicator */}
+            {prefillTeam1.length > 0 && (
+              <div className="-mt-2 flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                <p className="text-[11px] text-emerald-700 font-semibold">
+                  {prefillTeam1.length} player{prefillTeam1.length !== 1 ? "s" : ""} from previous match will be auto-loaded
+                </p>
+              </div>
+            )}
+
+            {/* Team 2 Name with autocomplete */}
+            {mode === "create" ? (
+              <TeamAutocompleteInput
+                label="Team 2 Name"
                 value={form.team2Name}
-                onChange={(e) => set("team2Name", e.target.value)}
-                placeholder="Enter Team 2 Name"
-                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
-                required
+                onChange={(val) => {
+                  set("team2Name", val);
+                  if (prefillTeam2.length > 0) setPrefillTeam2([]);
+                }}
+                onSelectTeam={(name, players) => {
+                  set("team2Name", name);
+                  setPrefillTeam2(players);
+                }}
                 disabled={loading}
+                teamRegistry={teamRegistry}
+                placeholder="Enter Team 2 Name"
+                required
               />
-            </div>
+            ) : (
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 2 Name</label>
+                <input
+                  type="text"
+                  value={form.team2Name}
+                  onChange={(e) => set("team2Name", e.target.value)}
+                  placeholder="Enter Team 2 Name"
+                  className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-all placeholder:text-slate-400"
+                  required
+                  disabled={loading}
+                />
+              </div>
+            )}
+
+            {/* Prefill Team 2 indicator */}
+            {prefillTeam2.length > 0 && (
+              <div className="-mt-2 flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                <p className="text-[11px] text-emerald-700 font-semibold">
+                  {prefillTeam2.length} player{prefillTeam2.length !== 1 ? "s" : ""} from previous match will be auto-loaded
+                </p>
+              </div>
+            )}
 
             {/* Overs & Match No — side by side */}
             <div className="grid grid-cols-2 gap-3">
@@ -474,6 +653,28 @@ export default function TourPage() {
   const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
   const [sendLoadingMatchId, setSendLoadingMatchId] = useState<string | null>(null);
 
+  // End tournament state
+  const [showEndTournament, setShowEndTournament] = useState(false);
+  const [endLoading, setEndLoading] = useState(false);
+
+  // Build team registry from existing matches: teamName => latest players
+  const teamRegistry = useCallback((): Map<string, string[]> => {
+    const registry = new Map<string, string[]>();
+    for (const m of matches) {
+      if (m.team1Name.trim()) {
+        const existing = registry.get(m.team1Name.trim()) ?? [];
+        const players = m.playersTeam1 ?? [];
+        registry.set(m.team1Name.trim(), players.length > existing.length ? players : existing);
+      }
+      if (m.team2Name.trim()) {
+        const existing = registry.get(m.team2Name.trim()) ?? [];
+        const players = m.playersTeam2 ?? [];
+        registry.set(m.team2Name.trim(), players.length > existing.length ? players : existing);
+      }
+    }
+    return registry;
+  }, [matches]);
+
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
     if (type === "success") {
       toast.success(message);
@@ -553,14 +754,19 @@ export default function TourPage() {
   };
 
   // Create match
-  const handleCreate = async (form: typeof defaultForm) => {
+  const handleCreate = async (form: typeof defaultForm, prefillTeam1?: string[], prefillTeam2?: string[]) => {
     setModalLoading(true);
     setModalError(null);
     try {
       const res = await fetch("/api/matches", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, tournamentId }),
+        body: JSON.stringify({
+          ...form,
+          tournamentId,
+          playersTeam1: prefillTeam1 ?? [],
+          playersTeam2: prefillTeam2 ?? [],
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create match.");
@@ -575,8 +781,27 @@ export default function TourPage() {
     }
   };
 
+  // End tournament
+  const handleEndTournament = async () => {
+    setEndLoading(true);
+    try {
+      const res = await fetch(`/api/tournaments/${tournamentId}/end`, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to end tournament.");
+      setTournament((prev) => prev ? { ...prev, status: "Completed" } : prev);
+      setMatches((prev) => prev.map((m) => ({ ...m, playersTeam1: [], playersTeam2: [] })));
+      setShowEndTournament(false);
+      toast.success("Tournament ended. All player rosters cleared.");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to end tournament.");
+    } finally {
+      setEndLoading(false);
+    }
+  };
+
   // Edit match
-  const handleEdit = async (form: typeof defaultForm) => {
+  const handleEdit = async (form: typeof defaultForm, _prefillTeam1?: string[], _prefillTeam2?: string[]) => {
+
     if (!editTarget) return;
     setModalLoading(true);
     setModalError(null);
@@ -746,7 +971,7 @@ export default function TourPage() {
               {matches.length} match{matches.length !== 1 ? "es" : ""}
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap justify-end">
             {/* SCOREBOARD LINKS */}
             <button
               onClick={() => {
@@ -763,6 +988,27 @@ export default function TourPage() {
               </svg>
               SCOREBOARD LINKS
             </button>
+
+            {/* END TOURNAMENT */}
+            {tournament?.status !== "Completed" && (
+              <button
+                onClick={() => setShowEndTournament(true)}
+                className="flex items-center gap-1.5 bg-slate-100 hover:bg-red-50 border border-slate-300 hover:border-red-300 text-slate-600 hover:text-red-600 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                END TOURNAMENT
+              </button>
+            )}
+            {tournament?.status === "Completed" && (
+              <span className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg">
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                TOURNAMENT ENDED
+              </span>
+            )}
 
             {/* CREATE MATCH */}
             <button
@@ -918,6 +1164,7 @@ export default function TourPage() {
           loading={modalLoading}
           error={modalError}
           storageExceeded={storageExceeded}
+          teamRegistry={teamRegistry()}
         />
       )}
 
@@ -929,7 +1176,55 @@ export default function TourPage() {
           onSubmit={handleEdit}
           loading={modalLoading}
           error={modalError}
+          teamRegistry={new Map()}
         />
+      )}
+
+      {/* ── End Tournament Confirmation ─────────────────────────────────── */}
+      {showEndTournament && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setShowEndTournament(false)} />
+          <div className="relative w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="h-1 w-full bg-gradient-to-r from-red-500 to-rose-600" />
+            <div className="p-7 flex flex-col items-center gap-5 text-center">
+              <div className="w-13 h-13 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center p-3">
+                <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold text-slate-900 font-space">End Tournament?</h3>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                  This will mark <span className="text-slate-900 font-bold">{tournament?.name}</span> as completed<br />
+                  and <span className="text-red-600 font-bold">clear all saved player rosters</span> from matches.<br />
+                  This cannot be undone.
+                </p>
+              </div>
+              <div className="flex gap-3 w-full">
+                <button
+                  onClick={handleEndTournament}
+                  disabled={endLoading}
+                  className="flex-1 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 active:scale-95 text-white font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                >
+                  {endLoading ? (
+                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                  ) : null}
+                  END TOURNAMENT
+                </button>
+                <button
+                  onClick={() => setShowEndTournament(false)}
+                  disabled={endLoading}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold py-2.5 rounded-lg text-sm tracking-wide transition-all duration-200 cursor-pointer disabled:opacity-60"
+                >
+                  CANCEL
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {deleteTarget && (

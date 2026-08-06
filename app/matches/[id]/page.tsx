@@ -1379,15 +1379,24 @@ export default function MatchScoringPage() {
     );
   }
 
+  // Determine current active team batting/bowling keys
+  const battingTeamKey = scoringState
+    ? scoringState.battingTeam
+    : getTeamsByToss().batting;
+  const bowlingTeamKey = scoringState
+    ? scoringState.bowlingTeam
+    : getTeamsByToss().bowling;
+
   // Determine current active team batting/bowling labels
   const currentBattingTeamLabel =
-    scoringState?.battingTeam === "team1" ? match.team1Name : match.team2Name;
+    battingTeamKey === "team1" ? match.team1Name : match.team2Name;
   const currentBowlingTeamLabel =
-    scoringState?.battingTeam === "team1" ? match.team2Name : match.team1Name;
+    bowlingTeamKey === "team1" ? match.team1Name : match.team2Name;
 
   // Roster lists for suggestions
-  const battingRoster = scoringState?.battingTeam === "team1" ? match.playersTeam1 : match.playersTeam2;
-  const bowlingRoster = scoringState?.battingTeam === "team1" ? match.playersTeam2 : match.playersTeam1;
+  const battingRoster = battingTeamKey === "team1" ? match.playersTeam1 : match.playersTeam2;
+  const bowlingRoster = bowlingTeamKey === "team1" ? match.playersTeam1 : match.playersTeam2;
+
 
   // Active batsman stats
   const activeStrikerStats = scoringState?.batsmen.find((b) => b.name === scoringState.striker);
@@ -2763,15 +2772,21 @@ export default function MatchScoringPage() {
                   {/* Suggestions list from added players */}
                   {battingRoster && battingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
-                      {battingRoster.map((p, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setStrikerInput(p)}
-                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
-                        >
-                          {p}
-                        </button>
-                      ))}
+                      {battingRoster
+                        .filter((p) => {
+                          const matchesSearch = strikerInput.trim() === "" || p.toLowerCase().includes(strikerInput.toLowerCase().trim());
+                          const notSelectedInOther = nonStrikerInput.trim() === "" || p.toLowerCase() !== nonStrikerInput.toLowerCase().trim();
+                          return matchesSearch && notSelectedInOther;
+                        })
+                        .map((p, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setStrikerInput(p)}
+                            className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
+                          >
+                            {p}
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
@@ -2788,15 +2803,21 @@ export default function MatchScoringPage() {
                   />
                   {battingRoster && battingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
-                      {battingRoster.map((p, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setNonStrikerInput(p)}
-                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
-                        >
-                          {p}
-                        </button>
-                      ))}
+                      {battingRoster
+                        .filter((p) => {
+                          const matchesSearch = nonStrikerInput.trim() === "" || p.toLowerCase().includes(nonStrikerInput.toLowerCase().trim());
+                          const notSelectedInOther = strikerInput.trim() === "" || p.toLowerCase() !== strikerInput.toLowerCase().trim();
+                          return matchesSearch && notSelectedInOther;
+                        })
+                        .map((p, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setNonStrikerInput(p)}
+                            className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
+                          >
+                            {p}
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
@@ -2821,18 +2842,21 @@ export default function MatchScoringPage() {
                   />
                   {bowlingRoster && bowlingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
-                      {bowlingRoster.map((p, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setBowlerInput(p)}
-                          className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
-                        >
-                          {p}
-                        </button>
-                      ))}
+                      {bowlingRoster
+                        .filter((p) => bowlerInput.trim() === "" || p.toLowerCase().includes(bowlerInput.toLowerCase().trim()))
+                        .map((p, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setBowlerInput(p)}
+                            className="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-[10px] rounded text-slate-700 cursor-pointer font-bold"
+                          >
+                            {p}
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
+
               </div>
 
               {/* Action buttons (Image 2) */}
@@ -2918,11 +2942,13 @@ export default function MatchScoringPage() {
                   {battingRoster && battingRoster.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1 max-h-[80px] overflow-y-auto">
                       {battingRoster
-                        .filter(
-                          (p) =>
-                            p.toLowerCase() !== scoringState?.striker.toLowerCase() &&
-                            p.toLowerCase() !== scoringState?.nonStriker.toLowerCase()
-                        )
+                        .filter((p) => {
+                          const matchesSearch = newBatsmanInput.trim() === "" || p.toLowerCase().includes(newBatsmanInput.toLowerCase().trim());
+                          const isStriker = p.toLowerCase() === scoringState?.striker?.toLowerCase();
+                          const isNonStriker = p.toLowerCase() === scoringState?.nonStriker?.toLowerCase();
+                          const isAlreadyOut = scoringState?.batsmen?.some(b => b.name.toLowerCase() === p.toLowerCase() && b.out);
+                          return matchesSearch && !isStriker && !isNonStriker && !isAlreadyOut;
+                        })
                         .map((p, i) => (
                           <button
                             key={i}
@@ -2934,6 +2960,7 @@ export default function MatchScoringPage() {
                         ))}
                     </div>
                   )}
+
                 </div>
               </div>
 
@@ -2997,7 +3024,10 @@ export default function MatchScoringPage() {
                   </span>
                   <div className="flex flex-wrap gap-1.5 max-h-[110px] overflow-y-auto">
                     {bowlingRoster
-                      .filter((p) => p.toLowerCase() !== newBowlerInput.toLowerCase())
+                      .filter((p) => {
+                        const matchesSearch = newBowlerInput.trim() === "" || p.toLowerCase().includes(newBowlerInput.toLowerCase().trim());
+                        return matchesSearch && p.toLowerCase() !== newBowlerInput.toLowerCase();
+                      })
                       .map((p, i) => (
                         <button
                           key={i}
@@ -3016,6 +3046,7 @@ export default function MatchScoringPage() {
                   </div>
                 </div>
               )}
+
 
               {/* Action buttons */}
               <div className="flex gap-3 mt-1">
@@ -3104,11 +3135,13 @@ export default function MatchScoringPage() {
                   </span>
                   <div className="flex flex-wrap gap-1.5 max-h-[110px] overflow-y-auto">
                     {battingRoster
-                      .filter((p) => 
-                        p.toLowerCase() !== scoringState.striker.toLowerCase() &&
-                        p.toLowerCase() !== scoringState.nonStriker.toLowerCase() &&
-                        p.toLowerCase() !== retireNewBatsmanInput.toLowerCase()
-                      )
+                      .filter((p) => {
+                        const matchesSearch = retireNewBatsmanInput.trim() === "" || p.toLowerCase().includes(retireNewBatsmanInput.toLowerCase().trim());
+                        const isStriker = p.toLowerCase() === scoringState.striker.toLowerCase();
+                        const isNonStriker = p.toLowerCase() === scoringState.nonStriker.toLowerCase();
+                        const isAlreadyOut = scoringState.batsmen?.some(b => b.name.toLowerCase() === p.toLowerCase() && b.out);
+                        return matchesSearch && !isStriker && !isNonStriker && !isAlreadyOut && p.toLowerCase() !== retireNewBatsmanInput.toLowerCase();
+                      })
                       .map((p, i) => (
                         <button
                           key={i}
@@ -3122,6 +3155,7 @@ export default function MatchScoringPage() {
                   </div>
                 </div>
               )}
+
 
               {/* Action buttons */}
               <div className="flex gap-3 mt-1">
