@@ -1480,8 +1480,8 @@ export default function MatchScoringPage() {
 
       {/* ── SCOREBOARD LINKS Bar – right below header ───────────────────── */}
       <div className="w-full bg-slate-900 border-b border-slate-800">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold flex-wrap">
             <Link href={`/tournaments/${match.tournamentId}`} className="hover:text-amber-400 transition-colors flex items-center gap-1">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -1494,7 +1494,7 @@ export default function MatchScoringPage() {
           <button
             onClick={() => setShowScoreboardLinks(true)}
             id="scoreboard-links"
-            className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 active:scale-95 text-white font-bold text-xs tracking-wider px-4 py-2 rounded-lg transition-all duration-200 cursor-pointer shadow-sm shadow-cyan-500/20"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 active:scale-95 text-white font-bold text-[10px] md:text-xs tracking-wider px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition-all duration-200 cursor-pointer shadow-sm shadow-cyan-500/20"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -1503,6 +1503,7 @@ export default function MatchScoringPage() {
           </button>
         </div>
       </div>
+
 
       <main className="flex-1 w-full max-w-5xl mx-auto py-8 px-4 md:px-6 z-10 flex flex-col gap-6">
         {/* Storage Indicator */}
@@ -2459,38 +2460,39 @@ export default function MatchScoringPage() {
               {/* ── Prominent Summary & Scorecard Broadcast Buttons ── */}
               <div className="flex flex-col gap-2">
                 <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">📡 Live Screen — shows on all scoreboards instantly:</p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
                   <button
                     onClick={() => handleUpdateDisplayScreen("SUMMARY")}
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
+                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
                       scoringState?.displayScreen === "SUMMARY"
                         ? "bg-cyan-500/30 border-cyan-400 text-cyan-200 shadow-cyan-500/20"
                         : "bg-gradient-to-br from-cyan-600 to-teal-700 border-cyan-500/40 text-white hover:from-cyan-500 hover:to-teal-600 shadow-cyan-500/10"
                     }`}
                   >
-                    <span className="text-xl">📋</span>
+                    <span className="text-sm md:text-xl">📋</span>
                     VIEW SUMMARY
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
+                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
                       scoringState?.displayScreen === "FULLSCORE"
                         ? "bg-blue-500/30 border-blue-400 text-blue-200 shadow-blue-500/20"
                         : "bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500/40 text-white hover:from-blue-500 hover:to-indigo-600 shadow-blue-500/10"
                     }`}
                   >
-                    <span className="text-xl">📊</span>
+                    <span className="text-sm md:text-xl">📊</span>
                     VIEW SCORECARD
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("DEFAULT!")}
-                    className="flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-xs font-black tracking-wider bg-gradient-to-br from-zinc-700 to-zinc-800 border-2 border-zinc-600/50 text-zinc-200 hover:from-zinc-600 hover:to-zinc-700 transition-all active:scale-95 cursor-pointer shadow-lg"
+                    className="flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider bg-gradient-to-br from-zinc-700 to-zinc-800 border-2 border-zinc-600/50 text-zinc-200 hover:from-zinc-600 hover:to-zinc-700 transition-all active:scale-95 cursor-pointer shadow-lg"
                   >
-                    <span className="text-xl">🏏</span>
+                    <span className="text-sm md:text-xl">🏏</span>
                     LIVE SCORE
                   </button>
                 </div>
               </div>
+
 
               <div className="border-t border-slate-200" />
 
@@ -2528,11 +2530,11 @@ export default function MatchScoringPage() {
 
 
             {/* Umpire Decision Controller Row */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex items-center gap-4">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center gap-2 md:gap-4">
               <span className="text-xs font-black tracking-wider text-slate-800 uppercase">Decision :</span>
               <button
                 onClick={() => handleSetDecision("PENDING")}
-                className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "PENDING"
+                className={`px-3 md:px-4 py-1 md:py-1.5 rounded-lg text-[10px] md:text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "PENDING"
                   ? "bg-[#ffcc00] text-black ring-2 ring-amber-400"
                   : "bg-[#ffcc00] hover:bg-amber-500 text-black font-semibold"
                   }`}
@@ -2541,7 +2543,7 @@ export default function MatchScoringPage() {
               </button>
               <button
                 onClick={() => handleSetDecision("OUT")}
-                className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "OUT"
+                className={`px-3 md:px-4 py-1 md:py-1.5 rounded-lg text-[10px] md:text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "OUT"
                   ? "bg-red-600 text-white ring-2 ring-red-500"
                   : "bg-red-600 hover:bg-red-700 text-white"
                   }`}
@@ -2550,7 +2552,7 @@ export default function MatchScoringPage() {
               </button>
               <button
                 onClick={() => handleSetDecision("NOT OUT")}
-                className={`px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "NOT OUT"
+                className={`px-3 md:px-4 py-1 md:py-1.5 rounded-lg text-[10px] md:text-xs font-bold active:scale-95 transition-all cursor-pointer ${scoringState?.decision === "NOT OUT"
                   ? "bg-emerald-600 text-white ring-2 ring-emerald-500"
                   : "bg-emerald-600 hover:bg-emerald-700 text-white"
                   }`}
@@ -2560,12 +2562,13 @@ export default function MatchScoringPage() {
               {scoringState?.decision && (
                 <button
                   onClick={() => handleSetDecision(null)}
-                  className="text-xs text-slate-400 hover:text-slate-600 font-semibold"
+                  className="text-[10px] md:text-xs text-slate-400 hover:text-slate-600 font-semibold"
                 >
                   Clear
                 </button>
               )}
             </div>
+
 
             {/* Custom Input Display */}
             <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center gap-3">

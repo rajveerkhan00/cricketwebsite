@@ -21,6 +21,11 @@
   }
 }
 
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
 body {
   background: #ffffff !important;
   color: #0f172a !important;
