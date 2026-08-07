@@ -71,21 +71,265 @@ const THEME_FONTS: Record<string, string> = {
   "ipl-2025": "'Outfit', sans-serif",
 };
 
-const getPlayerTournamentStats = (name: string) => {
-  if (!name) return null;
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  hash = Math.abs(hash);
-  const matches = (hash % 4) + 6; const runs = (hash % 180) + 160;
-  const innings = matches - (hash % 2); const notOuts = hash % 3;
-  const avg = (runs / Math.max(1, innings - notOuts)).toFixed(2);
-  const sr = ((hash % 35) + 132.5).toFixed(2);
-  const wickets = hash % 3 === 0 ? (hash % 10) + 2 : 0;
-  const economy = wickets > 0 ? ((hash % 3) + 6.4 + (hash % 10) / 10).toFixed(2) : "—";
-  const best = wickets > 0 ? `${Math.min(wickets, (hash % 3) + 2)}/${(hash % 18) + 12}` : "—";
-  const fours = Math.floor(runs / 10) + (hash % 6); const sixes = Math.floor(runs / 22) + (hash % 4);
-  const hs = `${(hash % 50) + 55}${hash % 2 === 0 ? "*" : ""}`;
-  return { matches, runs, avg, sr, wickets, economy, best, fours, sixes, hs };
+const PANEL_THEMES: Record<string, {
+  bg: string;
+  border: string;
+  borderLeft: string;
+  accent: string;
+  accentText: string;
+  textSecondary: string;
+  shadow: string;
+  radius: string;
+  font?: string;
+}> = {
+  "asia-cup": {
+    bg: "#192E68",
+    border: "2px solid #0F172B",
+    borderLeft: "5px solid #0F172B",
+    accent: "#fbbf24",
+    accentText: "#f2f0ebff",
+    textSecondary: "#bbf7d0",
+    shadow: "0 8px 32px #0F172B",
+    radius: "10px"
+  },
+  "cwc-19": {
+    bg: "#000000",
+    border: "2px solid #38bdf840",
+    borderLeft: "5px solid #38bdf8",
+    accent: "#e0f2fe",
+    accentText: "#7dd3fc",
+    textSecondary: "#bae6fd",
+    shadow: "0 8px 32px rgba(56, 189, 248, 0.25)",
+    radius: "10px"
+  },
+  "champions-trophy-2025": {
+    bg: "#0A1128",
+    border: "2px solid #34d39940",
+    borderLeft: "5px solid #00CC44",
+    accent: "#00CC44",
+    accentText: "#f6f9f8ff",
+    textSecondary: "#f2f7f5ff",
+    shadow: "0 8px 32px rgba(52, 211, 153, 0.25)",
+    radius: "10px"
+  },
+  "cwc-25-india": {
+    bg: "rgba(12, 10, 35, 0.95)",
+    border: "2px solid #fb923c40",
+    borderLeft: "5px solid #027ABA",
+    accent: "#eef0f2ff",
+    accentText: "#f8f4f1ff",
+    textSecondary: "#fed7aa",
+    shadow: "0 8px 32px rgba(251, 146, 60, 0.25)",
+    radius: "12px"
+  },
+  "wcl-fancode": {
+    bg: "#0284C7",
+    border: "2px solid #f0abfc40",
+    borderLeft: "5px solid #111827",
+    accent: "#f7f4f7ff",
+    accentText: "#f8f4f8ff",
+    textSecondary: "#f5d0fe",
+    shadow: "0 8px 32px rgba(240, 171, 252, 0.25)",
+    radius: "12px"
+  },
+  "cwc-23-india": {
+    bg: "rgba(8, 12, 40, 0.95)",
+    border: "2px solid #f9731640",
+    borderLeft: "5px solid #D946EF",
+    accent: "#D946EF",
+    accentText: "#f9f5faff",
+    textSecondary: "#e0e7ff",
+    shadow: "0 8px 32px rgba(249, 115, 22, 0.25)",
+    radius: "10px"
+  },
+  "bbl-black": {
+    bg: "#1E1254",
+    border: "2px solid #4ade8040",
+    borderLeft: "5px solid #F5C511",
+    accent: "#F5C511",
+    accentText: "#f5fbf7ff",
+    textSecondary: "#f0f5f2ff",
+    shadow: "0 8px 32px rgba(74, 222, 128, 0.25)",
+    radius: "8px",
+    font: "'Orbitron', sans-serif"
+  },
+  "cricfusion": {
+    bg: "rgba(20, 4, 40, 0.95)",
+    border: "2px solid #c026d340",
+    borderLeft: "5px solid #D92D20",
+    accent: "#f4efefff",
+    accentText: "#fdfbfbff",
+    textSecondary: "#ede9fe",
+    shadow: "0 8px 22px #D92D20",
+    radius: "12px"
+  },
+  "t20-emerging-asia-cup": {
+    bg: "rgba(15, 18, 25, 0.95)",
+    border: "2px solid #ef444440",
+    borderLeft: "5px solid #F56B13",
+    accent: "#F56B13",
+    accentText: "#f7f3f3ff",
+    textSecondary: "#f2f4f7ff",
+    shadow: "0 8px 32px rgba(239, 68, 68, 0.25)",
+    radius: "10px"
+  },
+  "sa20": {
+    bg: "rgba(4, 20, 12, 0.95)",
+    border: "2px solid #eab30840",
+    borderLeft: "5px solid #eab308",
+    accent: "#facc15",
+    accentText: "#f8f7f2ff",
+    textSecondary: "#fef9c3",
+    shadow: "0 8px 32px rgba(234, 179, 8, 0.25)",
+    radius: "12px",
+    font: "'Rubik', sans-serif"
+  },
+  "jiocinema": {
+    bg: "#CE1741",
+    border: "2px solid #3b82f640",
+    borderLeft: "5px solid #323344",
+    accent: "#ececf3ff",
+    accentText: "#f0f2f5ff",
+    textSecondary: "#dbeafe",
+    shadow: "0 8px 32px rgba(59, 130, 246, 0.25)",
+    radius: "10px",
+    font: "'Rubik', sans-serif"
+  },
+  "ipl": {
+    bg: "#162756",
+    border: "2px solid #f59e0b40",
+    borderLeft: "5px solid #f59e0b",
+    accent: "#fbbf24",
+    accentText: "#f6f5f0ff",
+    textSecondary: "#edeef2ff",
+    shadow: "0 8px 32px rgba(245, 158, 11, 0.25)",
+    radius: "12px"
+  },
+  "wt20-2024": {
+    bg: "rgba(8, 0, 22, 0.96)",
+    border: "2px solid #7c3aed40",
+    borderLeft: "5px solid #7c3aed",
+    accent: "#a78bfa",
+    accentText: "#c4b5fd",
+    textSecondary: "#ede9fe",
+    shadow: "0 8px 32px rgba(124, 58, 237, 0.25)",
+    radius: "10px"
+  },
+  "bbl-starsports": {
+    bg: "rgba(0, 30, 10, 0.95)",
+    border: "2px solid #dc262640",
+    borderLeft: "5px solid #fbbf24",
+    accent: "#fbbf24",
+    accentText: "#fca5a5",
+    textSecondary: "#dcfce7",
+    shadow: "0 8px 32px rgba(220, 38, 38, 0.25)",
+    radius: "8px",
+    font: "'Orbitron', sans-serif"
+  },
+  "ipl-2025": {
+    bg: "rgba(4, 6, 35, 0.96)",
+    border: "2px solid #f59e0b40",
+    borderLeft: "5px solid #f59e0b",
+    accent: "#fbbf24",
+    accentText: "#fde68a",
+    textSecondary: "#e0e7ff",
+    shadow: "0 8px 32px rgba(245, 158, 11, 0.25)",
+    radius: "14px"
+  },
+  "crioverlay-green": {
+    bg: "linear-gradient(180deg, #050b14 0%, #0b1324 100%)",
+    border: "1.5px solid #76ff0340",
+    borderLeft: "5px solid #76ff03",
+    accent: "#76ff03",
+    accentText: "#f6f9f4ff",
+    textSecondary: "#edefebff",
+    shadow: "0 8px 32px rgba(118, 255, 3, 0.25)",
+    radius: "14px",
+    font: "'Montserrat', sans-serif"
+  }
+};
+
+
+// ── Real tournament stats aggregation (computed from actual match data) ──────
+const computePlayerTournamentStats = (matches: Match[], name: string) => {
+  if (!name || !matches.length) return null;
+  let totalRuns = 0, totalBalls = 0, totalFours = 0, totalSixes = 0;
+  let innings = 0, notOuts = 0, highestScore = 0, highestNotOut = false;
+  let totalWkts = 0, totalRunsConceded = 0, totalBallsBowled = 0;
+  let bestWkts = 0, bestRuns = 999;
+
+  for (const m of matches) {
+    const ss = m.scoringState;
+    if (!ss) continue;
+    // Collect all innings (current + firstInnings)
+    const allInnings = [ss, ...(ss.firstInnings ? [ss.firstInnings] : [])];
+    for (const inn of allInnings) {
+      // Batting
+      const bat = inn.batsmen?.find((b: BatsmanStats) => b.name === name);
+      if (bat && bat.balls > 0) {
+        innings++;
+        totalRuns += bat.runs;
+        totalBalls += bat.balls;
+        totalFours += bat.fours;
+        totalSixes += bat.sixes;
+        if (!bat.out) notOuts++;
+        if (
+          bat.runs > highestScore ||
+          (bat.runs === highestScore && !bat.out)
+        ) {
+          highestScore = bat.runs;
+          highestNotOut = !bat.out;
+        }
+      }
+      // Bowling
+      const bowl = inn.bowlers?.find((bw: BowlerStats) => bw.name === name);
+      if (bowl && bowl.ballsBowled > 0) {
+        totalWkts += bowl.wickets;
+        totalRunsConceded += bowl.runsConceded;
+        totalBallsBowled += bowl.ballsBowled;
+        // Track best spell
+        if (
+          bowl.wickets > bestWkts ||
+          (bowl.wickets === bestWkts && bowl.runsConceded < bestRuns)
+        ) {
+          bestWkts = bowl.wickets;
+          bestRuns = bowl.runsConceded;
+        }
+      }
+    }
+  }
+
+  if (innings === 0 && totalBallsBowled === 0) return null;
+
+  const dismissals = innings - notOuts;
+  const avg = dismissals > 0 ? (totalRuns / dismissals).toFixed(2) : innings > 0 ? "N/O" : "—";
+  const sr = totalBalls > 0 ? ((totalRuns / totalBalls) * 100).toFixed(2) : "—";
+  const hs = `${highestScore}${highestNotOut ? "*" : ""}`;
+  const economy = totalBallsBowled > 0
+    ? ((totalRunsConceded / totalBallsBowled) * 6).toFixed(2)
+    : "—";
+  const best = bestWkts > 0 ? `${bestWkts}/${bestRuns}` : "—";
+
+  return {
+    matches: matches.filter(m => {
+      const ss = m.scoringState;
+      if (!ss) return false;
+      const allInns = [ss, ...(ss.firstInnings ? [ss.firstInnings] : [])];
+      return allInns.some(inn =>
+        inn.batsmen?.some((b: BatsmanStats) => b.name === name && b.balls > 0) ||
+        inn.bowlers?.some((bw: BowlerStats) => bw.name === name && bw.ballsBowled > 0)
+      );
+    }).length,
+    runs: totalRuns,
+    avg,
+    sr,
+    hs,
+    fours: totalFours,
+    sixes: totalSixes,
+    wickets: totalWkts,
+    economy,
+    best,
+  };
 };
 
 const getPointsTable = (match: Match, themeSlug: string, plusOne: boolean) => {
@@ -466,6 +710,11 @@ export default function OverlayPage() {
   const [accessGranted, setAccessGranted] = useState(false);
   const [currentAnim, setCurrentAnim] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const [tournamentMatches, setTournamentMatches] = useState<Match[]>([]);
+
+  // Helper to look up real tournament stats for a player
+  const getPlayerTournamentStats = (name: string) =>
+    computePlayerTournamentStats(tournamentMatches.length > 0 ? tournamentMatches : match ? [match] : [], name);
 
   // The email used to check/grant access (from URL param or entered by user)
   const emailParam = searchParams?.get("email") || "";
@@ -600,6 +849,19 @@ export default function OverlayPage() {
       return () => clearInterval(interval);
     }
   }, [matchId, isPreview, userEmail]);
+
+  // Fetch all matches in the same tournament for real stats aggregation
+  useEffect(() => {
+    if (!match?.tournamentId || match.tournamentId === "demo-tournament-id") return;
+    fetch(`/api/matches?tournamentId=${match.tournamentId}`, { cache: "no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.matches && Array.isArray(data.matches)) {
+          setTournamentMatches(data.matches);
+        }
+      })
+      .catch(() => { });
+  }, [match?.tournamentId]);
 
   // Poll access every 8 seconds — instantly picks up admin approve/reject
   // Always call once on mount (handles preview mode immediately too)
@@ -856,6 +1118,103 @@ export default function OverlayPage() {
   // ════════════════════ 2. DECISION ════════════════════
   // Bypassed: Decisions are displayed inside the scoreboards' status bars/last sections
 
+  // ── B1 / B2: floating left-side batter stats panel (scoreboard stays visible) ──
+  const isBatterPanel = scoringState.displayScreen && (scoringState.displayScreen.toUpperCase() === "B1" || scoringState.displayScreen.toUpperCase() === "B2");
+  const batterPanelPlayer = isBatterPanel
+    ? (scoringState.displayScreen.toUpperCase() === "B1" ? scoringState.striker : scoringState.nonStriker)
+    : null;
+  const batterPanelLabel = scoringState.displayScreen?.toUpperCase() === "B1" ? "🏏 ON STRIKE" : "🏃 NON-STRIKER";
+  const batterPanelIsStriker = scoringState.displayScreen?.toUpperCase() === "B1";
+  const batterPanelStats = batterPanelPlayer ? getPlayerTournamentStats(batterPanelPlayer) : null;
+
+  const renderBatterStatsPanel = () => {
+    if (!isBatterPanel || !batterPanelPlayer) return null;
+    // Use real stats if available; fall back to zeros for a player who hasn't batted yet
+    const stats = batterPanelStats ?? { runs: 0, avg: "—", sr: "—", hs: "—", fours: 0, sixes: 0, wickets: 0, economy: "—", best: "—", matches: 0 };
+    // Get custom scoreboard panel theme config or fallback
+    const tStyle = PANEL_THEMES[themeSlug] || {
+      bg: theme.primaryBg,
+      border: `2px solid ${theme.borderColor}60`,
+      borderLeft: `5px solid ${theme.accent}`,
+      accent: theme.accent,
+      accentText: theme.accentText,
+      textSecondary: theme.textSecondary,
+      shadow: `0 8px 40px rgba(0,0,0,0.82), 0 0 24px ${theme.accent}25`,
+      radius: "18px",
+      font: activeFont
+    };
+
+    const panelAccent = tStyle.accent;
+    const panelBorder = tStyle.border;
+    const panelBorderLeft = tStyle.borderLeft;
+    const panelAccentTx = tStyle.accentText;
+    const panelSecondary = tStyle.textSecondary;
+    const panelBg = tStyle.bg;
+    const panelShadow = tStyle.shadow;
+    const panelRadius = tStyle.radius;
+    const panelFont = tStyle.font || activeFont;
+
+    return (
+      <div
+        className="animate-slide-up"
+        style={{
+          position: "fixed",
+          left: 20,
+          top: 50,
+          zIndex: 50,
+          width: 210,
+          background: panelBg,
+          border: panelBorder,
+          borderLeft: panelBorderLeft,
+          borderRadius: panelRadius,
+          overflow: "hidden",
+          boxShadow: panelShadow,
+          fontFamily: panelFont,
+        }}
+      >
+        {/* Header */}
+        <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, borderBottom: `1px solid ${theme.borderColor}30`, padding: "10px 12px", display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 7.5, color: panelAccent, fontWeight: 900, letterSpacing: 2, marginBottom: 2, textTransform: "uppercase" }}>{batterPanelLabel} · Tournament</div>
+            <div style={{ fontSize: 13, fontWeight: 950, color: theme.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{batterPanelPlayer.toUpperCase()}</div>
+          </div>
+          {/* Live indicator dot — uses theme accent */}
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: panelAccent, boxShadow: `0 0 8px ${panelAccent}`, flexShrink: 0 }} />
+        </div>
+
+        {/* Stats grid — all colours from theme */}
+        <div style={{ padding: "10px 9px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+          {[
+            { l: "RUNS", v: stats.runs, c: panelAccent },
+            { l: "AVG", v: stats.avg, c: panelAccentTx },
+            { l: "SR", v: stats.sr, c: panelAccentTx },
+            { l: "H/S", v: stats.hs, c: panelAccent },
+            { l: "4s", v: stats.fours, c: panelSecondary },
+            { l: "6s", v: stats.sixes, c: panelSecondary },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: `${theme.headerBg}B0`,
+              border: `1px solid ${theme.borderColor}25`,
+              borderTop: i < 2 ? `2px solid ${panelAccent}50` : `1px solid ${theme.borderColor}25`,
+              borderRadius: 10,
+              padding: "7px 5px",
+              textAlign: "center",
+            }}>
+              <div style={{ fontSize: 7, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5, marginBottom: 3 }}>{item.l}</div>
+              <div style={{ fontSize: 16, fontWeight: 950, color: item.c, lineHeight: 1 }}>{item.v}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Matches pill */}
+        <div style={{ margin: "0 9px 10px", background: `${panelAccent}18`, border: `1px solid ${panelAccent}35`, borderRadius: 8, padding: "5px 8px", textAlign: "center", fontSize: 8.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 1.5 }}>
+          {stats.matches} TOURNAMENT MATCH{stats.matches !== 1 ? "ES" : ""}
+        </div>
+      </div>
+    );
+  };
+
+
   // ════════════════════ 3. PLAYER SPOTLIGHT ════════════════════
   if (scoringState.tournamentStatsPlayer) {
     const pName = scoringState.tournamentStatsPlayer;
@@ -864,7 +1223,7 @@ export default function OverlayPage() {
       <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
         <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
         <div style={{ position: "relative", zIndex: 1, width: "72vw" }}>
-          {renderCustomOverlay()}{renderMom()}
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
           {/* Unique: Trophy banner header + 2-col layout */}
           <div className="animate-slide-up" style={{ background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, border: `3px solid ${theme.borderColor}`, borderRadius: "40px 10px 0 0", padding: "20px 36px", display: "flex", alignItems: "center", gap: 24, boxShadow: `0 4px 20px ${theme.accent}30` }}>
             <div style={{ fontSize: 48, filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }}>🏆</div>
@@ -911,7 +1270,7 @@ export default function OverlayPage() {
       <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
         <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
         <div style={{ position: "relative", zIndex: 1, width: "84vw" }}>
-          {renderCustomOverlay()}{renderMom()}
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
           <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}30` }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{ fontSize: 26 }}>📊</div>
@@ -986,7 +1345,7 @@ export default function OverlayPage() {
   }
 
   // ════════════════════ 5. FULL-SCREEN CARDS ════════════════════
-  const isFS = scoringState.displayScreen && scoringState.displayScreen.toUpperCase() !== "DEFAULT!" && scoringState.displayScreen !== "default" && scoringState.displayScreen.toUpperCase() !== "MINI";
+  const isFS = scoringState.displayScreen && scoringState.displayScreen.toUpperCase() !== "DEFAULT!" && scoringState.displayScreen !== "default" && scoringState.displayScreen.toUpperCase() !== "MINI" && scoringState.displayScreen.toUpperCase() !== "B1" && scoringState.displayScreen.toUpperCase() !== "B2";
   if (isFS) {
     const ds = scoringState.displayScreen.toUpperCase();
     const isY1Bat = ds === "Y1BAT" || ds === "1BAT"; const isY2Bat = ds === "Y2BAT" || ds === "2BAT";
@@ -1004,7 +1363,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "95vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             {/* Header: team logo left, score right, accent left-border */}
             <div className="animate-slide-up" style={{ background: `linear-gradient(135deg,${theme.headerBg},${theme.primaryBg})`, borderLeft: `8px solid ${theme.borderColor}`, border: `2px solid ${theme.borderColor}40`, borderRadius: "16px 16px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 25px ${theme.accent}30` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -1067,7 +1426,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "86vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             {/* Header: bowling accent top border */}
             <div className="animate-slide-up" style={{ background: `linear-gradient(135deg,${theme.headerBg},${theme.primaryBg})`, borderTop: `5px solid #ef4444`, border: `2px solid rgba(239,68,68,0.4)`, borderRadius: "12px 12px 0 0", padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 25px ${theme.accent}30` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -1132,7 +1491,7 @@ export default function OverlayPage() {
           </button>
 
           <div style={{ position: "relative", zIndex: 1, width: "80vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             {/* Central match title */}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "16px 32px", textAlign: "center" }}>
               <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>MATCH SUMMARY · {theme.name.toUpperCase()}</div>
@@ -1184,7 +1543,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "78vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid #ef4444`, borderRadius: "12px 12px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}25` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                 <div style={{ fontSize: 32 }}>⚰️</div>
@@ -1244,7 +1603,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 60% 50% at 50% 50%,${theme.accent}20,transparent 70%)`, pointerEvents: "none" }} />
           <div style={{ position: "relative", zIndex: 1, width: "62vw", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ marginBottom: 20 }}>
               <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor={theme.accent} borderColor={theme.borderColor} size={88} />
             </div>
@@ -1289,7 +1648,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "68vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg, ${theme.headerBg}, ${theme.primaryBg})`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}30` }}>
               <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={70} />
               <div style={{ textAlign: "center" }}>
@@ -1338,7 +1697,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 70% 50% at 50% 50%,${theme.accent}18,transparent 70%)`, pointerEvents: "none" }} />
           <div style={{ position: "relative", zIndex: 1, width: "75vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "18px 36px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}25` }}>
               <div>
                 <div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 2 }}>ACTIVE PARTNERSHIP</div>
@@ -1413,7 +1772,7 @@ export default function OverlayPage() {
           </button>
           <div style={{ position: "relative", zIndex: 1, width: "96vw", maxWidth: "1480px" }}>
 
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "18px 28px", textAlign: "center" }}>
               <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>FULL SCORECARD · {theme.name.toUpperCase()}</div>
               <div style={{ fontSize: 20, fontWeight: 900, color: theme.accentText, marginTop: 6 }}>{match.team1Name.toUpperCase()} vs {match.team2Name.toUpperCase()}</div>
@@ -1507,7 +1866,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "92vw" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, border: `2px solid ${theme.borderColor}40`, borderRadius: "16px 16px 0 0", padding: "20px 36px", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", boxShadow: `0 4px 20px ${theme.accent}30` }}>
               <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={80} />
               <div style={{ textAlign: "center", padding: "0 24px" }}>
@@ -1549,7 +1908,7 @@ export default function OverlayPage() {
         <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           <div style={{ position: "relative", zIndex: 1, width: "80vw", textAlign: "center" }}>
-            {renderCustomOverlay()}{renderMom()}
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
             <div className="animate-slide-up" style={{ background: `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`, border: `3px solid ${theme.borderColor}`, borderRadius: 24, padding: "48px 64px", boxShadow: `0 8px 40px ${theme.accent}40` }}>
               <div style={{ fontSize: 13, color: theme.textSecondary, fontWeight: 900, letterSpacing: 5, textTransform: "uppercase", marginBottom: 16 }}>🏏 TOURNAMENT</div>
               <div style={{ fontSize: 44, fontWeight: 950, color: theme.accentText, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: 2, textShadow: `0 0 30px ${theme.accent}60` }}>{tourName}</div>
@@ -1636,6 +1995,7 @@ export default function OverlayPage() {
     return (
       <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 15, overflow: "hidden" }}>
         <style>{GREEN_CSS}</style>
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
         <div className="g-canvas">
           <div className="g-bar">
             {/* Left badge */}
@@ -1749,7 +2109,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>Asia Cup Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
@@ -1946,7 +2306,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>CWC 19 Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.6))" }}>
@@ -2153,7 +2513,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>Champions Trophy Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.4))", margin: "0 0 12px" }}>
@@ -2332,7 +2692,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>CWC 25 India Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
@@ -2574,7 +2934,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>WCL Fancode Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
@@ -2769,7 +3129,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>T20 World Cup Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
@@ -3044,7 +3404,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>BBL Black Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 32px rgba(0,0,0,0.7))" }}>
@@ -3239,7 +3599,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>CricFusion Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.25))" }}>
@@ -3425,7 +3785,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>T20 Emerging Asia Cup Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1300px", position: "relative", zIndex: 1, filter: "drop-shadow(0 0 15px rgba(6,182,212,0.3))" }}>
@@ -3570,7 +3930,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>SA20 Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1320px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.6))" }}>
@@ -3706,7 +4066,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>Jio Cinema Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(225,29,72,0.25))" }}>
@@ -3815,7 +4175,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>IPL Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
@@ -3947,7 +4307,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>WT20 2024 Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1300px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.6))" }}>
@@ -4087,7 +4447,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>BBL Star Sports Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
@@ -4208,7 +4568,7 @@ export default function OverlayPage() {
           <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
           <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>IPL 2025 Theme</span>
         </div>}
-        {renderCustomOverlay()}{renderMom()}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(168,85,247,0.35))" }}>
@@ -4294,7 +4654,7 @@ export default function OverlayPage() {
         <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span style={{ color: "#93c5fd" }}>{theme.name} Theme</span>
         <span style={{ color: "#4b5563", fontSize: 10 }}>| OBS: remove ?preview=true from URL</span>
       </div>}
-      {renderCustomOverlay()}{renderMom()}
+      {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
       {scoringState.inningsStarted ? (
         <div className="slide-up" style={{ width: "90vw", position: "relative", zIndex: 1 }}>
