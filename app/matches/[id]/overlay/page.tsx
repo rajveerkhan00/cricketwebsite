@@ -2134,12 +2134,12 @@ export default function OverlayPage() {
                 {/* Gold Parentheses decoration */}
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <span style={{ color: "#f59e0b", fontSize: "20px", fontWeight: "300", fontFamily: "serif" }}>(</span>
-                  <span style={{ color: "#ffffff", fontSize: "24px", fontWeight: "900", letterSpacing: "-0.5px" }}>{scoringState.score} - {scoringState.wickets}</span>
-                  <span style={{ color: "#cbd5e1", fontSize: "14px", fontWeight: "700", marginLeft: "2px" }}>{fmtOv(scoringState.balls, match.ballsPerOver)} ({scoringState.thisOver.filter(x => x && x !== ".").length})</span>
-                  <span style={{ color: "#f59e0b", fontSize: "20px", fontWeight: "300", fontFamily: "serif" }}>(</span>
+                  <span style={{ color: "#ffffff", fontSize: "20px", fontWeight: "900", letterSpacing: "-0.5px" }}>{scoringState.score} - {scoringState.wickets}</span>
+                  <span style={{ color: "#cbd5e1", fontSize: "12px", fontWeight: "700", marginLeft: "2px" }}>{fmtOv(scoringState.balls, match.ballsPerOver)} ({scoringState.thisOver.filter(x => x && x !== ".").length})</span>
+                  <span style={{ color: "#f59e0b", fontSize: "20px", fontWeight: "300", fontFamily: "serif" }}>)</span>
                 </div>
-                {/* Group Stage banner */}
-                <div style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", background: "#0ea5e9", padding: "2px 14px", borderRadius: "4px 4px 0 0", fontSize: "9px", fontWeight: "900", color: "#000000", letterSpacing: "1px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                {/* Group Stage banner — sits below score, no overlap */}
+                <div style={{ background: "#0ea5e9", padding: "1px 12px", borderRadius: "3px", fontSize: "8px", fontWeight: "900", color: "#000000", letterSpacing: "1px", textTransform: "uppercase", whiteSpace: "nowrap", marginTop: "2px" }}>
                   GROUP STAGE
                 </div>
               </div>
