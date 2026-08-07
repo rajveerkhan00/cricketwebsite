@@ -227,12 +227,12 @@ const PANEL_THEMES: Record<string, {
     font: "'Orbitron', sans-serif"
   },
   "ipl-2025": {
-    bg: "rgba(4, 6, 35, 0.96)",
+    bg: "#251253",
     border: "2px solid #f59e0b40",
     borderLeft: "5px solid #f59e0b",
-    accent: "#fbbf24",
-    accentText: "#fde68a",
-    textSecondary: "#e0e7ff",
+    accent: "#fbfaf6ff",
+    accentText: "hsla(60, 5%, 96%, 1.00)ff",
+    textSecondary: "rgba(235, 236, 242, 1)4, 231, 255, 1)",
     shadow: "0 8px 32px rgba(245, 158, 11, 0.25)",
     radius: "14px"
   },
@@ -2115,7 +2115,7 @@ export default function OverlayPage() {
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
 
             {/* The main scoreboard row */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "transparent", overflow: "hidden", borderRadius: "6px 6px 0 0", border: "1.5px solid rgba(255, 255, 255, 0.1)", borderBottom: "none" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "50px", background: "transparent", overflow: "hidden", borderRadius: "6px 6px 0 0", border: "1.5px solid rgba(255, 255, 255, 0.1)", borderBottom: "none" }}>
 
               {/* Team 1 Section */}
               <div style={{ display: "flex", alignItems: "center", background: "linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%)", padding: "0 20px", position: "relative", flexShrink: 0, minWidth: "150px" }}>
@@ -2310,10 +2310,10 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.6))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "70px", background: "transparent", overflow: "hidden", borderRadius: "8px", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "transparent", overflow: "hidden", borderRadius: "8px", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
 
               {/* LEFT HALF: Sky Blue Background */}
-              <div style={{ background: "#02b3e4", display: "flex", alignItems: "center", padding: "0 18px", flex: 1.1, minWidth: "480px" }}>
+              <div style={{ background: "#02b3e4", display: "flex", alignItems: "center", padding: "0 18px", flex: "1 1 0%", minWidth: 0, width: 0, overflow: "hidden" }}>
 
                 {/* Batting Team Logo/Crest in Ring */}
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -2401,7 +2401,7 @@ export default function OverlayPage() {
               </div>
 
               {/* RIGHT HALF: Red Background */}
-              <div style={{ background: "#dc2626", display: "flex", alignItems: "center", padding: "0 18px", flex: 1, minWidth: "420px", justifyContent: "space-between" }}>
+              <div style={{ background: "#dc2626", display: "flex", alignItems: "center", padding: "0 18px", flex: 1, minWidth: "450px", justifyContent: "space-between" }}>
 
                 {/* Bowler Details & This Over */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, paddingRight: "16px" }}>
@@ -2556,7 +2556,7 @@ export default function OverlayPage() {
               </div>
 
               {/* Center Dark Indigo Capsule */}
-              <div style={{ background: "#0a1128", height: "52px", borderRadius: "26px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "260px", flexShrink: 0, position: "relative" }}>
+              <div style={{ background: "#0a1128", height: "40px", borderRadius: "26px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "260px", flexShrink: 0, position: "relative" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", gap: "16px" }}>
                   {/* Left: CSK V MI */}
                   <span style={{ color: "#00cc44", fontWeight: "900", fontSize: "11px", letterSpacing: "0.5px" }}>
@@ -2638,7 +2638,7 @@ export default function OverlayPage() {
               </div>
 
               {/* Bowling Team Green Pill */}
-              <div style={{ background: "#00cc44", borderRadius: "10px", padding: "0 16px", height: "50px", display: "flex", alignItems: "center", justifyContent: "center", minWidth: "140px", border: "2px solid rgba(255,255,255,0.25)", marginLeft: "14px" }}>
+              <div style={{ background: "#00cc44", borderRadius: "10px", padding: "0 16px", height: "38px", display: "flex", alignItems: "center", justifyContent: "center", minWidth: "140px", border: "2px solid rgba(255,255,255,0.25)", marginLeft: "14px" }}>
                 <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "13px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center" }}>
                   {currentBowlTeam}
                 </span>
@@ -2696,7 +2696,7 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "transparent", overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "transparent", overflow: "hidden" }}>
 
               {/* Batting Team Trapezoid Name Block (Left End) */}
               <div style={{
@@ -2938,7 +2938,7 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.1)" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.1)" }}>
 
               {/* Left Block: Team Name + Code */}
               <div style={{
@@ -3141,7 +3141,7 @@ export default function OverlayPage() {
               </div>
             )}
 
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
 
               {/* Far Left Batting Team Pill (Cyan) */}
               <div style={{
@@ -3417,7 +3417,7 @@ export default function OverlayPage() {
             )}
 
             {/* Main scoreboard row */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "72px", overflow: "hidden", borderRadius: "4px" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "56px", overflow: "hidden", borderRadius: "4px" }}>
 
               {/* LEFT: Batting Team Yellow Panel */}
               <div style={{ background: "linear-gradient(180deg, #facc15 0%, #eab308 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "130px", flexShrink: 0 }}>
@@ -3612,7 +3612,7 @@ export default function OverlayPage() {
             )}
 
             {/* Main scoreboard row (White rounded capsule) */}
-            <div style={{ display: "flex", alignItems: "center", height: "66px", background: "#ffffff", overflow: "hidden", borderRadius: "9999px", padding: "0 18px", border: "1px solid rgba(0,0,0,0.08)", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", height: "54px", background: "#ffffff", overflow: "hidden", borderRadius: "9999px", padding: "0 18px", border: "1px solid rgba(0,0,0,0.08)", justifyContent: "space-between" }}>
 
               {/* LEFT: Batsmen names + stats */}
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingLeft: "10px", minWidth: "210px", flexShrink: 0 }}>
@@ -3789,7 +3789,7 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1300px", position: "relative", zIndex: 1, filter: "drop-shadow(0 0 15px rgba(6,182,212,0.3))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "rgba(8, 12, 28, 0.95)", border: "1.5px solid #0ea5e9", borderRadius: "10px", overflow: "hidden", backdropFilter: "blur(12px)" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "rgba(8, 12, 28, 0.95)", border: "1.5px solid #0ea5e9", borderRadius: "10px", overflow: "hidden", backdropFilter: "blur(12px)" }}>
               {/* Batting Team Skew panel */}
               <div style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
                 <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "14px", textTransform: "uppercase" }}>{batTeamShort}</span>
@@ -3942,7 +3942,7 @@ export default function OverlayPage() {
             )}
 
             {/* Scoreboard row */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "70px", background: "#111", border: "2px solid #facc15", overflow: "hidden", borderRadius: "6px" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "#111", border: "2px solid #facc15", overflow: "hidden", borderRadius: "6px" }}>
               {/* Batting team logo/badge */}
               <div style={{ background: "#facc15", color: "#000", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 24px", minWidth: "120px", fontWeight: "950", fontSize: "16px", textTransform: "uppercase" }}>
                 {batTeamShort}
@@ -4186,7 +4186,7 @@ export default function OverlayPage() {
             </div>
 
             {/* Main Scoreboard panel */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "#0c0a23", border: "3.5px solid #eab308", borderTop: "none", borderRadius: "0 0 10px 10px", overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "#0c0a23", border: "3.5px solid #eab308", borderTop: "none", borderRadius: "0 0 10px 10px", overflow: "hidden" }}>
               {/* Batting team gold badge */}
               <div style={{ background: "linear-gradient(180deg, #eab308 0%, #ca8a04 100%)", color: "#000", fontWeight: "950", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
                 {batTeamShort}
@@ -4319,7 +4319,7 @@ export default function OverlayPage() {
             )}
 
             {/* Scoreboard row */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "66px", background: "#0c0216", border: "1.5px solid #ec4899", overflow: "hidden", borderRadius: "4px" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "#0c0216", border: "1.5px solid #ec4899", overflow: "hidden", borderRadius: "4px" }}>
               {/* Batting Team Pink Badge */}
               <div style={{ background: "#ec4899", color: "#ffffff", fontWeight: "900", fontSize: "15px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px" }}>
                 {batTeamShort}
@@ -4452,7 +4452,7 @@ export default function OverlayPage() {
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
             {/* Main banner block */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "70px", background: "linear-gradient(135deg, #022c22 0%, #064e3b 100%)", border: "2.5px solid #cbd5e1", overflow: "hidden", borderRadius: "8px" }}>
+            <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "linear-gradient(135deg, #022c22 0%, #064e3b 100%)", border: "2.5px solid #cbd5e1", overflow: "hidden", borderRadius: "8px" }}>
               {/* Batting team skewed panel */}
               <div style={{ background: "#eab308", color: "#000", fontWeight: "950", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 22px", minWidth: "120px", clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)" }}>
                 {batTeamShort}
@@ -4571,68 +4571,137 @@ export default function OverlayPage() {
         {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
-          <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(168,85,247,0.35))" }}>
-            {/* Top gold bar */}
-            <div style={{ background: "linear-gradient(90deg, #581c87 0%, #3b0764 100%)", borderTop: "3px solid #fbbf24", borderRadius: "12px 12px 0 0", padding: "6px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ color: "#fbbf24", fontWeight: "900", fontSize: "11px", letterSpacing: "1px" }}>IPL 2025 PLATINUM EDITION</span>
-              <span style={{
-                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
-                fontWeight: "900",
-                fontSize: "11px",
-                background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
-                padding: activeNotification ? "2px 8px" : "0",
-                borderRadius: "4px",
-                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-              }}>{activeNotification || statusLine}</span>
-            </div>
+          <div className="slide-up" style={{ width: "96vw", maxWidth: "1380px", position: "relative", zIndex: 1, filter: "drop-shadow(0 8px 24px rgba(251,191,36,0.25))" }}>
+            {/* Thin gold top accent line */}
+            <div style={{ height: "3px", background: "linear-gradient(90deg, #7c3aed 0%, #fbbf24 30%, #f59e0b 70%, #7c3aed 100%)", borderRadius: "2px 2px 0 0" }} />
 
-            {/* Main luxury body */}
-            <div style={{ background: "rgba(24, 10, 48, 0.9)", border: "2px solid #fbbf24", borderTop: "none", borderRadius: "0 0 12px 12px", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", backdropFilter: "blur(16px)" }}>
-              {/* Left Batsmen */}
-              <div style={{ display: "flex", gap: "24px" }}>
-                <div>
-                  <span style={{ color: "#fbbf24", fontWeight: "800", fontSize: "13px" }}>▶ {scoringState.striker || "—"}</span>
-                  <div style={{ color: "#ffffff", fontSize: "17px", fontWeight: "900" }}>{striker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px" }}>{striker?.balls ?? 0}b</span></div>
+            {/* Main bar */}
+            <div style={{ display: "flex", alignItems: "stretch", height: "52px", background: "linear-gradient(90deg, #04021a 0%, #0d0a2e 40%, #1a0a3a 60%, #04021a 100%)", overflow: "hidden", borderRadius: "0 0 4px 4px", border: "1px solid rgba(251,191,36,0.2)", borderTop: "none" }}>
+
+              {/* ── LEFT WRAPPER (flex:1): Gold cap + Batsmen ── */}
+              <div style={{ display: "flex", alignItems: "stretch", flex: "1 1 0%", minWidth: 0, overflow: "hidden" }}>
+
+                {/* Gold slanted score cap */}
+                <div style={{ display: "flex", alignItems: "center", background: "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)", padding: "0 20px 0 16px", clipPath: "polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%)", minWidth: "200px", flexShrink: 0, gap: "10px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                    <span style={{ color: "#1a0a3a", fontWeight: 900, fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase" }}>{batTeamShort}</span>
+                    <span style={{ color: "#000000", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px" }}>{scoringState.score}-{scoringState.wickets}</span>
+                  </div>
+                  <div style={{ width: "1px", height: "28px", background: "rgba(0,0,0,0.2)", margin: "0 6px" }} />
+                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                    <span style={{ color: "rgba(0,0,0,0.6)", fontSize: "9px", fontWeight: "700", textTransform: "uppercase" }}>Overs</span>
+                    <span style={{ color: "#1a0a3a", fontSize: "14px", fontWeight: "900" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px" }}>{scoringState.nonStriker || "—"}</span>
-                  <div style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: "700" }}>{nonStriker?.runs ?? 0} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "10px" }}>{nonStriker?.balls ?? 0}b</span></div>
+
+                {/* Batsmen */}
+                <div style={{ display: "flex", alignItems: "center", flex: 1, padding: "0 20px", gap: "18px", minWidth: 0 }}>
+                  {/* Striker */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: "#fbbf24", fontSize: "8px" }}>▶</span>
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+                      <span style={{ color: "#fde68a", fontWeight: "800", fontSize: "11px", letterSpacing: "0.3px" }}>{scoringState.striker ? scoringState.striker.split(" ").pop() : "STRIKER"}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "16px" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "10px", fontWeight: "700" }}>({striker?.balls ?? 0})</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Divider */}
+                  <div style={{ width: "1px", height: "22px", background: "rgba(251,191,36,0.15)", flexShrink: 0 }} />
+                  {/* Non-Striker */}
+                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+                    <span style={{ color: "rgba(253,230,138,0.55)", fontWeight: "700", fontSize: "11px" }}>{scoringState.nonStriker ? scoringState.nonStriker.split(" ").pop() : "NON-STRIKER"}</span>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                      <span style={{ color: "rgba(255,255,255,0.65)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0}</span>
+                      <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px" }}>({nonStriker?.balls ?? 0})</span>
+                    </div>
+                  </div>
                 </div>
+
               </div>
 
-              {/* Elevated diamond center Score block */}
-              <div style={{ background: "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)", padding: "8px 24px", borderRadius: "4px", transform: "skewX(-10deg)", boxShadow: "0 4px 15px rgba(251,191,36,0.4)", display: "flex", alignItems: "center", gap: "14px", border: "1.5px solid #ffffff" }}>
-                <span style={{ color: "#000000", fontWeight: "950", fontSize: "25px", transform: "skewX(10deg)" }}>{batTeamShort} {scoringState.score}-{scoringState.wickets}</span>
-                <div style={{ width: "2px", height: "20px", background: "rgba(0,0,0,0.2)" }} />
-                <span style={{ color: "#000000", fontWeight: "900", fontSize: "13px", transform: "skewX(10deg)" }}>{fmtOv(scoringState.balls, match.ballsPerOver)} OVR</span>
+              {/* ── CENTER STATUS (fixed 200px, truly centered) ── */}
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "200px",
+                flexShrink: 0,
+                background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(180deg, rgba(124,58,237,0.3) 0%, rgba(0,0,0,0) 100%)",
+                borderLeft: "1px solid rgba(251,191,36,0.18)",
+                borderRight: "1px solid rgba(251,191,36,0.18)",
+                transition: "all 0.3s ease"
+              }}>
+                {activeNotification ? (
+                  <span style={{ color: getNotificationStyles(activeNotification).textColor, fontSize: "11px", fontWeight: "950", letterSpacing: "0.5px", textAlign: "center", textTransform: "uppercase", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>{activeNotification}</span>
+                ) : scoringState.target !== null ? (
+                  <>
+                    <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: "900", letterSpacing: "0.5px" }}>TARGET</span>
+                    <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "950" }}>{scoringState.target}</span>
+                    <span style={{ color: "#a78bfa", fontSize: "9px", fontWeight: "800" }}>NEED {need} IN {bLeft}b</span>
+                  </>
+                ) : (
+                  <>
+                    <span style={{ color: "rgba(251,191,36,0.5)", fontSize: "8px", fontWeight: "900", letterSpacing: "2px", textTransform: "uppercase" }}>IPL 2025</span>
+                    <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>LIVE</span>
+                  </>
+                )}
               </div>
 
-              {/* Right Bowler */}
-              <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-                <div>
-                  <span style={{ color: "#fbbf24", fontSize: "11px", fontWeight: "800" }}>BOWLER</span>
-                  <div style={{ color: "#ffffff", fontWeight: "800", fontSize: "14px", textTransform: "uppercase" }}>{scoringState.bowler || "—"}</div>
-                  <div style={{ color: "#ffffff", fontSize: "16px", fontWeight: "900" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</div>
+              {/* ── RIGHT WRAPPER (flex:1): Bowler + Over balls + Purple cap ── */}
+              <div style={{ display: "flex", alignItems: "stretch", flex: "1 1 0%", minWidth: 0, overflow: "hidden", justifyContent: "flex-end" }}>
+
+                {/* Bowler + over balls */}
+                <div style={{ display: "flex", alignItems: "center", flex: 1, padding: "0 20px", gap: "16px", justifyContent: "flex-end", minWidth: 0 }}>
+                  {/* Bowler info */}
+                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, alignItems: "flex-end" }}>
+                    <span style={{ color: "rgba(253,230,138,0.6)", fontWeight: "700", fontSize: "11px", letterSpacing: "0.3px" }}>{scoringState.bowler ? scoringState.bowler.split(" ").pop() : "BOWLER"}</span>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "16px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                      <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                    </div>
+                  </div>
+                  {/* Over ball dots */}
+                  <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
+                    {(() => {
+                      const bpo = match?.ballsPerOver || 6;
+                      const extrasCount = thisOver.filter(isExtraBall).length;
+                      const totalCirclesCount = bpo + extrasCount;
+                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const val = thisOver[i];
+                        let bg = "rgba(255,255,255,0.06)";
+                        let color = "#ffffff";
+                        let border = "1px solid rgba(251,191,36,0.2)";
+                        if (val) {
+                          border = "none";
+                          if (val === "4" || val === "4s") { bg = "#3b82f6"; color = "#fff"; }
+                          else if (val === "6" || val === "6s") { bg = "#fbbf24"; color = "#000"; }
+                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { bg = "#ef4444"; color = "#fff"; }
+                          else if (isExtraBall(val)) { bg = "#a855f7"; color = "#fff"; }
+                          else { bg = "rgba(255,255,255,0.15)"; color = "#fff"; }
+                        }
+                        return (
+                          <div key={i} style={{ width: "20px", height: "20px", borderRadius: "3px", background: bg, color, border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "11px")), fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                            {renderOutcomeText(val, 20)}
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
                 </div>
-                {/* Outcomes */}
-                <div style={{ display: "flex", gap: "4px" }}>
-                  {(() => {
-                    const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCirclesCount = bpo + extrasCount;
-                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                      const ball = thisOver[i];
-                      return (
-                        <div key={i} style={{ width: "18px", height: "18px", borderRadius: "50%", background: ball ? (ball === "W" || ball?.startsWith("W+") ? "#ef4444" : "rgba(255,255,255,0.1)") : "transparent", border: ball ? "1px solid #fbbf24" : "1px dashed rgba(251,191,36,0.3)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: "900" }}>
-                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
-                        </div>
-                      );
-                    });
-                  })()}
+
+                {/* Purple right cap */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%)", padding: "0 16px 0 28px", width: "90px", flexShrink: 0, clipPath: "polygon(14px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                  <span style={{ color: "#fde68a", fontWeight: 950, fontSize: "15px", letterSpacing: "0.5px" }}>{bowlTeamShort}</span>
                 </div>
+
               </div>
+
             </div>
           </div>
+
         ) : (
           <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "rgba(24, 10, 48, 0.95)", border: "2px solid #fbbf24", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
             <div style={{ color: "#fbbf24", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
