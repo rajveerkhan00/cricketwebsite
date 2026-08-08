@@ -1581,57 +1581,155 @@ export default function OverlayPage() {
             {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
             {/* Card wrapper — themed */}
-            <div className="animate-slide-up" style={{ background: panelBg, border: panelBorder, borderLeft: panelBorderLeft, borderRadius: panelRadius, overflow: "hidden", boxShadow: panelShadow }}>
+            <div className="animate-slide-up" style={{ 
+              background: `linear-gradient(145deg, ${panelBg}, ${theme.headerBg}f0)`, 
+              border: panelBorder, 
+              borderLeft: panelBorderLeft, 
+              borderRadius: panelRadius, 
+              overflow: "hidden", 
+              boxShadow: panelShadow,
+              backdropFilter: "blur(20px)",
+              position: "relative"
+            }}>
+              {/* Premium top accent glow line */}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${panelAccent}, transparent)` }} />
 
               {/* Header */}
-              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}99)`, borderBottom: `1px solid ${panelAccent}30`, padding: "18px 28px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                  <TeamLogo name={batTeam} isBatting={scoringState.inningsNo === inn} isBowling={false} accentColor={panelAccent} borderColor={panelAccent} size={64} />
+              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}77)`, borderBottom: `1px solid ${panelAccent}20`, padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                  <div style={{ position: "relative", display: "inline-flex" }}>
+                    {/* Spinning dash circle to make it look active */}
+                    <div style={{ position: "absolute", inset: -5, borderRadius: "50%", border: `1.5px dashed ${panelAccent}40`, animation: "spin 25s linear infinite" }} />
+                    <TeamLogo name={batTeam} isBatting={scoringState.inningsNo === inn} isBowling={false} accentColor={panelAccent} borderColor={panelAccent} size={68} />
+                  </div>
                   <div>
-                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 3, textTransform: "uppercase" }}>Innings {inn} · Batting Scorecard</div>
-                    <div style={{ fontSize: 22, fontWeight: 950, color: panelAccentTx, letterSpacing: 1 }}>{batTeam.toUpperCase()}</div>
-                    <div style={{ fontSize: 10, color: panelSecondary, marginTop: 2 }}>vs {bowlTeam.toUpperCase()}</div>
+                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 4, textTransform: "uppercase", opacity: 0.8 }}>Innings {inn} · Live Batting Card</div>
+                    <div style={{ fontSize: 26, fontWeight: 950, color: panelAccentTx, letterSpacing: 0.5, textShadow: `0 2px 10px rgba(0,0,0,0.5)` }}>{batTeam.toUpperCase()}</div>
+                    <div style={{ fontSize: 11, color: panelSecondary, marginTop: 2, display: "flex", alignItems: "center", gap: 6 }}>
+                      <span>vs {bowlTeam.toUpperCase()}</span>
+                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: panelSecondary, opacity: 0.5 }} />
+                      <span style={{ color: panelAccent }}>{match.matchType.toUpperCase()}</span>
+                    </div>
                   </div>
                 </div>
-                {innData && <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 44, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{innData.score}/{innData.wickets}</div>
-                  <div style={{ fontSize: 11, color: panelSecondary, fontWeight: 700, marginTop: 3 }}>{fmtOv(innData.balls, match.ballsPerOver)} / {match.overs} OVERS</div>
-                </div>}
+                {innData && (
+                  <div style={{ 
+                    background: `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`, 
+                    border: `1px solid ${panelAccent}30`, 
+                    borderRadius: 16, 
+                    padding: "10px 24px", 
+                    boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05)`, 
+                    textAlign: "right"
+                  }}>
+                    <div style={{ fontSize: 48, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 15px ${panelAccent}35` }}>
+                      {innData.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 32, fontWeight: 500 }}>/</span>{innData.wickets}
+                    </div>
+                    <div style={{ fontSize: 11, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>{fmtOv(innData.balls, match.ballsPerOver)} / {match.overs} OVERS</div>
+                  </div>
+                )}
               </div>
 
               {/* Table body */}
-              <div className="scroll-vertical" style={{ overflowY: "auto", maxHeight: "52vh" }}>
+              <div className="scroll-vertical" style={{ overflowY: "auto", maxHeight: "50vh", background: "rgba(0,0,0,0.15)" }}>
                 {innData ? <>
                   <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
-                    <thead><tr style={{ background: `${panelAccent}15`, borderBottom: `2px solid ${panelAccent}35` }}>
-                      {["BATSMAN", "STATUS", "R", "B", "4s", "6s", "SR"].map((h, i) => <th key={h} style={{ padding: "11px 16px", fontSize: 9, fontWeight: 900, textAlign: i === 0 ? "left" : "center", color: panelSecondary, letterSpacing: 2 }}>{h}</th>)}
-                    </tr></thead>
+                    <thead>
+                      <tr style={{ background: `${theme.headerBg}a0`, borderBottom: `2px solid ${panelAccent}30` }}>
+                        {["BATSMAN", "STATUS", "RUNS", "BALLS", "4s", "6s", "S/R"].map((h, i) => (
+                          <th key={h} style={{ padding: "14px 18px", fontSize: 9.5, fontWeight: 900, textAlign: i === 0 ? "left" : "center", color: panelSecondary, letterSpacing: 2, borderBottom: `1px solid rgba(255,255,255,0.03)` }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
                     <tbody>
                       {innData.batsmen.map((b, idx) => {
                         const isSt = b.name === scoringState.striker && scoringState.inningsNo === inn;
                         const isNS = b.name === scoringState.nonStriker && scoringState.inningsNo === inn;
-                        return <tr key={idx} className="table-row-animated" style={{ animationDelay: `${idx * 0.05}s`, borderBottom: `1px solid ${panelAccent}12`, background: isSt ? `${panelAccent}18` : isNS ? `${panelAccent}08` : "transparent", borderLeft: isSt ? `4px solid ${panelAccent}` : isNS ? `4px solid ${panelAccent}50` : "4px solid transparent" }}>
-                          <td style={{ padding: "13px 16px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              {isSt && <div style={{ position: "relative", width: 10, height: 10, flexShrink: 0 }}><span style={{ width: 7, height: 7, borderRadius: "50%", background: panelAccent, boxShadow: `0 0 8px ${panelAccent}`, display: "block", margin: "auto" }} /><span className="striker-dot-ring" /></div>}
-                              <span style={{ fontWeight: 900, fontSize: 15, color: b.out ? "#6b7280" : panelAccentTx }}>{b.name}</span>
-                              {isSt && <span className="bat-swing" style={{ fontSize: 13 }}>🏏</span>}
-                            </div>
-                          </td>
-                          <td style={{ padding: "13px 16px", textAlign: "center" }}><span style={{ background: b.out ? "rgba(239,68,68,0.15)" : `${panelAccent}20`, border: `1px solid ${b.out ? "#ef4444" : panelAccent}40`, borderRadius: 6, padding: "3px 10px", fontSize: 9, fontWeight: 900, color: b.out ? "#ef4444" : panelAccent }}>{b.out ? "OUT" : "BATTING"}</span></td>
-                          <td style={{ padding: "13px", textAlign: "center", fontWeight: 950, fontSize: 19, color: b.runs >= 50 ? panelAccent : panelAccentTx }}>{b.runs}</td>
-                          <td style={{ padding: "13px", textAlign: "center", fontSize: 13, color: panelSecondary }}>{b.balls}</td>
-                          <td style={{ padding: "13px", textAlign: "center", fontSize: 13, color: "#fbbf24", fontWeight: 800 }}>{b.fours}</td>
-                          <td style={{ padding: "13px", textAlign: "center", fontSize: 13, color: "#38bdf8", fontWeight: 800 }}>{b.sixes}</td>
-                          <td style={{ padding: "13px", textAlign: "center", fontSize: 13, color: panelAccentTx, fontWeight: 800 }}>{b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0"}</td>
-                        </tr>;
+                        const srVal = b.balls > 0 ? ((b.runs / b.balls) * 100) : 0;
+                        return (
+                          <tr key={idx} className="table-row-animated" style={{ 
+                            animationDelay: `${idx * 0.04}s`, 
+                            borderBottom: `1px solid rgba(255,255,255,0.03)`, 
+                            background: isSt ? `linear-gradient(90deg, ${panelAccent}12, transparent)` : isNS ? `linear-gradient(90deg, rgba(255,255,255,0.02), transparent)` : "transparent", 
+                            borderLeft: isSt ? `5px solid ${panelAccent}` : isNS ? `5px solid ${panelAccent}50` : "5px solid transparent",
+                            transition: "background 0.2s ease"
+                          }}>
+                            {/* Batsman Name */}
+                            <td style={{ padding: "14px 18px" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                                {isSt && (
+                                  <div style={{ position: "relative", width: 10, height: 10, flexShrink: 0 }}>
+                                    <span style={{ width: 8, height: 8, borderRadius: "50%", background: panelAccent, boxShadow: `0 0 10px ${panelAccent}`, display: "block" }} />
+                                    <span className="striker-dot-ring" style={{ border: `2px solid ${panelAccent}` }} />
+                                  </div>
+                                )}
+                                <span style={{ fontWeight: 900, fontSize: 16, color: b.out ? "rgba(255,255,255,0.35)" : panelAccentTx, transition: "color 0.2s ease" }}>{b.name}</span>
+                                {isSt && <span className="bat-swing" style={{ fontSize: 14 }}>🏏</span>}
+                              </div>
+                            </td>
+                            {/* Status */}
+                            <td style={{ padding: "14px 18px", textAlign: "center" }}>
+                              <span style={{ 
+                                background: b.out ? "rgba(239,68,68,0.1)" : `${panelAccent}15`, 
+                                border: `1px solid ${b.out ? "rgba(239,68,68,0.3)" : `${panelAccent}30`}`, 
+                                borderRadius: 8, 
+                                padding: "4px 12px", 
+                                fontSize: 9, 
+                                fontWeight: 900, 
+                                letterSpacing: 1,
+                                color: b.out ? "#ef4444" : panelAccent,
+                                textTransform: "uppercase"
+                              }}>
+                                {b.out ? "OUT" : "BATTING"}
+                              </span>
+                            </td>
+                            {/* Runs */}
+                            <td style={{ padding: "14px", textAlign: "center", fontWeight: 950, fontSize: 21, color: b.runs >= 50 ? panelAccent : "#fff", position: "relative" }}>
+                              <span style={{ textShadow: b.runs >= 50 ? `0 0 8px ${panelAccent}50` : "none" }}>{b.runs}</span>
+                              {b.runs >= 50 && <span style={{ fontSize: 11, position: "absolute", top: 4, right: 4, color: "#fbbf24" }}>⭐</span>}
+                            </td>
+                            {/* Balls */}
+                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: panelSecondary, fontWeight: 700 }}>{b.balls}</td>
+                            {/* Fours */}
+                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: "#fbbf24", fontWeight: 800 }}>{b.fours}</td>
+                            {/* Sixes */}
+                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: "#38bdf8", fontWeight: 800 }}>{b.sixes}</td>
+                            {/* Strike Rate + Mini Visual Meter */}
+                            <td style={{ padding: "14px", textAlign: "center" }}>
+                              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                                <span style={{ fontSize: 14, color: panelAccentTx, fontWeight: 800 }}>{srVal.toFixed(1)}</span>
+                                {b.balls > 0 && (
+                                  <div style={{ width: 48, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
+                                    <div style={{ width: `${Math.min(srVal / 2.5, 100)}%`, height: "100%", background: panelAccent }} />
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        );
                       })}
                     </tbody>
                   </table>
+
                   {/* Footer total bar */}
-                  <div style={{ background: `${panelAccent}12`, borderTop: `2px solid ${panelAccent}35`, padding: "14px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: panelSecondary }}>INN {inn} TOTAL</div>
-                    <div style={{ fontSize: 22, fontWeight: 950, color: panelAccentTx }}>{innData.score}/{innData.wickets} <span style={{ fontSize: 12, color: panelSecondary, fontWeight: 600 }}>({fmtOv(innData.balls, match.ballsPerOver)}/{match.overs} OVS)</span></div>
+                  <div style={{ 
+                    background: `linear-gradient(135deg, ${theme.headerBg}f5, ${panelBg}ee)`, 
+                    borderTop: `2px solid ${panelAccent}30`, 
+                    padding: "16px 32px", 
+                    display: "flex", 
+                    justifyContent: "space-between", 
+                    alignItems: "center",
+                    boxShadow: "0 -4px 20px rgba(0,0,0,0.2)"
+                  }}>
+                    <div style={{ fontSize: 12, fontWeight: 900, color: panelSecondary, letterSpacing: 2 }}>INN {inn} TEAM TOTAL</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                      <div style={{ fontSize: 24, fontWeight: 950, color: panelAccentTx }}>
+                        {innData.score}<span style={{ color: panelAccent, opacity: 0.8 }}>/</span>{innData.wickets}
+                      </div>
+                      <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.15)" }} />
+                      <div style={{ fontSize: 13, color: panelSecondary, fontWeight: 700 }}>
+                        ({fmtOv(innData.balls, match.ballsPerOver)}/{match.overs} OVS) · RR <span style={{ color: panelAccent, fontWeight: 900 }}>{calcRR(innData as any)}</span>
+                      </div>
+                    </div>
                   </div>
                 </> : <div style={{ textAlign: "center", color: panelSecondary, padding: 40 }}>No scorecard data.</div>}
               </div>
@@ -1652,51 +1750,141 @@ export default function OverlayPage() {
             {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
             {/* Card wrapper — themed */}
-            <div className="animate-slide-up" style={{ background: panelBg, border: panelBorder, borderLeft: panelBorderLeft, borderRadius: panelRadius, overflow: "hidden", boxShadow: panelShadow }}>
+            <div className="animate-slide-up" style={{ 
+              background: `linear-gradient(145deg, ${panelBg}, ${theme.headerBg}f0)`, 
+              border: panelBorder, 
+              borderLeft: panelBorderLeft, 
+              borderRadius: panelRadius, 
+              overflow: "hidden", 
+              boxShadow: panelShadow,
+              backdropFilter: "blur(20px)",
+              position: "relative"
+            }}>
+              {/* Premium top accent glow line */}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${panelAccent}, transparent)` }} />
 
               {/* Header */}
-              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}99)`, borderBottom: `1px solid ${panelAccent}30`, padding: "18px 28px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                  <TeamLogo name={bowlTeam} isBatting={false} isBowling={scoringState.inningsNo === inn} accentColor={panelAccent} borderColor={panelAccent} size={64} />
+              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}77)`, borderBottom: `1px solid ${panelAccent}20`, padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                  <div style={{ position: "relative", display: "inline-flex" }}>
+                    <div style={{ position: "absolute", inset: -5, borderRadius: "50%", border: `1.5px dashed ${panelAccent}40`, animation: "spin 25s linear infinite" }} />
+                    <TeamLogo name={bowlTeam} isBatting={false} isBowling={scoringState.inningsNo === inn} accentColor={panelAccent} borderColor={panelAccent} size={68} />
+                  </div>
                   <div>
-                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 3, textTransform: "uppercase" }}>Innings {inn} · Bowling Figures</div>
-                    <div style={{ fontSize: 22, fontWeight: 950, color: panelAccentTx, letterSpacing: 1 }}>{bowlTeam.toUpperCase()} BOWLING</div>
-                    <div style={{ fontSize: 10, color: panelSecondary, marginTop: 2 }}>vs {batTeam.toUpperCase()}</div>
+                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 4, textTransform: "uppercase", opacity: 0.8 }}>Innings {inn} · Live Bowling Figures</div>
+                    <div style={{ fontSize: 26, fontWeight: 950, color: panelAccentTx, letterSpacing: 0.5, textShadow: `0 2px 10px rgba(0,0,0,0.5)` }}>{bowlTeam.toUpperCase()} BOWLING</div>
+                    <div style={{ fontSize: 11, color: panelSecondary, marginTop: 2, display: "flex", alignItems: "center", gap: 6 }}>
+                      <span>vs {batTeam.toUpperCase()}</span>
+                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: panelSecondary, opacity: 0.5 }} />
+                      <span style={{ color: panelAccent }}>{match.matchType.toUpperCase()}</span>
+                    </div>
                   </div>
                 </div>
-                {innData && <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 32, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{innData.score}/{innData.wickets}</div>
-                  <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 700, marginTop: 3 }}>({fmtOv(innData.balls, match.ballsPerOver)} overs)</div>
-                </div>}
+                {innData && (
+                  <div style={{ 
+                    background: `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`, 
+                    border: `1px solid ${panelAccent}30`, 
+                    borderRadius: 16, 
+                    padding: "10px 24px", 
+                    boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05)`, 
+                    textAlign: "right"
+                  }}>
+                    <div style={{ fontSize: 36, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 15px ${panelAccent}35` }}>
+                      {innData.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 26, fontWeight: 500 }}>/</span>{innData.wickets}
+                    </div>
+                    <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>({fmtOv(innData.balls, match.ballsPerOver)} OVERS)</div>
+                  </div>
+                )}
               </div>
 
               {/* Bowler cards grid */}
-              <div className="scroll-vertical" style={{ padding: "24px 20px", maxHeight: "55vh", overflowY: "auto" }}>
+              <div className="scroll-vertical" style={{ padding: "28px 24px", maxHeight: "55vh", overflowY: "auto", background: "rgba(0,0,0,0.12)" }}>
                 {innData ? (
-                  <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(innData.bowlers.length, 4)}, 1fr)`, gap: 16 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(innData.bowlers.length, 4)}, 1fr)`, gap: 20 }}>
                     {innData.bowlers.map((bw, idx) => {
                       const isAct = scoringState.inningsNo === inn && bw.name === scoringState.bowler;
                       const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * match.ballsPerOver).toFixed(2) : "0.00";
-                      return <div key={idx} className="table-row-animated" style={{ animationDelay: `${idx * 0.07}s`, background: isAct ? `linear-gradient(180deg, ${panelAccent}22, transparent)` : `${panelBg}cc`, border: `2px solid ${isAct ? panelAccent : panelAccent + "30"}`, borderRadius: 16, padding: "22px 18px", textAlign: "center", position: "relative", boxShadow: isAct ? `0 0 18px ${panelAccent}40` : "none" }}>
-                        {/* Active bowler top glow bar */}
-                        {isAct && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, transparent, ${panelAccent}, transparent)`, borderRadius: "16px 16px 0 0" }} />}
-                        <div style={{ fontSize: 14, fontWeight: 900, color: isAct ? panelAccent : panelAccentTx, marginBottom: 3 }}>{bw.name}{isAct && <span style={{ marginLeft: 6 }}>⚡</span>}</div>
-                        <div style={{ fontSize: 8, color: isAct ? panelAccent : panelSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 16 }}>{isAct ? "● BOWLING NOW" : "BOWLER"}</div>
-                        {/* Wickets circle */}
-                        <div style={{ width: 72, height: 72, borderRadius: "50%", background: bw.wickets > 0 ? `linear-gradient(135deg, ${panelAccent}55, ${panelAccent}cc)` : `${panelAccent}12`, border: `3px solid ${bw.wickets > 0 ? panelAccent : panelAccent + "30"}`, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: "0 auto 14px", boxShadow: bw.wickets > 0 ? `0 0 18px ${panelAccent}50` : "none" }}>
-                          <div style={{ fontSize: 24, fontWeight: 950, color: bw.wickets > 0 ? "#fff" : panelSecondary, lineHeight: 1 }}>{bw.wickets}</div>
-                          <div style={{ fontSize: 7, color: bw.wickets > 0 ? panelAccentTx : panelSecondary, fontWeight: 800, letterSpacing: 1 }}>WKT{bw.wickets !== 1 ? "S" : ""}</div>
+                      const isEcoGood = parseFloat(eco) <= 6.0;
+                      return (
+                        <div key={idx} className="table-row-animated" style={{ 
+                          animationDelay: `${idx * 0.06}s`, 
+                          background: isAct ? `linear-gradient(180deg, ${panelAccent}18, ${theme.headerBg}b0)` : `linear-gradient(180deg, ${panelBg}66, ${theme.headerBg}d0)`, 
+                          border: `2px solid ${isAct ? panelAccent : "rgba(255,255,255,0.06)"}`, 
+                          borderRadius: 20, 
+                          padding: "24px 20px", 
+                          textAlign: "center", 
+                          position: "relative", 
+                          boxShadow: isAct ? `0 0 25px ${panelAccent}40, inset 0 0 10px ${panelAccent}10` : "none",
+                          transition: "transform 0.2s ease, border-color 0.2s ease"
+                        }}>
+                          {/* Active bowler top glowing border animation */}
+                          {isAct && (
+                            <div style={{ 
+                              position: "absolute", 
+                              top: -2, 
+                              left: 0, 
+                              right: 0, 
+                              height: 4, 
+                              background: `linear-gradient(90deg, transparent, ${panelAccent}, transparent)`, 
+                              borderRadius: "20px 20px 0 0" 
+                            }} />
+                          )}
+                          
+                          <div style={{ fontSize: 16, fontWeight: 950, color: isAct ? panelAccent : panelAccentTx, marginBottom: 4, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                            <span>{bw.name.toUpperCase()}</span>
+                            {isAct && <span style={{ fontSize: 13, animation: "livePulse 1s ease infinite" }}>⚡</span>}
+                          </div>
+                          
+                          <div style={{ fontSize: 8.5, color: isAct ? panelAccent : panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 18, textTransform: "uppercase", opacity: 0.8 }}>
+                            {isAct ? "● CURRENTLY BOWLING" : "BOWLER"}
+                          </div>
+
+                          {/* Wickets circle with dynamic background */}
+                          <div style={{ 
+                            width: 80, 
+                            height: 80, 
+                            borderRadius: "50%", 
+                            background: bw.wickets > 0 ? `linear-gradient(135deg, ${panelAccent}33, ${panelAccent}b0)` : "rgba(255,255,255,0.02)", 
+                            border: `3px solid ${bw.wickets > 0 ? panelAccent : "rgba(255,255,255,0.08)"}`, 
+                            display: "flex", 
+                            flexDirection: "column", 
+                            alignItems: "center", 
+                            justifyContent: "center", 
+                            margin: "0 auto 20px", 
+                            boxShadow: bw.wickets > 0 ? `0 8px 24px ${panelAccent}30` : "none",
+                            position: "relative"
+                          }}>
+                            {/* Inner spinning ring for high wickets spell */}
+                            {bw.wickets >= 3 && (
+                              <div style={{ position: "absolute", inset: -6, borderRadius: "50%", border: `1px dashed ${panelAccent}`, animation: "spin 15s linear infinite" }} />
+                            )}
+                            <div style={{ fontSize: 28, fontWeight: 950, color: bw.wickets > 0 ? "#fff" : panelSecondary, lineHeight: 1 }}>{bw.wickets}</div>
+                            <div style={{ fontSize: 8, color: bw.wickets > 0 ? "#fff" : panelSecondary, fontWeight: 800, letterSpacing: 1, marginTop: 2 }}>WKT{bw.wickets !== 1 ? "S" : ""}</div>
+                          </div>
+
+                          {/* Stats mini grid */}
+                          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+                            {[
+                              { label: "OVERS", val: fmtOv(bw.ballsBowled, match.ballsPerOver), color: panelAccentTx },
+                              { label: "RUNS", val: bw.runsConceded, color: panelAccentTx },
+                              { label: "ECONOMY", val: eco, color: isEcoGood ? "#4ade80" : "#fb923c" }
+                            ].map((st, si) => (
+                              <div key={si} style={{ 
+                                background: "rgba(0,0,0,0.2)", 
+                                border: "1px solid rgba(255,255,255,0.03)",
+                                borderRadius: 10, 
+                                padding: "8px 4px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center"
+                              }}>
+                                <div style={{ fontSize: 6.5, color: panelSecondary, fontWeight: 800, letterSpacing: 1, marginBottom: 4 }}>{st.label}</div>
+                                <div style={{ fontSize: 14, fontWeight: 950, color: st.color }}>{st.val}</div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                        {/* Stats mini grid */}
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
-                          {[{ l: "OVERS", v: fmtOv(bw.ballsBowled, match.ballsPerOver) }, { l: "RUNS", v: bw.runsConceded }, { l: "ECO", v: eco }].map((st, si) => (
-                            <div key={si} style={{ background: `${panelAccent}12`, borderRadius: 8, padding: "7px 3px" }}>
-                              <div style={{ fontSize: 7, color: panelSecondary, fontWeight: 800, letterSpacing: 1, marginBottom: 2 }}>{st.l}</div>
-                              <div style={{ fontSize: 13, fontWeight: 900, color: panelAccentTx }}>{st.v}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>;
+                      );
                     })}
                   </div>
                 ) : <div style={{ textAlign: "center", color: panelSecondary, padding: 40 }}>No bowling details.</div>}
@@ -1717,51 +1905,183 @@ export default function OverlayPage() {
       const topBw2 = inn2?.bowlers.slice().sort((a, b) => b.wickets - a.wickets || a.runsConceded - b.runsConceded).slice(0, 2) || [];
       const bt1IsT1 = bt1 === match.team1Name;
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden" }}>
           <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
           {/* Floating print button — hidden on actual print */}
           <button className="no-print" onClick={() => window.print()} style={{ position: "fixed", top: 16, right: 16, zIndex: 9999, background: theme.accent, color: "#000", border: "none", borderRadius: 10, padding: "10px 18px", fontWeight: 900, fontSize: 12, cursor: "pointer", boxShadow: `0 4px 20px rgba(0,0,0,0.5), 0 0 12px ${theme.accent}60`, display: "flex", alignItems: "center", gap: 6, letterSpacing: 1 }}>
             🖨️ Save PDF
           </button>
 
-          <div style={{ position: "relative", zIndex: 1, width: "80vw" }}>
+          <div style={{ position: "relative", zIndex: 1, width: "84vw" }}>
             {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+            
             {/* Central match title */}
-            <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,rgba(0,0,0,0.96),${theme.headerBg},rgba(0,0,0,0.96))`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "20px 20px 0 0", padding: "16px 32px", textAlign: "center" }}>
-              <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 4 }}>MATCH SUMMARY · {theme.name.toUpperCase()}</div>
-              <div style={{ fontSize: 18, fontWeight: 900, color: theme.accentText, marginTop: 4 }}>{match.team1Name.toUpperCase()} <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 12px" }}>vs</span> {match.team2Name.toUpperCase()}</div>
+            <div className="animate-slide-up" style={{ 
+              background: `linear-gradient(90deg, rgba(0,0,0,0.95), ${theme.headerBg}f2, rgba(0,0,0,0.95))`, 
+              borderTop: `4px solid ${theme.borderColor}`, 
+              borderRadius: "24px 24px 0 0", 
+              padding: "20px 36px", 
+              textAlign: "center",
+              boxShadow: "0 4px 30px rgba(0,0,0,0.4)"
+            }}>
+              <div style={{ fontSize: 9.5, color: theme.textSecondary, fontWeight: 900, letterSpacing: 4, textTransform: "uppercase", opacity: 0.8 }}>MATCH SUMMARY · {theme.name.toUpperCase()}</div>
+              <div style={{ fontSize: 22, fontWeight: 950, color: theme.accentText, marginTop: 6, letterSpacing: 0.5 }}>
+                {match.team1Name.toUpperCase()} <span style={{ color: "rgba(255,255,255,0.25)", margin: "0 14px", fontWeight: 500 }}>VS</span> {match.team2Name.toUpperCase()}
+              </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 160px 1fr", background: "rgba(4,6,20,0.97)", border: `2px solid ${theme.borderColor}25`, borderTop: "none", borderRadius: "0 0 20px 20px", overflow: "hidden" }}>
+
+            {/* Split dashboard */}
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: "1fr 170px 1fr", 
+              background: `linear-gradient(185deg, rgba(4,6,20,0.98), ${panelBg}ee)`, 
+              border: `2px solid ${theme.borderColor}30`, 
+              borderTop: "none", 
+              borderRadius: "0 0 24px 24px", 
+              overflow: "hidden",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(20px)"
+            }}>
+              {/* Innings columns mapping */}
               {[{ label: "INNINGS 1", team: bt1, inn: inn1, topBat: topB1, topBowl: topBw1, isT1: bt1IsT1 }, { label: "INNINGS 2", team: bt2, inn: inn2, topBat: topB2, topBowl: topBw2, isT1: !bt1IsT1 }].map((blk, bi) => (
-                <div key={bi} style={{ padding: "32px 28px", borderRight: bi === 0 ? `1px solid ${theme.borderColor}20` : "none", borderLeft: bi === 1 ? `1px solid ${theme.borderColor}20` : "none" }}>
-                  <div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 16 }}>{blk.label}</div>
-                  <div style={{ display: "flex", justifyContent: bi === 1 ? "flex-end" : "flex-start" }}>
-                    <TeamLogo
-                      name={blk.team}
-                      isBatting={scoringState.inningsNo === (bi === 0 ? 1 : 2) && scoringState.battingTeam === (blk.isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
-                      isBowling={scoringState.inningsNo === (bi === 0 ? 1 : 2) && scoringState.bowlingTeam === (blk.isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
-                      accentColor={theme.accent}
-                      borderColor={theme.borderColor}
-                      size={88}
-                    />
+                <div key={bi} style={{ 
+                  padding: "36px 32px", 
+                  borderRight: bi === 0 ? `1px solid rgba(255,255,255,0.04)` : "none", 
+                  borderLeft: bi === 1 ? `1px solid rgba(255,255,255,0.04)` : "none" 
+                }}>
+                  <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 20, opacity: 0.8 }}>{blk.label}</div>
+                  
+                  {/* Glowing Logo Circle */}
+                  <div style={{ display: "flex", justifyContent: bi === 1 ? "flex-end" : "flex-start", marginBottom: 14 }}>
+                    <div style={{ position: "relative", display: "inline-flex" }}>
+                      <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}30`, animation: "spin 30s linear infinite" }} />
+                      <TeamLogo
+                        name={blk.team}
+                        isBatting={scoringState.inningsNo === (bi === 0 ? 1 : 2) && scoringState.battingTeam === (blk.isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
+                        isBowling={scoringState.inningsNo === (bi === 0 ? 1 : 2) && scoringState.bowlingTeam === (blk.isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
+                        accentColor={theme.accent}
+                        borderColor={theme.borderColor}
+                        size={84}
+                      />
+                    </div>
                   </div>
+
                   {blk.inn ? <>
-                    <div style={{ fontSize: 50, fontWeight: 950, color: theme.accentText, lineHeight: 1, marginTop: 16, marginBottom: 4 }}>{blk.inn.score}<span style={{ color: "rgba(255,255,255,0.3)" }}>/{blk.inn.wickets}</span></div>
-                    <div style={{ fontSize: 12, color: theme.textSecondary, marginBottom: 18 }}>({fmtOv(blk.inn.balls, match.ballsPerOver)} / {match.overs} Overs)</div>
-                    {blk.topBat.length > 0 && <><div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 8 }}>🏏 TOP BATSMEN</div>
-                      {blk.topBat.map((b, i) => <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 5 }}><span style={{ color: "#fff", fontWeight: 700 }}>{b.name}</span><span style={{ color: theme.accent, fontWeight: 900 }}>{b.runs}({b.balls})</span></div>)}</>}
-                    {blk.topBowl.length > 0 && <><div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2, marginBottom: 8, marginTop: 14 }}>🎯 TOP BOWLERS</div>
-                      {blk.topBowl.map((bw, i) => <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 5 }}><span style={{ color: "#fff", fontWeight: 700 }}>{bw.name}</span><span style={{ color: "#ef4444", fontWeight: 900 }}>{bw.wickets}/{bw.runsConceded}</span></div>)}</>}
-                  </> : <div style={{ color: "#6b7280", fontSize: 14, fontWeight: 700, marginTop: 20 }}>Yet to bat</div>}
+                    <div style={{ 
+                      fontSize: 54, 
+                      fontWeight: 950, 
+                      color: panelAccent, 
+                      lineHeight: 1, 
+                      marginTop: 18, 
+                      marginBottom: 4,
+                      textShadow: `0 0 15px ${panelAccent}25`
+                    }}>
+                      {blk.inn.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 36, fontWeight: 500 }}>/</span>{blk.inn.wickets}
+                    </div>
+                    <div style={{ fontSize: 12, color: panelSecondary, fontWeight: 700, marginBottom: 24 }}>
+                      ({fmtOv(blk.inn.balls, match.ballsPerOver)} / {match.overs} Overs) · RR <span style={{ color: panelAccent, fontWeight: 900 }}>{calcRR(blk.inn as any)}</span>
+                    </div>
+
+                    {/* Top Batsmen list with sleek cards */}
+                    {blk.topBat.length > 0 && (
+                      <div style={{ marginBottom: 20 }}>
+                        <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 8, textTransform: "uppercase" }}>🏏 TOP BATSMEN</div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {blk.topBat.map((b, i) => (
+                            <div key={i} className="stat-badge" style={{ 
+                              display: "flex", 
+                              justifyContent: "space-between", 
+                              alignItems: "center",
+                              background: "rgba(255,255,255,0.02)", 
+                              border: "1px solid rgba(255,255,255,0.03)", 
+                              borderRadius: 10,
+                              padding: "8px 12px",
+                              fontSize: 13 
+                            }}>
+                              <span style={{ color: "#fff", fontWeight: 800 }}>{b.name}</span>
+                              <span style={{ color: panelAccent, fontWeight: 950 }}>{b.runs} <span style={{ color: panelSecondary, fontSize: 10, fontWeight: 600 }}>({b.balls})</span></span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Top Bowlers list with sleek cards */}
+                    {blk.topBowl.length > 0 && (
+                      <div>
+                        <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 8, textTransform: "uppercase" }}>🎯 TOP BOWLERS</div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {blk.topBowl.map((bw, i) => (
+                            <div key={i} className="stat-badge" style={{ 
+                              display: "flex", 
+                              justifyContent: "space-between", 
+                              alignItems: "center",
+                              background: "rgba(255,255,255,0.02)", 
+                              border: "1px solid rgba(255,255,255,0.03)", 
+                              borderRadius: 10,
+                              padding: "8px 12px",
+                              fontSize: 13 
+                            }}>
+                              <span style={{ color: "#fff", fontWeight: 800 }}>{bw.name}</span>
+                              <span style={{ color: "#ef4444", fontWeight: 950 }}>{bw.wickets} <span style={{ color: panelSecondary, fontSize: 10, fontWeight: 600 }}>/ {bw.runsConceded}</span></span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </> : <div style={{ color: "#475569", fontSize: 14, fontWeight: 800, marginTop: 24, letterSpacing: 1, textTransform: "uppercase" }}>Yet to bat</div>}
                 </div>
               ))}
-              {/* Center */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "32px 12px", background: `linear-gradient(180deg,${theme.accent}06,transparent)`, borderLeft: `1px solid ${theme.borderColor}20`, borderRight: `1px solid ${theme.borderColor}20` }}>
-                <div style={{ fontSize: 28, color: "rgba(255,255,255,0.1)", fontWeight: 900, marginBottom: 20 }}>VS</div>
-                <div style={{ background: match.status === "Completed" ? `${theme.accent}20` : "rgba(239,68,68,0.15)", border: `1px solid ${match.status === "Completed" ? theme.accent : "#ef4444"}40`, borderRadius: 12, padding: "10px 14px", textAlign: "center", fontSize: 11, fontWeight: 900, color: match.status === "Completed" ? theme.accentText : "#fca5a5" }}>
-                  {match.status === "Completed" ? "🏆 DONE" : scoringState.inningsNo === 2 ? `NEED\n${Math.max(0, (scoringState.target || 0) - scoringState.score)}` : "🏏 LIVE"}
+
+              {/* Center Vs status panel */}
+              <div style={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                padding: "36px 16px", 
+                background: `linear-gradient(180deg, ${panelAccent}08, transparent)`, 
+                borderLeft: `1px solid rgba(255,255,255,0.04)`, 
+                borderRight: `1px solid rgba(255,255,255,0.04)`,
+                position: "relative"
+              }}>
+                <div style={{ fontSize: 32, color: "rgba(255,255,255,0.05)", fontWeight: 950, marginBottom: 24, letterSpacing: 1 }}>VS</div>
+                
+                {/* Glowing neon status pill */}
+                <div style={{ 
+                  background: match.status === "Completed" ? `linear-gradient(135deg, ${panelAccent}30, ${panelAccent}10)` : "rgba(239,68,68,0.12)", 
+                  border: `2px solid ${match.status === "Completed" ? panelAccent : "#ef4444"}`, 
+                  borderRadius: 14, 
+                  padding: "12px 18px", 
+                  textAlign: "center", 
+                  fontSize: 11, 
+                  fontWeight: 950, 
+                  color: match.status === "Completed" ? panelAccentTx : "#fca5a5",
+                  boxShadow: `0 8px 24px ${match.status === "Completed" ? panelAccent : "#ef4444"}25`,
+                  textTransform: "uppercase",
+                  letterSpacing: 1.5,
+                  minWidth: 110,
+                  lineHeight: 1.4
+                }}>
+                  {match.status === "Completed" ? (
+                    <div>
+                      <div style={{ fontSize: 14, marginBottom: 2 }}>🏆</div>
+                      DONE
+                    </div>
+                  ) : scoringState.inningsNo === 2 ? (
+                    <div>
+                      <span style={{ fontSize: 9, opacity: 0.8, display: "block" }}>NEED</span>
+                      <span style={{ fontSize: 16, fontWeight: 950, color: "#fff" }}>{Math.max(0, (scoringState.target || 0) - scoringState.score)}</span>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                      <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444" }} />
+                      LIVE
+                    </div>
+                  )}
                 </div>
-                <div style={{ marginTop: 20, fontSize: 10, color: theme.textSecondary, fontWeight: 700 }}>{match.overs} OVS FORMAT</div>
+                
+                <div style={{ marginTop: 24, fontSize: 9.5, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase" }}>{match.overs} OVERS FORMAT</div>
               </div>
             </div>
           </div>
