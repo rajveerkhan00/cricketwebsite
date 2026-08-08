@@ -1984,7 +1984,7 @@ export default function MatchScoringPage() {
                   </button>
                 </div>
 
-                {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 */}
+                {/* Row 3: 🎯 (2nd innings only) | Tour Name | B1 | B2 | BOWLER */}
                 <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
                   {scoringState?.inningsNo === 2 && (
                     <button
@@ -2014,17 +2014,17 @@ export default function MatchScoringPage() {
                   >
                     B2
                   </button>
-                </div>
-
-                {/* Row 4: Bowler | Batting | Bowling | PP+ */}
-                <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
                   <button
                     onClick={() => handleUpdateDisplayScreen("BOWLER")}
-                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
+                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
                     style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
                   >
-                    Bowler
+                    BOWLER
                   </button>
+                </div>
+
+                {/* Row 4: Batting | Bowling | PP+ */}
+                <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
                     className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
