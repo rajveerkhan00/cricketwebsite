@@ -1315,7 +1315,12 @@ export default function MatchScoringPage() {
 
   const handleTourStatsController = (mode: string | null) => {
     if (!scoringState) return;
-    const updated = { ...scoringState, displayStatsMode: mode };
+    const targetScreen = mode || "default";
+    const updated = {
+      ...scoringState,
+      displayStatsMode: mode,
+      displayScreen: targetScreen
+    };
     setScoringState(updated);
     saveScoringState(updated);
     if (mode) {
@@ -2709,15 +2714,22 @@ export default function MatchScoringPage() {
                   "TOP BOWLERS",
                   "TOP 4/6 STRIKERS",
                   "TOP PLAYER OF SERIES",
-                ].map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() => handleTourStatsController(mode)}
-                    className="px-4 py-2 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-black font-black text-[10px] tracking-wider rounded-lg active:scale-95 shadow-md shadow-orange-500/5 cursor-pointer"
-                  >
-                    {mode}
-                  </button>
-                ))}
+                ].map((mode) => {
+                  const isActive = scoringState?.displayScreen === mode || scoringState?.displayStatsMode === mode;
+                  return (
+                    <button
+                      key={mode}
+                      onClick={() => handleTourStatsController(mode)}
+                      className={`px-4 py-2 text-black font-black text-[10px] tracking-wider rounded-lg active:scale-95 transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-amber-400 ring-2 ring-amber-500 shadow-lg shadow-amber-500/20 scale-105"
+                          : "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 shadow-md shadow-orange-500/5"
+                      }`}
+                    >
+                      {mode}
+                    </button>
+                  );
+                })}
                 <button
                   onClick={() => handleTourStatsController(null)}
                   className="px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-black text-[10px] tracking-wider rounded-lg active:scale-95 shadow-md shadow-rose-500/10 cursor-pointer uppercase"

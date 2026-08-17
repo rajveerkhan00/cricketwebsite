@@ -1496,101 +1496,23 @@ export default function OverlayPage() {
     );
   }
 
-  // ════════════════════ 4. STATS MODES ════════════════════
-  if (scoringState.displayStatsMode) {
-    const mode = scoringState.displayStatsMode!;
-    const isPT = mode === "POINTS TABLE" || mode === "PT (TIED POINT +1)";
-    const isTB = mode === "TOP BATTERS"; const isTBo = mode === "TOP BOWLERS";
-    const isTSt = mode === "TOP 4/6 STRIKERS"; const isPOS = mode === "TOP PLAYER OF SERIES";
-    const allP = [...(match.playersTeam1 || []), ...(match.playersTeam2 || [])];
-    return (
-      <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: activeFont, overflow: "hidden" }}>
-        <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-        <div style={{ position: "relative", zIndex: 1, width: "84vw" }}>
-          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
-          <div className="animate-slide-up" style={{ background: `linear-gradient(90deg,${theme.headerBg},${theme.primaryBg})`, borderTop: `4px solid ${theme.borderColor}`, borderRadius: "16px 16px 0 0", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: `0 4px 20px ${theme.accent}30` }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <div style={{ fontSize: 26 }}>📊</div>
-              <div>
-                <div style={{ fontSize: 10, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3 }}>TOURNAMENT STATS</div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: theme.accentText }}>{mode.toUpperCase()}</div>
-              </div>
-            </div>
-            <div style={{ fontSize: 12, color: theme.textSecondary, fontWeight: 700 }}>{match.team1Name} vs {match.team2Name}</div>
-          </div>
-          <div style={{ background: theme.primaryBg, border: `2px solid ${theme.borderColor}30`, borderTop: "none", borderRadius: "0 0 16px 16px", padding: "28px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.7)" }}>
-            {isPT && (
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead><tr style={{ background: `${theme.borderColor}18`, borderBottom: `2px solid ${theme.borderColor}50` }}>
-                  {["#", "TEAM", "P", "W", "L", "T", "NRR", "PTS"].map(h => <th key={h} style={{ padding: "12px 14px", fontSize: 10, fontWeight: 900, textAlign: h === "TEAM" || h === "#" ? "left" : "center", color: theme.textSecondary, letterSpacing: 1.5 }}>{h}</th>)}
-                </tr></thead>
-                <tbody>
-                  {getPointsTable(match, themeSlug, mode.includes("+1")).map((row, i) => (
-                    <tr key={i} className="table-row-animated" style={{ animationDelay: `${i * 0.06}s`, borderBottom: "1px solid rgba(255,255,255,0.04)", background: (row.name === match.team1Name || row.name === match.team2Name) ? `${theme.accent}08` : "transparent" }}>
-                      <td style={{ padding: "13px 14px" }}><div style={{ width: 24, height: 24, borderRadius: "50%", background: i < 4 ? `${theme.accent}25` : "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 900, color: i < 4 ? theme.accent : theme.textSecondary }}>{i + 1}</div></td>
-                      <td style={{ padding: "13px 14px", fontWeight: 900, fontSize: 14 }}>{row.name.toUpperCase()}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center", fontSize: 13 }}>{row.p}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center", fontSize: 13, color: "#4ade80", fontWeight: 800 }}>{row.w}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center", fontSize: 13, color: "#f87171" }}>{row.l}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center", fontSize: 13 }}>{row.t}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center", fontSize: 11, fontFamily: "monospace", color: parseFloat(row.nrr) >= 0 ? "#4ade80" : "#f87171" }}>{row.nrr}</td>
-                      <td style={{ padding: "13px 14px", textAlign: "center" }}><div style={{ background: i < 4 ? `${theme.accent}20` : "rgba(255,255,255,0.06)", border: `1px solid ${i < 4 ? theme.accent : "transparent"}30`, borderRadius: 8, padding: "4px 12px", fontWeight: 950, fontSize: 18, color: i < 4 ? theme.accentText : "#fff", display: "inline-block" }}>{row.pts}</div></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-            {(isTB || isTBo || isTSt) && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 16 }}>
-                {(isTBo ? [...(match.playersTeam2 || []), ...(match.playersTeam1 || [])] : allP).slice(0, 5).map((p, idx) => {
-                  const s = getPlayerTournamentStats(p);
-                  return <div key={idx} className="table-row-animated" style={{ animationDelay: `${idx * 0.08}s`, background: idx === 0 ? `linear-gradient(180deg,${isTBo ? "rgba(239,68,68,0.18)" : theme.accent + "18"},transparent)` : "rgba(255,255,255,0.03)", border: `2px solid ${idx === 0 ? isTBo ? "#ef4444" : theme.accent : theme.borderColor}25`, borderRadius: 20, padding: 20, textAlign: "center" }}>
-                    <div style={{ fontSize: 32, marginBottom: 10 }}>{isTBo ? ["🔥", "💨", "⚡", "🎯", "💫"][idx] : isTSt ? "⚡" : ["🥇", "🥈", "🥉", "🏅", "🎖️"][idx]}</div>
-                    <div style={{ fontSize: 13, fontWeight: 900, color: theme.accentText, marginBottom: 8, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p}</div>
-                    <div style={{ fontSize: 34, fontWeight: 950, color: isTBo ? "#ef4444" : isTSt ? theme.accent : "#fff", lineHeight: 1, marginBottom: 4 }}>{isTBo ? s?.wickets || (idx + 4) : isTSt ? `SR: ${s?.sr}` : s?.runs}</div>
-                    <div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 1.5, marginBottom: 10 }}>{isTBo ? "WICKETS" : isTSt ? "STRIKE RATE" : "RUNS"}</div>
-                    <div style={{ display: "flex", justifyContent: "center", gap: 6, flexWrap: "wrap" }}>
-                      {isTBo ? <><span style={{ fontSize: 10, color: "#fbbf24", fontWeight: 800 }}>ECO {s?.economy !== "—" ? s?.economy : "7.24"}</span><span style={{ color: "rgba(255,255,255,0.2)" }}>|</span><span style={{ fontSize: 10, color: "#4ade80", fontWeight: 800 }}>BEST {s?.best !== "—" ? s?.best : "3/18"}</span></>
-                        : isTSt ? <><span style={{ fontSize: 10, color: "#fbbf24", fontWeight: 800 }}>{s?.fours} 4s</span><span style={{ color: "rgba(255,255,255,0.2)" }}>|</span><span style={{ fontSize: 10, color: "#38bdf8", fontWeight: 800 }}>{s?.sixes} 6s</span></>
-                          : <><span style={{ fontSize: 10, color: "#fbbf24", fontWeight: 800 }}>AVG {s?.avg}</span><span style={{ color: "rgba(255,255,255,0.2)" }}>|</span><span style={{ fontSize: 10, color: "#38bdf8", fontWeight: 800 }}>SR {s?.sr}</span></>}
-                    </div>
-                  </div>;
-                })}
-              </div>
-            )}
-            {isPOS && (() => {
-              const p = allP[0] || "CRICKET SUPERSTAR"; const s = getPlayerTournamentStats(p); return (
-                <div style={{ textAlign: "center", padding: "20px 0" }}>
-                  <div style={{ fontSize: 60, marginBottom: 16 }}>🏆</div>
-                  <div style={{ fontSize: 11, color: theme.textSecondary, fontWeight: 800, letterSpacing: 3, marginBottom: 14 }}>PLAYER OF THE TOURNAMENT</div>
-                  <div style={{ display: "flex", justifyContent: "center" }}><TeamLogo name={p} isBatting={false} isBowling={false} accentColor={theme.accent} borderColor={theme.borderColor} size={100} /></div>
-                  <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 24, flexWrap: "wrap" }}>
-                    {[{ l: "Runs", v: s?.runs ?? 342 }, { l: "Wickets", v: s?.wickets || 8 }, { l: "Avg", v: s?.avg ?? "68.4" }, { l: "SR", v: s?.sr ?? "152.8" }].map((it, i) => (
-                      <div key={i} style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${theme.borderColor}30`, borderRadius: 16, padding: "14px 28px" }}>
-                        <div style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 2 }}>{it.l}</div>
-                        <div style={{ fontSize: 24, fontWeight: 900, marginTop: 4, color: "#fff" }}>{it.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ════════════════════ 5. FULL-SCREEN CARDS ════════════════════
-  const isFS = scoringState.displayScreen && scoringState.displayScreen.toUpperCase() !== "DEFAULT!" && scoringState.displayScreen !== "default" && scoringState.displayScreen.toUpperCase() !== "MINI" && scoringState.displayScreen.toUpperCase() !== "B1" && scoringState.displayScreen.toUpperCase() !== "B2" && scoringState.displayScreen.toUpperCase() !== "BOWLER";
+  // ════════════════════ 5. FULL-SCREEN BROADCAST CARDS ════════════════════
+  const activeScreen = (scoringState.displayScreen || scoringState.displayStatsMode || "").toUpperCase();
+  const ds = activeScreen;
+  const isFS = ds !== "" && ds !== "DEFAULT!" && ds !== "DEFAULT" && ds !== "MINI" && ds !== "B1" && ds !== "B2" && ds !== "BOWLER";
   if (isFS) {
-    const ds = scoringState.displayScreen.toUpperCase();
     const isY1Bat = ds === "Y1BAT" || ds === "1BAT"; const isY2Bat = ds === "Y2BAT" || ds === "2BAT";
     const isY1Ball = ds === "Y1BALL" || ds === "1BALL"; const isY2Ball = ds === "Y2BALL" || ds === "2BALL";
     const isSummary = ds === "SUMMARY"; const isFullScore = ds === "FULLSCORE"; const isFow = ds === "FOW";
     const isBowlerSp = ds === "BOWLER"; const isTarget = ds === "TARGET";
     const isPartner = ds === "PARTNERSHIP";
     const isSquads = ds === "B1" || ds === "B2" || ds === "TEAMS PLAYERS";
+    const isPointsTable = ds === "POINTSTABLE" || ds === "POINTS TABLE" || ds === "PT" || ds === "TABLE";
+    const isPointsTablePlusOne = ds === "PT+1" || ds === "PT (TIED POINT +1)" || ds === "POINTSTABLE_PLUS1";
+    const isTopBatters = ds === "TOPBATTERS" || ds === "TOP BATTERS" || ds === "ORANGE CAP" || ds === "TOP RUNS";
+    const isTopBowlers = ds === "TOPBOWLERS" || ds === "TOP BOWLERS" || ds === "PURPLE CAP" || ds === "TOP WICKETS";
+    const isTopStrikers = ds === "TOPSTRIKERS" || ds === "TOP 4/6 STRIKERS" || ds === "STRIKERS" || ds === "TOP 4/6";
+    const isPlayerOfSeries = ds === "PLAYEROFSERIES" || ds === "TOP PLAYER OF SERIES" || ds === "MOS" || ds === "SERIES PLAYER";
 
     // ── BATTING CARD — centered, fully themed ──────────────────────────
     if (isY1Bat || isY2Bat) {
@@ -3806,6 +3728,1148 @@ export default function OverlayPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── POINTS TABLE & PT (TIED POINT +1) — Broadcast-Grade Standings with Exact Theme Palette ──
+    if (isPointsTable || isPointsTablePlusOne) {
+      const isPlusOne = isPointsTablePlusOne;
+      const ptList = getPointsTable(match, themeSlug, isPlusOne);
+      const tourName = (match as any).tournamentName || "TOURNAMENT STANDINGS";
+
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1300 }}>
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+            {/* Top Header Banner with Theme Palette */}
+            <div className="animate-slide-up" style={{
+              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}40`,
+              borderBottom: `2px solid ${panelAccent}40`,
+              borderRadius: "24px 24px 0 0",
+              padding: "18px 36px",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(24px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <TeamLogo name={match.team1Name} isBatting={true} isBowling={false} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
+                <div>
+                  <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
+                    {isPlusOne ? "STANDINGS (TIED POINT +1)" : "OFFICIAL STANDINGS"} · STAGE 1
+                  </div>
+                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                    {tourName.toUpperCase()} · POINTS TABLE
+                  </div>
+                </div>
+              </div>
+
+              {/* Center Status Badge */}
+              <div style={{
+                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
+                border: `1.5px solid ${panelAccent}`,
+                borderRadius: 999,
+                padding: "8px 24px",
+                textAlign: "center",
+                boxShadow: `0 0 20px ${panelAccent}40`
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
+                  🏆 <span style={{ color: panelAccent }}>{isPlusOne ? "TIED MATCH = 2 PTS" : "TOP 4 QUALIFY"}</span>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+                    OFFICIAL BROADCAST
+                  </div>
+                  <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
+                    {theme.name.toUpperCase()}
+                  </div>
+                </div>
+                <TeamLogo name={match.team2Name} isBatting={false} isBowling={true} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
+              </div>
+            </div>
+
+            {/* Main Points Table Card */}
+            <div style={{
+              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}30`,
+              borderTop: "none",
+              borderRadius: "0 0 24px 24px",
+              padding: "28px 36px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+            }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
+                <thead>
+                  <tr style={{ background: `${panelAccent}18`, borderBottom: `2px solid ${panelAccent}40` }}>
+                    {["POS", "TEAM", "P", "W", "L", "T", "NRR", "PTS"].map((h, i) => (
+                      <th key={h} style={{
+                        padding: "14px 16px",
+                        fontSize: 11,
+                        fontWeight: 950,
+                        textAlign: i <= 1 ? "left" : "center",
+                        color: i === 7 ? panelAccent : panelSecondary,
+                        letterSpacing: 2,
+                        textTransform: "uppercase"
+                      }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {ptList.map((tm: any, i: number) => {
+                    const isPlaying = tm.name === match.team1Name || tm.name === match.team2Name;
+                    const isTop4 = i < 4;
+                    return (
+                      <tr
+                        key={i}
+                        className="table-row-animated"
+                        style={{
+                          animationDelay: `${i * 0.04}s`,
+                          borderBottom: `1px solid rgba(255,255,255,0.06)`,
+                          background: isPlaying
+                            ? `${panelAccent}16`
+                            : isTop4
+                              ? "rgba(255,255,255,0.02)"
+                              : "transparent"
+                        }}
+                      >
+                        <td style={{ padding: "14px 16px" }}>
+                          <div style={{
+                            width: 30,
+                            height: 30,
+                            borderRadius: "50%",
+                            background: isTop4 ? `${panelAccent}30` : "rgba(255,255,255,0.06)",
+                            border: `1.5px solid ${isTop4 ? panelAccent : "rgba(255,255,255,0.12)"}`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 12,
+                            fontWeight: 950,
+                            color: isTop4 ? panelAccent : "#94a3b8"
+                          }}>
+                            {i + 1}
+                          </div>
+                        </td>
+                        <td style={{ padding: "14px 16px" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                            <span style={{ fontSize: 16, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                              {tm.name.toUpperCase()}
+                            </span>
+                            {isPlaying && (
+                              <span style={{
+                                background: `${panelAccent}25`,
+                                border: `1px solid ${panelAccent}`,
+                                borderRadius: 6,
+                                padding: "2px 8px",
+                                fontSize: 9,
+                                fontWeight: 950,
+                                color: panelAccent
+                              }}>
+                                LIVE MATCH
+                              </span>
+                            )}
+                            {isTop4 && (
+                              <span style={{ fontSize: 9, fontWeight: 900, color: "#4ade80", opacity: 0.85 }}>
+                                • QUALIFY ZONE
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#ffffff", fontWeight: 800, fontSize: 14 }}>{tm.p}</td>
+                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#4ade80", fontWeight: 900, fontSize: 14 }}>{tm.w}</td>
+                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#f87171", fontWeight: 800, fontSize: 14 }}>{tm.l}</td>
+                        <td style={{ padding: "14px 16px", textAlign: "center", color: panelSecondary, fontWeight: 800, fontSize: 14 }}>{tm.t}</td>
+                        <td style={{ padding: "14px 16px", textAlign: "center", color: parseFloat(tm.nrr) >= 0 ? "#4ade80" : "#fb923c", fontWeight: 900, fontSize: 13 }}>
+                          {parseFloat(tm.nrr) > 0 ? `+${tm.nrr}` : tm.nrr}
+                        </td>
+                        <td style={{ padding: "14px 16px", textAlign: "center" }}>
+                          <span style={{
+                            background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.5))`,
+                            border: `1.5px solid ${panelAccent}80`,
+                            borderRadius: 10,
+                            padding: "6px 16px",
+                            fontSize: 16,
+                            fontWeight: 950,
+                            color: panelAccent,
+                            display: "inline-block",
+                            boxShadow: `0 0 12px ${panelAccent}30`
+                          }}>
+                            {tm.pts}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              {/* Table Footer Legend */}
+              <div style={{
+                marginTop: 20,
+                background: "rgba(0,0,0,0.4)",
+                border: `1px solid ${theme.borderColor}20`,
+                borderRadius: 12,
+                padding: "10px 20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: 10.5,
+                color: panelSecondary,
+                fontWeight: 800
+              }}>
+                <div>
+                  ⚡ POINTS SYSTEM: <span style={{ color: "#ffffff", fontWeight: 900 }}>Win = 2 PTS · {isPlusOne ? "Tie = 2 PTS" : "Tie = 1 PT"} · Loss = 0 PTS</span>
+                </div>
+                <div style={{ color: panelAccent, fontWeight: 950 }}>
+                  TOP 4 TEAMS ADVANCE TO PLAYOFFS
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── TOP BATTERS — Broadcast Leaderboard with Exact Theme Palette ──
+    if (isTopBatters) {
+      const { battersList } = (() => {
+        const matchesToScan = (tournamentMatches && tournamentMatches.length > 0) ? tournamentMatches : [match];
+        const batMap: Record<string, any> = {};
+        matchesToScan.forEach(m => {
+          const ss = m.scoringState;
+          if (!ss) return;
+          const allInns = [
+            { team: ss.battingTeam === "team1" ? m.team1Name : m.team2Name, inn: ss },
+            ...(ss.firstInnings ? [{ team: ss.battingTeam === "team1" ? m.team2Name : m.team1Name, inn: ss.firstInnings }] : [])
+          ];
+          allInns.forEach(({ team, inn }) => {
+            inn.batsmen?.forEach((b: BatsmanStats) => {
+              if (!b.name) return;
+              if (!batMap[b.name]) batMap[b.name] = { name: b.name, team, runs: 0, balls: 0, fours: 0, sixes: 0, innings: 0, notOuts: 0, hs: 0, hsNo: false };
+              if (b.balls > 0) {
+                batMap[b.name].innings++;
+                batMap[b.name].runs += (b.runs || 0);
+                batMap[b.name].balls += (b.balls || 0);
+                batMap[b.name].fours += (b.fours || 0);
+                batMap[b.name].sixes += (b.sixes || 0);
+                if (!b.out) batMap[b.name].notOuts++;
+                if (b.runs > batMap[b.name].hs || (b.runs === batMap[b.name].hs && !b.out)) {
+                  batMap[b.name].hs = b.runs;
+                  batMap[b.name].hsNo = !b.out;
+                }
+              }
+            });
+          });
+        });
+        let list = Object.values(batMap).map(b => {
+          const dismissals = b.innings - b.notOuts;
+          const avg = dismissals > 0 ? (b.runs / dismissals).toFixed(1) : b.innings > 0 ? "N/O" : "0.0";
+          const sr = b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0";
+          return { ...b, avg, sr, hsStr: `${b.hs}${b.hsNo ? "*" : ""}` };
+        }).sort((a, b) => b.runs - a.runs || parseFloat(b.sr) - parseFloat(a.sr));
+
+        if (list.length === 0) {
+          list = [
+            { name: scoringState.striker || "Virat Kohli", team: match.team1Name, runs: 74, balls: 42, fours: 8, sixes: 3, innings: 1, notOuts: 0, hs: 74, hsNo: false, avg: "74.0", sr: "176.2", hsStr: "74" },
+            { name: scoringState.nonStriker || "Rohit Sharma", team: match.team1Name, runs: 58, balls: 34, fours: 6, sixes: 2, innings: 1, notOuts: 1, hs: 58, hsNo: true, avg: "58.0", sr: "170.6", hsStr: "58*" },
+            { name: "Top Batter", team: match.team2Name, runs: 42, balls: 26, fours: 4, sixes: 2, innings: 1, notOuts: 0, hs: 42, hsNo: false, avg: "42.0", sr: "161.5", hsStr: "42" }
+          ];
+        }
+        return { battersList: list };
+      })();
+
+      const leader = battersList[0];
+      const rest = battersList.slice(1, 6);
+      const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
+
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+            {/* Top Header Banner with Theme Palette */}
+            <div className="animate-slide-up" style={{
+              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}40`,
+              borderBottom: `2px solid ${panelAccent}40`,
+              borderRadius: "24px 24px 0 0",
+              padding: "18px 36px",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(24px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16
+            }}>
+              <div>
+                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
+                  TOURNAMENT LEADERBOARD · ORANGE CAP
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                  {tourName.toUpperCase()} · TOP BATTERS
+                </div>
+              </div>
+
+              <div style={{
+                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
+                border: `1.5px solid ${panelAccent}`,
+                borderRadius: 999,
+                padding: "8px 24px",
+                textAlign: "center",
+                boxShadow: `0 0 20px ${panelAccent}40`
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
+                  👑 <span style={{ color: panelAccent }}>MOST RUNS IN SERIES</span>
+                </div>
+              </div>
+
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+                  OFFICIAL BROADCAST
+                </div>
+                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
+                  {theme.name.toUpperCase()}
+                </div>
+              </div>
+            </div>
+
+            {/* Main Leaderboard Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.35fr",
+              gap: 20,
+              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}30`,
+              borderTop: "none",
+              borderRadius: "0 0 24px 24px",
+              padding: "28px 32px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+            }}>
+              {/* Left Column: #1 Top Batter Hero Card */}
+              {leader && (
+                <div style={{
+                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                  border: `1.5px solid ${panelAccent}60`,
+                  borderTop: `4px solid ${panelAccent}`,
+                  borderRadius: 20,
+                  padding: "28px",
+                  boxShadow: `0 0 30px ${panelAccent}25`,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between"
+                }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <span style={{
+                        background: `linear-gradient(135deg, ${panelAccent}40, rgba(0,0,0,0.6))`,
+                        border: `1.5px solid ${panelAccent}`,
+                        borderRadius: 8,
+                        padding: "4px 12px",
+                        fontSize: 10,
+                        fontWeight: 950,
+                        color: panelAccent,
+                        letterSpacing: 1.5,
+                        textTransform: "uppercase"
+                      }}>
+                        👑 #1 LEADING RUN SCORER
+                      </span>
+                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
+                    </div>
+
+                    <div style={{ fontSize: 32, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
+                      {leader.name}
+                    </div>
+
+                    {/* Giant Runs Display */}
+                    <div style={{ fontSize: 80, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 40px ${panelAccent}45`, margin: "14px 0" }}>
+                      {leader.runs} <span style={{ fontSize: 24, fontWeight: 800, color: panelSecondary }}>RUNS</span>
+                    </div>
+                  </div>
+
+                  {/* Leader Stat Badges */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
+                    {[
+                      { l: "AVERAGE", v: leader.avg },
+                      { l: "STRIKE RATE", v: leader.sr },
+                      { l: "HIGHEST", v: leader.hsStr }
+                    ].map((s, si) => (
+                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "10px", textAlign: "center" }}>
+                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
+                        <div style={{ fontSize: 18, fontWeight: 950, color: "#ffffff", marginTop: 2 }}>{s.v}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+                    <div style={{ background: "rgba(251,191,36,0.15)", border: "1.5px solid rgba(251,191,36,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#fbbf24", fontWeight: 900 }}>
+                      💥 {leader.fours}×4s
+                    </div>
+                    <div style={{ background: "rgba(56,189,248,0.15)", border: "1.5px solid rgba(56,189,248,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#38bdf8", fontWeight: 900 }}>
+                      🚀 {leader.sixes}×6s
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Right Column: Ranked Top Batters List */}
+              <div style={{
+                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                border: `1.5px solid ${theme.borderColor}30`,
+                borderRadius: 20,
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 8
+              }}>
+                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
+                  RANKED CONTENDERS (#2 — #{battersList.length})
+                </div>
+
+                {rest.map((b: any, i: number) => (
+                  <div
+                    key={i}
+                    className="table-row-animated"
+                    style={{
+                      animationDelay: `${(i + 1) * 0.04}s`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "rgba(0,0,0,0.35)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: 12,
+                      padding: "10px 16px"
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <div style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1.5px solid rgba(255,255,255,0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 11,
+                        fontWeight: 950,
+                        color: "#94a3b8"
+                      }}>
+                        #{i + 2}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 14.5, fontWeight: 900, color: "#ffffff" }}>{b.name}</div>
+                        <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700 }}>{b.team.toUpperCase()} · HS {b.hsStr} · SR {b.sr}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 22, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{b.runs}</div>
+                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>RUNS</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── TOP BOWLERS — Broadcast Leaderboard with Exact Theme Palette ──
+    if (isTopBowlers) {
+      const { bowlersList } = (() => {
+        const matchesToScan = (tournamentMatches && tournamentMatches.length > 0) ? tournamentMatches : [match];
+        const bowlMap: Record<string, any> = {};
+        matchesToScan.forEach(m => {
+          const ss = m.scoringState;
+          if (!ss) return;
+          const allInns = [
+            { team: ss.battingTeam === "team1" ? m.team2Name : m.team1Name, inn: ss },
+            ...(ss.firstInnings ? [{ team: ss.battingTeam === "team1" ? m.team1Name : m.team2Name, inn: ss.firstInnings }] : [])
+          ];
+          allInns.forEach(({ team, inn }) => {
+            inn.bowlers?.forEach((bw: BowlerStats) => {
+              if (!bw.name) return;
+              if (!bowlMap[bw.name]) bowlMap[bw.name] = { name: bw.name, team, wickets: 0, runsConceded: 0, ballsBowled: 0, bestW: 0, bestR: 999 };
+              if (bw.ballsBowled > 0) {
+                bowlMap[bw.name].wickets += (bw.wickets || 0);
+                bowlMap[bw.name].runsConceded += (bw.runsConceded || 0);
+                bowlMap[bw.name].ballsBowled += (bw.ballsBowled || 0);
+                if (bw.wickets > bowlMap[bw.name].bestW || (bw.wickets === bowlMap[bw.name].bestW && bw.runsConceded < bowlMap[bw.name].bestR)) {
+                  bowlMap[bw.name].bestW = bw.wickets;
+                  bowlMap[bw.name].bestR = bw.runsConceded;
+                }
+              }
+            });
+          });
+        });
+        const bpo = match.ballsPerOver || 6;
+        let list = Object.values(bowlMap).map(bw => {
+          const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
+          const avg = bw.wickets > 0 ? (bw.runsConceded / bw.wickets).toFixed(1) : "—";
+          const bestStr = bw.bestW > 0 ? `${bw.bestW}/${bw.bestR}` : "0/0";
+          const overs = `${Math.floor(bw.ballsBowled / bpo)}.${bw.ballsBowled % bpo}`;
+          return { ...bw, eco, avg, bestStr, overs };
+        }).sort((a, b) => b.wickets - a.wickets || parseFloat(a.eco) - parseFloat(b.eco));
+
+        if (list.length === 0) {
+          list = [
+            { name: scoringState.bowler || "Jasprit Bumrah", team: match.team2Name, wickets: 4, runsConceded: 18, ballsBowled: 24, bestW: 4, bestR: 18, eco: "4.50", avg: "4.5", bestStr: "4/18", overs: "4.0" },
+            { name: "Top Bowler 2", team: match.team1Name, wickets: 3, runsConceded: 22, ballsBowled: 24, bestW: 3, bestR: 22, eco: "5.50", avg: "7.3", bestStr: "3/22", overs: "4.0" },
+            { name: "Top Bowler 3", team: match.team2Name, wickets: 2, runsConceded: 19, ballsBowled: 18, bestW: 2, bestR: 19, eco: "6.33", avg: "9.5", bestStr: "2/19", overs: "3.0" }
+          ];
+        }
+        return { bowlersList: list };
+      })();
+
+      const leader = bowlersList[0];
+      const rest = bowlersList.slice(1, 6);
+      const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
+
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+            {/* Top Header Banner with Theme Palette */}
+            <div className="animate-slide-up" style={{
+              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}40`,
+              borderBottom: `2px solid #ef4444`,
+              borderRadius: "24px 24px 0 0",
+              padding: "18px 36px",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(24px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16
+            }}>
+              <div>
+                <div style={{ fontSize: 9.5, color: "#f87171", fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
+                  TOURNAMENT LEADERBOARD · PURPLE CAP
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                  {tourName.toUpperCase()} · TOP BOWLERS
+                </div>
+              </div>
+
+              <div style={{
+                background: "linear-gradient(135deg, rgba(239,68,68,0.25), rgba(0,0,0,0.8))",
+                border: "1.5px solid #ef4444",
+                borderRadius: 999,
+                padding: "8px 24px",
+                textAlign: "center",
+                boxShadow: "0 0 20px rgba(239,68,68,0.4)"
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
+                  ⚡ <span style={{ color: "#f87171" }}>MOST WICKETS IN SERIES</span>
+                </div>
+              </div>
+
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+                  OFFICIAL BROADCAST
+                </div>
+                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
+                  {theme.name.toUpperCase()}
+                </div>
+              </div>
+            </div>
+
+            {/* Main Leaderboard Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.35fr",
+              gap: 20,
+              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}30`,
+              borderTop: "none",
+              borderRadius: "0 0 24px 24px",
+              padding: "28px 32px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+            }}>
+              {/* Left Column: #1 Top Bowler Hero Card */}
+              {leader && (
+                <div style={{
+                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                  border: "1.5px solid rgba(239,68,68,0.6)",
+                  borderTop: "4px solid #ef4444",
+                  borderRadius: 20,
+                  padding: "28px",
+                  boxShadow: "0 0 30px rgba(239,68,68,0.25)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between"
+                }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <span style={{
+                        background: "linear-gradient(135deg, rgba(239,68,68,0.4), rgba(0,0,0,0.6))",
+                        border: "1.5px solid #ef4444",
+                        borderRadius: 8,
+                        padding: "4px 12px",
+                        fontSize: 10,
+                        fontWeight: 950,
+                        color: "#f87171",
+                        letterSpacing: 1.5,
+                        textTransform: "uppercase"
+                      }}>
+                        ⚡ #1 LEADING WICKET TAKER
+                      </span>
+                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
+                    </div>
+
+                    <div style={{ fontSize: 32, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
+                      {leader.name}
+                    </div>
+
+                    {/* Giant Wickets Display */}
+                    <div style={{ fontSize: 80, fontWeight: 950, color: "#ef4444", lineHeight: 1, textShadow: "0 0 40px rgba(239,68,68,0.5)", margin: "14px 0" }}>
+                      {leader.wickets} <span style={{ fontSize: 24, fontWeight: 800, color: panelSecondary }}>WKTS</span>
+                    </div>
+                  </div>
+
+                  {/* Leader Stat Badges */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
+                    {[
+                      { l: "ECONOMY", v: leader.eco },
+                      { l: "AVERAGE", v: leader.avg },
+                      { l: "BEST SPELL", v: leader.bestStr }
+                    ].map((s, si) => (
+                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "10px", textAlign: "center" }}>
+                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
+                        <div style={{ fontSize: 18, fontWeight: 950, color: "#ffffff", marginTop: 2 }}>{s.v}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+                    <div style={{ background: "rgba(239,68,68,0.15)", border: "1.5px solid rgba(239,68,68,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#f87171", fontWeight: 900 }}>
+                      ⚡ {leader.overs} OVERS BOWLED
+                    </div>
+                    <div style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#ffffff", fontWeight: 900 }}>
+                      🎯 {leader.runsConceded} RUNS CONCEDED
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Right Column: Ranked Top Bowlers List */}
+              <div style={{
+                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                border: `1.5px solid ${theme.borderColor}30`,
+                borderRadius: 20,
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 8
+              }}>
+                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
+                  RANKED CONTENDERS (#2 — #{bowlersList.length})
+                </div>
+
+                {rest.map((bw: any, i: number) => (
+                  <div
+                    key={i}
+                    className="table-row-animated"
+                    style={{
+                      animationDelay: `${(i + 1) * 0.04}s`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "rgba(0,0,0,0.35)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: 12,
+                      padding: "10px 16px"
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <div style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1.5px solid rgba(255,255,255,0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 11,
+                        fontWeight: 950,
+                        color: "#94a3b8"
+                      }}>
+                        #{i + 2}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 14.5, fontWeight: 900, color: "#ffffff" }}>{bw.name}</div>
+                        <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700 }}>{bw.team.toUpperCase()} · ECO {bw.eco} · BEST {bw.bestStr}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 22, fontWeight: 950, color: "#ef4444", lineHeight: 1 }}>{bw.wickets}</div>
+                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>WKTS</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── TOP 4/6 STRIKERS — Broadcast Leaderboard with Exact Theme Palette ──
+    if (isTopStrikers) {
+      const { strikersList } = (() => {
+        const matchesToScan = (tournamentMatches && tournamentMatches.length > 0) ? tournamentMatches : [match];
+        const batMap: Record<string, any> = {};
+        matchesToScan.forEach(m => {
+          const ss = m.scoringState;
+          if (!ss) return;
+          const allInns = [
+            { team: ss.battingTeam === "team1" ? m.team1Name : m.team2Name, inn: ss },
+            ...(ss.firstInnings ? [{ team: ss.battingTeam === "team1" ? m.team2Name : m.team1Name, inn: ss.firstInnings }] : [])
+          ];
+          allInns.forEach(({ team, inn }) => {
+            inn.batsmen?.forEach((b: BatsmanStats) => {
+              if (!b.name) return;
+              if (!batMap[b.name]) batMap[b.name] = { name: b.name, team, runs: 0, balls: 0, fours: 0, sixes: 0 };
+              batMap[b.name].runs += (b.runs || 0);
+              batMap[b.name].balls += (b.balls || 0);
+              batMap[b.name].fours += (b.fours || 0);
+              batMap[b.name].sixes += (b.sixes || 0);
+            });
+          });
+        });
+        let list = Object.values(batMap).map(b => {
+          const boundaryRuns = (b.fours * 4) + (b.sixes * 6);
+          const totalBoundaries = b.fours + b.sixes;
+          const boundaryPct = b.runs > 0 ? Math.round((boundaryRuns / b.runs) * 100) : 0;
+          const sr = b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0";
+          return { ...b, boundaryRuns, totalBoundaries, boundaryPct, sr };
+        }).sort((a, b) => b.sixes - a.sixes || b.fours - a.fours || b.boundaryRuns - a.boundaryRuns);
+
+        if (list.length === 0) {
+          list = [
+            { name: scoringState.striker || "Top Striker", team: match.team1Name, runs: 68, balls: 32, fours: 7, sixes: 5, boundaryRuns: 58, totalBoundaries: 12, boundaryPct: 85, sr: "212.5" },
+            { name: scoringState.nonStriker || "Power Hitter", team: match.team1Name, runs: 44, balls: 20, fours: 4, sixes: 3, boundaryRuns: 34, totalBoundaries: 7, boundaryPct: 77, sr: "220.0" }
+          ];
+        }
+        return { strikersList: list };
+      })();
+
+      const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
+
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1300 }}>
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+            {/* Top Header Banner with Theme Palette */}
+            <div className="animate-slide-up" style={{
+              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}40`,
+              borderBottom: `2px solid ${panelAccent}40`,
+              borderRadius: "24px 24px 0 0",
+              padding: "18px 36px",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(24px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16
+            }}>
+              <div>
+                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
+                  POWER HITTERS · BOUNDARY KINGS
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                  {tourName.toUpperCase()} · TOP 4s & 6s STRIKERS
+                </div>
+              </div>
+
+              <div style={{
+                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
+                border: `1.5px solid ${panelAccent}`,
+                borderRadius: 999,
+                padding: "8px 24px",
+                textAlign: "center",
+                boxShadow: `0 0 20px ${panelAccent}40`
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
+                  💥 <span style={{ color: panelAccent }}>MOST SIXES & FOURS</span>
+                </div>
+              </div>
+
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+                  OFFICIAL BROADCAST
+                </div>
+                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
+                  {theme.name.toUpperCase()}
+                </div>
+              </div>
+            </div>
+
+            {/* Main Table Grid */}
+            <div style={{
+              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}30`,
+              borderTop: "none",
+              borderRadius: "0 0 24px 24px",
+              padding: "28px 36px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+            }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
+                <thead>
+                  <tr style={{ background: `${panelAccent}18`, borderBottom: `2px solid ${panelAccent}40` }}>
+                    {["POS", "BATSMAN", "TEAM", "4s (FOURS)", "6s (SIXES)", "TOTAL BOUNDARIES", "BOUNDARY RUNS", "S/R"].map((h, i) => (
+                      <th key={h} style={{
+                        padding: "14px 16px",
+                        fontSize: 10.5,
+                        fontWeight: 950,
+                        textAlign: i <= 2 ? "left" : "center",
+                        color: i === 4 ? "#38bdf8" : i === 3 ? "#fbbf24" : i === 6 ? panelAccent : panelSecondary,
+                        letterSpacing: 2,
+                        textTransform: "uppercase"
+                      }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {strikersList.map((st: any, i: number) => (
+                    <tr
+                      key={i}
+                      className="table-row-animated"
+                      style={{
+                        animationDelay: `${i * 0.04}s`,
+                        borderBottom: `1px solid rgba(255,255,255,0.06)`,
+                        background: i === 0 ? `${panelAccent}16` : "transparent"
+                      }}
+                    >
+                      <td style={{ padding: "14px 16px" }}>
+                        <div style={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: "50%",
+                          background: i === 0 ? `${panelAccent}30` : "rgba(255,255,255,0.06)",
+                          border: `1.5px solid ${i === 0 ? panelAccent : "rgba(255,255,255,0.12)"}`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 11,
+                          fontWeight: 950,
+                          color: i === 0 ? panelAccent : "#94a3b8"
+                        }}>
+                          #{i + 1}
+                        </div>
+                      </td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <span style={{ fontSize: 15, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                          {st.name}
+                        </span>
+                        {i === 0 && (
+                          <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 900, color: panelAccent }}>
+                            👑 LEADING POWER STRIKER
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: "14px 16px", color: panelSecondary, fontWeight: 800, fontSize: 13 }}>
+                        {st.team.toUpperCase()}
+                      </td>
+                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
+                        <span style={{ background: "rgba(251,191,36,0.15)", border: "1px solid rgba(251,191,36,0.4)", borderRadius: 8, padding: "4px 12px", fontSize: 14, fontWeight: 950, color: "#fbbf24" }}>
+                          {st.fours}×4s
+                        </span>
+                      </td>
+                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
+                        <span style={{ background: "rgba(56,189,248,0.15)", border: "1px solid rgba(56,189,248,0.4)", borderRadius: 8, padding: "4px 12px", fontSize: 14, fontWeight: 950, color: "#38bdf8" }}>
+                          {st.sixes}×6s
+                        </span>
+                      </td>
+                      <td style={{ padding: "14px 16px", textAlign: "center", color: "#ffffff", fontWeight: 900, fontSize: 15 }}>
+                        {st.totalBoundaries}
+                      </td>
+                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
+                        <span style={{ fontSize: 17, fontWeight: 950, color: panelAccent }}>
+                          {st.boundaryRuns}
+                        </span> <span style={{ fontSize: 10, color: panelSecondary, fontWeight: 700 }}>({st.boundaryPct}%)</span>
+                      </td>
+                      <td style={{ padding: "14px 16px", textAlign: "center", color: "#4ade80", fontWeight: 900, fontSize: 14 }}>
+                        {st.sr}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── TOP PLAYER OF SERIES — Broadcast MVP Showcase with Exact Theme Palette ──
+    if (isPlayerOfSeries) {
+      const { mvpList } = (() => {
+        const matchesToScan = (tournamentMatches && tournamentMatches.length > 0) ? tournamentMatches : [match];
+        const batMap: Record<string, any> = {};
+        const bowlMap: Record<string, any> = {};
+        matchesToScan.forEach(m => {
+          const ss = m.scoringState;
+          if (!ss) return;
+          const allInns = [
+            { team: ss.battingTeam === "team1" ? m.team1Name : m.team2Name, inn: ss },
+            ...(ss.firstInnings ? [{ team: ss.battingTeam === "team1" ? m.team2Name : m.team1Name, inn: ss.firstInnings }] : [])
+          ];
+          allInns.forEach(({ team, inn }) => {
+            inn.batsmen?.forEach((b: BatsmanStats) => {
+              if (!b.name) return;
+              if (!batMap[b.name]) batMap[b.name] = { name: b.name, team, runs: 0, balls: 0, fours: 0, sixes: 0 };
+              batMap[b.name].runs += (b.runs || 0);
+              batMap[b.name].balls += (b.balls || 0);
+              batMap[b.name].fours += (b.fours || 0);
+              batMap[b.name].sixes += (b.sixes || 0);
+            });
+            const bowlTeamName = team === m.team1Name ? m.team2Name : m.team1Name;
+            inn.bowlers?.forEach((bw: BowlerStats) => {
+              if (!bw.name) return;
+              if (!bowlMap[bw.name]) bowlMap[bw.name] = { name: bw.name, team: bowlTeamName, wickets: 0, runsConceded: 0, ballsBowled: 0 };
+              bowlMap[bw.name].wickets += (bw.wickets || 0);
+              bowlMap[bw.name].runsConceded += (bw.runsConceded || 0);
+              bowlMap[bw.name].ballsBowled += (bw.ballsBowled || 0);
+            });
+          });
+        });
+
+        const allNames = Array.from(new Set([...Object.keys(batMap), ...Object.keys(bowlMap), ...(match.playersTeam1 || []), ...(match.playersTeam2 || [])]));
+        let list = allNames.map(name => {
+          const b = batMap[name] || { name, team: (match.playersTeam1 || []).includes(name) ? match.team1Name : match.team2Name, runs: 0, balls: 0, fours: 0, sixes: 0 };
+          const bw = bowlMap[name] || { name, team: b.team, wickets: 0, runsConceded: 0, ballsBowled: 0 };
+          const momCount = matchesToScan.filter(m => m.scoringState?.momPlayer === name).length;
+          const score = (b.runs * 1) + (b.sixes * 2) + (bw.wickets * 25) + (momCount * 50);
+          return {
+            name,
+            team: b.team || match.team1Name,
+            runs: b.runs,
+            wickets: bw.wickets,
+            momCount,
+            score,
+            sr: b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0",
+            eco: bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * (match.ballsPerOver || 6)).toFixed(2) : "0.00"
+          };
+        }).sort((a, b) => b.score - a.score || b.runs - a.runs);
+
+        if (list.length === 0) {
+          list = [
+            { name: scoringState.striker || "Star All-Rounder", team: match.team1Name, runs: 96, wickets: 3, momCount: 2, score: 271, sr: "188.2", eco: "5.50" },
+            { name: scoringState.bowler || "Key Match Winner", team: match.team2Name, runs: 42, wickets: 5, momCount: 1, score: 217, sr: "150.0", eco: "4.80" }
+          ];
+        }
+        return { mvpList: list };
+      })();
+
+      const leader = mvpList[0];
+      const rest = mvpList.slice(1, 5);
+      const tourName = (match as any).tournamentName || "TOURNAMENT MVP";
+
+      return (
+        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
+          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
+            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+            {/* Top Header Banner with Theme Palette */}
+            <div className="animate-slide-up" style={{
+              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}40`,
+              borderBottom: `2px solid ${panelAccent}40`,
+              borderRadius: "24px 24px 0 0",
+              padding: "18px 36px",
+              boxShadow: panelShadow,
+              backdropFilter: "blur(24px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16
+            }}>
+              <div>
+                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
+                  TOURNAMENT IMPACT · MAN OF THE SERIES
+                </div>
+                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
+                  {tourName.toUpperCase()} · PLAYER OF THE SERIES
+                </div>
+              </div>
+
+              <div style={{
+                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
+                border: `1.5px solid ${panelAccent}`,
+                borderRadius: 999,
+                padding: "8px 28px",
+                textAlign: "center",
+                boxShadow: `0 0 20px ${panelAccent}40`
+              }}>
+                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
+                  🌟 <span style={{ color: panelAccent }}>MOST VALUABLE PLAYER</span>
+                </div>
+              </div>
+
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+                  OFFICIAL BROADCAST
+                </div>
+                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
+                  {theme.name.toUpperCase()}
+                </div>
+              </div>
+            </div>
+
+            {/* Main MVP Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1.1fr 1.3fr",
+              gap: 20,
+              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
+              border: `1.5px solid ${theme.borderColor}30`,
+              borderTop: "none",
+              borderRadius: "0 0 24px 24px",
+              padding: "28px 32px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+            }}>
+              {/* Left Column: #1 MVP Hero Card */}
+              {leader && (
+                <div style={{
+                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                  border: `1.5px solid ${panelAccent}60`,
+                  borderTop: `4px solid ${panelAccent}`,
+                  borderRadius: 20,
+                  padding: "28px",
+                  boxShadow: `0 0 30px ${panelAccent}30`,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between"
+                }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <span style={{
+                        background: `linear-gradient(135deg, ${panelAccent}40, rgba(0,0,0,0.6))`,
+                        border: `1.5px solid ${panelAccent}`,
+                        borderRadius: 8,
+                        padding: "4px 12px",
+                        fontSize: 10,
+                        fontWeight: 950,
+                        color: panelAccent,
+                        letterSpacing: 1.5,
+                        textTransform: "uppercase"
+                      }}>
+                        🌟 #1 SERIES MVP WINNER
+                      </span>
+                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
+                    </div>
+
+                    <div style={{ fontSize: 34, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
+                      {leader.name}
+                    </div>
+
+                    {/* Giant Impact Rating */}
+                    <div style={{ fontSize: 72, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 40px ${panelAccent}45`, margin: "14px 0" }}>
+                      {leader.score} <span style={{ fontSize: 22, fontWeight: 800, color: panelSecondary }}>MVP PTS</span>
+                    </div>
+                  </div>
+
+                  {/* Impact Figures Grid */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
+                    {[
+                      { l: "TOTAL RUNS", v: `${leader.runs} (SR ${leader.sr})`, c: panelAccent },
+                      { l: "TOTAL WKTS", v: `${leader.wickets} (ECO ${leader.eco})`, c: "#ef4444" },
+                      { l: "MOM AWARDS", v: `⭐ ${leader.momCount}`, c: "#fbbf24" }
+                    ].map((s, si) => (
+                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "12px 8px", textAlign: "center" }}>
+                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
+                        <div style={{ fontSize: 14, fontWeight: 950, color: s.c, marginTop: 3 }}>{s.v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Right Column: Ranked MVP Contenders List */}
+              <div style={{
+                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
+                border: `1.5px solid ${theme.borderColor}30`,
+                borderRadius: 20,
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 8
+              }}>
+                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
+                  MVP CONTENDERS (#2 — #{mvpList.length})
+                </div>
+
+                {rest.map((p: any, i: number) => (
+                  <div
+                    key={i}
+                    className="table-row-animated"
+                    style={{
+                      animationDelay: `${(i + 1) * 0.04}s`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "rgba(0,0,0,0.35)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: 12,
+                      padding: "12px 16px"
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <div style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1.5px solid rgba(255,255,255,0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 11,
+                        fontWeight: 950,
+                        color: "#94a3b8"
+                      }}>
+                        #{i + 2}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 900, color: "#ffffff" }}>{p.name}</div>
+                        <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 700 }}>
+                          {p.team.toUpperCase()} · 🏏 {p.runs} runs · ⚡ {p.wickets} wkts {p.momCount > 0 ? `· ⭐ ${p.momCount} MoM` : ""}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 22, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{p.score}</div>
+                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>MVP PTS</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
