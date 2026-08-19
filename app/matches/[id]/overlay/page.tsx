@@ -56,7 +56,7 @@ const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: 
   "ipl": { name: "IPL", primaryBg: "rgba(5,5,40,0.95)", secondaryBg: "rgba(10,10,60,0.85)", accent: "#fbbf24", accentText: "#fde68a", textPrimary: "#ffffff", textSecondary: "#e0e7ff", scoreBg: "rgba(251,191,36,0.15)", scoreText: "#fde68a", borderColor: "#f59e0b", headerBg: "rgba(2,2,25,0.98)", ballColors: { runs: "#4f46e5", four: "#fbbf24", six: "#f59e0b", wicket: "#ef4444", extra: "#22d3ee" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
   "wt20-2024": { name: "WT20 2024", primaryBg: "rgba(8,0,22,0.96)", secondaryBg: "rgba(16,4,40,0.85)", accent: "#a78bfa", accentText: "#c4b5fd", textPrimary: "#ffffff", textSecondary: "#ede9fe", scoreBg: "rgba(167,139,250,0.15)", scoreText: "#c4b5fd", borderColor: "#7c3aed", headerBg: "rgba(4,0,12,0.99)", ballColors: { runs: "#6d28d9", four: "#4ade80", six: "#a78bfa", wicket: "#ef4444", extra: "#38bdf8" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
   "bbl-starsports": { name: "BBL Star Sports", primaryBg: "rgba(0,30,10,0.95)", secondaryBg: "rgba(0,50,20,0.85)", accent: "#ef4444", accentText: "#fca5a5", textPrimary: "#ffffff", textSecondary: "#dcfce7", scoreBg: "rgba(239,68,68,0.15)", scoreText: "#fca5a5", borderColor: "#dc2626", headerBg: "rgba(0,18,6,0.98)", ballColors: { runs: "#16a34a", four: "#fbbf24", six: "#ef4444", wicket: "#7f1d1d", extra: "#60a5fa" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
-  "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(4,6,35,0.96)", secondaryBg: "rgba(8,12,55,0.85)", accent: "#fbbf24", accentText: "#fde68a", textPrimary: "#ffffff", textSecondary: "#e0e7ff", scoreBg: "linear-gradient(135deg, rgba(251,191,36,0.18), rgba(0, 0, 0, 0.5))", scoreText: "#fde68a", borderColor: "#f59e0b", headerBg: "rgba(4,6,28,0.98)", ballColors: { runs: "#4338ca", four: "#fbbf24", six: "#f59e0b", wicket: "#ef4444", extra: "#34d399" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
+  "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(11,11,11,0.98)", secondaryBg: "rgba(18,18,18,0.92)", accent: "#c8e63c", accentText: "#c8e63c", textPrimary: "#ffffff", textSecondary: "#d4d4d8", scoreBg: "linear-gradient(135deg, rgba(200,230,60,0.18), rgba(0, 0, 0, 0.5))", scoreText: "#c8e63c", borderColor: "#c8e63c", headerBg: "rgba(8,8,8,0.99)", ballColors: { runs: "rgba(255,255,255,0.2)", four: "#3b82f6", six: "#c8e63c", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
   "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(9,13,22,0.97)", secondaryBg: "rgba(15,22,38,0.95)", accent: "#76ff03", accentText: "#b2ff59", textPrimary: "#ffffff", textSecondary: "#ccff90", scoreBg: "rgba(118,255,3,0.15)", scoreText: "#76ff03", borderColor: "#76ff03", headerBg: "rgba(5,10,18,0.99)", ballColors: { runs: "#76ff03", four: "#fbbf24", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "" },
 };
 const DEFAULT_THEME = THEME_MAP["ipl"];
@@ -894,7 +894,7 @@ export default function OverlayPage() {
   useEffect(() => {
     fetchMatch();
     if (matchId && (isValidObjectId(matchId) || matchId === "active") && !isPreview) {
-      const interval = setInterval(fetchMatch, 3000);
+      const interval = setInterval(fetchMatch, 1000);
       return () => clearInterval(interval);
     }
   }, [matchId, isPreview, userEmail]);
@@ -1187,6 +1187,163 @@ export default function OverlayPage() {
       // Use real stats if available; fall back to zeros for a player who hasn't batted yet
       const stats = batterPanelStats ?? { runs: 0, avg: "—", sr: "—", hs: "—", fours: 0, sixes: 0, wickets: 0, economy: "—", best: "—", matches: 0 };
 
+      if (themeSlug === "ipl-2025") {
+        return (
+          <div
+            className="animate-slide-up"
+            style={{
+              position: "fixed",
+              left: 24,
+              bottom: 90,
+              zIndex: 70,
+              width: 380,
+              height: 280,
+              background: "linear-gradient(135deg, rgba(8, 28, 12, 0.96) 0%, rgba(3, 10, 24, 0.98) 100%)",
+              border: "2px solid #a3e635",
+              borderTop: "5px solid #a3e635",
+              borderRadius: "18px",
+              overflow: "hidden",
+              boxShadow: "0 16px 40px rgba(0,0,0,0.85), 0 0 20px rgba(163, 230, 53, 0.25)",
+              fontFamily: "'Outfit', 'Segoe UI', sans-serif",
+              display: "flex"
+            }}
+          >
+            {/* Left Half: Green watermarked block with player avatar & name */}
+            <div style={{
+              width: "160px",
+              background: "linear-gradient(180deg, #3ea30e 0%, #297a08 50%, #1e5a06 100%)",
+              borderRadius: "13px 0 0 13px",
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "12px 8px 10px"
+            }}>
+              {/* Floral watermarks */}
+              <svg style={{ position: "absolute", width: "130px", height: "130px", opacity: 0.25, color: "#ffffff", left: "-25px", top: "-15px", pointerEvents: "none" }} viewBox="0 0 100 100">
+                <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+              </svg>
+              <svg style={{ position: "absolute", width: "130px", height: "130px", opacity: 0.25, color: "#ffffff", right: "-25px", bottom: "-15px", pointerEvents: "none" }} viewBox="0 0 100 100">
+                <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+              </svg>
+
+              <div style={{
+                background: "rgba(0,0,0,0.35)",
+                borderRadius: "6px",
+                padding: "3px 8px",
+                fontSize: "8.5px",
+                fontWeight: 950,
+                color: "#ffffff",
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                position: "relative",
+                zIndex: 2
+              }}>
+                {batterPanelLabel}
+              </div>
+
+              <div style={{ position: "relative", zIndex: 2, padding: "10px 0" }}>
+                <svg style={{ width: "64px", height: "64px", color: "#ffffff", opacity: 0.8 }} viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+              </div>
+
+              <div style={{
+                color: "#ffffff",
+                fontSize: "14px",
+                fontWeight: 950,
+                letterSpacing: "0.5px",
+                textTransform: "uppercase",
+                textAlign: "center",
+                position: "relative",
+                zIndex: 2,
+                lineHeight: 1.1,
+                textShadow: "0 2px 6px rgba(0,0,0,0.7)"
+              }}>
+                {batterPanelPlayer.toUpperCase()}
+              </div>
+            </div>
+
+            {/* Right Half: 4 Stat Pills */}
+            <div style={{
+              flex: 1,
+              padding: "10px 12px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: "6px"
+            }}>
+              {/* 1. Matches */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+                border: "1px solid rgba(163, 230, 53, 0.3)",
+                borderRadius: "9px",
+                padding: "4px 10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+              }}>
+                <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                  MATCHES
+                </div>
+                <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                  {stats.matches}
+                </div>
+              </div>
+
+              {/* 2. Runs (Solid Neon Lime Pill) */}
+              <div style={{
+                background: "linear-gradient(90deg, #a3e635 0%, #bef264 100%)",
+                borderRadius: "9px",
+                padding: "4px 10px",
+                boxShadow: "0 4px 12px rgba(163, 230, 53, 0.35)"
+              }}>
+                <div style={{ fontSize: "8.5px", color: "#030a24", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+                  RUNS
+                </div>
+                <div style={{ fontSize: "22px", fontWeight: 950, color: "#030a24", lineHeight: 1.1 }}>
+                  {stats.runs}
+                </div>
+              </div>
+
+              {/* 3. Strike Rate */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+                border: "1px solid rgba(163, 230, 53, 0.3)",
+                borderRadius: "9px",
+                padding: "4px 10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+              }}>
+                <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                  STRIKE RATE
+                </div>
+                <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                  {stats.sr}
+                </div>
+              </div>
+
+              {/* 4. 50s/100s */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+                border: "1px solid rgba(163, 230, 53, 0.3)",
+                borderRadius: "9px",
+                padding: "4px 10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+              }}>
+                <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                  50S/100S
+                </div>
+                <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                  {(stats as any).fifties ?? 0}/{(stats as any).hundreds ?? 0}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div
           className="animate-slide-up"
@@ -1251,8 +1408,6 @@ export default function OverlayPage() {
       <>
         {renderBatterContent()}
         {renderBowlerStatsPanel()}
-        {renderBattingCard()}
-        {renderBowlingCard()}
       </>
     );
   };
@@ -1261,6 +1416,163 @@ export default function OverlayPage() {
     if (!isBowlerPanel || !bowlerPanelPlayer) return null;
     // Use real stats if available; fall back to zeros/defaults for a bowler with no stats yet
     const stats = bowlerPanelStats ?? { wickets: 0, economy: "—", bowlAvg: "—", bowlSr: "—", best: "—", runsConceded: 0, matches: 0 };
+
+    if (themeSlug === "ipl-2025") {
+      return (
+        <div
+          className="animate-slide-up"
+          style={{
+            position: "fixed",
+            right: 24,
+            bottom: 90,
+            zIndex: 70,
+            width: 380,
+            height: 280,
+            background: "linear-gradient(135deg, rgba(8, 28, 12, 0.96) 0%, rgba(3, 10, 24, 0.98) 100%)",
+            border: "2px solid #a3e635",
+            borderTop: "5px solid #a3e635",
+            borderRadius: "18px",
+            overflow: "hidden",
+            boxShadow: "0 16px 40px rgba(0,0,0,0.85), 0 0 20px rgba(163, 230, 53, 0.25)",
+            fontFamily: "'Outfit', 'Segoe UI', sans-serif",
+            display: "flex"
+          }}
+        >
+          {/* Left Half: Green watermarked block with player avatar & name */}
+          <div style={{
+            width: "160px",
+            background: "linear-gradient(180deg, #3ea30e 0%, #297a08 50%, #1e5a06 100%)",
+            borderRadius: "13px 0 0 13px",
+            position: "relative",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "12px 8px 10px"
+          }}>
+            {/* Floral watermarks */}
+            <svg style={{ position: "absolute", width: "130px", height: "130px", opacity: 0.25, color: "#ffffff", left: "-25px", top: "-15px", pointerEvents: "none" }} viewBox="0 0 100 100">
+              <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+              <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+            </svg>
+            <svg style={{ position: "absolute", width: "130px", height: "130px", opacity: 0.25, color: "#ffffff", right: "-25px", bottom: "-15px", pointerEvents: "none" }} viewBox="0 0 100 100">
+              <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+              <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+            </svg>
+
+            <div style={{
+              background: "rgba(0,0,0,0.35)",
+              borderRadius: "6px",
+              padding: "3px 8px",
+              fontSize: "8.5px",
+              fontWeight: 950,
+              color: "#ffffff",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              position: "relative",
+              zIndex: 2
+            }}>
+              🎯 ACTIVE BOWLER
+            </div>
+
+            <div style={{ position: "relative", zIndex: 2, padding: "10px 0" }}>
+              <svg style={{ width: "64px", height: "64px", color: "#ffffff", opacity: 0.8 }} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </div>
+
+            <div style={{
+              color: "#ffffff",
+              fontSize: "14px",
+              fontWeight: 950,
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+              textAlign: "center",
+              position: "relative",
+              zIndex: 2,
+              lineHeight: 1.1,
+              textShadow: "0 2px 6px rgba(0,0,0,0.7)"
+            }}>
+              {bowlerPanelPlayer.toUpperCase()}
+            </div>
+          </div>
+
+          {/* Right Half: 4 Stat Pills */}
+          <div style={{
+            flex: 1,
+            padding: "10px 12px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: "6px"
+          }}>
+            {/* 1. Matches */}
+            <div style={{
+              background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+              border: "1px solid rgba(163, 230, 53, 0.3)",
+              borderRadius: "9px",
+              padding: "4px 10px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+            }}>
+              <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                MATCHES
+              </div>
+              <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                {stats.matches}
+              </div>
+            </div>
+
+            {/* 2. Wickets (Solid Neon Lime Pill) */}
+            <div style={{
+              background: "linear-gradient(90deg, #a3e635 0%, #bef264 100%)",
+              borderRadius: "9px",
+              padding: "4px 10px",
+              boxShadow: "0 4px 12px rgba(163, 230, 53, 0.35)"
+            }}>
+              <div style={{ fontSize: "8.5px", color: "#030a24", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+                WICKETS
+              </div>
+              <div style={{ fontSize: "22px", fontWeight: 950, color: "#030a24", lineHeight: 1.1 }}>
+                {stats.wickets ?? 0}
+              </div>
+            </div>
+
+            {/* 3. Economy */}
+            <div style={{
+              background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+              border: "1px solid rgba(163, 230, 53, 0.3)",
+              borderRadius: "9px",
+              padding: "4px 10px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+            }}>
+              <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                ECONOMY
+              </div>
+              <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                {stats.economy}
+              </div>
+            </div>
+
+            {/* 4. Best Spell */}
+            <div style={{
+              background: "linear-gradient(135deg, rgba(20, 28, 12, 0.95), rgba(45, 55, 15, 0.9))",
+              border: "1px solid rgba(163, 230, 53, 0.3)",
+              borderRadius: "9px",
+              padding: "4px 10px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+            }}>
+              <div style={{ fontSize: "8.5px", color: "#d4d4d8", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                BEST
+              </div>
+              <div style={{ fontSize: "20px", fontWeight: 950, color: "#ffffff", lineHeight: 1.1 }}>
+                {stats.best ?? "—"}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div
@@ -1497,342 +1809,708 @@ export default function OverlayPage() {
   }
 
   // ════════════════════ 5. FULL-SCREEN BROADCAST CARDS ════════════════════
-  const activeScreen = (scoringState.displayScreen || scoringState.displayStatsMode || "").toUpperCase();
+  const activeScreen = (screenParam || scoringState.displayScreen || scoringState.displayStatsMode || "").trim().toUpperCase();
   const ds = activeScreen;
-  const isFS = ds !== "" && ds !== "DEFAULT!" && ds !== "DEFAULT" && ds !== "MINI" && ds !== "B1" && ds !== "B2" && ds !== "BOWLER";
+  const isFS = ds !== "" && ds !== "DEFAULT!" && ds !== "DEFAULT" && ds !== "MINI" && ds !== "DEFAULT / OFF" && ds !== "OFF" && ds !== "NONE" && ds !== "LIVE SCORE";
   if (isFS) {
-    const isY1Bat = ds === "Y1BAT" || ds === "1BAT"; const isY2Bat = ds === "Y2BAT" || ds === "2BAT";
-    const isY1Ball = ds === "Y1BALL" || ds === "1BALL"; const isY2Ball = ds === "Y2BALL" || ds === "2BALL";
-    const isSummary = ds === "SUMMARY"; const isFullScore = ds === "FULLSCORE"; const isFow = ds === "FOW";
-    const isBowlerSp = ds === "BOWLER"; const isTarget = ds === "TARGET";
-    const isPartner = ds === "PARTNERSHIP";
-    const isSquads = ds === "B1" || ds === "B2" || ds === "TEAMS PLAYERS";
-    const isPointsTable = ds === "POINTSTABLE" || ds === "POINTS TABLE" || ds === "PT" || ds === "TABLE";
-    const isPointsTablePlusOne = ds === "PT+1" || ds === "PT (TIED POINT +1)" || ds === "POINTSTABLE_PLUS1";
-    const isTopBatters = ds === "TOPBATTERS" || ds === "TOP BATTERS" || ds === "ORANGE CAP" || ds === "TOP RUNS";
-    const isTopBowlers = ds === "TOPBOWLERS" || ds === "TOP BOWLERS" || ds === "PURPLE CAP" || ds === "TOP WICKETS";
-    const isTopStrikers = ds === "TOPSTRIKERS" || ds === "TOP 4/6 STRIKERS" || ds === "STRIKERS" || ds === "TOP 4/6";
-    const isPlayerOfSeries = ds === "PLAYEROFSERIES" || ds === "TOP PLAYER OF SERIES" || ds === "MOS" || ds === "SERIES PLAYER";
+    const isY1Bat = ds === "Y1BAT" || ds === "1BAT" || (ds === "BATTING" && (scoringState.inningsNo === 1 || !scoringState.inningsNo));
+    const isY2Bat = ds === "Y2BAT" || ds === "2BAT" || (ds === "BATTING" && scoringState.inningsNo === 2);
+    const isY1Ball = ds === "Y1BALL" || ds === "1BALL" || (ds === "BOWLING" && (scoringState.inningsNo === 1 || !scoringState.inningsNo));
+    const isY2Ball = ds === "Y2BALL" || ds === "2BALL" || (ds === "BOWLING" && scoringState.inningsNo === 2);
+    const isSummary = ds === "SUMMARY" || ds === "VIEW SUMMARY" || ds === "MATCH SUMMARY" || ds === "SUM";
+    const isFullScore = ds === "FULLSCORE" || ds === "SCORECARD" || ds === "VIEW SCORECARD" || ds === "FULL SCORE" || ds === "FULL_SCORE" || ds === "CARD";
+    const isFow = ds === "FOW" || ds === "FALL OF WICKETS" || ds === "FALLOFWICKETS";
+    const isBowlerSp = ds === "BOWLER" || ds === "BOWLER SPOTLIGHT" || ds === "BOWLER_SP";
+    const isTarget = ds === "TARGET" || ds === "CHASE" || ds === "TARGET_TICKER";
+    const isPartner = ds === "PARTNERSHIP" || ds === "PARTNER" || ds === "STAND";
+    const isSquads = ds === "B1" || ds === "B2" || ds === "TEAMS PLAYERS" || ds === "TEAM1" || ds === "TEAM2" || ds === "SQUADS" || ds === "PLAYINGXI" || ds === "PLAYING XI" || ds === "XI" || ds === "TEAM 1" || ds === "TEAM 2" || ds === "PLAYERS" || ds === "TEAM" || ds === "SQUAD";
+    const isPointsTable = ds === "POINTSTABLE" || ds === "POINTS TABLE" || ds === "PT" || ds === "TABLE" || ds === "STANDINGS";
+    const isPointsTablePlusOne = ds === "PT+1" || ds === "PT (TIED POINT +1)" || ds === "POINTSTABLE_PLUS1" || ds === "PT PLUS 1";
+    const isTopBatters = ds === "TOPBATTERS" || ds === "TOP BATTERS" || ds === "ORANGE CAP" || ds === "TOP RUNS" || ds === "BATTERS";
+    const isTopBowlers = ds === "TOPBOWLERS" || ds === "TOP BOWLERS" || ds === "PURPLE CAP" || ds === "TOP WICKETS" || ds === "BOWLERS";
+    const isTopStrikers = ds === "TOPSTRIKERS" || ds === "TOP 4/6 STRIKERS" || ds === "STRIKERS" || ds === "TOP 4/6" || ds === "TOP SIXES";
+    const isPlayerOfSeries = ds === "PLAYEROFSERIES" || ds === "TOP PLAYER OF SERIES" || ds === "MOS" || ds === "SERIES PLAYER" || ds === "MVP";
 
-    // ── BATTING CARD — centered, fully themed ──────────────────────────
+    // ── BATTING CARD — Universal Dynamic Modern Layout for all 16 themes ──────────────────────────
     if (isY1Bat || isY2Bat) {
       const inn = (isY1Bat ? 1 : 2) as 1 | 2; const innData = getInnState(inn);
       const batTeam = getInnTeam(inn, "bat"); const bowlTeam = getInnTeam(inn, "bowl");
+      const bpo = match.ballsPerOver || 6;
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const batTeamShort = getShortNameLocal(batTeam);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+
+      const isTeam1 = batTeam === match.team1Name;
+      const fullTeamRoster: string[] = isTeam1 ? (match.playersTeam1 || []) : (match.playersTeam2 || []);
+      const recordedBatsmen = innData?.batsmen || [];
+
+      const recordedNames = new Set(recordedBatsmen.map((b: any) => b.name.toLowerCase().trim()));
+      const remainingPlayers = fullTeamRoster.filter(p => !recordedNames.has(p.toLowerCase().trim()));
+
+      interface DisplayBatsmanRow {
+        name: string;
+        status: string;
+        runs?: number;
+        balls?: number;
+        isNotOut: boolean;
+        isOut: boolean;
+        isYetToBat: boolean;
+      }
+
+      const batsmanRows: DisplayBatsmanRow[] = [
+        ...recordedBatsmen.map((b: any) => {
+          const isOut = !!b.out;
+          const isNotOut = !b.out;
+          let dismissalText = isOut ? "OUT" : "NOT OUT";
+          if (isOut) {
+            if ((b as any).bowler) dismissalText = `b ${(b as any).bowler}`;
+            else if ((b as any).outDesc) dismissalText = (b as any).outDesc;
+            else if ((b as any).dismissal) dismissalText = (b as any).dismissal;
+          }
+          return {
+            name: b.name,
+            status: dismissalText,
+            runs: b.runs,
+            balls: b.balls,
+            isNotOut,
+            isOut,
+            isYetToBat: false,
+          };
+        }),
+        ...remainingPlayers.map(pName => ({
+          name: pName,
+          status: "",
+          isNotOut: false,
+          isOut: false,
+          isYetToBat: true,
+        }))
+      ];
+
+      if (batsmanRows.length === 0) {
+        if (scoringState.striker) {
+          batsmanRows.push({ name: scoringState.striker, status: "NOT OUT", runs: 0, balls: 0, isNotOut: true, isOut: false, isYetToBat: false });
+        }
+        if (scoringState.nonStriker && scoringState.nonStriker !== scoringState.striker) {
+          batsmanRows.push({ name: scoringState.nonStriker, status: "NOT OUT", runs: 0, balls: 0, isNotOut: true, isOut: false, isYetToBat: false });
+        }
+      }
+
+      const bBatRuns = innData?.batsmen?.reduce((acc: number, b: any) => acc + (b.runs || 0), 0) || 0;
+      const extras = innData ? Math.max(0, innData.score - bBatRuns) : 0;
+      const oversText = innData ? fmtOv(innData.balls, bpo) : "0.0";
+      const scoreText = innData ? `${innData.score}-${innData.wickets}` : "0-0";
+
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "92vw" }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Card wrapper — themed */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(145deg, ${panelBg}, ${theme.headerBg}f0)`,
-              border: panelBorder,
-              borderLeft: panelBorderLeft,
-              borderRadius: panelRadius,
-              overflow: "hidden",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(20px)",
-              position: "relative"
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Premium top accent glow line */}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${panelAccent}, transparent)` }} />
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
 
-              {/* Header */}
-              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}77)`, borderBottom: `1px solid ${panelAccent}20`, padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                  <div style={{ position: "relative", display: "inline-flex" }}>
-                    {/* Spinning dash circle to make it look active */}
-                    <div style={{ position: "absolute", inset: -5, borderRadius: "50%", border: `1.5px dashed ${panelAccent}40`, animation: "spin 25s linear infinite" }} />
-                    <TeamLogo name={batTeam} isBatting={scoringState.inningsNo === inn} isBowling={false} accentColor={panelAccent} borderColor={panelAccent} size={68} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 4, textTransform: "uppercase", opacity: 0.8 }}>Innings {inn} · Live Batting Card</div>
-                    <div style={{ fontSize: 26, fontWeight: 950, color: panelAccentTx, letterSpacing: 0.5, textShadow: `0 2px 10px rgba(0,0,0,0.5)` }}>{batTeam.toUpperCase()}</div>
-                    <div style={{ fontSize: 11, color: panelSecondary, marginTop: 2, display: "flex", alignItems: "center", gap: 6 }}>
-                      <span>vs {bowlTeam.toUpperCase()}</span>
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: panelSecondary, opacity: 0.5 }} />
-                      <span style={{ color: panelAccent }}>{match.matchType.toUpperCase()}</span>
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
+              <div style={{
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
+              }}>
+                {batTeam.toUpperCase()}
+              </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
+              </div>
+            </div>
+
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0,
+              opacity: 0.85
+            }}>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
+          </div>
+
+          {/* MAIN BATTING SCORECARD CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "16px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: "2px" }}>
+              {batsmanRows.length > 0 ? (
+                batsmanRows.map((row, idx) => {
+                  if (row.isNotOut) {
+                    return (
+                      <div
+                        key={idx}
+                        style={{
+                          background: `linear-gradient(90deg, ${cardAccent} 0%, ${cardAccent2} 100%)`,
+                          borderRadius: "8px",
+                          padding: "6px 14px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          margin: "3px 0",
+                          boxShadow: `0 2px 8px ${cardAccent}55`
+                        }}
+                      >
+                        <div style={{
+                          color: "#030a24",
+                          fontSize: "17px",
+                          fontWeight: 950,
+                          letterSpacing: "0.5px",
+                          textTransform: "uppercase",
+                          minWidth: "220px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {row.name}
+                        </div>
+
+                        <div style={{
+                          color: "#030a24",
+                          fontSize: "14px",
+                          fontWeight: 950,
+                          letterSpacing: "0.5px",
+                          textTransform: "uppercase",
+                          flex: 1,
+                          padding: "0 16px"
+                        }}>
+                          {row.status || "NOT OUT"}
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "28px", flexShrink: 0 }}>
+                          <span style={{ color: "#030a24", fontSize: "18px", fontWeight: 950, minWidth: "28px", textAlign: "right" }}>
+                            {row.runs ?? 0}
+                          </span>
+                          <span style={{ color: "#030a24", fontSize: "16px", fontWeight: 900, minWidth: "24px", textAlign: "right" }}>
+                            {row.balls ?? 0}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: "7px 14px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        borderBottom: `1px solid ${cardAccent}33`
+                      }}
+                    >
+                      <div style={{
+                        color: "#ffffff",
+                        fontSize: "17px",
+                        fontWeight: 900,
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase",
+                        minWidth: "220px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        {row.name}
+                      </div>
+
+                      <div style={{
+                        color: "#cbd5e1",
+                        fontSize: "14px",
+                        fontWeight: 700,
+                        letterSpacing: "0.5px",
+                        flex: 1,
+                        padding: "0 16px"
+                      }}>
+                        {row.status}
+                      </div>
+
+                      <div style={{ display: "flex", alignItems: "center", gap: "28px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontSize: "18px", fontWeight: 950, minWidth: "28px", textAlign: "right" }}>
+                          {row.isYetToBat ? "" : (row.runs ?? 0)}
+                        </span>
+                        <span style={{ color: "#94a3b8", fontSize: "16px", fontWeight: 700, minWidth: "24px", textAlign: "right" }}>
+                          {row.isYetToBat ? "" : (row.balls ?? 0)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  );
+                })
+              ) : (
+                <div style={{ textAlign: "center", color: "#94a3b8", padding: "30px", fontWeight: 800 }}>
+                  No batting data available yet.
                 </div>
-                {innData && (
-                  <div style={{
-                    background: `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`,
-                    border: `1px solid ${panelAccent}30`,
-                    borderRadius: 16,
-                    padding: "10px 24px",
-                    boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05)`,
-                    textAlign: "right"
-                  }}>
-                    <div style={{ fontSize: 48, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 15px ${panelAccent}35` }}>
-                      {innData.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 32, fontWeight: 500 }}>/</span>{innData.wickets}
-                    </div>
-                    <div style={{ fontSize: 11, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>{fmtOv(innData.balls, match.ballsPerOver)} / {match.overs} OVERS</div>
-                  </div>
-                )}
-              </div>
+              )}
+            </div>
+          </div>
 
-              {/* Table body */}
-              <div className="scroll-vertical" style={{ overflowY: "auto", maxHeight: "50vh", background: "rgba(0,0,0,0.15)" }}>
-                {innData ? <>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
-                    <thead>
-                      <tr style={{ background: `${theme.headerBg}a0`, borderBottom: `2px solid ${panelAccent}30` }}>
-                        {["BATSMAN", "STATUS", "RUNS", "BALLS", "4s", "6s", "S/R"].map((h, i) => (
-                          <th key={h} style={{ padding: "14px 18px", fontSize: 9.5, fontWeight: 900, textAlign: i === 0 ? "left" : "center", color: panelSecondary, letterSpacing: 2, borderBottom: `1px solid rgba(255,255,255,0.03)` }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {innData.batsmen.map((b, idx) => {
-                        const isSt = b.name === scoringState.striker && scoringState.inningsNo === inn;
-                        const isNS = b.name === scoringState.nonStriker && scoringState.inningsNo === inn;
-                        const srVal = b.balls > 0 ? ((b.runs / b.balls) * 100) : 0;
-                        return (
-                          <tr key={idx} className="table-row-animated" style={{
-                            animationDelay: `${idx * 0.04}s`,
-                            borderBottom: `1px solid rgba(255,255,255,0.03)`,
-                            background: isSt ? `linear-gradient(90deg, ${panelAccent}12, transparent)` : isNS ? `linear-gradient(90deg, rgba(255,255,255,0.02), transparent)` : "transparent",
-                            borderLeft: isSt ? `5px solid ${panelAccent}` : isNS ? `5px solid ${panelAccent}50` : "5px solid transparent",
-                            transition: "background 0.2s ease"
-                          }}>
-                            {/* Batsman Name */}
-                            <td style={{ padding: "14px 18px" }}>
-                              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                                {isSt && (
-                                  <div style={{ position: "relative", width: 10, height: 10, flexShrink: 0 }}>
-                                    <span style={{ width: 8, height: 8, borderRadius: "50%", background: panelAccent, boxShadow: `0 0 10px ${panelAccent}`, display: "block" }} />
-                                    <span className="striker-dot-ring" style={{ border: `2px solid ${panelAccent}` }} />
-                                  </div>
-                                )}
-                                <span style={{ fontWeight: 900, fontSize: 16, color: b.out ? "rgba(255,255,255,0.35)" : panelAccentTx, transition: "color 0.2s ease" }}>{b.name}</span>
-                                {isSt && <span className="bat-swing" style={{ fontSize: 14 }}>🏏</span>}
-                              </div>
-                            </td>
-                            {/* Status */}
-                            <td style={{ padding: "14px 18px", textAlign: "center" }}>
-                              <span style={{
-                                background: b.out ? "rgba(239,68,68,0.1)" : `${panelAccent}15`,
-                                border: `1px solid ${b.out ? "rgba(239,68,68,0.3)" : `${panelAccent}30`}`,
-                                borderRadius: 8,
-                                padding: "4px 12px",
-                                fontSize: 9,
-                                fontWeight: 900,
-                                letterSpacing: 1,
-                                color: b.out ? "#ef4444" : panelAccent,
-                                textTransform: "uppercase"
-                              }}>
-                                {b.out ? "OUT" : "BATTING"}
-                              </span>
-                            </td>
-                            {/* Runs */}
-                            <td style={{ padding: "14px", textAlign: "center", fontWeight: 950, fontSize: 21, color: b.runs >= 50 ? panelAccent : "#fff", position: "relative" }}>
-                              <span style={{ textShadow: b.runs >= 50 ? `0 0 8px ${panelAccent}50` : "none" }}>{b.runs}</span>
-                              {b.runs >= 50 && <span style={{ fontSize: 11, position: "absolute", top: 4, right: 4, color: "#fbbf24" }}>⭐</span>}
-                            </td>
-                            {/* Balls */}
-                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: panelSecondary, fontWeight: 700 }}>{b.balls}</td>
-                            {/* Fours */}
-                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: "#fbbf24", fontWeight: 800 }}>{b.fours}</td>
-                            {/* Sixes */}
-                            <td style={{ padding: "14px", textAlign: "center", fontSize: 14, color: "#38bdf8", fontWeight: 800 }}>{b.sixes}</td>
-                            {/* Strike Rate + Mini Visual Meter */}
-                            <td style={{ padding: "14px", textAlign: "center" }}>
-                              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                                <span style={{ fontSize: 14, color: panelAccentTx, fontWeight: 800 }}>{srVal.toFixed(1)}</span>
-                                {b.balls > 0 && (
-                                  <div style={{ width: 48, height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
-                                    <div style={{ width: `${Math.min(srVal / 2.5, 100)}%`, height: "100%", background: panelAccent }} />
-                                  </div>
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+          {/* BOTTOM PILL: OVERS | SCORE | EXTRAS */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              color: "#030a24",
+              fontSize: "17px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              OVERS <span style={{ fontWeight: 950 }}>{oversText}</span>
+            </div>
 
-                  {/* Footer total bar */}
-                  <div style={{
-                    background: `linear-gradient(135deg, ${theme.headerBg}f5, ${panelBg}ee)`,
-                    borderTop: `2px solid ${panelAccent}30`,
-                    padding: "16px 32px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    boxShadow: "0 -4px 20px rgba(0,0,0,0.2)"
-                  }}>
-                    <div style={{ fontSize: 12, fontWeight: 900, color: panelSecondary, letterSpacing: 2 }}>INN {inn} TEAM TOTAL</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                      <div style={{ fontSize: 24, fontWeight: 950, color: panelAccentTx }}>
-                        {innData.score}<span style={{ color: panelAccent, opacity: 0.8 }}>/</span>{innData.wickets}
-                      </div>
-                      <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.15)" }} />
-                      <div style={{ fontSize: 13, color: panelSecondary, fontWeight: 700 }}>
-                        ({fmtOv(innData.balls, match.ballsPerOver)}/{match.overs} OVS) · RR <span style={{ color: panelAccent, fontWeight: 900 }}>{calcRR(innData as any)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </> : <div style={{ textAlign: "center", color: panelSecondary, padding: 40 }}>No scorecard data.</div>}
-              </div>
+            <div style={{
+              color: "#030a24",
+              fontSize: "28px",
+              fontWeight: 950,
+              letterSpacing: "1.5px"
+            }}>
+              {scoreText}
+            </div>
+
+            <div style={{
+              color: "#030a24",
+              fontSize: "17px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              EXTRAS <span style={{ fontWeight: 950 }}>{extras}</span>
             </div>
           </div>
         </div>
       );
     }
 
-    // ── BOWLING CARD — centered, fully themed card grid ─────────────────
+    // ── BOWLING CARD — Universal Dynamic Modern Layout for all 16 themes ─────────────────
     if (isY1Ball || isY2Ball) {
       const inn = (isY1Ball ? 1 : 2) as 1 | 2; const innData = getInnState(inn);
       const bowlTeam = getInnTeam(inn, "bowl"); const batTeam = getInnTeam(inn, "bat");
+      const bpo = match.ballsPerOver || 6;
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const bowlTeamShort = getShortNameLocal(bowlTeam);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+
+      const bBatRuns = innData?.batsmen?.reduce((acc: number, b: any) => acc + (b.runs || 0), 0) || 0;
+      const extras = innData ? Math.max(0, innData.score - bBatRuns) : 0;
+      const oversText = innData ? fmtOv(innData.balls, bpo) : "0.0";
+      const scoreText = innData ? `${innData.score}-${innData.wickets}` : "0-0";
+
+      const bowlersList = innData?.bowlers || [];
+      const fowList = innData?.fallOfWickets || [];
+
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "92vw" }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Card wrapper — themed */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(145deg, ${panelBg}, ${theme.headerBg}f0)`,
-              border: panelBorder,
-              borderLeft: panelBorderLeft,
-              borderRadius: panelRadius,
-              overflow: "hidden",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(20px)",
-              position: "relative"
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Premium top accent glow line */}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${panelAccent}, transparent)` }} />
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{bowlTeamShort}</span>
+            </div>
 
-              {/* Header */}
-              <div style={{ background: `linear-gradient(135deg, ${theme.headerBg}ee, ${theme.headerBg}77)`, borderBottom: `1px solid ${panelAccent}20`, padding: "22px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                  <div style={{ position: "relative", display: "inline-flex" }}>
-                    <div style={{ position: "absolute", inset: -5, borderRadius: "50%", border: `1.5px dashed ${panelAccent}40`, animation: "spin 25s linear infinite" }} />
-                    <TeamLogo name={bowlTeam} isBatting={false} isBowling={scoringState.inningsNo === inn} accentColor={panelAccent} borderColor={panelAccent} size={68} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 3, marginBottom: 4, textTransform: "uppercase", opacity: 0.8 }}>Innings {inn} · Live Bowling Figures</div>
-                    <div style={{ fontSize: 26, fontWeight: 950, color: panelAccentTx, letterSpacing: 0.5, textShadow: `0 2px 10px rgba(0,0,0,0.5)` }}>{bowlTeam.toUpperCase()} BOWLING</div>
-                    <div style={{ fontSize: 11, color: panelSecondary, marginTop: 2, display: "flex", alignItems: "center", gap: 6 }}>
-                      <span>vs {batTeam.toUpperCase()}</span>
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: panelSecondary, opacity: 0.5 }} />
-                      <span style={{ color: panelAccent }}>{match.matchType.toUpperCase()}</span>
-                    </div>
-                  </div>
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
+              <div style={{
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
+              }}>
+                {bowlTeam.toUpperCase()}
+              </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
+              </div>
+            </div>
+
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0,
+              opacity: 0.85
+            }}>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{bowlTeamShort}</span>
+            </div>
+          </div>
+
+          {/* MAIN BOWLING & FALL OF WICKETS CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "16px 20px 20px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            <div style={{ position: "relative", zIndex: 2 }}>
+              {/* Table Header Strip */}
+              <div style={{
+                background: "rgba(255, 255, 255, 0.16)",
+                borderRadius: "8px",
+                padding: "6px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "8px"
+              }}>
+                <div style={{ width: "240px" }} />
+                <div style={{ display: "grid", gridTemplateColumns: "70px 70px 70px 85px 95px", textAlign: "right", gap: "10px" }}>
+                  <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900, letterSpacing: "1px" }}>OVERS</span>
+                  <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900, letterSpacing: "1px" }}>DOTS</span>
+                  <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900, letterSpacing: "1px" }}>RUNS</span>
+                  <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900, letterSpacing: "1px" }}>WICKETS</span>
+                  <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900, letterSpacing: "1px" }}>ECONOMY</span>
                 </div>
-                {innData && (
-                  <div style={{
-                    background: `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`,
-                    border: `1px solid ${panelAccent}30`,
-                    borderRadius: 16,
-                    padding: "10px 24px",
-                    boxShadow: `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05)`,
-                    textAlign: "right"
-                  }}>
-                    <div style={{ fontSize: 36, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 15px ${panelAccent}35` }}>
-                      {innData.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 26, fontWeight: 500 }}>/</span>{innData.wickets}
-                    </div>
-                    <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>({fmtOv(innData.balls, match.ballsPerOver)} OVERS)</div>
+              </div>
+
+              {/* Bowler Rows */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px", marginBottom: "16px" }}>
+                {bowlersList.length > 0 ? (
+                  bowlersList.map((bw: any, idx: number) => {
+                    const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
+                    const dots = bw.dotBalls ?? bw.dots ?? 0;
+                    return (
+                      <div
+                        key={idx}
+                        style={{
+                          padding: "8px 16px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          borderBottom: `1px solid ${cardAccent}33`
+                        }}
+                      >
+                        <div style={{
+                          color: "#ffffff",
+                          fontSize: "17px",
+                          fontWeight: 900,
+                          letterSpacing: "0.5px",
+                          textTransform: "uppercase",
+                          width: "240px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {bw.name}
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "70px 70px 70px 85px 95px", textAlign: "right", gap: "10px" }}>
+                          <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 900 }}>{fmtOv(bw.ballsBowled, bpo)}</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "16px", fontWeight: 800 }}>{dots}</span>
+                          <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 900 }}>{bw.runsConceded}</span>
+                          <span style={{ color: cardAccent, fontSize: "18px", fontWeight: 950 }}>{bw.wickets}</span>
+                          <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: 900 }}>{eco}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div style={{ textAlign: "center", color: "#94a3b8", padding: "20px", fontWeight: 800 }}>
+                    No bowling figures recorded yet.
                   </div>
                 )}
               </div>
 
-              {/* Bowler cards grid */}
-              <div className="scroll-vertical" style={{ padding: "28px 24px", maxHeight: "55vh", overflowY: "auto", background: "rgba(0,0,0,0.12)" }}>
-                {innData ? (
-                  <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(innData.bowlers.length, 4)}, 1fr)`, gap: 20 }}>
-                    {innData.bowlers.map((bw, idx) => {
-                      const isAct = scoringState.inningsNo === inn && bw.name === scoringState.bowler;
-                      const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * match.ballsPerOver).toFixed(2) : "0.00";
-                      const isEcoGood = parseFloat(eco) <= 6.0;
-                      return (
-                        <div key={idx} className="table-row-animated" style={{
-                          animationDelay: `${idx * 0.06}s`,
-                          background: isAct ? `linear-gradient(180deg, ${panelAccent}18, ${theme.headerBg}b0)` : `linear-gradient(180deg, ${panelBg}66, ${theme.headerBg}d0)`,
-                          border: `2px solid ${isAct ? panelAccent : "rgba(255,255,255,0.06)"}`,
-                          borderRadius: 20,
-                          padding: "24px 20px",
-                          textAlign: "center",
-                          position: "relative",
-                          boxShadow: isAct ? `0 0 25px ${panelAccent}40, inset 0 0 10px ${panelAccent}10` : "none",
-                          transition: "transform 0.2s ease, border-color 0.2s ease"
-                        }}>
-                          {/* Active bowler top glowing border animation */}
-                          {isAct && (
-                            <div style={{
-                              position: "absolute",
-                              top: -2,
-                              left: 0,
-                              right: 0,
-                              height: 4,
-                              background: `linear-gradient(90deg, transparent, ${panelAccent}, transparent)`,
-                              borderRadius: "20px 20px 0 0"
-                            }} />
-                          )}
-
-                          <div style={{ fontSize: 16, fontWeight: 950, color: isAct ? panelAccent : panelAccentTx, marginBottom: 4, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-                            <span>{bw.name.toUpperCase()}</span>
-                            {isAct && <span style={{ fontSize: 13, animation: "livePulse 1s ease infinite" }}>⚡</span>}
-                          </div>
-
-                          <div style={{ fontSize: 8.5, color: isAct ? panelAccent : panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 18, textTransform: "uppercase", opacity: 0.8 }}>
-                            {isAct ? "● CURRENTLY BOWLING" : "BOWLER"}
-                          </div>
-
-                          {/* Wickets circle with dynamic background */}
-                          <div style={{
-                            width: 80,
-                            height: 80,
-                            borderRadius: "50%",
-                            background: bw.wickets > 0 ? `linear-gradient(135deg, ${panelAccent}33, ${panelAccent}b0)` : "rgba(255,255,255,0.02)",
-                            border: `3px solid ${bw.wickets > 0 ? panelAccent : "rgba(255,255,255,0.08)"}`,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            margin: "0 auto 20px",
-                            boxShadow: bw.wickets > 0 ? `0 8px 24px ${panelAccent}30` : "none",
-                            position: "relative"
-                          }}>
-                            {/* Inner spinning ring for high wickets spell */}
-                            {bw.wickets >= 3 && (
-                              <div style={{ position: "absolute", inset: -6, borderRadius: "50%", border: `1px dashed ${panelAccent}`, animation: "spin 15s linear infinite" }} />
-                            )}
-                            <div style={{ fontSize: 28, fontWeight: 950, color: bw.wickets > 0 ? "#fff" : panelSecondary, lineHeight: 1 }}>{bw.wickets}</div>
-                            <div style={{ fontSize: 8, color: bw.wickets > 0 ? "#fff" : panelSecondary, fontWeight: 800, letterSpacing: 1, marginTop: 2 }}>WKT{bw.wickets !== 1 ? "S" : ""}</div>
-                          </div>
-
-                          {/* Stats mini grid */}
-                          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-                            {[
-                              { label: "OVERS", val: fmtOv(bw.ballsBowled, match.ballsPerOver), color: panelAccentTx },
-                              { label: "RUNS", val: bw.runsConceded, color: panelAccentTx },
-                              { label: "ECONOMY", val: eco, color: isEcoGood ? "#4ade80" : "#fb923c" }
-                            ].map((st, si) => (
-                              <div key={si} style={{
-                                background: "rgba(0,0,0,0.2)",
-                                border: "1px solid rgba(255,255,255,0.03)",
-                                borderRadius: 10,
-                                padding: "8px 4px",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center"
-                              }}>
-                                <div style={{ fontSize: 6.5, color: panelSecondary, fontWeight: 800, letterSpacing: 1, marginBottom: 4 }}>{st.label}</div>
-                                <div style={{ fontSize: 14, fontWeight: 950, color: st.color }}>{st.val}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
+              {/* Fall of Wickets Strip */}
+              {fowList.length > 0 && (
+                <div style={{
+                  borderTop: `1px solid ${cardAccent}4d`,
+                  paddingTop: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "14px"
+                }}>
+                  <div style={{
+                    color: cardAccent,
+                    fontSize: "13px",
+                    fontWeight: 950,
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    flexShrink: 0
+                  }}>
+                    FALL OF WICKETS:
                   </div>
-                ) : <div style={{ textAlign: "center", color: panelSecondary, padding: 40 }}>No bowling details.</div>}
-              </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", flex: 1 }}>
+                    {fowList.map((f: any, i: number) => (
+                      <span key={i} style={{ color: "#ffffff", fontSize: "13px", fontWeight: 900 }}>
+                        <span style={{ color: cardAccent }}>{f.score}</span>/{f.wickets}{" "}
+                        <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 700 }}>
+                          ({f.batsman}, {typeof f.over === "number" ? f.over.toFixed(1) : f.over} ov)
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL: OVERS | SCORE | WICKETS */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              color: "#030a24",
+              fontSize: "17px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              OVERS <span style={{ fontWeight: 950 }}>{oversText}</span>
+            </div>
+
+            <div style={{
+              color: "#030a24",
+              fontSize: "28px",
+              fontWeight: 950,
+              letterSpacing: "1.5px"
+            }}>
+              {scoreText}
+            </div>
+
+            <div style={{
+              color: "#030a24",
+              fontSize: "17px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              WICKETS <span style={{ fontWeight: 950 }}>{innData?.wickets || 0}/10</span>
             </div>
           </div>
         </div>
@@ -1849,329 +2527,206 @@ export default function OverlayPage() {
       const topB2 = inn2?.batsmen.slice().sort((a, b) => b.runs - a.runs || a.balls - b.balls).slice(0, 3) || [];
       const topBw1 = inn1?.bowlers.slice().sort((a, b) => b.wickets - a.wickets || a.runsConceded - b.runsConceded).slice(0, 3) || [];
       const topBw2 = inn2?.bowlers.slice().sort((a, b) => b.wickets - a.wickets || a.runsConceded - b.runsConceded).slice(0, 3) || [];
-      const bt1IsT1 = bt1 === match.team1Name;
 
       const bpo = match.ballsPerOver || 6;
-      const tossWinner = match.tossWonBy === "team1" ? match.team1Name : match.team2Name;
-      const tossChoice = match.optedTo || "Bat";
-      const tourName = (match as any).tournamentName || "MATCH SUMMARY";
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
-      // Innings 1 metrics
-      const inn1Fours = inn1?.batsmen.reduce((acc, b) => acc + (b.fours || 0), 0) || 0;
-      const inn1Sixes = inn1?.batsmen.reduce((acc, b) => acc + (b.sixes || 0), 0) || 0;
-      const inn1BoundaryRuns = (inn1Fours * 4) + (inn1Sixes * 6);
-      const inn1BatRuns = inn1?.batsmen.reduce((acc, b) => acc + (b.runs || 0), 0) || 0;
-      const inn1Extras = inn1 ? Math.max(0, inn1.score - inn1BatRuns) : 0;
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
 
-      // Innings 2 metrics
-      const inn2Fours = inn2?.batsmen.reduce((acc, b) => acc + (b.fours || 0), 0) || 0;
-      const inn2Sixes = inn2?.batsmen.reduce((acc, b) => acc + (b.sixes || 0), 0) || 0;
-      const inn2BoundaryRuns = (inn2Fours * 4) + (inn2Sixes * 6);
-      const inn2BatRuns = inn2?.batsmen.reduce((acc, b) => acc + (b.runs || 0), 0) || 0;
-      const inn2Extras = inn2 ? Math.max(0, inn2.score - inn2BatRuns) : 0;
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tossWinnerName = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
+      const tossDecisionText = (match as any).optedTo === "Bat" ? "BAT" : "BOWL";
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+      const hasInn2 = inn2 && (inn2.balls > 0 || inn2.score > 0 || (inn2.batsmen && inn2.batsmen.length > 0));
 
-      // Chase calculations
-      const runsNeeded = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : 0;
-      const totalBalls = match.overs * bpo;
-      const ballsRemaining = Math.max(0, totalBalls - scoringState.balls);
-      const rrr = ballsRemaining > 0 && scoringState.target !== null ? ((runsNeeded / ballsRemaining) * bpo).toFixed(2) : "0.00";
-      const crr = scoringState.balls > 0 ? ((scoringState.score / scoringState.balls) * bpo).toFixed(2) : "0.00";
+      const renderSummaryCard = (teamName: string, innData: any, topBat: any[], topBowl: any[]) => {
+        const oversText = innData ? fmtOv(innData.balls, bpo) : "0.0";
+        const scoreText = innData ? `${innData.score}-${innData.wickets}` : "0-0";
 
-      const renderInnColumn = (label: string, sublabel: string, team: string, inn: any, topBat: any[], topBowl: any[], isT1: boolean, isRight: boolean, fours: number, sixes: number, boundaryRuns: number, extras: number) => (
-        <div style={{
-          padding: "26px 24px 22px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 16
-        }}>
-          {/* Header & Logo */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <div style={{ position: "relative", display: "inline-flex" }}>
-                <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}50`, animation: "spin 30s linear infinite" }} />
-                <TeamLogo
-                  name={team}
-                  isBatting={scoringState.inningsNo === (isRight ? 2 : 1) && scoringState.battingTeam === (isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
-                  isBowling={scoringState.inningsNo === (isRight ? 2 : 1) && scoringState.bowlingTeam === (isT1 ? "team1" : "team2") && scoringState.inningsStarted && match.status !== "Completed"}
-                  accentColor={theme.accent}
-                  borderColor={theme.borderColor}
-                  size={72}
-                />
+        return (
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "16px 28px 20px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Inner Header Bar: Team Name, Overs, Score Badge */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderBottom: `1.5px solid ${cardAccent}66`,
+              paddingBottom: "12px",
+              marginBottom: "14px",
+              position: "relative",
+              zIndex: 2
+            }}>
+              <div style={{
+                color: cardTitleAccent,
+                fontSize: "22px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                textShadow: `0 0 12px ${cardAccent}66`
+              }}>
+                {teamName.toUpperCase()}
               </div>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
-                  <span style={{ fontSize: 9, color: panelAccent, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>{label}</span>
-                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: panelSecondary, opacity: 0.6 }} />
-                  <span style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, letterSpacing: 1.5 }}>{sublabel}</span>
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#fff", letterSpacing: 0.5, lineHeight: 1.1 }}>
-                  {team.toUpperCase()}
-                </div>
+
+              <div style={{
+                color: "#ffffff",
+                fontSize: "16px",
+                fontWeight: 900,
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                opacity: 0.95
+              }}>
+                OVERS <span style={{ fontWeight: 950 }}>{oversText}</span>
+              </div>
+
+              <div style={{
+                background: "#ffffff",
+                color: "#030a24",
+                fontSize: "22px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                padding: "3px 18px",
+                borderRadius: "8px",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.6)"
+              }}>
+                {scoreText}
               </div>
             </div>
 
+            {/* Dual Columns: Left Batsmen, Right Bowlers */}
             <div style={{
-              padding: "5px 10px",
-              borderRadius: 8,
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.06)",
-              fontSize: 9.5,
-              fontWeight: 800,
-              color: panelSecondary,
-              textAlign: "right"
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "40px",
+              position: "relative",
+              zIndex: 2
             }}>
-              {inn ? `${fmtOv(inn.balls, bpo)} / ${match.overs} Ov` : "YET TO BAT"}
+              {/* Left: Batsmen list */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {topBat.length > 0 ? (
+                  topBat.map((b, i) => (
+                    <div key={i} style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "4px 0"
+                    }}>
+                      <div style={{
+                        color: "#ffffff",
+                        fontSize: "18px",
+                        fontWeight: 900,
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        {b.name}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontSize: "19px", fontWeight: 950, minWidth: "26px", textAlign: "right" }}>
+                          {b.runs}
+                        </span>
+                        <span style={{ color: "#94a3b8", fontSize: "16px", fontWeight: 800, minWidth: "22px", textAlign: "right" }}>
+                          {b.balls}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "#94a3b8", fontSize: "14px", fontWeight: 800, padding: "10px 0" }}>
+                    YET TO BAT
+                  </div>
+                )}
+              </div>
+
+              {/* Right: Bowlers list */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {topBowl.length > 0 ? (
+                  topBowl.map((bw, i) => (
+                    <div key={i} style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "4px 0"
+                    }}>
+                      <div style={{
+                        color: "#ffffff",
+                        fontSize: "18px",
+                        fontWeight: 900,
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        {bw.name}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontSize: "19px", fontWeight: 950, minWidth: "46px", textAlign: "right" }}>
+                          {bw.wickets}-{bw.runsConceded}
+                        </span>
+                        <span style={{ color: "#94a3b8", fontSize: "16px", fontWeight: 800, minWidth: "28px", textAlign: "right" }}>
+                          {fmtOv(bw.ballsBowled, bpo)}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "#94a3b8", fontSize: "14px", fontWeight: 800, padding: "10px 0" }}>
+                    YET TO BOWL
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-
-          {inn ? (
-            <>
-              {/* Hero Score Box */}
-              <div style={{
-                background: `linear-gradient(135deg, rgba(255,255,255,0.04), ${panelBg}99, rgba(0,0,0,0.3))`,
-                border: `1.5px solid ${panelAccent}30`,
-                borderLeft: `4px solid ${panelAccent}`,
-                borderRadius: 14,
-                padding: "14px 18px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                boxShadow: `0 8px 24px rgba(0,0,0,0.3)`
-              }}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 3 }}>
-                    <span style={{ fontSize: 46, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 20px ${panelAccent}40` }}>
-                      {inn.score}
-                    </span>
-                    <span style={{ fontSize: 28, fontWeight: 500, color: panelAccentTx, opacity: 0.6, margin: "0 2px" }}>/</span>
-                    <span style={{ fontSize: 36, fontWeight: 950, color: panelAccentTx }}>
-                      {inn.wickets}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 10.5, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 0.5 }}>
-                    {fmtOv(inn.balls, bpo)} / {match.overs} OVERS · RR <span style={{ color: panelAccent, fontWeight: 950 }}>{calcRR(inn as any)}</span>
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "flex-end" }}>
-                  <div style={{
-                    background: "rgba(0,0,0,0.3)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 6,
-                    padding: "3px 8px",
-                    fontSize: 9.5,
-                    fontWeight: 800,
-                    color: "#fff",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6
-                  }}>
-                    <span>💥 {fours}×4s</span>
-                    <span style={{ opacity: 0.3 }}>|</span>
-                    <span>🚀 {sixes}×6s</span>
-                  </div>
-                  <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 700 }}>
-                    Boundaries: <span style={{ color: panelAccent, fontWeight: 900 }}>{boundaryRuns}</span> · Extras: <span style={{ color: "#fff", fontWeight: 900 }}>{extras}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Top Batsmen */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7, padding: "0 2px" }}>
-                  <div style={{ fontSize: 8.5, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5 }}>
-                    <span>🏏</span> TOP BATSMEN
-                  </div>
-                  <div style={{ fontSize: 7.5, color: panelSecondary, fontWeight: 800, letterSpacing: 1 }}>
-                    R (B) · 4s/6s · SR
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  {topBat.length > 0 ? (
-                    topBat.map((b, i) => {
-                      const sr = b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0";
-                      const pct = inn ? Math.min(100, Math.round((b.runs / (inn.score || 1)) * 100)) : 0;
-                      return (
-                        <div
-                          key={i}
-                          className="stat-badge"
-                          style={{
-                            background: "linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                            borderRadius: 10,
-                            padding: "8px 12px",
-                            position: "relative",
-                            overflow: "hidden",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 8
-                          }}
-                        >
-                          <div style={{ position: "absolute", bottom: 0, left: 0, height: 2, width: `${pct}%`, background: `linear-gradient(90deg, ${panelAccent}, ${theme.borderColor})`, opacity: 0.8 }} />
-
-                          <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
-                            <div style={{
-                              width: 20,
-                              height: 20,
-                              borderRadius: 5,
-                              background: i === 0 ? `${panelAccent}30` : "rgba(255,255,255,0.05)",
-                              border: `1px solid ${i === 0 ? panelAccent : "rgba(255,255,255,0.1)"}`,
-                              fontSize: 9.5,
-                              fontWeight: 950,
-                              color: i === 0 ? panelAccent : panelSecondary,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexShrink: 0
-                            }}>
-                              {i + 1}
-                            </div>
-                            <div style={{ minWidth: 0 }}>
-                              <div style={{ color: "#fff", fontWeight: 900, fontSize: 12.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {b.name}
-                                {b.out ? (
-                                  <span style={{ fontSize: 7.5, color: "#f87171", fontWeight: 800, marginLeft: 5, opacity: 0.8 }}>OUT</span>
-                                ) : (
-                                  <span style={{ fontSize: 7.5, color: "#4ade80", fontWeight: 800, marginLeft: 5, opacity: 0.9 }}>*NOT OUT</span>
-                                )}
-                              </div>
-                              <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 700, marginTop: 1 }}>
-                                {b.fours}×4s · {b.sixes}×6s · SR {sr}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div style={{ textAlign: "right", flexShrink: 0 }}>
-                            <span style={{ fontSize: 16, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>
-                              {b.runs}
-                            </span>
-                            <span style={{ fontSize: 10.5, color: panelSecondary, fontWeight: 700, marginLeft: 3 }}>
-                              ({b.balls})
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div style={{ fontSize: 10.5, color: panelSecondary, textAlign: "center", padding: 10 }}>
-                      No batting figures recorded.
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Top Bowlers */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7, padding: "0 2px" }}>
-                  <div style={{ fontSize: 8.5, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5 }}>
-                    <span>🎯</span> TOP BOWLERS
-                  </div>
-                  <div style={{ fontSize: 7.5, color: panelSecondary, fontWeight: 800, letterSpacing: 1 }}>
-                    O · R · W · ECON
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  {topBowl.length > 0 ? (
-                    topBowl.map((bw, i) => {
-                      const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
-                      const isGreatSpell = bw.wickets >= 2;
-                      return (
-                        <div
-                          key={i}
-                          className="stat-badge"
-                          style={{
-                            background: "linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))",
-                            border: `1px solid ${isGreatSpell ? "rgba(239,68,68,0.25)" : "rgba(255,255,255,0.06)"}`,
-                            borderRadius: 10,
-                            padding: "8px 12px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 8
-                          }}
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
-                            <div style={{
-                              width: 20,
-                              height: 20,
-                              borderRadius: 5,
-                              background: bw.wickets > 0 ? "rgba(239,68,68,0.2)" : "rgba(255,255,255,0.05)",
-                              border: `1px solid ${bw.wickets > 0 ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
-                              fontSize: 9.5,
-                              fontWeight: 950,
-                              color: bw.wickets > 0 ? "#ef4444" : panelSecondary,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexShrink: 0
-                            }}>
-                              {i + 1}
-                            </div>
-                            <div style={{ minWidth: 0 }}>
-                              <div style={{ color: "#fff", fontWeight: 900, fontSize: 12.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {bw.name}
-                              </div>
-                              <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 700, marginTop: 1 }}>
-                                {fmtOv(bw.ballsBowled, bpo)} Ov · Econ <span style={{ color: parseFloat(eco) <= 6.0 ? "#4ade80" : "#fb923c", fontWeight: 800 }}>{eco}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div style={{ textAlign: "right", flexShrink: 0 }}>
-                            <span style={{ fontSize: 16, fontWeight: 950, color: "#ef4444", lineHeight: 1 }}>
-                              {bw.wickets}
-                            </span>
-                            <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 700, margin: "0 2px" }}>/</span>
-                            <span style={{ fontSize: 13, color: "#fff", fontWeight: 900 }}>
-                              {bw.runsConceded}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div style={{ fontSize: 10.5, color: panelSecondary, textAlign: "center", padding: 10 }}>
-                      No bowling figures recorded.
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
-          ) : (
-            <div style={{
-              flex: 1,
-              minHeight: 260,
-              borderRadius: 14,
-              background: "rgba(0,0,0,0.25)",
-              border: "1.5px dashed rgba(255,255,255,0.1)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 24,
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: 36, marginBottom: 10, opacity: 0.6 }}>🏏</div>
-              <div style={{ fontSize: 15, fontWeight: 950, color: "#fff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                YET TO BAT
-              </div>
-              <div style={{ fontSize: 10.5, color: panelSecondary, marginTop: 4, maxWidth: 200 }}>
-                {team} will commence their innings in the 2nd innings.
-              </div>
-            </div>
-          )}
-        </div>
-      );
+        );
+      };
 
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          {/* Floating Print / Save PDF button */}
           <button
             className="no-print"
             onClick={() => window.print()}
@@ -2180,15 +2735,15 @@ export default function OverlayPage() {
               top: 18,
               right: 22,
               zIndex: 9999,
-              background: `linear-gradient(135deg, ${panelAccent}, ${theme.borderColor})`,
-              color: "#000",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
               border: "none",
               borderRadius: 12,
               padding: "10px 22px",
               fontWeight: 950,
               fontSize: 12,
               cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${panelAccent}60`,
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
               gap: 8,
@@ -2199,529 +2754,866 @@ export default function OverlayPage() {
             🖨️ Save PDF
           </button>
 
-          <div style={{ position: "relative", zIndex: 1, width: "92vw", maxWidth: 1360 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
-            {/* ── Top Header Banner (Matches Summary Design System) ── */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 32px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 14
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Left: Tournament & Match Details */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  background: `linear-gradient(135deg, ${panelAccent}25, rgba(255,255,255,0.04))`,
-                  border: `1.5px solid ${panelAccent}60`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 20,
-                  boxShadow: `0 0 16px ${panelAccent}30`
-                }}>
-                  🏏
-                </div>
-                <div>
-                  <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                    {match.matchType.toUpperCase()} · MATCH #{match.matchNo} · {match.overs} OVERS
-                  </div>
-                  <div style={{ fontSize: 20, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginTop: 2, textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>
-                    {tourName.toUpperCase()}
-                  </div>
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
 
-              {/* Center: Live / Winner Status Pill */}
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: match.status === "Completed"
-                  ? `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.7))`
-                  : scoringState.inningsNo === 2
-                    ? "linear-gradient(135deg, rgba(239,68,68,0.25), rgba(0,0,0,0.7))"
-                    : "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(0,0,0,0.7))",
-                border: `1.5px solid ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 22px",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                boxShadow: `0 0 20px ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "30px",
+                fontWeight: 950,
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                {match.status === "Completed" ? (
-                  <>
-                    <span style={{ fontSize: 16 }}>🏆</span>
-                    <span style={{ fontSize: 13, fontWeight: 950, color: panelAccentTx, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                      {winnerText ? winnerText.toUpperCase() : "MATCH COMPLETED"}
-                    </span>
-                  </>
-                ) : scoringState.inningsNo === 2 ? (
-                  <>
-                    <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
-                    <span style={{ fontSize: 12, fontWeight: 950, color: "#ffffff", letterSpacing: 1 }}>
-                      TARGET: <span style={{ color: panelAccent }}>{scoringState.target}</span> · NEED <span style={{ color: "#ffffff", fontWeight: 950 }}>{runsNeeded}</span> FROM <span style={{ color: "#ffffff" }}>{ballsRemaining}b</span> (RRR: {rrr})
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
-                    <span style={{ fontSize: 12, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5 }}>
-                      1ST INNINGS IN PROGRESS · CRR {crr}
-                    </span>
-                  </>
-                )}
+                MATCH SUMMARY
               </div>
-
-              {/* Right: Broadcast Theme Tag */}
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                  OFFICIAL BROADCAST
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2, textShadow: `0 0 12px ${panelAccent}40` }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* ── 3-Column Symmetrical Dashboard Grid (Innings 1 | Center Nerve / Required Runs | Innings 2) ── */}
             <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 180px 1fr",
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}f2, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              overflow: "hidden",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
-              position: "relative"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* 1. LEFT COLUMN: INNINGS 1 */}
-              <div style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}>
-                {renderInnColumn("1ST INNINGS", "BATTED FIRST", bt1, inn1, topB1, topBw1, bt1IsT1, false, inn1Fours, inn1Sixes, inn1BoundaryRuns, inn1Extras)}
-              </div>
-
-              {/* 2. CENTER COLUMN: VS, REQUIRED RUNS / STATUS & MATCH PULSE */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "26px 14px 22px",
-                position: "relative",
-                background: `linear-gradient(180deg, ${panelAccent}08, rgba(0,0,0,0.5) 50%, ${panelAccent}08)`,
-                borderRight: "1px solid rgba(255,255,255,0.06)"
-              }}>
-                {/* Glowing Central VS Emblem */}
-                <div style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: "50%",
-                  background: `linear-gradient(135deg, ${panelAccent}25, rgba(0,0,0,0.85))`,
-                  border: `2px solid ${panelAccent}`,
-                  boxShadow: `0 0 18px ${panelAccent}50`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 15,
-                  fontWeight: 950,
-                  color: panelAccentTx,
-                  letterSpacing: 1
-                }}>
-                  VS
-                </div>
-
-                {/* Prominent Center Required Runs / Match Status Box */}
-                <div style={{
-                  width: "100%",
-                  background: match.status === "Completed"
-                    ? `linear-gradient(135deg, ${panelAccent}25, rgba(0,0,0,0.7))`
-                    : scoringState.inningsNo === 2
-                      ? "linear-gradient(135deg, rgba(239,68,68,0.22), rgba(0,0,0,0.6))"
-                      : "linear-gradient(135deg, rgba(56,189,248,0.15), rgba(0,0,0,0.6))",
-                  border: `1.5px solid ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : theme.borderColor}`,
-                  borderRadius: 14,
-                  padding: "14px 10px",
-                  textAlign: "center",
-                  boxShadow: `0 8px 24px ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : theme.borderColor}25`
-                }}>
-                  {match.status === "Completed" ? (
-                    <div>
-                      <div style={{ fontSize: 18, marginBottom: 2 }}>🏆</div>
-                      <div style={{ fontSize: 8, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>RESULT</div>
-                      <div style={{ fontSize: 12, fontWeight: 950, color: "#fff", marginTop: 4, lineHeight: 1.2 }}>
-                        {winnerText ? winnerText.toUpperCase() : "COMPLETED"}
-                      </div>
-                    </div>
-                  ) : scoringState.inningsNo === 2 ? (
-                    <div>
-                      <div style={{ fontSize: 8.5, color: "#fca5a5", fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 2 }}>NEED</div>
-                      <div style={{ fontSize: 34, fontWeight: 950, color: "#fff", lineHeight: 1, textShadow: "0 0 14px rgba(255,255,255,0.4)" }}>
-                        {runsNeeded}
-                      </div>
-                      <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 800, marginTop: 4, letterSpacing: 1 }}>
-                        OFF {ballsRemaining} BALLS
-                      </div>
-                      <div style={{ fontSize: 8, color: panelAccent, fontWeight: 900, marginTop: 3 }}>
-                        RRR: {rrr}
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 5, marginBottom: 3 }}>
-                        <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444" }} />
-                        <span style={{ fontSize: 8.5, color: "#fca5a5", fontWeight: 900, letterSpacing: 1.5 }}>LIVE</span>
-                      </div>
-                      <div style={{ fontSize: 11, fontWeight: 950, color: "#fff", textTransform: "uppercase" }}>
-                        INN 1
-                      </div>
-                      <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 800, marginTop: 3 }}>
-                        CRR: {crr}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Toss Box */}
-                <div style={{
-                  background: "rgba(0,0,0,0.4)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: 10,
-                  padding: "8px 6px",
-                  textAlign: "center",
-                  width: "100%"
-                }}>
-                  <div style={{ fontSize: 7.5, color: panelAccent, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 2 }}>
-                    🪙 TOSS
-                  </div>
-                  <div style={{ fontSize: 10, fontWeight: 900, color: "#fff", lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {tossWinner}
-                  </div>
-                  <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 700, marginTop: 1 }}>
-                    opted to {tossChoice}
-                  </div>
-                </div>
-
-                {/* Match Format Tag */}
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 7.5, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                    FORMAT
-                  </div>
-                  <div style={{ fontSize: 9.5, fontWeight: 950, color: panelAccent, marginTop: 1 }}>
-                    {match.overs} OVERS
-                  </div>
-                </div>
-              </div>
-
-              {/* 3. RIGHT COLUMN: INNINGS 2 */}
-              <div>
-                {renderInnColumn("2ND INNINGS", scoringState.target ? `CHASING ${scoringState.target}` : "TARGET CHASE", bt2, inn2, topB2, topBw2, !bt1IsT1, true, inn2Fours, inn2Sixes, inn2BoundaryRuns, inn2Extras)}
-              </div>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
             </div>
+          </div>
 
-            {/* ── Bottom Spotlight / Man of the Match Ribbon ── */}
-            {scoringState.momPlayer && (
-              <div className="animate-slide-up" style={{
-                marginTop: 12,
-                background: `linear-gradient(90deg, rgba(2,4,15,0.95), ${theme.headerBg}ee, rgba(2,4,15,0.95))`,
-                border: `1.5px solid ${panelAccent}60`,
-                borderRadius: 16,
-                padding: "12px 24px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                boxShadow: `0 8px 30px ${panelAccent}25`
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontSize: 20 }}>⭐</span>
-                  <div>
-                    <span style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>MAN OF THE MATCH: </span>
-                    <span style={{ fontSize: 15, color: panelAccent, fontWeight: 950, letterSpacing: 1 }}>{scoringState.momPlayer.toUpperCase()}</span>
-                  </div>
-                </div>
-                <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  MATCH IMPACT PLAYER
-                </div>
-              </div>
-            )}
+          {/* MAIN INNINGS SUMMARY CARDS */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px", width: "100%", alignItems: "center" }}>
+            {renderSummaryCard(bt1, inn1, topB1, topBw1)}
+            {hasInn2 && renderSummaryCard(bt2, inn2, topB2, topBw2)}
+          </div>
+
+          {/* BOTTOM TOSS / OUTCOME PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "11px 24px",
+            textAlign: "center",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)"
+          }}>
+            <div style={{
+              color: "#030a24",
+              fontSize: "15px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              {match.status === "Completed" && winnerText
+                ? winnerText.toUpperCase()
+                : `${tossWinnerName.toUpperCase()} WON THE TOSS AND ELECTED TO ${tossDecisionText.toUpperCase()}`}
+            </div>
           </div>
         </div>
       );
     }
 
-    // ── FALL OF WICKETS — Broadcast-Grade Timeline Beads with Exact Theme Palette ──
-    if (isFow) {
-      const fowList = scoringState.fallOfWickets || [];
-      const row1 = fowList.slice(0, 5);
-      const row2 = fowList.slice(5);
-      const tourName = (match as any).tournamentName || "FALL OF WICKETS";
-      return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "88vw", maxWidth: 1300 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+    // ── MATCH FULL SCORECARD — Detailed Innings 1 & 2 Scorecard with Universal Dynamic Theme ───────────
+    if (isFullScore) {
+      const inn1 = getInnState(1);
+      const inn2 = getInnState(2);
+      const bt1 = getInnTeam(1, "bat");
+      const bt2 = getInnTeam(2, "bat");
+      const bpo = match.ballsPerOver || 6;
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
 
-            {/* Top Header Banner with Theme Palette */}
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tossWinnerName = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
+      const tossDecisionText = (match as any).optedTo === "Bat" ? "BAT" : "BOWL";
+      const hasInn2 = inn2 && (inn2.balls > 0 || inn2.score > 0 || (inn2.batsmen && inn2.batsmen.length > 0));
+
+      const renderInningsCard = (teamName: string, innNumber: number, innData: any) => {
+        if (!innData) {
+          return (
             <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid #ef4444`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 32px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 14
+              background: bodyBgGrad,
+              border: `2px solid ${cardAccent}`,
+              borderRadius: "22px",
+              padding: "24px",
+              boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 20px ${cardAccent}26`,
+              width: "min(92vw, 1080px)",
+              textAlign: "center",
+              color: "#94a3b8"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <TeamLogo
-                  name={currentBatTeam}
-                  isBatting={true}
-                  isBowling={false}
-                  accentColor={panelAccent}
-                  borderColor={theme.borderColor}
-                  size={58}
-                />
-                <div>
-                  <div style={{ fontSize: 9.5, color: "#f87171", fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                    INNINGS {scoringState.inningsNo} · WICKETS TIMELINE
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                    {currentBatTeam.toUpperCase()} FALL OF WICKETS
-                  </div>
-                </div>
+              <div style={{ color: cardTitleAccent, fontSize: "20px", fontWeight: 950, textTransform: "uppercase", marginBottom: "6px" }}>
+                {teamName.toUpperCase()} — INNINGS {innNumber}
               </div>
+              <div style={{ fontSize: "14px", fontWeight: 700 }}>Yet to bat</div>
+            </div>
+          );
+        }
 
-              {/* Center Total Wickets Pill */}
+        const oversText = fmtOv(innData.balls, bpo);
+        const scoreText = `${innData.score}-${innData.wickets}`;
+        const bBatRuns = innData.batsmen?.reduce((acc: number, b: any) => acc + (b.runs || 0), 0) || 0;
+        const extras = Math.max(0, innData.score - bBatRuns);
+        const batsmenList = innData.batsmen || [];
+        const bowlersList = innData.bowlers || [];
+        const fowList = innData.fallOfWickets || [];
+
+        return (
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "16px 24px 20px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            <div style={{ position: "relative", zIndex: 2 }}>
+              {/* Inner Header Bar: Team Name, Overs, Score Badge */}
               <div style={{
-                background: "linear-gradient(135deg, rgba(239,68,68,0.2), rgba(0,0,0,0.7))",
-                border: "1.5px solid #ef4444",
-                borderRadius: 999,
-                padding: "8px 22px",
                 display: "flex",
                 alignItems: "center",
-                gap: 8,
-                boxShadow: "0 0 20px rgba(239,68,68,0.35)"
+                justifyContent: "space-between",
+                borderBottom: `1.5px solid ${cardAccent}66`,
+                paddingBottom: "10px",
+                marginBottom: "12px"
               }}>
-                <span style={{ fontSize: 16 }}>⚡</span>
-                <span style={{ fontSize: 16, fontWeight: 950, color: "#ffffff", letterSpacing: 1 }}>
-                  {fowList.length} <span style={{ color: "#f87171" }}>/ 10</span> WICKETS DOWN
-                </span>
+                <div style={{
+                  color: cardTitleAccent,
+                  fontSize: "22px",
+                  fontWeight: 950,
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  textShadow: `0 0 12px ${cardAccent}66`
+                }}>
+                  {teamName.toUpperCase()} <span style={{ fontSize: "14px", color: cardAccent2, opacity: 0.9 }}>· INNINGS {innNumber}</span>
+                </div>
+
+                <div style={{
+                  color: "#ffffff",
+                  fontSize: "15px",
+                  fontWeight: 900,
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  opacity: 0.95
+                }}>
+                  OVERS <span style={{ fontWeight: 950 }}>{oversText}</span>
+                </div>
+
+                <div style={{
+                  background: "#ffffff",
+                  color: "#030a24",
+                  fontSize: "20px",
+                  fontWeight: 950,
+                  letterSpacing: "1px",
+                  padding: "3px 16px",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.6)"
+                }}>
+                  {scoreText}
+                </div>
               </div>
 
-              {/* Theme Name Branding */}
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                  OFFICIAL BROADCAST
+              {/* BATTING SECTION */}
+              <div style={{ marginBottom: "16px" }}>
+                <div style={{
+                  background: "rgba(255, 255, 255, 0.14)",
+                  borderRadius: "8px",
+                  padding: "5px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "6px"
+                }}>
+                  <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "220px" }}>BATSMAN</span>
+                  <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left", paddingLeft: "10px" }}>DISMISSAL</span>
+                  <div style={{ display: "grid", gridTemplateColumns: "45px 45px 40px 40px 65px", textAlign: "right", gap: "8px" }}>
+                    <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>R</span>
+                    <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>B</span>
+                    <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>4s</span>
+                    <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>6s</span>
+                    <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>SR</span>
+                  </div>
                 </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2, textShadow: `0 0 12px ${panelAccent}40` }}>
-                  {theme.name.toUpperCase()}
-                </div>
-              </div>
-            </div>
 
-            {/* Main Timeline Card Container */}
-            <div style={{
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "36px 32px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
-            }}>
-              {fowList.length > 0 ? (
-                <>
-                  {/* Timeline Row 1 */}
-                  <div style={{ position: "relative", marginBottom: row2.length > 0 ? 36 : 20 }}>
-                    <div style={{ position: "absolute", top: 18, left: "4%", right: "4%", height: 3, background: "linear-gradient(90deg, #ef4444, rgba(239,68,68,0.2))", borderRadius: 4 }} />
-                    <div style={{ display: "grid", gridTemplateColumns: `repeat(${row1.length}, 1fr)`, gap: 14 }}>
-                      {row1.map((f: any, i: number) => (
-                        <div key={i} className="table-row-animated" style={{ animationDelay: `${i * 0.07}s`, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                          <div style={{
-                            width: 36,
-                            height: 36,
-                            borderRadius: "50%",
-                            background: "linear-gradient(135deg, #991b1b, #dc2626)",
-                            border: "2.5px solid #ef4444",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 12,
-                            fontWeight: 950,
-                            color: "#ffffff",
-                            boxShadow: "0 0 16px rgba(239,68,68,0.6)",
-                            zIndex: 2
-                          }}>
-                            {f.wickets}
-                          </div>
-                          <div style={{
-                            marginTop: 12,
-                            background: "linear-gradient(145deg, rgba(239,68,68,0.12), rgba(0,0,0,0.6))",
-                            border: "1.5px solid rgba(239,68,68,0.3)",
-                            borderRadius: 14,
-                            padding: "12px 14px",
-                            textAlign: "center",
-                            width: "100%",
-                            boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
-                          }}>
-                            <div style={{ fontSize: 8.5, color: "#f87171", fontWeight: 900, letterSpacing: 1.5, marginBottom: 3 }}>
-                              WICKET {f.wickets}
-                            </div>
-                            <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                              {f.batsman}
-                            </div>
-                            <div style={{ fontSize: 24, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>
-                              {f.score}
-                            </div>
-                            <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700, marginTop: 4 }}>
-                              {typeof f.over === "number" ? f.over.toFixed(1) : f.over} OVERS
-                            </div>
-                          </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                  {batsmenList.map((b: any, i: number) => {
+                    const isOut = !!b.out;
+                    const sr = b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0";
+                    let dismissal = isOut ? "out" : "not out";
+                    if (isOut) {
+                      if (b.bowler) dismissal = `b ${b.bowler}`;
+                      else if (b.outDesc) dismissal = b.outDesc;
+                      else if (b.dismissal) dismissal = b.dismissal;
+                    }
+
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          padding: "6px 14px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          borderBottom: `1px solid ${cardAccent}26`,
+                          background: !isOut ? `${cardAccent}14` : "transparent",
+                          borderRadius: "4px"
+                        }}
+                      >
+                        <div style={{
+                          color: "#ffffff",
+                          fontSize: "15px",
+                          fontWeight: 900,
+                          width: "220px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          textTransform: "uppercase"
+                        }}>
+                          {b.name} {!isOut && <span style={{ color: cardAccent, fontSize: "11px" }}>*</span>}
                         </div>
-                      ))}
+
+                        <div style={{
+                          color: isOut ? "#94a3b8" : cardAccent,
+                          fontSize: "13px",
+                          fontWeight: 700,
+                          flex: 1,
+                          textAlign: "left",
+                          paddingLeft: "10px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          textTransform: "uppercase"
+                        }}>
+                          {dismissal}
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "45px 45px 40px 40px 65px", textAlign: "right", gap: "8px" }}>
+                          <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 950 }}>{b.runs}</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "14px", fontWeight: 800 }}>{b.balls}</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "14px", fontWeight: 800 }}>{b.fours || 0}</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "14px", fontWeight: 800 }}>{b.sixes || 0}</span>
+                          <span style={{ color: cardAccent, fontSize: "14px", fontWeight: 900 }}>{sr}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "6px 14px",
+                  borderTop: `1px solid ${cardAccent}4d`,
+                  marginTop: "4px",
+                  fontSize: "13px",
+                  fontWeight: 900,
+                  color: cardAccent2
+                }}>
+                  <span>EXTRAS</span>
+                  <span>{extras}</span>
+                </div>
+              </div>
+
+              {/* BOWLING SECTION */}
+              {bowlersList.length > 0 && (
+                <div>
+                  <div style={{
+                    background: "rgba(255, 255, 255, 0.14)",
+                    borderRadius: "8px",
+                    padding: "5px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: "6px"
+                  }}>
+                    <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "240px" }}>BOWLER</span>
+                    <div style={{ display: "grid", gridTemplateColumns: "60px 55px 55px 65px 75px", textAlign: "right", gap: "8px" }}>
+                      <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>OVERS</span>
+                      <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>DOTS</span>
+                      <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>RUNS</span>
+                      <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>WKTS</span>
+                      <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>ECON</span>
                     </div>
                   </div>
 
-                  {/* Timeline Row 2 */}
-                  {row2.length > 0 && (
-                    <div style={{ position: "relative", marginBottom: 24 }}>
-                      <div style={{ position: "absolute", top: 18, left: "4%", right: "4%", height: 3, background: "linear-gradient(90deg, #ef4444, rgba(239,68,68,0.2))", borderRadius: 4 }} />
-                      <div style={{ display: "grid", gridTemplateColumns: `repeat(${row2.length}, 1fr)`, gap: 14 }}>
-                        {row2.map((f: any, i: number) => (
-                          <div key={i} className="table-row-animated" style={{ animationDelay: `${(i + 5) * 0.07}s`, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <div style={{
-                              width: 36,
-                              height: 36,
-                              borderRadius: "50%",
-                              background: "linear-gradient(135deg, #991b1b, #dc2626)",
-                              border: "2.5px solid #ef4444",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: 12,
-                              fontWeight: 950,
-                              color: "#ffffff",
-                              boxShadow: "0 0 16px rgba(239,68,68,0.6)",
-                              zIndex: 2
-                            }}>
-                              {f.wickets}
-                            </div>
-                            <div style={{
-                              marginTop: 12,
-                              background: "linear-gradient(145deg, rgba(239,68,68,0.12), rgba(0,0,0,0.6))",
-                              border: "1.5px solid rgba(239,68,68,0.3)",
-                              borderRadius: 14,
-                              padding: "12px 14px",
-                              textAlign: "center",
-                              width: "100%",
-                              boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
-                            }}>
-                              <div style={{ fontSize: 8.5, color: "#f87171", fontWeight: 900, letterSpacing: 1.5, marginBottom: 3 }}>
-                                WICKET {f.wickets}
-                              </div>
-                              <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {f.batsman}
-                              </div>
-                              <div style={{ fontSize: 24, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>
-                                {f.score}
-                              </div>
-                              <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700, marginTop: 4 }}>
-                                {typeof f.over === "number" ? f.over.toFixed(1) : f.over} OVERS
-                              </div>
-                            </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                    {bowlersList.map((bw: any, i: number) => {
+                      const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
+                      const dots = bw.dotBalls ?? bw.dots ?? 0;
+                      return (
+                        <div
+                          key={i}
+                          style={{
+                            padding: "6px 14px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            borderBottom: `1px solid ${cardAccent}26`
+                          }}
+                        >
+                          <div style={{
+                            color: "#ffffff",
+                            fontSize: "15px",
+                            fontWeight: 900,
+                            width: "240px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            textTransform: "uppercase"
+                          }}>
+                            {bw.name}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
-                  {/* Summary Badges Row */}
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center", borderTop: `1px solid ${theme.borderColor}20`, paddingTop: 20 }}>
+                          <div style={{ display: "grid", gridTemplateColumns: "60px 55px 55px 65px 75px", textAlign: "right", gap: "8px" }}>
+                            <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 900 }}>{fmtOv(bw.ballsBowled, bpo)}</span>
+                            <span style={{ color: "#cbd5e1", fontSize: "14px", fontWeight: 800 }}>{dots}</span>
+                            <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 900 }}>{bw.runsConceded}</span>
+                            <span style={{ color: cardAccent, fontSize: "15px", fontWeight: 950 }}>{bw.wickets}</span>
+                            <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: 900 }}>{eco}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* FOW Summary */}
+              {fowList.length > 0 && (
+                <div style={{ marginTop: "12px", borderTop: `1px solid ${cardAccent}40`, paddingTop: "8px" }}>
+                  <div style={{ fontSize: "11px", color: cardAccent, fontWeight: 950, letterSpacing: "1px", marginBottom: "4px" }}>
+                    FALL OF WICKETS
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {fowList.map((f: any, i: number) => (
                       <span key={i} style={{
-                        background: "rgba(239,68,68,0.15)",
-                        border: "1.5px solid rgba(239,68,68,0.4)",
-                        borderRadius: 20,
-                        padding: "6px 14px",
-                        fontSize: 11.5,
+                        background: "rgba(255,255,255,0.06)",
+                        border: `1px solid ${cardAccent}4d`,
+                        borderRadius: "12px",
+                        padding: "3px 10px",
+                        fontSize: "11px",
                         fontWeight: 900,
-                        color: "#f87171"
+                        color: "#ffffff"
                       }}>
-                        {f.score}/{f.wickets} <span style={{ color: "#ffffff", opacity: 0.9, fontWeight: 700 }}>({f.batsman}, {typeof f.over === "number" ? f.over.toFixed(1) : f.over} ov)</span>
+                        {f.score}/{f.wickets} <span style={{ color: "#94a3b8", fontWeight: 700 }}>({f.batsman}, {typeof f.over === "number" ? f.over.toFixed(1) : f.over} ov)</span>
                       </span>
                     ))}
                   </div>
-                </>
-              ) : (
-                <div style={{ textAlign: "center", color: panelSecondary, padding: 60 }}>
-                  <div style={{ fontSize: 40, marginBottom: 10 }}>🏏</div>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: "#ffffff" }}>NO WICKETS FALLEN YET</div>
-                  <div style={{ fontSize: 12, marginTop: 4 }}>The batting side has not lost any wickets in this innings.</div>
                 </div>
               )}
             </div>
           </div>
-        </div>
-      );
-    }
+        );
+      };
 
-    // ── BOWLER SPOTLIGHT — Centered oval design ──────────────────────────
-    if (isBowlerSp) {
-      const eco = bowler && bowler.ballsBowled > 0 ? ((bowler.runsConceded / bowler.ballsBowled) * match.ballsPerOver).toFixed(2) : "0.00";
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 60% 50% at 50% 50%,${panelAccent}20,transparent 70%)`, pointerEvents: "none" }} />
-          <div style={{ position: "relative", zIndex: 1, width: "68vw", maxWidth: 960, display: "flex", flexDirection: "column", alignItems: "center" }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
-            <div className="animate-slide-up" style={{ marginBottom: 20 }}>
-              <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor={panelAccent} borderColor={theme.borderColor} size={88} />
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
             </div>
-            <div className="scale-in" style={{ background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`, border: `2px solid ${theme.borderColor}`, borderTop: `6px solid ${panelAccent}`, borderRadius: 24, padding: "40px 48px", textAlign: "center", minWidth: "100%", boxShadow: panelShadow }}>
-              <div style={{ fontSize: 11, color: panelSecondary, fontWeight: 900, letterSpacing: 4, marginBottom: 8, textTransform: "uppercase" }}>⚡ BOWLING SPOTLIGHT · ACTIVE SPELL</div>
-              <div style={{ fontSize: 44, fontWeight: 950, color: "#fff", letterSpacing: 1, marginBottom: 4, textShadow: `0 0 30px ${panelAccent}40` }}>{scoringState.bowler || "No Bowler"}</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16, marginTop: 28, marginBottom: scoringState.thisOver.length > 0 ? 28 : 0 }}>
-                {[{ l: "WICKETS", v: bowler?.wickets ?? 0, c: "#ef4444" }, { l: "RUNS", v: bowler?.runsConceded ?? 0, c: "#fff" }, { l: "OVERS", v: fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver), c: panelAccentTx }, { l: "ECONOMY", v: eco, c: parseFloat(eco) < 8 ? "#4ade80" : "#f87171" }].map((st, i) => (
-                  <div key={i} style={{ background: i === 0 ? "rgba(239,68,68,0.15)" : "rgba(255,255,255,0.04)", border: `1.5px solid ${i === 0 ? "#ef4444" : "rgba(255,255,255,0.08)"}40`, borderRadius: 18, padding: "20px 14px", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
-                    <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 8 }}>{st.l}</div>
-                    <div style={{ fontSize: 34, fontWeight: 950, color: st.c }}>{st.v}</div>
-                  </div>
-                ))}
+
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
+              <div style={{
+                color: cardTitleAccent,
+                fontSize: "28px",
+                fontWeight: 950,
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
+              }}>
+                MATCH SCORECARD
               </div>
-              {scoringState.thisOver.length > 0 && <>
-                <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 12, textTransform: "uppercase" }}>THIS OVER DELIVERIES</div>
-                <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
-                  {(() => {
-                    const bpo = match.ballsPerOver || 6;
-                    const thisOver = scoringState.thisOver || [];
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCircles = bpo + extrasCount;
-                    return Array.from({ length: totalCircles }).map((_, i) => (
-                      <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={42} />
-                    ));
-                  })()}
-                </div>
-              </>}
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
+              </div>
+            </div>
+
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
+
+          {/* MAIN INNINGS SCORECARDS */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px", width: "100%", alignItems: "center" }}>
+            {renderInningsCard(bt1, 1, inn1)}
+            {hasInn2 && renderInningsCard(bt2, 2, inn2)}
+          </div>
+
+          {/* BOTTOM OUTCOME PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "11px 24px",
+            textAlign: "center",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)"
+          }}>
+            <div style={{
+              color: "#030a24",
+              fontSize: "15px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase"
+            }}>
+              {match.status === "Completed" && winnerText
+                ? winnerText.toUpperCase()
+                : `${tossWinnerName.toUpperCase()} WON THE TOSS AND ELECTED TO ${tossDecisionText.toUpperCase()}`}
             </div>
           </div>
         </div>
       );
     }
 
-    // ── TARGET — Broadcast-Grade Chase Equation with Exact Theme Palette ──
+    // ── FALL OF WICKETS — Broadcast Timeline Cards with Universal Dynamic Theme ──
+    if (isFow) {
+      const fowList = scoringState.fallOfWickets || [];
+      const row1 = fowList.slice(0, 5);
+      const row2 = fowList.slice(5);
+      const bpo = match.ballsPerOver || 6;
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const batTeamShort = getShortNameLocal(currentBatTeam);
+      const oversText = fmtOv(scoringState.balls, bpo);
+      const scoreText = `${scoringState.score}-${scoringState.wickets}`;
+
+      return (
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
+
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
+              <div style={{
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
+              }}>
+                FALL OF WICKETS
+              </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
+              </div>
+            </div>
+
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
+          </div>
+
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "24px 32px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "20px",
+              borderBottom: `1px solid ${cardAccent}26`,
+              paddingBottom: "12px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+                INNINGS {scoringState.inningsNo} · WICKETS TIMELINE
+              </span>
+              <span style={{ color: cardAccent2, fontSize: "15px", fontWeight: 950 }}>
+                {fowList.length} WICKETS DOWN
+              </span>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Row 1 (Wickets 1-5) */}
+              {row1.length > 0 ? (
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.max(1, row1.length)}, 1fr)`, gap: "14px" }}>
+                  {row1.map((f: any, i: number) => (
+                    <div key={i} style={{
+                      background: `${cardAccent}14`,
+                      border: `1.5px solid ${cardAccent}66`,
+                      borderRadius: "14px",
+                      padding: "14px 10px",
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "6px"
+                    }}>
+                      <div style={{
+                        background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+                        color: "#030a24",
+                        borderRadius: "50%",
+                        width: "32px",
+                        height: "32px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "14px",
+                        fontWeight: 950
+                      }}>
+                        {f.wickets}
+                      </div>
+                      <div style={{ color: "#ffffff", fontSize: "14px", fontWeight: 900, textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {f.batsman}
+                      </div>
+                      <div style={{ color: cardTitleAccent, fontSize: "24px", fontWeight: 950, lineHeight: 1.1 }}>
+                        {f.score}
+                      </div>
+                      <div style={{ color: cardAccent2, fontSize: "12px", fontWeight: 800 }}>
+                        {typeof f.over === "number" ? f.over.toFixed(1) : f.over} OVERS
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ textAlign: "center", color: "#94a3b8", padding: "40px", fontSize: "16px", fontWeight: 800 }}>
+                  🏏 No wickets fallen yet in this innings.
+                </div>
+              )}
+
+              {/* Row 2 (Wickets 6-10) */}
+              {row2.length > 0 && (
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${row2.length}, 1fr)`, gap: "14px" }}>
+                  {row2.map((f: any, i: number) => (
+                    <div key={i} style={{
+                      background: "rgba(255, 255, 255, 0.04)",
+                      border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                      borderRadius: "14px",
+                      padding: "14px 10px",
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "6px"
+                    }}>
+                      <div style={{
+                        background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+                        color: "#030a24",
+                        borderRadius: "50%",
+                        width: "32px",
+                        height: "32px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "14px",
+                        fontWeight: 950
+                      }}>
+                        {f.wickets}
+                      </div>
+                      <div style={{ color: "#ffffff", fontSize: "14px", fontWeight: 900, textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {f.batsman}
+                      </div>
+                      <div style={{ color: cardTitleAccent, fontSize: "24px", fontWeight: 950, lineHeight: 1.1 }}>
+                        {f.score}
+                      </div>
+                      <div style={{ color: cardAccent2, fontSize: "12px", fontWeight: 800 }}>
+                        {typeof f.over === "number" ? f.over.toFixed(1) : f.over} OVERS
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              OVERS <span>{oversText}</span>
+            </div>
+            <div style={{ color: "#030a24", fontSize: "28px", fontWeight: 950 }}>
+              {scoreText}
+            </div>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              WICKETS <span>{fowList.length}/10</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
+    // ── TARGET — Broadcast-Grade Chase Equation with Exact Theme Palette or IPL 2025 Replica ──
     if (isTarget) {
       const need = Math.max(0, (scoringState.target || 0) - scoringState.score);
       const bpo = match.ballsPerOver || 6;
@@ -2729,640 +3621,52 @@ export default function OverlayPage() {
       const rrr = bLeft > 0 ? ((need / bLeft) * bpo).toFixed(2) : "0.00";
       const crr = scoringState.balls > 0 ? ((scoringState.score / scoringState.balls) * bpo).toFixed(2) : "0.00";
       const pct = scoringState.target ? Math.min(100, (scoringState.score / scoringState.target) * 100) : 0;
-      const tourName = (match as any).tournamentName || "MATCH EQUATION";
+      
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
-      return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "84vw", maxWidth: 1180 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
-
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
-            }}>
-              {/* Batting Team Logo & Title */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ position: "relative", display: "inline-flex" }}>
-                  <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}50`, animation: "spin 30s linear infinite" }} />
-                  <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
-                </div>
-                <div>
-                  <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                    INNINGS 2 · CHASE EQUATION
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                    {currentBatTeam.toUpperCase()} BATTING
-                  </div>
-                </div>
-              </div>
-
-              {/* Center Match Equation Badge */}
-              <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}25, rgba(0,0,0,0.7))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 24px",
-                textAlign: "center",
-                boxShadow: `0 0 20px ${panelAccent}30`
-              }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  TARGET: <span style={{ color: panelAccent }}>{scoringState.target} RUNS</span>
-                </div>
-              </div>
-
-              {/* Bowling Team Logo & Title */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                    BOWLING SIDE
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                    {currentBowlTeam.toUpperCase()}
-                  </div>
-                </div>
-                <TeamLogo name={currentBowlTeam} isBatting={false} isBowling={true} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
-              </div>
-            </div>
-
-            {/* Main Target Card Body */}
-            <div style={{
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "36px 44px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)",
-              textAlign: "center"
-            }}>
-              {scoringState.target !== null ? (
-                <>
-                  <div style={{ fontSize: 13, color: panelSecondary, fontWeight: 900, letterSpacing: 4, textTransform: "uppercase", marginBottom: 6 }}>
-                    ⚡ {currentBatTeam.toUpperCase()} REQUIRE
-                  </div>
-
-                  {/* Giant Number of Runs Needed */}
-                  <div style={{
-                    fontSize: 104,
-                    fontWeight: 950,
-                    color: panelAccent,
-                    lineHeight: 1,
-                    letterSpacing: "-1px",
-                    textShadow: `0 0 60px ${panelAccent}50, 0 8px 30px rgba(0,0,0,0.9)`,
-                    marginBottom: 4
-                  }}>
-                    {need}
-                  </div>
-
-                  <div style={{ fontSize: 18, color: "#ffffff", fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 28 }}>
-                    RUNS TO WIN FROM <span style={{ color: panelAccent }}>{bLeft} BALLS</span> (RRR: {rrr})
-                  </div>
-
-                  {/* Smooth Animated Chase Progress Bar */}
-                  <div style={{ marginBottom: 32, padding: "0 10px" }}>
-                    <div style={{ height: 10, background: "rgba(255,255,255,0.08)", borderRadius: 6, overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5)" }}>
-                      <div style={{ height: "100%", width: `${pct}%`, background: `linear-gradient(90deg, ${theme.borderColor}, ${panelAccent})`, borderRadius: 6, boxShadow: `0 0 12px ${panelAccent}80` }} />
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 11, color: panelSecondary, fontWeight: 800 }}>
-                      <span>0 RUNS</span>
-                      <span style={{ color: "#ffffff", fontWeight: 950 }}>{scoringState.score}/{scoringState.wickets} SCORED ({fmtOv(scoringState.balls, bpo)}/{match.overs} OV)</span>
-                      <span style={{ color: panelAccent, fontWeight: 950 }}>TARGET: {scoringState.target}</span>
-                    </div>
-                  </div>
-
-                  {/* 4-Column Stat Cards Grid */}
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
-                    {[
-                      { l: "TARGET", v: scoringState.target, c: panelAccent },
-                      { l: "BALLS REMAINING", v: bLeft, c: "#ffffff" },
-                      { l: "CURRENT RUN RATE", v: crr, c: "#4ade80" },
-                      { l: "REQUIRED RUN RATE", v: rrr, c: parseFloat(rrr) > 12 ? "#ef4444" : parseFloat(rrr) > 9 ? "#fb923c" : "#4ade80" }
-                    ].map((st, i) => (
-                      <div key={i} style={{
-                        background: "rgba(0,0,0,0.5)",
-                        border: `1.5px solid ${theme.borderColor}25`,
-                        borderRadius: 16,
-                        padding: "18px 12px",
-                        boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
-                      }}>
-                        <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, marginBottom: 8, textTransform: "uppercase" }}>
-                          {st.l}
-                        </div>
-                        <div style={{ fontSize: 26, fontWeight: 950, color: st.c, lineHeight: 1 }}>
-                          {st.v}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Active Batters & Bowler Mini Bar */}
-                  <div style={{
-                    marginTop: 20,
-                    background: "rgba(0,0,0,0.4)",
-                    border: `1px solid ${theme.borderColor}20`,
-                    borderRadius: 12,
-                    padding: "10px 20px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    fontSize: 11,
-                    color: panelSecondary,
-                    fontWeight: 800
-                  }}>
-                    <div>
-                      🏏 STRIKER: <span style={{ color: "#fff", fontWeight: 950 }}>{scoringState.striker || "—"}</span> ({striker?.runs ?? 0} runs)
-                    </div>
-                    <div>
-                      🏃 NON-STRIKER: <span style={{ color: "#fff", fontWeight: 950 }}>{scoringState.nonStriker || "—"}</span> ({nonStriker?.runs ?? 0} runs)
-                    </div>
-                    <div>
-                      🎯 BOWLER: <span style={{ color: "#fff", fontWeight: 950 }}>{scoringState.bowler || "—"}</span> ({bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0})
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div style={{ color: panelSecondary, fontSize: 16, padding: 60 }}>
-                  <div style={{ fontSize: 40, marginBottom: 10 }}>🎯</div>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: "#fff" }}>TARGET NOT YET SET</div>
-                  <div style={{ fontSize: 12, marginTop: 4 }}>The first innings is currently in progress.</div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ── PARTNERSHIP — Broadcast-Grade Duel Showcase with Exact Theme Palette ──
-    if (isPartner) {
-      const pRuns = (striker?.runs || 0) + (nonStriker?.runs || 0);
-      const pBalls = (striker?.balls || 0) + (nonStriker?.balls || 0);
-      const pSR = pBalls > 0 ? ((pRuns / pBalls) * 100).toFixed(1) : "0.0";
-      const stCont = pRuns > 0 ? Math.round(((striker?.runs || 0) / pRuns) * 100) : 50;
-      const totalFours = (striker?.fours || 0) + (nonStriker?.fours || 0);
-      const totalSixes = (striker?.sixes || 0) + (nonStriker?.sixes || 0);
-
-      return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "fixed", inset: 0, zIndex: 0, background: `radial-gradient(ellipse 70% 50% at 50% 50%, ${panelAccent}15, transparent 70%)`, pointerEvents: "none" }} />
-          <div style={{ position: "relative", zIndex: 1, width: "88vw", maxWidth: 1240 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
-
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
-            }}>
-              <div>
-                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  ACTIVE PARTNERSHIP · INNINGS {scoringState.inningsNo}
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {currentBatTeam.toUpperCase()} BATTING DUO
-                </div>
-              </div>
-
-              {/* Center Partnership Hero Pill */}
-              <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 28px",
-                textAlign: "center",
-                boxShadow: `0 0 24px ${panelAccent}40`
-              }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 2 }}>
-                  CURRENT PARTNERSHIP
-                </div>
-                <div style={{ fontSize: 28, fontWeight: 950, color: "#ffffff", lineHeight: 1 }}>
-                  <span style={{ color: panelAccent }}>{pRuns}</span> <span style={{ fontSize: 14, fontWeight: 800, color: panelSecondary }}>RUNS ({pBalls}b · SR {pSR})</span>
-                </div>
-              </div>
-
-              {/* Batting Team Logo */}
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <TeamLogo name={currentBatTeam} isBatting={true} isBowling={false} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
-              </div>
-            </div>
-
-            {/* 3-Column VS Duel Container */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 130px 1fr",
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              overflow: "hidden",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
-            }}>
-              {/* Striker Wing */}
-              <div style={{ padding: "36px 36px", borderRight: `1px solid ${theme.borderColor}20`, display: "flex", flexDirection: "column", gap: 12, background: `linear-gradient(180deg, ${panelAccent}08, rgba(0,0,0,0.3))` }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ position: "relative", width: 12, height: 12 }}>
-                    <span style={{ width: 8, height: 8, borderRadius: "50%", background: panelAccent, boxShadow: `0 0 8px ${panelAccent}`, display: "block", margin: "auto" }} />
-                    <span className="striker-dot-ring" style={{ border: `2px solid ${panelAccent}` }} />
-                  </div>
-                  <span style={{ fontSize: 9.5, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                    ON STRIKE 🏏
-                  </span>
-                </div>
-
-                <div style={{ fontSize: 26, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {scoringState.striker || "—"}
-                </div>
-
-                <div style={{ fontSize: 72, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 30px ${panelAccent}40` }}>
-                  {striker?.runs ?? 0}
-                </div>
-
-                <div style={{ fontSize: 13, color: panelSecondary, fontWeight: 700 }}>
-                  ({striker?.balls ?? 0} balls · SR {striker?.balls ? ((striker.runs / striker.balls) * 100).toFixed(1) : "0.0"})
-                </div>
-
-                <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
-                  <div style={{ background: "rgba(251,191,36,0.15)", border: "1.5px solid rgba(251,191,36,0.4)", borderRadius: 10, padding: "6px 14px", fontSize: 13, color: "#fbbf24", fontWeight: 900 }}>
-                    💥 {striker?.fours ?? 0}×4s
-                  </div>
-                  <div style={{ background: "rgba(56,189,248,0.15)", border: "1.5px solid rgba(56,189,248,0.4)", borderRadius: 10, padding: "6px 14px", fontSize: 13, color: "#38bdf8", fontWeight: 900 }}>
-                    🚀 {striker?.sixes ?? 0}×6s
-                  </div>
-                </div>
-
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 800, marginTop: 6 }}>
-                  Contribution: <span style={{ color: panelAccent, fontWeight: 950 }}>{stCont}%</span> of partnership
-                </div>
-              </div>
-
-              {/* Center VS Meter Column */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 8px", background: "rgba(0,0,0,0.3)" }}>
-                <div style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: "50%",
-                  background: `linear-gradient(135deg, ${panelAccent}30, rgba(255,255,255,0.06))`,
-                  border: `1.5px solid ${panelAccent}60`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 13,
-                  fontWeight: 950,
-                  color: "#ffffff",
-                  marginBottom: 16,
-                  boxShadow: `0 0 16px ${panelAccent}30`
-                }}>
-                  VS
-                </div>
-
-                {/* Vertical Duel Progress Bar */}
-                <div style={{ width: 8, height: 140, background: "rgba(255,255,255,0.08)", borderRadius: 4, position: "relative", overflow: "hidden", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: `${stCont}%`, background: `linear-gradient(180deg, ${panelAccent}, ${theme.borderColor})`, borderRadius: 4, boxShadow: `0 0 8px ${panelAccent}` }} />
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${100 - stCont}%`, background: `linear-gradient(180deg, #38bdf8, #0284c7)`, borderRadius: 4 }} />
-                </div>
-
-                <div style={{ marginTop: 14, fontSize: 10, color: panelSecondary, fontWeight: 900, textAlign: "center" }}>
-                  {stCont}% | {100 - stCont}%
-                </div>
-              </div>
-
-              {/* Non-Striker Wing */}
-              <div style={{ padding: "36px 36px", borderLeft: `1px solid ${theme.borderColor}20`, textAlign: "right", display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-end", background: `linear-gradient(180deg, ${panelAccent}04, rgba(0,0,0,0.3))` }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                    RUNNING END 🏃
-                  </span>
-                </div>
-
-                <div style={{ fontSize: 26, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {scoringState.nonStriker || "—"}
-                </div>
-
-                <div style={{ fontSize: 72, fontWeight: 950, color: panelAccentTx, lineHeight: 1, textShadow: "0 0 30px rgba(255,255,255,0.2)" }}>
-                  {nonStriker?.runs ?? 0}
-                </div>
-
-                <div style={{ fontSize: 13, color: panelSecondary, fontWeight: 700 }}>
-                  ({nonStriker?.balls ?? 0} balls · SR {nonStriker?.balls ? ((nonStriker.runs / nonStriker.balls) * 100).toFixed(1) : "0.0"})
-                </div>
-
-                <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
-                  <div style={{ background: "rgba(251,191,36,0.15)", border: "1.5px solid rgba(251,191,36,0.4)", borderRadius: 10, padding: "6px 14px", fontSize: 13, color: "#fbbf24", fontWeight: 900 }}>
-                    💥 {nonStriker?.fours ?? 0}×4s
-                  </div>
-                  <div style={{ background: "rgba(56,189,248,0.15)", border: "1.5px solid rgba(56,189,248,0.4)", borderRadius: 10, padding: "6px 14px", fontSize: 13, color: "#38bdf8", fontWeight: 900 }}>
-                    🚀 {nonStriker?.sixes ?? 0}×6s
-                  </div>
-                </div>
-
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 800, marginTop: 6 }}>
-                  Contribution: <span style={{ color: panelAccentTx, fontWeight: 950 }}>{100 - stCont}%</span> of partnership
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Partnership Summary Footer */}
-            <div style={{
-              marginTop: 12,
-              background: `linear-gradient(90deg, ${panelBg}, rgba(2,4,16,0.98))`,
-              border: `1px solid ${panelAccent}40`,
-              borderRadius: 14,
-              padding: "10px 24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              fontSize: 10.5,
-              fontWeight: 800,
-              color: panelSecondary
-            }}>
-              <div>
-                💥 TOTAL BOUNDARIES: <span style={{ color: "#ffffff", fontWeight: 950 }}>{totalFours}×4s · {totalSixes}×6s</span> ({(totalFours * 4) + (totalSixes * 6)} runs)
-              </div>
-              <div style={{ color: panelAccent, fontWeight: 950 }}>
-                PARTNERSHIP RUN RATE: {pBalls > 0 ? ((pRuns / pBalls) * (match.ballsPerOver || 6)).toFixed(2) : "0.00"}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ── FULL SCORECARD — Broadcast-Grade Dual-Innings Scorecard with Exact Theme Palette ──
-    if (isFullScore) {
-      const inn1 = getInnState(1);
-      const inn2 = getInnState(2);
-      const bt1 = getInnTeam(1, "bat");
-      const bt2 = getInnTeam(2, "bat");
-      const bpo = match.ballsPerOver || 6;
-      const tourName = (match as any).tournamentName || "FULL MATCH SCORECARD";
-
-      const renderScorecardInnings = (innNum: 1 | 2, teamName: string, oppName: string, inn: any) => {
-        if (!inn) {
-          return (
-            <div style={{
-              background: `linear-gradient(145deg, ${panelBg}e6, ${theme.headerBg}f2)`,
-              border: `1.5px solid ${theme.borderColor}25`,
-              borderTop: `3px solid ${panelAccent}60`,
-              borderRadius: 18,
-              padding: "32px 24px",
-              minHeight: 420,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              boxShadow: panelShadow
-            }}>
-              <div style={{ fontSize: 42, marginBottom: 12, opacity: 0.5 }}>🏏</div>
-              <div style={{ fontSize: 16, fontWeight: 950, color: "#fff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                INNINGS {innNum} · {teamName.toUpperCase()}
-              </div>
-              <div style={{ fontSize: 12, color: panelSecondary, marginTop: 6 }}>
-                Innings has not commenced yet.
-              </div>
-            </div>
-          );
-        }
-
-        const batRuns = inn.batsmen.reduce((acc: number, b: any) => acc + (b.runs || 0), 0);
-        const extras = Math.max(0, inn.score - batRuns);
-        const fours = inn.batsmen.reduce((acc: number, b: any) => acc + (b.fours || 0), 0);
-        const sixes = inn.batsmen.reduce((acc: number, b: any) => acc + (b.sixes || 0), 0);
-        const boundaryRuns = (fours * 4) + (sixes * 6);
-        const fow = inn.fallOfWickets || [];
-
-        return (
-          <div style={{
-            background: `linear-gradient(145deg, ${panelBg}f0, ${theme.headerBg}fa)`,
-            border: `1.5px solid ${theme.borderColor}35`,
-            borderTop: `4px solid ${panelAccent}`,
-            borderRadius: 18,
-            padding: "20px 22px",
-            boxShadow: panelShadow,
-            display: "flex",
-            flexDirection: "column",
-            gap: 16
-          }}>
-            {/* Innings Header with Team Logo & Hero Score */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ position: "relative", display: "inline-flex" }}>
-                  <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}50`, animation: "spin 30s linear infinite" }} />
-                  <TeamLogo
-                    name={teamName}
-                    isBatting={scoringState.inningsNo === innNum && scoringState.inningsStarted && match.status !== "Completed"}
-                    isBowling={false}
-                    accentColor={panelAccent}
-                    borderColor={theme.borderColor}
-                    size={64}
-                  />
-                </div>
-                <div>
-                  <div style={{ fontSize: 8.5, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 2 }}>
-                    INNINGS {innNum} · BATTING
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                    {teamName.toUpperCase()}
-                  </div>
-                  <div style={{ fontSize: 10, color: panelSecondary, marginTop: 1 }}>
-                    vs {oppName.toUpperCase()}
-                  </div>
-                </div>
-              </div>
-
-              {/* Score Box */}
-              <div style={{
-                background: `linear-gradient(135deg, rgba(255,255,255,0.04), ${panelBg}99)`,
-                border: `1.5px solid ${panelAccent}40`,
-                borderRadius: 14,
-                padding: "8px 18px",
-                textAlign: "right",
-                boxShadow: `0 6px 20px rgba(0,0,0,0.3)`
-              }}>
-                <div style={{ fontSize: 34, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 15px ${panelAccent}30` }}>
-                  {inn.score}<span style={{ color: panelAccentTx, opacity: 0.6, fontSize: 24, fontWeight: 500 }}>/</span>{inn.wickets}
-                </div>
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 800, marginTop: 3 }}>
-                  {fmtOv(inn.balls, bpo)}/{match.overs} OV · RR <span style={{ color: panelAccent, fontWeight: 950 }}>{calcRR(inn as any)}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Batting Table */}
-            <div>
-              <div style={{ fontSize: 9, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6, display: "flex", alignItems: "center", gap: 5 }}>
-                <span>🏏</span> BATTING CARD
-              </div>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont, fontSize: "11.5px" }}>
-                <thead>
-                  <tr style={{ background: `${panelAccent}15`, borderBottom: `1.5px solid ${panelAccent}35` }}>
-                    {["BATSMAN", "STATUS", "R", "B", "4s", "6s", "SR"].map((h, i) => (
-                      <th key={h} style={{ padding: "8px 10px", fontSize: 8.5, fontWeight: 900, textAlign: i === 0 ? "left" : "center", color: panelSecondary, letterSpacing: 1.5 }}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {inn.batsmen.map((b: any, bi: number) => {
-                    const isStriker = scoringState.inningsNo === innNum && b.name === scoringState.striker;
-                    const isNonStriker = scoringState.inningsNo === innNum && b.name === scoringState.nonStriker;
-                    const sr = b.balls > 0 ? ((b.runs / b.balls) * 100).toFixed(1) : "0.0";
-                    return (
-                      <tr key={bi} style={{
-                        borderBottom: `1px solid rgba(255,255,255,0.04)`,
-                        background: isStriker ? `${panelAccent}14` : isNonStriker ? `${panelAccent}06` : "transparent"
-                      }}>
-                        <td style={{ padding: "8px 10px" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            {isStriker && <span style={{ width: 6, height: 6, borderRadius: "50%", background: panelAccent, display: "inline-block", flexShrink: 0, boxShadow: `0 0 6px ${panelAccent}` }} />}
-                            <span style={{ fontWeight: 900, color: b.out ? "rgba(255,255,255,0.4)" : "#ffffff" }}>{b.name}</span>
-                            {isStriker && <span style={{ fontSize: 11 }}>🏏</span>}
-                          </div>
-                        </td>
-                        <td style={{ padding: "8px 10px", textAlign: "center" }}>
-                          <span style={{
-                            background: b.out ? "rgba(239,68,68,0.12)" : `${panelAccent}20`,
-                            border: `1px solid ${b.out ? "rgba(239,68,68,0.3)" : `${panelAccent}40`}`,
-                            borderRadius: 6,
-                            padding: "2px 7px",
-                            fontSize: 7.5,
-                            fontWeight: 900,
-                            color: b.out ? "#f87171" : panelAccent
-                          }}>
-                            {b.out ? "OUT" : "NOT OUT"}
-                          </span>
-                        </td>
-                        <td style={{ padding: "8px", textAlign: "center", fontWeight: 950, fontSize: 14, color: b.runs >= 50 ? panelAccent : "#ffffff" }}>
-                          {b.runs}{b.runs >= 50 ? "⭐" : ""}
-                        </td>
-                        <td style={{ padding: "8px", textAlign: "center", color: panelSecondary, fontWeight: 700 }}>{b.balls}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: "#fbbf24", fontWeight: 800 }}>{b.fours}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: "#38bdf8", fontWeight: 800 }}>{b.sixes}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: panelAccentTx, fontWeight: 800 }}>{sr}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-
-              {/* Extras & Boundaries summary */}
-              <div style={{
-                background: "rgba(0,0,0,0.25)",
-                border: "1px solid rgba(255,255,255,0.04)",
-                borderRadius: 8,
-                padding: "6px 12px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: 6,
-                fontSize: 9.5,
-                color: panelSecondary,
-                fontWeight: 700
-              }}>
-                <div>
-                  Boundaries: <span style={{ color: "#fff", fontWeight: 900 }}>{fours}×4s</span>, <span style={{ color: "#fff", fontWeight: 900 }}>{sixes}×6s</span> ({boundaryRuns} runs)
-                </div>
-                <div>
-                  Extras: <span style={{ color: panelAccent, fontWeight: 900 }}>{extras}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bowling Table */}
-            <div>
-              <div style={{ fontSize: 9, color: panelAccent, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6, display: "flex", alignItems: "center", gap: 5 }}>
-                <span>🎯</span> BOWLING FIGURES
-              </div>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont, fontSize: "11.5px" }}>
-                <thead>
-                  <tr style={{ background: `${panelAccent}15`, borderBottom: `1.5px solid ${panelAccent}35` }}>
-                    {["BOWLER", "O", "R", "W", "ECON"].map((h, i) => (
-                      <th key={h} style={{ padding: "8px 10px", fontSize: 8.5, fontWeight: 900, textAlign: i === 0 ? "left" : "center", color: panelSecondary, letterSpacing: 1.5 }}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {inn.bowlers.map((bw: any, bi: number) => {
-                    const isCurrentBowler = scoringState.inningsNo === innNum && bw.name === scoringState.bowler;
-                    const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
-                    return (
-                      <tr key={bi} style={{
-                        borderBottom: `1px solid rgba(255,255,255,0.04)`,
-                        background: isCurrentBowler ? `${panelAccent}14` : "transparent"
-                      }}>
-                        <td style={{ padding: "8px 10px" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            {isCurrentBowler && <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444", display: "inline-block", flexShrink: 0 }} />}
-                            <span style={{ fontWeight: 900, color: "#ffffff" }}>{bw.name}</span>
-                            {isCurrentBowler && <span style={{ fontSize: 11 }}>⚡</span>}
-                          </div>
-                        </td>
-                        <td style={{ padding: "8px", textAlign: "center", color: panelSecondary, fontWeight: 700 }}>{fmtOv(bw.ballsBowled, bpo)}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: "#ffffff", fontWeight: 800 }}>{bw.runsConceded}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: bw.wickets > 0 ? "#f87171" : "#ffffff", fontWeight: 950, fontSize: 13 }}>{bw.wickets}</td>
-                        <td style={{ padding: "8px", textAlign: "center", color: parseFloat(eco) <= 6.0 ? "#4ade80" : "#fb923c", fontWeight: 800 }}>{eco}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Fall of Wickets */}
-            {fow.length > 0 && (
-              <div>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 5 }}>
-                  FALL OF WICKETS
-                </div>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                  {fow.map((f: any, fi: number) => (
-                    <span key={fi} style={{
-                      background: "rgba(239,68,68,0.1)",
-                      border: "1px solid rgba(239,68,68,0.25)",
-                      borderRadius: 6,
-                      padding: "3px 8px",
-                      fontSize: 8.5,
-                      fontWeight: 800,
-                      color: "#f87171"
-                    }}>
-                      {f.score}/{f.wickets} <span style={{ color: "#fff", opacity: 0.8 }}>({f.batsman}, {typeof f.over === "number" ? f.over.toFixed(1) : f.over} ov)</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        );
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
       };
 
+      const batTeamShort = getShortNameLocal(currentBatTeam);
+      const bowlTeamShort = getShortNameLocal(currentBowlTeam);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+      const oversText = fmtOv(scoringState.balls, bpo);
+      const scoreText = `${scoringState.score}-${scoringState.wickets}`;
+
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          {/* Floating Print / Save PDF button */}
           <button
             className="no-print"
             onClick={() => window.print()}
@@ -3371,15 +3675,15 @@ export default function OverlayPage() {
               top: 18,
               right: 22,
               zIndex: 9999,
-              background: `linear-gradient(135deg, ${panelAccent}, ${theme.borderColor})`,
-              color: "#000000",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
               border: "none",
               borderRadius: 12,
               padding: "10px 22px",
               fontWeight: 950,
               fontSize: 12,
               cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${panelAccent}60`,
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
               gap: 8,
@@ -3390,551 +3694,1211 @@ export default function OverlayPage() {
             🖨️ Save PDF
           </button>
 
-          <div style={{ position: "relative", zIndex: 1, width: "95vw", maxWidth: 1440 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 32px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 14
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Match & Tournament details */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  background: `linear-gradient(135deg, ${panelAccent}25, rgba(255,255,255,0.04))`,
-                  border: `1.5px solid ${panelAccent}60`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 20,
-                  boxShadow: `0 0 16px ${panelAccent}30`
-                }}>
-                  🏏
-                </div>
-                <div>
-                  <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                    {match.matchType.toUpperCase()} · MATCH #{match.matchNo} · {match.overs} OVERS
-                  </div>
-                  <div style={{ fontSize: 20, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginTop: 2, textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>
-                    {tourName.toUpperCase()}
-                  </div>
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
 
-              {/* Match Outcome / Status Pill */}
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: match.status === "Completed"
-                  ? `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.7))`
-                  : scoringState.inningsNo === 2
-                    ? "linear-gradient(135deg, rgba(239,68,68,0.25), rgba(0,0,0,0.7))"
-                    : "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(0,0,0,0.7))",
-                border: `1.5px solid ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 22px",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                boxShadow: `0 0 20px ${match.status === "Completed" ? panelAccent : scoringState.inningsNo === 2 ? "#ef4444" : panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                {match.status === "Completed" ? (
-                  <>
-                    <span style={{ fontSize: 16 }}>🏆</span>
-                    <span style={{ fontSize: 13, fontWeight: 950, color: panelAccentTx, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                      {winnerText ? winnerText.toUpperCase() : "MATCH COMPLETED"}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
-                    <span style={{ fontSize: 12, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5 }}>
-                      MATCH IN PROGRESS · INNINGS {scoringState.inningsNo}
-                    </span>
-                  </>
-                )}
+                TARGET · {scoringState.target || "—"} RUNS
               </div>
-
-              {/* Theme Name Branding */}
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                  OFFICIAL SCORECARD
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2, textShadow: `0 0 12px ${panelAccent}40` }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main Scorecard Dual Columns */}
             <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 18,
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "24px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {renderScorecardInnings(1, bt1, bt2, inn1)}
-              {renderScorecardInnings(2, bt2, bt1, inn2)}
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{bowlTeamShort}</span>
             </div>
+          </div>
 
-            {/* Man of the Match Footer if awarded */}
-            {scoringState.momPlayer && (
-              <div style={{
-                marginTop: 12,
-                background: `linear-gradient(90deg, ${panelBg}, rgba(2,4,16,0.98))`,
-                border: `1px solid ${panelAccent}40`,
-                borderRadius: 14,
-                padding: "10px 24px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontSize: 20 }}>⭐</span>
-                  <div>
-                    <span style={{ fontSize: 9, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>MAN OF THE MATCH: </span>
-                    <span style={{ fontSize: 15, color: panelAccent, fontWeight: 950, letterSpacing: 1 }}>{scoringState.momPlayer.toUpperCase()}</span>
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "24px 32px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden",
+            textAlign: "center"
+          }}>
+            {scoringState.target !== null ? (
+              <>
+                <div style={{ fontSize: "12px", color: "#94a3b8", fontWeight: 900, letterSpacing: "3px", textTransform: "uppercase", marginBottom: "4px" }}>
+                  {currentBatTeam.toUpperCase()} NEED
+                </div>
+
+                <div style={{
+                  fontSize: "88px",
+                  fontWeight: 950,
+                  color: cardAccent,
+                  lineHeight: 1,
+                  letterSpacing: "-1px",
+                  textShadow: `0 0 40px ${cardAccent}66`,
+                  margin: "6px 0"
+                }}>
+                  {need}
+                </div>
+
+                <div style={{ fontSize: "16px", color: "#ffffff", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "20px" }}>
+                  RUNS TO WIN FROM <span style={{ color: cardAccent2 }}>{bLeft} BALLS</span>
+                </div>
+
+                {/* Progress Bar */}
+                <div style={{ marginBottom: "24px" }}>
+                  <div style={{ height: "10px", background: "rgba(255, 255, 255, 0.1)", borderRadius: "6px", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${pct}%`, background: `linear-gradient(90deg, ${cardAccent}, ${cardAccent2})`, borderRadius: "6px" }} />
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px", fontSize: "11px", color: "#94a3b8", fontWeight: 800 }}>
+                    <span>0 RUNS</span>
+                    <span style={{ color: "#ffffff" }}>{scoringState.score}/{scoringState.wickets} ({oversText}/{match.overs} OV)</span>
+                    <span style={{ color: cardAccent }}>TARGET: {scoringState.target}</span>
                   </div>
                 </div>
-                <div style={{ fontSize: 9, color: panelSecondary, fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  MATCH IMPACT PLAYER
+
+                {/* 4 Stat Boxes */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
+                  {[
+                    { l: "TARGET", v: scoringState.target, c: "#ffffff" },
+                    { l: "BALLS LEFT", v: bLeft, c: cardAccent2 },
+                    { l: "REQ. RUN RATE", v: rrr, c: cardAccent },
+                    { l: "CURR. RUN RATE", v: crr, c: cardAccent2 }
+                  ].map((st, i) => (
+                    <div key={i} style={{
+                      background: "rgba(255, 255, 255, 0.06)",
+                      border: `1.5px solid ${cardAccent}4d`,
+                      borderRadius: "14px",
+                      padding: "14px 10px"
+                    }}>
+                      <div style={{ fontSize: "10px", color: "#94a3b8", fontWeight: 900, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
+                        {st.l}
+                      </div>
+                      <div style={{ fontSize: "24px", fontWeight: 950, color: st.c, lineHeight: 1 }}>
+                        {st.v}
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </>
+            ) : (
+              <div style={{ padding: "40px", color: "#94a3b8", fontSize: "16px", fontWeight: 800 }}>
+                🎯 Target not yet set (1st Innings in progress).
               </div>
             )}
           </div>
-        </div>
-      );
-    }
 
-    // ── SQUADS — Broadcast-Grade Playing XI Dual-Column with Exact Theme Palette ──
-    if (isSquads) {
-      const tourName = (match as any).tournamentName || "OFFICIAL PLAYING XI";
-      return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "92vw", maxWidth: 1380 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
-
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
-              display: "grid",
-              gridTemplateColumns: "auto 1fr auto",
-              alignItems: "center",
-              gap: 20
-            }}>
-              {/* Team 1 Logo */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ position: "relative", display: "inline-flex" }}>
-                  <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}50`, animation: "spin 30s linear infinite" }} />
-                  <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor={panelAccent} borderColor={theme.borderColor} size={70} />
-                </div>
-              </div>
-
-              {/* Center Match Details */}
-              <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase", opacity: 0.9 }}>
-                  {match.matchType.toUpperCase()} · MATCH #{match.matchNo} · {match.overs} OVERS
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginTop: 2, textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>
-                  {tourName.toUpperCase()} · PLAYING XI
-                </div>
-                <div style={{ fontSize: 11, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>
-                  {match.team1Name.toUpperCase()} <span style={{ color: panelAccent }}>VS</span> {match.team2Name.toUpperCase()}
-                </div>
-              </div>
-
-              {/* Team 2 Logo */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "flex-end" }}>
-                <div style={{ position: "relative", display: "inline-flex" }}>
-                  <div style={{ position: "absolute", inset: -4, borderRadius: "50%", border: `1.5px dashed ${panelAccent}50`, animation: "spin 30s linear infinite" }} />
-                  <TeamLogo name={match.team2Name} isBatting={!team1IsBatting} isBowling={team1IsBatting} accentColor={panelAccent} borderColor={theme.borderColor} size={70} />
-                </div>
-              </div>
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              OVERS <span>{oversText}</span>
             </div>
-
-            {/* Main Dual Playing XI Grid */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 20,
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "24px 28px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
-            }}>
-              {[{ name: match.team1Name, players: match.playersTeam1 || [], isBat: team1IsBatting }, { name: match.team2Name, players: match.playersTeam2 || [], isBat: !team1IsBatting }].map((team, ti) => (
-                <div key={ti} style={{
-                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                  border: `1.5px solid ${theme.borderColor}30`,
-                  borderTop: `4px solid ${team.isBat ? panelAccent : "#ef4444"}`,
-                  borderRadius: 18,
-                  padding: "20px",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
-                }}>
-                  {/* Team Card Header */}
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, borderBottom: `1px solid ${theme.borderColor}20`, paddingBottom: 12 }}>
-                    <div>
-                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5, textTransform: "uppercase" }}>
-                        {team.isBat ? "CURRENT INNINGS" : "OPPOSING SIDE"}
-                      </div>
-                      <div style={{ fontSize: 20, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                        {team.name.toUpperCase()}
-                      </div>
-                    </div>
-                    <span style={{
-                      background: team.isBat ? `${panelAccent}25` : "rgba(239,68,68,0.2)",
-                      border: `1.5px solid ${team.isBat ? panelAccent : "#ef4444"}`,
-                      borderRadius: 8,
-                      padding: "4px 12px",
-                      fontSize: 10,
-                      fontWeight: 950,
-                      color: team.isBat ? panelAccentTx : "#f87171",
-                      letterSpacing: 1,
-                      textTransform: "uppercase"
-                    }}>
-                      {team.isBat ? "🏏 BATTING XI" : "🎯 BOWLING XI"}
-                    </span>
-                  </div>
-
-                  {/* Players Scrollable List */}
-                  <div className="scroll-vertical" style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "420px", overflowY: "auto", paddingRight: 4 }}>
-                    {team.players.length > 0 ? (
-                      team.players.map((p: string, i: number) => {
-                        const isSt = p === scoringState.striker && team.isBat;
-                        const isNS = p === scoringState.nonStriker && team.isBat;
-                        const isBwl = p === scoringState.bowler && !team.isBat;
-                        return (
-                          <div
-                            key={i}
-                            className="table-row-animated"
-                            style={{
-                              animationDelay: `${i * 0.03}s`,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              background: isSt ? `${panelAccent}25` : isBwl ? "rgba(239,68,68,0.18)" : isNS ? "rgba(56,189,248,0.12)" : "rgba(0,0,0,0.3)",
-                              border: `1.5px solid ${isSt ? panelAccent : isBwl ? "#ef4444" : isNS ? "#38bdf8" : "rgba(255,255,255,0.06)"}`,
-                              borderRadius: 12,
-                              padding: "9px 14px",
-                              boxShadow: isSt || isBwl ? `0 0 14px ${isSt ? panelAccent : "#ef4444"}35` : "none"
-                            }}
-                          >
-                            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                              <div style={{
-                                width: 28,
-                                height: 28,
-                                borderRadius: "50%",
-                                background: isSt ? `${panelAccent}35` : isBwl ? "rgba(239,68,68,0.3)" : `${theme.borderColor}25`,
-                                border: `1.5px solid ${isSt ? panelAccent : isBwl ? "#ef4444" : theme.borderColor + "50"}`,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontSize: 11,
-                                fontWeight: 950,
-                                color: isSt ? panelAccent : isBwl ? "#f87171" : "#ffffff",
-                                flexShrink: 0
-                              }}>
-                                {i + 1}
-                              </div>
-                              <span style={{ fontSize: 14.5, fontWeight: 900, color: "#ffffff", letterSpacing: 0.3 }}>
-                                {p}
-                              </span>
-                            </div>
-
-                            {/* Active Match Role Badges */}
-                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              {isSt && (
-                                <span style={{
-                                  background: `${panelAccent}30`,
-                                  border: `1px solid ${panelAccent}`,
-                                  borderRadius: 6,
-                                  padding: "2px 8px",
-                                  fontSize: 8.5,
-                                  fontWeight: 950,
-                                  color: panelAccent,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 4
-                                }}>
-                                  <span className="bat-swing">🏏</span> ON STRIKE
-                                </span>
-                              )}
-                              {isNS && (
-                                <span style={{
-                                  background: "rgba(56,189,248,0.2)",
-                                  border: "1px solid #38bdf8",
-                                  borderRadius: 6,
-                                  padding: "2px 8px",
-                                  fontSize: 8.5,
-                                  fontWeight: 950,
-                                  color: "#38bdf8",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 4
-                                }}>
-                                  🏃 NON-STRIKER
-                                </span>
-                              )}
-                              {isBwl && (
-                                <span style={{
-                                  background: "rgba(239,68,68,0.25)",
-                                  border: "1px solid #ef4444",
-                                  borderRadius: 6,
-                                  padding: "2px 8px",
-                                  fontSize: 8.5,
-                                  fontWeight: 950,
-                                  color: "#f87171",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 4
-                                }}>
-                                  ⚡ BOWLER
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div style={{ fontSize: 12, color: panelSecondary, textAlign: "center", padding: 24 }}>
-                        No players registered for this team yet.
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+            <div style={{ color: "#030a24", fontSize: "28px", fontWeight: 950 }}>
+              {scoreText}
+            </div>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              RRR <span>{rrr}</span>
             </div>
           </div>
         </div>
       );
     }
 
-    // ── POINTS TABLE & PT (TIED POINT +1) — Broadcast-Grade Standings with Exact Theme Palette ──
-    if (isPointsTable || isPointsTablePlusOne) {
-      const isPlusOne = isPointsTablePlusOne;
-      const ptList = getPointsTable(match, themeSlug, isPlusOne);
-      const tourName = (match as any).tournamentName || "TOURNAMENT STANDINGS";
+    // ── PARTNERSHIP — Broadcast-Grade Duel Showcase with Exact Theme Palette or IPL 2025 Replica ──
+    if (isPartner) {
+      const pRuns = (striker?.runs || 0) + (nonStriker?.runs || 0);
+      const pBalls = (striker?.balls || 0) + (nonStriker?.balls || 0);
+      const pSR = pBalls > 0 ? ((pRuns / pBalls) * 100).toFixed(1) : "0.0";
+      const stCont = pRuns > 0 ? Math.round(((striker?.runs || 0) / pRuns) * 100) : 50;
+      const totalFours = (striker?.fours || 0) + (nonStriker?.fours || 0);
+      const totalSixes = (striker?.sixes || 0) + (nonStriker?.sixes || 0);
+      const bpo = match.ballsPerOver || 6;
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const batTeamShort = getShortNameLocal(currentBatTeam);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+      const oversText = fmtOv(scoringState.balls, bpo);
+      const scoreText = `${scoringState.score}-${scoringState.wickets}`;
 
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1300 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <TeamLogo name={match.team1Name} isBatting={true} isBowling={false} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
-                <div>
-                  <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                    {isPlusOne ? "STANDINGS (TIED POINT +1)" : "OFFICIAL STANDINGS"} · STAGE 1
-                  </div>
-                  <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                    {tourName.toUpperCase()} · POINTS TABLE
-                  </div>
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
 
-              {/* Center Status Badge */}
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 24px",
-                textAlign: "center",
-                boxShadow: `0 0 20px ${panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  🏆 <span style={{ color: panelAccent }}>{isPlusOne ? "TIED MATCH = 2 PTS" : "TOP 4 QUALIFY"}</span>
-                </div>
+                CURRENT PARTNERSHIP
               </div>
-
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                    OFFICIAL BROADCAST
-                  </div>
-                  <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
-                    {theme.name.toUpperCase()}
-                  </div>
-                </div>
-                <TeamLogo name={match.team2Name} isBatting={false} isBowling={true} accentColor={panelAccent} borderColor={theme.borderColor} size={64} />
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main Points Table Card */}
             <div style={{
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "28px 36px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
-                <thead>
-                  <tr style={{ background: `${panelAccent}18`, borderBottom: `2px solid ${panelAccent}40` }}>
-                    {["POS", "TEAM", "P", "W", "L", "T", "NRR", "PTS"].map((h, i) => (
-                      <th key={h} style={{
-                        padding: "14px 16px",
-                        fontSize: 11,
-                        fontWeight: 950,
-                        textAlign: i <= 1 ? "left" : "center",
-                        color: i === 7 ? panelAccent : panelSecondary,
-                        letterSpacing: 2,
-                        textTransform: "uppercase"
-                      }}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {ptList.map((tm: any, i: number) => {
-                    const isPlaying = tm.name === match.team1Name || tm.name === match.team2Name;
-                    const isTop4 = i < 4;
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{batTeamShort}</span>
+            </div>
+          </div>
+
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "24px 32px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Center Big Partnership Header */}
+            <div style={{
+              textAlign: "center",
+              marginBottom: "20px",
+              borderBottom: `1px solid ${cardAccent}26`,
+              paddingBottom: "16px"
+            }}>
+              <div style={{ color: cardAccent, fontSize: "13px", fontWeight: 900, letterSpacing: "2px", textTransform: "uppercase" }}>
+                TOTAL PARTNERSHIP
+              </div>
+              <div style={{
+                fontSize: "58px",
+                fontWeight: 950,
+                color: "#ffffff",
+                lineHeight: 1,
+                margin: "4px 0",
+                textShadow: `0 0 20px ${cardAccent}66`
+              }}>
+                {pRuns} <span style={{ fontSize: "24px", color: cardAccent2, fontWeight: 800 }}>RUNS</span>
+              </div>
+              <div style={{ color: "#94a3b8", fontSize: "14px", fontWeight: 800 }}>
+                {pBalls} BALLS · RUN RATE {pSR}
+              </div>
+            </div>
+
+            {/* Two Batsmen Comparison */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "24px"
+            }}>
+              {/* Striker */}
+              <div style={{
+                background: `${cardAccent}14`,
+                border: `1.5px solid ${cardAccent}66`,
+                borderRadius: "16px",
+                padding: "20px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px"
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{
+                    background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+                    color: "#030a24",
+                    fontSize: "11px",
+                    fontWeight: 950,
+                    padding: "3px 10px",
+                    borderRadius: "6px",
+                    letterSpacing: "1px"
+                  }}>
+                    STRIKER *
+                  </span>
+                  <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 900 }}>
+                    {stCont}% OF RUNS
+                  </span>
+                </div>
+                <div style={{ color: "#ffffff", fontSize: "22px", fontWeight: 950, textTransform: "uppercase" }}>
+                  {scoringState.striker || "Striker"}
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <span style={{ color: cardAccent, fontSize: "40px", fontWeight: 950, lineHeight: 1 }}>{striker?.runs || 0}</span>
+                  <span style={{ color: "#94a3b8", fontSize: "16px", fontWeight: 800 }}>({striker?.balls || 0} balls)</span>
+                </div>
+                <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: "#ffffff", fontSize: "13px", fontWeight: 800 }}>
+                    {striker?.fours || 0}×4s
+                  </span>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: "#ffffff", fontSize: "13px", fontWeight: 800 }}>
+                    {striker?.sixes || 0}×6s
+                  </span>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: cardAccent2, fontSize: "13px", fontWeight: 900 }}>
+                    SR {striker?.balls ? ((striker.runs / striker.balls) * 100).toFixed(1) : "0.0"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Non-Striker */}
+              <div style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1.5px solid rgba(255,255,255,0.12)",
+                borderRadius: "16px",
+                padding: "20px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px"
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{
+                    background: "rgba(255,255,255,0.15)",
+                    color: "#ffffff",
+                    fontSize: "11px",
+                    fontWeight: 950,
+                    padding: "3px 10px",
+                    borderRadius: "6px",
+                    letterSpacing: "1px"
+                  }}>
+                    NON-STRIKER
+                  </span>
+                  <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900 }}>
+                    {100 - stCont}% OF RUNS
+                  </span>
+                </div>
+                <div style={{ color: "#ffffff", fontSize: "22px", fontWeight: 950, textTransform: "uppercase" }}>
+                  {scoringState.nonStriker || "Non-Striker"}
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <span style={{ color: "#ffffff", fontSize: "40px", fontWeight: 950, lineHeight: 1 }}>{nonStriker?.runs || 0}</span>
+                  <span style={{ color: "#94a3b8", fontSize: "16px", fontWeight: 800 }}>({nonStriker?.balls || 0} balls)</span>
+                </div>
+                <div style={{ display: "flex", gap: "8px", marginTop: "4px" }}>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: "#ffffff", fontSize: "13px", fontWeight: 800 }}>
+                    {nonStriker?.fours || 0}×4s
+                  </span>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: "#ffffff", fontSize: "13px", fontWeight: 800 }}>
+                    {nonStriker?.sixes || 0}×6s
+                  </span>
+                  <span style={{ background: "rgba(255,255,255,0.08)", padding: "4px 10px", borderRadius: "6px", color: cardAccent2, fontSize: "13px", fontWeight: 900 }}>
+                    SR {nonStriker?.balls ? ((nonStriker.runs / nonStriker.balls) * 100).toFixed(1) : "0.0"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              OVERS <span>{oversText}</span>
+            </div>
+            <div style={{ color: "#030a24", fontSize: "28px", fontWeight: 950 }}>
+              {scoreText}
+            </div>
+            <div style={{ color: "#030a24", fontSize: "17px", fontWeight: 950, textTransform: "uppercase" }}>
+              BOUNDARIES <span>{totalFours}×4s, {totalSixes}×6s</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── BOWLER SPOTLIGHT — Universal Dynamic Modern Card for all 16 themes ──
+    if (isBowlerSp) {
+      const bpo = match.ballsPerOver || 6;
+      const bw = scoringState.bowlers.find(b => b.name === scoringState.bowler) || scoringState.bowlers[0] || { name: "Active Bowler", ballsBowled: 0, runsConceded: 0, wickets: 0 };
+      const oversText = fmtOv(bw.ballsBowled, bpo);
+      const eco = bw.ballsBowled > 0 ? ((bw.runsConceded / bw.ballsBowled) * bpo).toFixed(2) : "0.00";
+      const dots = (bw as any).dotBalls ?? (bw as any).dots ?? 0;
+      const bowlTeam = currentBowlTeam;
+      const tourTitle = (match as any).tournamentName || "BOWLER SPOTLIGHT";
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      return (
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 32px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)"
+          }}>
+            <div style={{ color: cardTitleAccent, fontSize: "24px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              {bw.name.toUpperCase()}
+            </div>
+            <div style={{ color: cardAccent2, fontSize: "12px", fontWeight: 900, letterSpacing: "2.5px", textTransform: "uppercase", marginTop: "3px" }}>
+              CURRENT BOWLER · {bowlTeam.toUpperCase()}
+            </div>
+          </div>
+
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "28px 32px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "16px", textAlign: "center" }}>
+              <div style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${cardAccent}33`, borderRadius: "14px", padding: "16px" }}>
+                <div style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>OVERS</div>
+                <div style={{ color: "#ffffff", fontSize: "32px", fontWeight: 950 }}>{oversText}</div>
+              </div>
+              <div style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${cardAccent}33`, borderRadius: "14px", padding: "16px" }}>
+                <div style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>DOT BALLS</div>
+                <div style={{ color: "#ffffff", fontSize: "32px", fontWeight: 950 }}>{dots}</div>
+              </div>
+              <div style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${cardAccent}33`, borderRadius: "14px", padding: "16px" }}>
+                <div style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>RUNS</div>
+                <div style={{ color: "#ffffff", fontSize: "32px", fontWeight: 950 }}>{bw.runsConceded}</div>
+              </div>
+              <div style={{ background: `${cardAccent}18`, border: `2px solid ${cardAccent}`, borderRadius: "14px", padding: "16px" }}>
+                <div style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>WICKETS</div>
+                <div style={{ color: cardAccent, fontSize: "36px", fontWeight: 950 }}>{bw.wickets}</div>
+              </div>
+              <div style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${cardAccent}33`, borderRadius: "14px", padding: "16px" }}>
+                <div style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>ECONOMY</div>
+                <div style={{ color: "#ffffff", fontSize: "32px", fontWeight: 950 }}>{eco}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "16px", fontWeight: 950, textTransform: "uppercase" }}>
+              SPELL: <span style={{ fontWeight: 950 }}>{bw.wickets}-{bw.runsConceded} ({oversText} ov)</span>
+            </div>
+            <div style={{ color: "#030a24", fontSize: "20px", fontWeight: 950, textTransform: "uppercase" }}>
+              ECONOMY {eco}
+            </div>
+            <div style={{ color: "#030a24", fontSize: "16px", fontWeight: 950, textTransform: "uppercase" }}>
+              DOTS {dots}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── SQUADS — Universal Dynamic Modern Playing XI for all 16 themes ──
+    if (isSquads) {
+      const isTeam2 = ds === "TEAM2" || ds === "TEAM 2" || ds === "B2";
+      const isTeam1 = ds === "TEAM1" || ds === "TEAM 1" || ds === "B1";
+      const selectedTeam = isTeam2 ? match.team2Name : isTeam1 ? match.team1Name : currentBatTeam;
+      const rawPlayers = selectedTeam === match.team2Name ? (match.playersTeam2 || []) : (match.playersTeam1 || []);
+
+      const players = [...rawPlayers];
+      const row1 = players.length > 6 ? players.slice(0, 6) : players;
+      const row2 = players.length > 6 ? players.slice(6) : [];
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #b4f210 0%, #99e300 60%, #82c800 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const tossWinnerName = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
+      const tossDecisionText = (match as any).optedTo === "Bat" ? "BAT" : "BOWL";
+
+      return (
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "18px",
+            padding: "10px 48px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)"
+          }}>
+            <div style={{
+              color: cardTitleAccent,
+              fontSize: "24px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              lineHeight: 1.1,
+              textShadow: `0 0 16px ${cardAccent}80`
+            }}>
+              {selectedTeam.toUpperCase()}
+            </div>
+            <div style={{
+              color: "#ffffff",
+              fontSize: "12px",
+              fontWeight: 900,
+              letterSpacing: "2.5px",
+              textTransform: "uppercase",
+              marginTop: "4px",
+              opacity: 0.95
+            }}>
+              PLAYING XI
+            </div>
+          </div>
+
+          {/* MAIN PLAYING XI CARDS CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "28px 32px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {players.length === 0 ? (
+              <div style={{
+                padding: "48px 24px",
+                textAlign: "center",
+                color: "#94a3b8",
+                fontSize: "14px",
+                fontWeight: 800,
+                letterSpacing: "1px",
+                textTransform: "uppercase"
+              }}>
+                No players registered for {selectedTeam} yet.
+              </div>
+            ) : (
+              <>
+                {/* Row 1 */}
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "14px",
+                  marginBottom: row2.length > 0 ? "14px" : "0",
+                  position: "relative",
+                  zIndex: 2,
+                  flexWrap: "wrap"
+                }}>
+                  {row1.map((pName, idx) => {
+                    const isCaptain = idx === 0 || pName.toLowerCase().includes("(c)");
+                    const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
                     return (
-                      <tr
-                        key={i}
+                      <div
+                        key={idx}
                         className="table-row-animated"
                         style={{
-                          animationDelay: `${i * 0.04}s`,
-                          borderBottom: `1px solid rgba(255,255,255,0.06)`,
-                          background: isPlaying
-                            ? `${panelAccent}16`
-                            : isTop4
-                              ? "rgba(255,255,255,0.02)"
-                              : "transparent"
+                          animationDelay: `${idx * 0.04}s`,
+                          background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
+                          border: `1.5px solid ${cardAccent}aa`,
+                          borderRadius: "12px 12px 9px 9px",
+                          width: "132px",
+                          height: "124px",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          position: "relative",
+                          overflow: "hidden",
+                          boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
                         }}
                       >
-                        <td style={{ padding: "14px 16px" }}>
+                        {/* Captain Badge */}
+                        {isCaptain && (
                           <div style={{
-                            width: 30,
-                            height: 30,
+                            position: "absolute",
+                            top: "6px",
+                            right: "6px",
+                            width: "18px",
+                            height: "18px",
                             borderRadius: "50%",
-                            background: isTop4 ? `${panelAccent}30` : "rgba(255,255,255,0.06)",
-                            border: `1.5px solid ${isTop4 ? panelAccent : "rgba(255,255,255,0.12)"}`,
+                            background: "#ea580c",
+                            border: "1.5px solid #ffffff",
+                            color: "#ffffff",
+                            fontSize: "10px",
+                            fontWeight: 950,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            fontSize: 12,
-                            fontWeight: 950,
-                            color: isTop4 ? panelAccent : "#94a3b8"
+                            lineHeight: 1,
+                            boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
+                            zIndex: 3
                           }}>
-                            {i + 1}
+                            c
                           </div>
-                        </td>
-                        <td style={{ padding: "14px 16px" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                            <span style={{ fontSize: 16, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                              {tm.name.toUpperCase()}
-                            </span>
-                            {isPlaying && (
-                              <span style={{
-                                background: `${panelAccent}25`,
-                                border: `1px solid ${panelAccent}`,
-                                borderRadius: 6,
-                                padding: "2px 8px",
-                                fontSize: 9,
-                                fontWeight: 950,
-                                color: panelAccent
-                              }}>
-                                LIVE MATCH
-                              </span>
-                            )}
-                            {isTop4 && (
-                              <span style={{ fontSize: 9, fontWeight: 900, color: "#4ade80", opacity: 0.85 }}>
-                                • QUALIFY ZONE
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#ffffff", fontWeight: 800, fontSize: 14 }}>{tm.p}</td>
-                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#4ade80", fontWeight: 900, fontSize: 14 }}>{tm.w}</td>
-                        <td style={{ padding: "14px 16px", textAlign: "center", color: "#f87171", fontWeight: 800, fontSize: 14 }}>{tm.l}</td>
-                        <td style={{ padding: "14px 16px", textAlign: "center", color: panelSecondary, fontWeight: 800, fontSize: 14 }}>{tm.t}</td>
-                        <td style={{ padding: "14px 16px", textAlign: "center", color: parseFloat(tm.nrr) >= 0 ? "#4ade80" : "#fb923c", fontWeight: 900, fontSize: 13 }}>
-                          {parseFloat(tm.nrr) > 0 ? `+${tm.nrr}` : tm.nrr}
-                        </td>
-                        <td style={{ padding: "14px 16px", textAlign: "center" }}>
-                          <span style={{
-                            background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.5))`,
-                            border: `1.5px solid ${panelAccent}80`,
-                            borderRadius: 10,
-                            padding: "6px 16px",
-                            fontSize: 16,
+                        )}
+
+                        {/* User Silhouette Avatar */}
+                        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
+                          <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                          </svg>
+                        </div>
+
+                        {/* Bottom Name Banner */}
+                        <div style={{
+                          width: "100%",
+                          background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
+                          borderRadius: "0 0 7px 7px",
+                          padding: "5px 4px",
+                          textAlign: "center",
+                          boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
+                        }}>
+                          <div style={{
+                            color: "#001a2e",
+                            fontSize: "10.5px",
                             fontWeight: 950,
-                            color: panelAccent,
-                            display: "inline-block",
-                            boxShadow: `0 0 12px ${panelAccent}30`
+                            textTransform: "uppercase",
+                            letterSpacing: "0.3px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis"
                           }}>
-                            {tm.pts}
-                          </span>
-                        </td>
-                      </tr>
+                            {cleanName}
+                          </div>
+                        </div>
+                      </div>
                     );
                   })}
-                </tbody>
-              </table>
+                </div>
 
-              {/* Table Footer Legend */}
+                {/* Row 2 (Centered) */}
+                {row2.length > 0 && (
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "14px",
+                    position: "relative",
+                    zIndex: 2,
+                    flexWrap: "wrap"
+                  }}>
+                    {row2.map((pName, idx) => {
+                      const isCaptain = (idx + 6) === 0 || pName.toLowerCase().includes("(c)");
+                      const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
+                      return (
+                        <div
+                          key={idx + 6}
+                          className="table-row-animated"
+                          style={{
+                            animationDelay: `${(idx + 6) * 0.04}s`,
+                            background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
+                            border: `1.5px solid ${cardAccent}aa`,
+                            borderRadius: "12px 12px 9px 9px",
+                            width: "132px",
+                            height: "124px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            position: "relative",
+                            overflow: "hidden",
+                            boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
+                          }}
+                        >
+                          {/* Captain Badge */}
+                          {isCaptain && (
+                            <div style={{
+                              position: "absolute",
+                              top: "6px",
+                              right: "6px",
+                              width: "18px",
+                              height: "18px",
+                              borderRadius: "50%",
+                              background: "#ea580c",
+                              border: "1.5px solid #ffffff",
+                              color: "#ffffff",
+                              fontSize: "10px",
+                              fontWeight: 950,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              lineHeight: 1,
+                              boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
+                              zIndex: 3
+                            }}>
+                              c
+                            </div>
+                          )}
+
+                          {/* User Silhouette Avatar */}
+                          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
+                            <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                          </div>
+
+                          {/* Bottom Name Banner */}
+                          <div style={{
+                            width: "100%",
+                            background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
+                            borderRadius: "0 0 7px 7px",
+                            padding: "5px 4px",
+                            textAlign: "center",
+                            boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
+                          }}>
+                            <div style={{
+                              color: "#001a2e",
+                              fontSize: "10.5px",
+                              fontWeight: 950,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.3px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis"
+                            }}>
+                              {cleanName}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* BOTTOM TOSS BANNER PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "18px",
+            border: `2px solid ${cardAccent}`,
+            padding: "12px 36px",
+            textAlign: "center",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)"
+          }}>
+            <div style={{
+              color: "#001a2e",
+              fontSize: "16px",
+              fontWeight: 950,
+              letterSpacing: "0.6px",
+              textTransform: "uppercase",
+              lineHeight: 1.2
+            }}>
+              {tossWinnerName.toUpperCase()} WON THE TOSS AND ELECTED TO {tossDecisionText}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── POINTS TABLE & PT (TIED POINT +1) — Broadcast-Grade Standings with Exact Theme Palette or IPL 2025 Replica ──
+    if (isPointsTable || isPointsTablePlusOne) {
+      const isPlusOne = isPointsTablePlusOne;
+      const ptList = getPointsTable(match, themeSlug, isPlusOne);
+
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+
+      return (
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
+
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                marginTop: 20,
-                background: "rgba(0,0,0,0.4)",
-                border: `1px solid ${theme.borderColor}20`,
-                borderRadius: 12,
-                padding: "10px 20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: 10.5,
-                color: panelSecondary,
-                fontWeight: 800
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div>
-                  ⚡ POINTS SYSTEM: <span style={{ color: "#ffffff", fontWeight: 900 }}>Win = 2 PTS · {isPlusOne ? "Tie = 2 PTS" : "Tie = 1 PT"} · Loss = 0 PTS</span>
-                </div>
-                <div style={{ color: panelAccent, fontWeight: 950 }}>
-                  TOP 4 TEAMS ADVANCE TO PLAYOFFS
-                </div>
+                {isPlusOne ? "STANDINGS (TIED +1)" : "POINTS TABLE · STANDINGS"}
               </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
+              </div>
+            </div>
+
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
+            }}>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
+
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "20px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Header Strip */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "8px",
+              padding: "6px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "40px" }}>POS</span>
+              <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left" }}>TEAM</span>
+              <div style={{ display: "grid", gridTemplateColumns: "50px 50px 50px 50px 75px 65px", textAlign: "right", gap: "10px" }}>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>P</span>
+                <span style={{ color: cardAccent2, fontSize: "12px", fontWeight: 900 }}>W</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>L</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>T</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>NRR</span>
+                <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950 }}>PTS</span>
+              </div>
+            </div>
+
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {ptList.map((tm: any, i: number) => {
+                const isTop4 = i < 4;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "8px 16px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      borderBottom: `1px solid ${cardAccent}26`,
+                      background: isTop4 ? `${cardAccent}14` : "transparent",
+                      borderRadius: "6px"
+                    }}
+                  >
+                    <div style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      background: isTop4 ? `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})` : "rgba(255,255,255,0.1)",
+                      color: isTop4 ? "#030a24" : "#ffffff",
+                      fontSize: "12px",
+                      fontWeight: 950,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "14px"
+                    }}>
+                      {i + 1}
+                    </div>
+
+                    <div style={{
+                      color: "#ffffff",
+                      fontSize: "16px",
+                      fontWeight: 950,
+                      flex: 1,
+                      textAlign: "left",
+                      textTransform: "uppercase"
+                    }}>
+                      {tm.name} {isTop4 && <span style={{ color: cardAccent2, fontSize: "10px", fontWeight: 800 }}>• Q</span>}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "50px 50px 50px 50px 75px 65px", textAlign: "right", gap: "10px" }}>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 800 }}>{tm.p}</span>
+                      <span style={{ color: cardAccent2, fontSize: "15px", fontWeight: 900 }}>{tm.w}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{tm.l}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{tm.t}</span>
+                      <span style={{ color: parseFloat(tm.nrr) >= 0 ? cardAccent2 : "#cbd5e1", fontSize: "14px", fontWeight: 900 }}>
+                        {parseFloat(tm.nrr) > 0 ? `+${tm.nrr}` : tm.nrr}
+                      </span>
+                      <span style={{ color: cardAccent, fontSize: "18px", fontWeight: 950 }}>{tm.pts}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            textAlign: "center"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              TOP 4 TEAMS ADVANCE TO PLAYOFFS · WIN = 2 PTS · {isPlusOne ? "TIE = 2 PTS" : "TIE = 1 PT"}
             </div>
           </div>
         </div>
@@ -3993,194 +4957,263 @@ export default function OverlayPage() {
       const rest = battersList.slice(1, 6);
       const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
 
-      return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
+      return (
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
+
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <div>
-                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  TOURNAMENT LEADERBOARD · ORANGE CAP
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {tourName.toUpperCase()} · TOP BATTERS
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
 
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 24px",
-                textAlign: "center",
-                boxShadow: `0 0 20px ${panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  👑 <span style={{ color: panelAccent }}>MOST RUNS IN SERIES</span>
-                </div>
+                ORANGE CAP · TOP RUN SCORERS
               </div>
-
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                  OFFICIAL BROADCAST
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main Leaderboard Grid */}
             <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.35fr",
-              gap: 20,
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "28px 32px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Left Column: #1 Top Batter Hero Card */}
-              {leader && (
-                <div style={{
-                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                  border: `1.5px solid ${panelAccent}60`,
-                  borderTop: `4px solid ${panelAccent}`,
-                  borderRadius: 20,
-                  padding: "28px",
-                  boxShadow: `0 0 30px ${panelAccent}25`,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between"
-                }}>
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{
-                        background: `linear-gradient(135deg, ${panelAccent}40, rgba(0,0,0,0.6))`,
-                        border: `1.5px solid ${panelAccent}`,
-                        borderRadius: 8,
-                        padding: "4px 12px",
-                        fontSize: 10,
-                        fontWeight: 950,
-                        color: panelAccent,
-                        letterSpacing: 1.5,
-                        textTransform: "uppercase"
-                      }}>
-                        👑 #1 LEADING RUN SCORER
-                      </span>
-                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
-                    </div>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
 
-                    <div style={{ fontSize: 32, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
-                      {leader.name}
-                    </div>
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "20px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Header Strip */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "8px",
+              padding: "6px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "40px" }}>POS</span>
+              <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", width: "200px", textAlign: "left" }}>BATSMAN</span>
+              <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left" }}>TEAM</span>
+              <div style={{ display: "grid", gridTemplateColumns: "55px 55px 50px 50px 65px 75px", textAlign: "right", gap: "10px" }}>
+                <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950 }}>RUNS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>BALLS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>4s</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>6s</span>
+                <span style={{ color: cardAccent2, fontSize: "12px", fontWeight: 900 }}>H.S.</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>S/R</span>
+              </div>
+            </div>
 
-                    {/* Giant Runs Display */}
-                    <div style={{ fontSize: 80, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 40px ${panelAccent}45`, margin: "14px 0" }}>
-                      {leader.runs} <span style={{ fontSize: 24, fontWeight: 800, color: panelSecondary }}>RUNS</span>
-                    </div>
-                  </div>
-
-                  {/* Leader Stat Badges */}
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
-                    {[
-                      { l: "AVERAGE", v: leader.avg },
-                      { l: "STRIKE RATE", v: leader.sr },
-                      { l: "HIGHEST", v: leader.hsStr }
-                    ].map((s, si) => (
-                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "10px", textAlign: "center" }}>
-                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
-                        <div style={{ fontSize: 18, fontWeight: 950, color: "#ffffff", marginTop: 2 }}>{s.v}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-                    <div style={{ background: "rgba(251,191,36,0.15)", border: "1.5px solid rgba(251,191,36,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#fbbf24", fontWeight: 900 }}>
-                      💥 {leader.fours}×4s
-                    </div>
-                    <div style={{ background: "rgba(56,189,248,0.15)", border: "1.5px solid rgba(56,189,248,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#38bdf8", fontWeight: 900 }}>
-                      🚀 {leader.sixes}×6s
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Right Column: Ranked Top Batters List */}
-              <div style={{
-                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                border: `1.5px solid ${theme.borderColor}30`,
-                borderRadius: 20,
-                padding: "20px 24px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 8
-              }}>
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
-                  RANKED CONTENDERS (#2 — #{battersList.length})
-                </div>
-
-                {rest.map((b: any, i: number) => (
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {battersList.map((b: any, i: number) => {
+                const isLeader = i === 0;
+                return (
                   <div
                     key={i}
-                    className="table-row-animated"
                     style={{
-                      animationDelay: `${(i + 1) * 0.04}s`,
+                      padding: "8px 16px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      background: "rgba(0,0,0,0.35)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 12,
-                      padding: "10px 16px"
+                      borderBottom: `1px solid ${cardAccent}26`,
+                      background: isLeader ? `${cardAccent}14` : "transparent",
+                      borderRadius: "6px"
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <div style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1.5px solid rgba(255,255,255,0.15)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 11,
-                        fontWeight: 950,
-                        color: "#94a3b8"
-                      }}>
-                        #{i + 2}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: 14.5, fontWeight: 900, color: "#ffffff" }}>{b.name}</div>
-                        <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700 }}>{b.team.toUpperCase()} · HS {b.hsStr} · SR {b.sr}</div>
-                      </div>
+                    <div style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      background: isLeader ? `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})` : "rgba(255,255,255,0.1)",
+                      color: isLeader ? "#030a24" : "#ffffff",
+                      fontSize: "12px",
+                      fontWeight: 950,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "14px"
+                    }}>
+                      {i + 1}
                     </div>
 
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: 22, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{b.runs}</div>
-                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>RUNS</div>
+                    <div style={{
+                      color: "#ffffff",
+                      fontSize: "16px",
+                      fontWeight: 950,
+                      width: "200px",
+                      textAlign: "left",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap"
+                    }}>
+                      {b.name} {isLeader && <span style={{ color: cardAccent, fontSize: "11px" }}>👑</span>}
+                    </div>
+
+                    <div style={{
+                      color: "#94a3b8",
+                      fontSize: "14px",
+                      fontWeight: 800,
+                      flex: 1,
+                      textAlign: "left",
+                      textTransform: "uppercase"
+                    }}>
+                      {b.team}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "55px 55px 50px 50px 65px 75px", textAlign: "right", gap: "10px" }}>
+                      <span style={{ color: cardAccent, fontSize: "17px", fontWeight: 950 }}>{b.runs}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{b.balls}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{b.fours || 0}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{b.sixes || 0}</span>
+                      <span style={{ color: cardAccent2, fontSize: "15px", fontWeight: 900 }}>{b.hsStr}</span>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 900 }}>{b.sr}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            textAlign: "center"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              LEADING RUN SCORER: {leader?.name.toUpperCase()} ({leader?.runs} RUNS)
             </div>
           </div>
         </div>
@@ -4235,197 +5268,262 @@ export default function OverlayPage() {
       })();
 
       const leader = bowlersList[0];
-      const rest = bowlersList.slice(1, 6);
-      const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
 
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid #ef4444`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <div>
-                <div style={{ fontSize: 9.5, color: "#f87171", fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  TOURNAMENT LEADERBOARD · PURPLE CAP
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {tourName.toUpperCase()} · TOP BOWLERS
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
 
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: "linear-gradient(135deg, rgba(239,68,68,0.25), rgba(0,0,0,0.8))",
-                border: "1.5px solid #ef4444",
-                borderRadius: 999,
-                padding: "8px 24px",
-                textAlign: "center",
-                boxShadow: "0 0 20px rgba(239,68,68,0.4)"
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  ⚡ <span style={{ color: "#f87171" }}>MOST WICKETS IN SERIES</span>
-                </div>
+                PURPLE CAP · TOP WICKET TAKERS
               </div>
-
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                  OFFICIAL BROADCAST
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main Leaderboard Grid */}
             <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1.35fr",
-              gap: 20,
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "28px 32px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Left Column: #1 Top Bowler Hero Card */}
-              {leader && (
-                <div style={{
-                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                  border: "1.5px solid rgba(239,68,68,0.6)",
-                  borderTop: "4px solid #ef4444",
-                  borderRadius: 20,
-                  padding: "28px",
-                  boxShadow: "0 0 30px rgba(239,68,68,0.25)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between"
-                }}>
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{
-                        background: "linear-gradient(135deg, rgba(239,68,68,0.4), rgba(0,0,0,0.6))",
-                        border: "1.5px solid #ef4444",
-                        borderRadius: 8,
-                        padding: "4px 12px",
-                        fontSize: 10,
-                        fontWeight: 950,
-                        color: "#f87171",
-                        letterSpacing: 1.5,
-                        textTransform: "uppercase"
-                      }}>
-                        ⚡ #1 LEADING WICKET TAKER
-                      </span>
-                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
-                    </div>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
 
-                    <div style={{ fontSize: 32, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
-                      {leader.name}
-                    </div>
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "20px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Header Strip */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "8px",
+              padding: "6px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "40px" }}>POS</span>
+              <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", width: "200px", textAlign: "left" }}>BOWLER</span>
+              <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left" }}>TEAM</span>
+              <div style={{ display: "grid", gridTemplateColumns: "60px 55px 65px 65px 75px", textAlign: "right", gap: "10px" }}>
+                <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950 }}>WKTS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>OVERS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>RUNS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>BEST</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>ECON</span>
+              </div>
+            </div>
 
-                    {/* Giant Wickets Display */}
-                    <div style={{ fontSize: 80, fontWeight: 950, color: "#ef4444", lineHeight: 1, textShadow: "0 0 40px rgba(239,68,68,0.5)", margin: "14px 0" }}>
-                      {leader.wickets} <span style={{ fontSize: 24, fontWeight: 800, color: panelSecondary }}>WKTS</span>
-                    </div>
-                  </div>
-
-                  {/* Leader Stat Badges */}
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
-                    {[
-                      { l: "ECONOMY", v: leader.eco },
-                      { l: "AVERAGE", v: leader.avg },
-                      { l: "BEST SPELL", v: leader.bestStr }
-                    ].map((s, si) => (
-                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "10px", textAlign: "center" }}>
-                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
-                        <div style={{ fontSize: 18, fontWeight: 950, color: "#ffffff", marginTop: 2 }}>{s.v}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-                    <div style={{ background: "rgba(239,68,68,0.15)", border: "1.5px solid rgba(239,68,68,0.4)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#f87171", fontWeight: 900 }}>
-                      ⚡ {leader.overs} OVERS BOWLED
-                    </div>
-                    <div style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: "8px 16px", fontSize: 13, color: "#ffffff", fontWeight: 900 }}>
-                      🎯 {leader.runsConceded} RUNS CONCEDED
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Right Column: Ranked Top Bowlers List */}
-              <div style={{
-                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                border: `1.5px solid ${theme.borderColor}30`,
-                borderRadius: 20,
-                padding: "20px 24px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 8
-              }}>
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
-                  RANKED CONTENDERS (#2 — #{bowlersList.length})
-                </div>
-
-                {rest.map((bw: any, i: number) => (
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {bowlersList.map((bw: any, i: number) => {
+                const isLeader = i === 0;
+                return (
                   <div
                     key={i}
-                    className="table-row-animated"
                     style={{
-                      animationDelay: `${(i + 1) * 0.04}s`,
+                      padding: "8px 16px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      background: "rgba(0,0,0,0.35)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 12,
-                      padding: "10px 16px"
+                      borderBottom: `1px solid ${cardAccent}26`,
+                      background: isLeader ? `${cardAccent}14` : "transparent",
+                      borderRadius: "6px"
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <div style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1.5px solid rgba(255,255,255,0.15)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 11,
-                        fontWeight: 950,
-                        color: "#94a3b8"
-                      }}>
-                        #{i + 2}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: 14.5, fontWeight: 900, color: "#ffffff" }}>{bw.name}</div>
-                        <div style={{ fontSize: 9.5, color: panelSecondary, fontWeight: 700 }}>{bw.team.toUpperCase()} · ECO {bw.eco} · BEST {bw.bestStr}</div>
-                      </div>
+                    <div style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      background: isLeader ? `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})` : "rgba(255,255,255,0.1)",
+                      color: isLeader ? "#030a24" : "#ffffff",
+                      fontSize: "12px",
+                      fontWeight: 950,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "14px"
+                    }}>
+                      {i + 1}
                     </div>
 
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: 22, fontWeight: 950, color: "#ef4444", lineHeight: 1 }}>{bw.wickets}</div>
-                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>WKTS</div>
+                    <div style={{
+                      color: "#ffffff",
+                      fontSize: "16px",
+                      fontWeight: 950,
+                      width: "200px",
+                      textAlign: "left",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap"
+                    }}>
+                      {bw.name} {isLeader && <span style={{ color: cardAccent, fontSize: "11px" }}>⚡</span>}
+                    </div>
+
+                    <div style={{
+                      color: "#94a3b8",
+                      fontSize: "14px",
+                      fontWeight: 800,
+                      flex: 1,
+                      textAlign: "left",
+                      textTransform: "uppercase"
+                    }}>
+                      {bw.team}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "60px 55px 65px 65px 75px", textAlign: "right", gap: "10px" }}>
+                      <span style={{ color: cardAccent, fontSize: "18px", fontWeight: 950 }}>{bw.wickets}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "15px", fontWeight: 800 }}>{bw.overs}</span>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 800 }}>{bw.runsConceded}</span>
+                      <span style={{ color: cardAccent2, fontSize: "15px", fontWeight: 900 }}>{bw.bestStr}</span>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 900 }}>{bw.eco}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            textAlign: "center"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              LEADING WICKET TAKER: {leader?.name.toUpperCase()} ({leader?.wickets} WICKETS · ECON {leader?.eco})
             </div>
           </div>
         </div>
@@ -4472,153 +5570,262 @@ export default function OverlayPage() {
         return { strikersList: list };
       })();
 
-      const tourName = (match as any).tournamentName || "TOURNAMENT LEADERBOARD";
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
 
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1300 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <div>
-                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  POWER HITTERS · BOUNDARY KINGS
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {tourName.toUpperCase()} · TOP 4s & 6s STRIKERS
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
 
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 24px",
-                textAlign: "center",
-                boxShadow: `0 0 20px ${panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  💥 <span style={{ color: panelAccent }}>MOST SIXES & FOURS</span>
-                </div>
+                TOP 4s & 6s · MAXIMUM STRIKERS
               </div>
-
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                  OFFICIAL BROADCAST
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main Table Grid */}
             <div style={{
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "28px 36px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: panelFont }}>
-                <thead>
-                  <tr style={{ background: `${panelAccent}18`, borderBottom: `2px solid ${panelAccent}40` }}>
-                    {["POS", "BATSMAN", "TEAM", "4s (FOURS)", "6s (SIXES)", "TOTAL BOUNDARIES", "BOUNDARY RUNS", "S/R"].map((h, i) => (
-                      <th key={h} style={{
-                        padding: "14px 16px",
-                        fontSize: 10.5,
-                        fontWeight: 950,
-                        textAlign: i <= 2 ? "left" : "center",
-                        color: i === 4 ? "#38bdf8" : i === 3 ? "#fbbf24" : i === 6 ? panelAccent : panelSecondary,
-                        letterSpacing: 2,
-                        textTransform: "uppercase"
-                      }}>
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {strikersList.map((st: any, i: number) => (
-                    <tr
-                      key={i}
-                      className="table-row-animated"
-                      style={{
-                        animationDelay: `${i * 0.04}s`,
-                        borderBottom: `1px solid rgba(255,255,255,0.06)`,
-                        background: i === 0 ? `${panelAccent}16` : "transparent"
-                      }}
-                    >
-                      <td style={{ padding: "14px 16px" }}>
-                        <div style={{
-                          width: 28,
-                          height: 28,
-                          borderRadius: "50%",
-                          background: i === 0 ? `${panelAccent}30` : "rgba(255,255,255,0.06)",
-                          border: `1.5px solid ${i === 0 ? panelAccent : "rgba(255,255,255,0.12)"}`,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: 11,
-                          fontWeight: 950,
-                          color: i === 0 ? panelAccent : "#94a3b8"
-                        }}>
-                          #{i + 1}
-                        </div>
-                      </td>
-                      <td style={{ padding: "14px 16px" }}>
-                        <span style={{ fontSize: 15, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                          {st.name}
-                        </span>
-                        {i === 0 && (
-                          <span style={{ marginLeft: 8, fontSize: 9, fontWeight: 900, color: panelAccent }}>
-                            👑 LEADING POWER STRIKER
-                          </span>
-                        )}
-                      </td>
-                      <td style={{ padding: "14px 16px", color: panelSecondary, fontWeight: 800, fontSize: 13 }}>
-                        {st.team.toUpperCase()}
-                      </td>
-                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
-                        <span style={{ background: "rgba(251,191,36,0.15)", border: "1px solid rgba(251,191,36,0.4)", borderRadius: 8, padding: "4px 12px", fontSize: 14, fontWeight: 950, color: "#fbbf24" }}>
-                          {st.fours}×4s
-                        </span>
-                      </td>
-                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
-                        <span style={{ background: "rgba(56,189,248,0.15)", border: "1px solid rgba(56,189,248,0.4)", borderRadius: 8, padding: "4px 12px", fontSize: 14, fontWeight: 950, color: "#38bdf8" }}>
-                          {st.sixes}×6s
-                        </span>
-                      </td>
-                      <td style={{ padding: "14px 16px", textAlign: "center", color: "#ffffff", fontWeight: 900, fontSize: 15 }}>
-                        {st.totalBoundaries}
-                      </td>
-                      <td style={{ padding: "14px 16px", textAlign: "center" }}>
-                        <span style={{ fontSize: 17, fontWeight: 950, color: panelAccent }}>
-                          {st.boundaryRuns}
-                        </span> <span style={{ fontSize: 10, color: panelSecondary, fontWeight: 700 }}>({st.boundaryPct}%)</span>
-                      </td>
-                      <td style={{ padding: "14px 16px", textAlign: "center", color: "#4ade80", fontWeight: 900, fontSize: 14 }}>
-                        {st.sr}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
+
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "20px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Header Strip */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "8px",
+              padding: "6px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "40px" }}>POS</span>
+              <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", width: "200px", textAlign: "left" }}>BATSMAN</span>
+              <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left" }}>TEAM</span>
+              <div style={{ display: "grid", gridTemplateColumns: "55px 55px 75px 80px 75px", textAlign: "right", gap: "10px" }}>
+                <span style={{ color: "#fbbf24", fontSize: "12px", fontWeight: 900 }}>4s</span>
+                <span style={{ color: "#38bdf8", fontSize: "12px", fontWeight: 900 }}>6s</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>BOUNDARIES</span>
+                <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950 }}>RUNS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>S/R</span>
+              </div>
+            </div>
+
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {strikersList.map((st: any, i: number) => {
+                const isLeader = i === 0;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "8px 16px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      borderBottom: `1px solid ${cardAccent}26`,
+                      background: isLeader ? `${cardAccent}14` : "transparent",
+                      borderRadius: "6px"
+                    }}
+                  >
+                    <div style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      background: isLeader ? `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})` : "rgba(255,255,255,0.1)",
+                      color: isLeader ? "#030a24" : "#ffffff",
+                      fontSize: "12px",
+                      fontWeight: 950,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "14px"
+                    }}>
+                      {i + 1}
+                    </div>
+
+                    <div style={{
+                      color: "#ffffff",
+                      fontSize: "16px",
+                      fontWeight: 950,
+                      width: "200px",
+                      textAlign: "left",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap"
+                    }}>
+                      {st.name} {isLeader && <span style={{ color: cardAccent, fontSize: "11px" }}>🚀</span>}
+                    </div>
+
+                    <div style={{
+                      color: "#94a3b8",
+                      fontSize: "14px",
+                      fontWeight: 800,
+                      flex: 1,
+                      textAlign: "left",
+                      textTransform: "uppercase"
+                    }}>
+                      {st.team}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "55px 55px 75px 80px 75px", textAlign: "right", gap: "10px" }}>
+                      <span style={{ color: "#fbbf24", fontSize: "16px", fontWeight: 900 }}>{st.fours}×4s</span>
+                      <span style={{ color: "#38bdf8", fontSize: "16px", fontWeight: 950 }}>{st.sixes}×6s</span>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 800 }}>{st.totalBoundaries}</span>
+                      <span style={{ color: cardAccent, fontSize: "17px", fontWeight: 950 }}>{st.boundaryRuns}</span>
+                      <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 900 }}>{st.sr}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            textAlign: "center"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              POWER HITTER LEADER: {strikersList[0]?.name.toUpperCase()} ({strikersList[0]?.sixes} SIXES · SR {strikersList[0]?.sr})
             </div>
           </div>
         </div>
@@ -4686,190 +5893,260 @@ export default function OverlayPage() {
       })();
 
       const leader = mvpList[0];
-      const rest = mvpList.slice(1, 5);
-      const tourName = (match as any).tournamentName || "TOURNAMENT MVP";
+      const isIpl2025 = themeSlug === "ipl-2025";
+      const cardAccent = isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isIpl2025
+        ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+        : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isIpl2025
+        ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+        : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isIpl2025
+        ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+        : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const fontStyle = THEME_FONTS[themeSlug] || panelFont;
+
+      const getShortNameLocal = (name: string) => {
+        if (!name) return "IPL";
+        const words = name.trim().split(/\s+/).filter(Boolean);
+        if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+        if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return name.slice(0, 3).toUpperCase();
+      };
+
+      const t1Short = getShortNameLocal(match.team1Name);
+      const t2Short = getShortNameLocal(match.team2Name);
+      const tourTitle = (match as any).tournamentName || "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
 
       return (
-        <div className="fade-in" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: panelFont, overflow: "hidden", padding: "20px 0" }}>
-          <style>{GLOBAL_CSS}</style><GroundBG bgUrl={theme.bgUrl} />
-          <div style={{ position: "relative", zIndex: 1, width: "90vw", maxWidth: 1320 }}>
-            {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+        <div className="fade-in" style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: fontStyle,
+          overflow: "hidden",
+          padding: "20px 0",
+          gap: "14px"
+        }}>
+          <style>{GLOBAL_CSS}</style>
+          <GroundBG bgUrl={theme.bgUrl} />
 
-            {/* Top Header Banner with Theme Palette */}
-            <div className="animate-slide-up" style={{
-              background: `linear-gradient(185deg, rgba(4,6,20,0.99), ${panelBg}f6, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}40`,
-              borderBottom: `2px solid ${panelAccent}40`,
-              borderRadius: "24px 24px 0 0",
-              padding: "18px 36px",
-              boxShadow: panelShadow,
-              backdropFilter: "blur(24px)",
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              position: "fixed",
+              top: 18,
+              right: 22,
+              zIndex: 9999,
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              color: "#030a24",
+              border: "none",
+              borderRadius: 12,
+              padding: "10px 22px",
+              fontWeight: 950,
+              fontSize: 12,
+              cursor: "pointer",
+              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              gap: 16
+              gap: 8,
+              letterSpacing: 1.5,
+              textTransform: "uppercase"
+            }}
+          >
+            🖨️ Save PDF
+          </button>
+
+          {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
+
+          {/* TOP HEADER PILL */}
+          <div className="animate-slide-up" style={{
+            background: headerBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "10px 24px",
+            position: "relative",
+            overflow: "hidden",
+            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+            width: "min(92vw, 1080px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}>
+            <div style={{
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              <div>
-                <div style={{ fontSize: 9.5, color: panelAccentTx, fontWeight: 900, letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  TOURNAMENT IMPACT · MAN OF THE SERIES
-                </div>
-                <div style={{ fontSize: 22, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5 }}>
-                  {tourName.toUpperCase()} · PLAYER OF THE SERIES
-                </div>
-              </div>
+              <span style={{ color: "#030a24", fontSize: "17px", fontWeight: 950 }}>{t1Short}</span>
+            </div>
 
+            <div style={{ textAlign: "center", flex: 1, padding: "0 14px" }}>
               <div style={{
-                background: `linear-gradient(135deg, ${panelAccent}30, rgba(0,0,0,0.8))`,
-                border: `1.5px solid ${panelAccent}`,
-                borderRadius: 999,
-                padding: "8px 28px",
-                textAlign: "center",
-                boxShadow: `0 0 20px ${panelAccent}40`
+                color: cardTitleAccent,
+                fontSize: "26px",
+                fontWeight: 950,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                lineHeight: 1.1,
+                textShadow: `0 0 16px ${cardAccent}80`
               }}>
-                <div style={{ fontSize: 13, fontWeight: 950, color: "#ffffff", letterSpacing: 1.5, textTransform: "uppercase" }}>
-                  🌟 <span style={{ color: panelAccent }}>MOST VALUABLE PLAYER</span>
-                </div>
+                PLAYER OF THE TOURNAMENT · MVP
               </div>
-
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-                  OFFICIAL BROADCAST
-                </div>
-                <div style={{ fontSize: 13.5, fontWeight: 950, color: panelAccent, letterSpacing: 1.2, marginTop: 2 }}>
-                  {theme.name.toUpperCase()}
-                </div>
+              <div style={{
+                color: cardAccent2,
+                fontSize: "12px",
+                fontWeight: 900,
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                marginTop: "3px"
+              }}>
+                {tourTitle}
               </div>
             </div>
 
-            {/* Main MVP Grid */}
             <div style={{
-              display: "grid",
-              gridTemplateColumns: "1.1fr 1.3fr",
-              gap: 20,
-              background: `linear-gradient(185deg, rgba(2,4,16,0.98), ${panelBg}, rgba(2,4,16,0.99))`,
-              border: `1.5px solid ${theme.borderColor}30`,
-              borderTop: "none",
-              borderRadius: "0 0 24px 24px",
-              padding: "28px 32px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.8)"
+              width: "54px",
+              height: "54px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              border: "2px solid rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              flexShrink: 0
             }}>
-              {/* Left Column: #1 MVP Hero Card */}
-              {leader && (
-                <div style={{
-                  background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                  border: `1.5px solid ${panelAccent}60`,
-                  borderTop: `4px solid ${panelAccent}`,
-                  borderRadius: 20,
-                  padding: "28px",
-                  boxShadow: `0 0 30px ${panelAccent}30`,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between"
-                }}>
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{
-                        background: `linear-gradient(135deg, ${panelAccent}40, rgba(0,0,0,0.6))`,
-                        border: `1.5px solid ${panelAccent}`,
-                        borderRadius: 8,
-                        padding: "4px 12px",
-                        fontSize: 10,
-                        fontWeight: 950,
-                        color: panelAccent,
-                        letterSpacing: 1.5,
-                        textTransform: "uppercase"
-                      }}>
-                        🌟 #1 SERIES MVP WINNER
-                      </span>
-                      <span style={{ fontSize: 11, color: panelSecondary, fontWeight: 800 }}>{leader.team.toUpperCase()}</span>
-                    </div>
+              <span style={{ color: "#ffffff", fontSize: "17px", fontWeight: 950 }}>{t2Short}</span>
+            </div>
+          </div>
 
-                    <div style={{ fontSize: 34, fontWeight: 950, color: "#ffffff", letterSpacing: 0.5, marginBottom: 4 }}>
-                      {leader.name}
-                    </div>
+          {/* MAIN CONTAINER */}
+          <div className="animate-slide-up" style={{
+            background: bodyBgGrad,
+            border: `2px solid ${cardAccent}`,
+            borderRadius: "22px",
+            padding: "20px 24px",
+            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+            width: "min(92vw, 1080px)",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Header Strip */}
+            <div style={{
+              background: "rgba(255, 255, 255, 0.14)",
+              borderRadius: "8px",
+              padding: "6px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "8px"
+            }}>
+              <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950, letterSpacing: "1px", width: "40px" }}>POS</span>
+              <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", width: "200px", textAlign: "left" }}>PLAYER</span>
+              <span style={{ color: "#94a3b8", fontSize: "12px", fontWeight: 900, letterSpacing: "1px", flex: 1, textAlign: "left" }}>TEAM</span>
+              <div style={{ display: "grid", gridTemplateColumns: "60px 60px 60px 85px", textAlign: "right", gap: "10px" }}>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>RUNS</span>
+                <span style={{ color: "#ffffff", fontSize: "12px", fontWeight: 900 }}>WKTS</span>
+                <span style={{ color: cardAccent2, fontSize: "12px", fontWeight: 900 }}>MOM</span>
+                <span style={{ color: cardAccent, fontSize: "12px", fontWeight: 950 }}>IMPACT PTS</span>
+              </div>
+            </div>
 
-                    {/* Giant Impact Rating */}
-                    <div style={{ fontSize: 72, fontWeight: 950, color: panelAccent, lineHeight: 1, textShadow: `0 0 40px ${panelAccent}45`, margin: "14px 0" }}>
-                      {leader.score} <span style={{ fontSize: 22, fontWeight: 800, color: panelSecondary }}>MVP PTS</span>
-                    </div>
-                  </div>
-
-                  {/* Impact Figures Grid */}
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 12 }}>
-                    {[
-                      { l: "TOTAL RUNS", v: `${leader.runs} (SR ${leader.sr})`, c: panelAccent },
-                      { l: "TOTAL WKTS", v: `${leader.wickets} (ECO ${leader.eco})`, c: "#ef4444" },
-                      { l: "MOM AWARDS", v: `⭐ ${leader.momCount}`, c: "#fbbf24" }
-                    ].map((s, si) => (
-                      <div key={si} style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "12px 8px", textAlign: "center" }}>
-                        <div style={{ fontSize: 8, color: panelSecondary, fontWeight: 900, letterSpacing: 1.5 }}>{s.l}</div>
-                        <div style={{ fontSize: 14, fontWeight: 950, color: s.c, marginTop: 3 }}>{s.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Right Column: Ranked MVP Contenders List */}
-              <div style={{
-                background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.45))",
-                border: `1.5px solid ${theme.borderColor}30`,
-                borderRadius: 20,
-                padding: "20px 24px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 8
-              }}>
-                <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>
-                  MVP CONTENDERS (#2 — #{mvpList.length})
-                </div>
-
-                {rest.map((p: any, i: number) => (
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {mvpList.map((mv: any, i: number) => {
+                const isLeader = i === 0;
+                return (
                   <div
                     key={i}
-                    className="table-row-animated"
                     style={{
-                      animationDelay: `${(i + 1) * 0.04}s`,
+                      padding: "8px 16px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      background: "rgba(0,0,0,0.35)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 12,
-                      padding: "12px 16px"
+                      borderBottom: `1px solid ${cardAccent}26`,
+                      background: isLeader ? `${cardAccent}14` : "transparent",
+                      borderRadius: "6px"
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <div style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1.5px solid rgba(255,255,255,0.15)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 11,
-                        fontWeight: 950,
-                        color: "#94a3b8"
-                      }}>
-                        #{i + 2}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: 15, fontWeight: 900, color: "#ffffff" }}>{p.name}</div>
-                        <div style={{ fontSize: 10, color: panelSecondary, fontWeight: 700 }}>
-                          {p.team.toUpperCase()} · 🏏 {p.runs} runs · ⚡ {p.wickets} wkts {p.momCount > 0 ? `· ⭐ ${p.momCount} MoM` : ""}
-                        </div>
-                      </div>
+                    <div style={{
+                      width: "26px",
+                      height: "26px",
+                      borderRadius: "50%",
+                      background: isLeader ? `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})` : "rgba(255,255,255,0.1)",
+                      color: isLeader ? "#030a24" : "#ffffff",
+                      fontSize: "12px",
+                      fontWeight: 950,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "14px"
+                    }}>
+                      {i + 1}
                     </div>
 
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: 22, fontWeight: 950, color: panelAccent, lineHeight: 1 }}>{p.score}</div>
-                      <div style={{ fontSize: 8.5, color: panelSecondary, fontWeight: 800, marginTop: 2 }}>MVP PTS</div>
+                    <div style={{
+                      color: "#ffffff",
+                      fontSize: "16px",
+                      fontWeight: 950,
+                      width: "200px",
+                      textAlign: "left",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap"
+                    }}>
+                      {mv.name} {isLeader && <span style={{ color: cardAccent, fontSize: "11px" }}>⭐</span>}
+                    </div>
+
+                    <div style={{
+                      color: "#94a3b8",
+                      fontSize: "14px",
+                      fontWeight: 800,
+                      flex: 1,
+                      textAlign: "left",
+                      textTransform: "uppercase"
+                    }}>
+                      {mv.team}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "60px 60px 60px 85px", textAlign: "right", gap: "10px" }}>
+                      <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: 800 }}>{mv.runs}</span>
+                      <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: 800 }}>{mv.wickets}</span>
+                      <span style={{ color: cardAccent2, fontSize: "15px", fontWeight: 900 }}>{mv.momCount}×⭐</span>
+                      <span style={{ color: cardAccent, fontSize: "18px", fontWeight: 950 }}>{mv.score}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="animate-slide-up" style={{
+            background: bottomPillBgGrad,
+            borderRadius: "20px",
+            padding: "10px 28px",
+            boxShadow: `0 8px 24px rgba(0,0,0,0.7), 0 0 18px ${cardAccent}55`,
+            width: "min(92vw, 1080px)",
+            textAlign: "center"
+          }}>
+            <div style={{ color: "#030a24", fontSize: "15px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase" }}>
+              PLAYER OF SERIES LEADER: {leader?.name.toUpperCase()} ({leader?.score} IMPACT POINTS)
             </div>
           </div>
         </div>
@@ -9872,35 +11149,7 @@ export default function OverlayPage() {
           </div>
         ) : (
           /* Match not started card */
-          <div className="scale-in" style={{
-            position: "relative",
-            zIndex: 1,
-            background: "linear-gradient(135deg, #011d16 0%, #022c22 60%, #04362a 100%)",
-            border: "2px solid rgba(203,213,225,0.6)",
-            borderRadius: 18,
-            padding: "28px 42px",
-            textAlign: "center",
-            boxShadow: "0 14px 32px rgba(0,0,0,0.8), 0 0 20px rgba(234,179,8,0.25)"
-          }}>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28, marginBottom: 16 }}>
-              <TeamLogo name={match.team1Name} isBatting={false} isBowling={false} accentColor="#eab308" borderColor="#cbd5e1" size={58} />
-              <div style={{
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #eab308, #ca8a04)",
-                color: "#000",
-                fontWeight: 950,
-                fontSize: 14,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 0 12px rgba(234,179,8,0.5)"
-              }}>
-                VS
-              </div>
-              <TeamLogo name={match.team2Name} isBatting={false} isBowling={false} accentColor="#eab308" borderColor="#cbd5e1" size={58} />
-            </div>
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "linear-gradient(135deg, #011d16 0%, #022c22 60%, #04362a 100%)", border: "2px solid rgba(203,213,225,0.6)", borderRadius: 18, padding: "28px 42px", textAlign: "center", color: "#fff", boxShadow: "0 14px 32px rgba(0,0,0,0.8)" }}>
             <div style={{ color: "#eab308", fontWeight: 950, fontSize: "18px", letterSpacing: "1px" }}>
               {match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}
             </div>
@@ -9913,12 +11162,13 @@ export default function OverlayPage() {
     );
   }
 
-  // ── IPL 2025 / 15th Theme: Premium luxury purple-magenta glass ──
+  // ── IPL 2025 / 15th Theme: 100% Exact Replica of Broadcast Scoreboard Image (Compact Height) ──
   if (themeSlug === "ipl-2025") {
     const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
     const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
 
     const getShortNameLocal = (name: string) => {
+      if (!name) return "TEAM";
       const words = name.trim().split(/\s+/).filter(Boolean);
       if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
       if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
@@ -9928,140 +11178,475 @@ export default function OverlayPage() {
     const batTeamShort = getShortNameLocal(currentBatTeam);
     const bowlTeamShort = getShortNameLocal(currentBowlTeam);
 
-    let statusLine = scoringState.customInputText
-      ? scoringState.customInputText.toUpperCase()
-      : need !== null
-        ? `IPL 2025: REQUIRE ${need} RUNS IN ${bLeft} BALLS`
-        : `IPL 2025 SEASON ACTION LIVE`;
+    const tossWinner = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
+    const tossWinnerShort = getShortNameLocal(tossWinner);
+    const tossDecision = (match as any).optedTo === "Bat" ? "BAT" : "BOWL";
 
     const thisOver = scoringState.thisOver || [];
+    const bpo = match.ballsPerOver || 6;
+
+    const isWicketNotification = activeNotification && (
+      activeNotification.toUpperCase().includes("WICKET") ||
+      activeNotification.toUpperCase().includes("OUT") ||
+      activeNotification.toUpperCase().includes("BOWLED") ||
+      activeNotification.toUpperCase().includes("LBW") ||
+      activeNotification.toUpperCase().includes("CAUGHT")
+    );
 
     return (
-      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
-        <style>{GLOBAL_CSS}</style>
+      <div style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: isPreview ? "center" : "flex-end",
+        padding: isPreview ? "80px 0 20px" : "0 0 16px",
+        fontFamily: "'Outfit', 'Segoe UI', sans-serif",
+        overflow: "hidden"
+      }}>
+        <style>{`
+          ${GLOBAL_CSS}
+          @keyframes iplZoomInOut {
+            0% { transform: scale(0.88); opacity: 0.88; }
+            50% { transform: scale(1.14); opacity: 1; }
+            100% { transform: scale(0.92); opacity: 0.92; }
+          }
+        `}</style>
         <GroundBG bgUrl={theme.bgUrl} />
 
-        {isPreview && <div style={{ position: "fixed", top: 0, left: 0, right: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)", color: "#a855f7", padding: "9px 20px", fontSize: 11, fontWeight: 900, letterSpacing: 2.5, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 14 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 6 }}><span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />PREVIEW MODE</span>
-          <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span><span>IPL 2025 Theme</span>
-        </div>}
+        {isPreview && (
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            background: "rgba(0,0,0,0.94)",
+            backdropFilter: "blur(8px)",
+            color: "#a3e635",
+            padding: "9px 20px",
+            fontSize: 11,
+            fontWeight: 900,
+            letterSpacing: 2.5,
+            zIndex: 999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14
+          }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#a3e635", display: "inline-block", boxShadow: "0 0 8px #a3e635" }} />
+              PREVIEW MODE
+            </span>
+            <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
+            <span>IPL 2025 Broadcast Theme</span>
+          </div>
+        )}
         {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
         {scoringState.inningsStarted ? (
-          <div className="slide-up" style={{ width: "96vw", maxWidth: "1380px", position: "relative", zIndex: 1, filter: "drop-shadow(0 8px 24px rgba(251,191,36,0.25))" }}>
-            {/* Thin gold top accent line */}
-            <div style={{ height: "3px", background: "linear-gradient(90deg, #7c3aed 0%, #fbbf24 30%, #f59e0b 70%, #7c3aed 100%)", borderRadius: "2px 2px 0 0" }} />
+          <div className="slide-up" style={{
+            width: "96vw",
+            maxWidth: "1240px",
+            position: "relative",
+            zIndex: 1,
+            filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.95))"
+          }}>
+            {/* ── MAIN SCOREBOARD HORIZONTAL CHASSIS (Compact 48px) ── */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              height: "48px",
+              background: "linear-gradient(90deg, #01061c 0%, #030d30 20%, #041038 50%, #030d30 80%, #01061c 100%)",
+              borderRadius: "11px",
+              padding: "0",
+              boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08), 0 6px 24px rgba(0,0,0,0.8)",
+              position: "relative"
+            }}>
 
-            {/* Main bar */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "52px", background: "linear-gradient(90deg, #04021a 0%, #0d0a2e 40%, #1a0a3a 60%, #04021a 100%)", overflow: "hidden", borderRadius: "0 0 4px 4px", border: "1px solid rgba(251,191,36,0.2)", borderTop: "none" }}>
+              {/* ── FAR LEFT: Batting Team Gold Floral Tab ── */}
+              <div style={{
+                width: "52px",
+                height: "100%",
+                background: "linear-gradient(135deg, #eab308 0%, #ca8a04 45%, #1e1b4b 95%)",
+                borderRadius: "11px 0 0 11px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                overflow: "hidden",
+                flexShrink: 0
+              }}>
+                {/* Flower watermark outline */}
+                <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
+                  <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                  <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+                  <circle cx="50" cy="50" r="6" fill="currentColor" />
+                </svg>
+                <span style={{
+                  color: "#ffffff",
+                  fontWeight: 950,
+                  fontSize: "12.5px",
+                  letterSpacing: "0.5px",
+                  position: "relative",
+                  zIndex: 2,
+                  textShadow: "0 1px 3px rgba(0,0,0,0.6)"
+                }}>
+                  {batTeamShort}
+                </span>
+              </div>
 
-              {/* ── LEFT WRAPPER (flex:1): Gold cap + Batsmen ── */}
-              <div style={{ display: "flex", alignItems: "stretch", flex: "1 1 0%", minWidth: 0, overflow: "hidden" }}>
+              {/* ── LEFT-CENTER: Two-Tier Score + Batsmen Unit ── */}
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "2px 6px 2px 5px",
+                gap: "2px",
+                flexShrink: 0
+              }}>
 
-                {/* Gold slanted score cap */}
-                <div style={{ display: "flex", alignItems: "center", background: "linear-gradient(135deg, #fbbf24 0%, #d97706 100%)", padding: "0 20px 0 16px", clipPath: "polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%)", minWidth: "200px", flexShrink: 0, gap: "10px" }}>
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-                    <span style={{ color: "#1a0a3a", fontWeight: 900, fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase" }}>{batTeamShort}</span>
-                    <span style={{ color: "#000000", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px" }}>{scoringState.score}-{scoringState.wickets}</span>
+                {/* ── TOP TIER: Vivid Neon Lime Green Pill OR Animated Event Banner (SIX/FOUR/WICKET etc.) ── */}
+                {activeNotification ? (
+                  <div style={{
+                    background: isWicketNotification
+                      ? "linear-gradient(180deg, #2d060a 0%, #4a0d14 55%, #2d060a 100%)"
+                      : "linear-gradient(180deg, #05200a 0%, #0d3812 55%, #05200a 100%)",
+                    borderRadius: "7px",
+                    height: "21px",
+                    padding: "0 10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "290px",
+                    boxShadow: isWicketNotification
+                      ? "0 0 12px rgba(239, 68, 68, 0.45), inset 0 0 8px rgba(239, 68, 68, 0.25)"
+                      : "0 0 12px rgba(163, 230, 53, 0.45), inset 0 0 8px rgba(163, 230, 53, 0.25)",
+                    border: isWicketNotification ? "1.2px solid #f87171" : "1.2px solid #a3e635",
+                    position: "relative",
+                    overflow: "hidden"
+                  }}>
+                    {/* Watermark repeated text in background */}
+                    <div style={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      color: isWicketNotification ? "rgba(248, 113, 113, 0.18)" : "rgba(163, 230, 53, 0.18)",
+                      fontSize: "14px",
+                      fontWeight: 950,
+                      letterSpacing: "4px",
+                      textTransform: "uppercase",
+                      pointerEvents: "none",
+                      userSelect: "none"
+                    }}>
+                      <span>{activeNotification}</span>
+                      <span>{activeNotification}</span>
+                      <span>{activeNotification}</span>
+                    </div>
+
+                    {/* Center animated glowing event text */}
+                    <span style={{
+                      color: isWicketNotification ? "#fca5a5" : "#bef264",
+                      fontSize: "13px",
+                      fontWeight: 950,
+                      letterSpacing: "3px",
+                      textTransform: "uppercase",
+                      position: "relative",
+                      zIndex: 2,
+                      textShadow: isWicketNotification
+                        ? "0 0 8px rgba(239, 68, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.5)"
+                        : "0 0 8px rgba(163, 230, 53, 0.8), 0 0 16px rgba(163, 230, 53, 0.5)",
+                      animation: "iplZoomInOut 1s ease-in-out infinite alternate"
+                    }}>
+                      {activeNotification}
+                    </span>
                   </div>
-                  <div style={{ width: "1px", height: "28px", background: "rgba(0,0,0,0.2)", margin: "0 6px" }} />
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)", fontSize: "9px", fontWeight: "700", textTransform: "uppercase" }}>Overs</span>
-                    <span style={{ color: "#1a0a3a", fontSize: "14px", fontWeight: "900" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
-                  </div>
-                </div>
+                ) : (
+                  <div style={{
+                    background: "linear-gradient(180deg, #b4f210 0%, #99e300 55%, #82c800 100%)",
+                    borderRadius: "7px",
+                    height: "21px",
+                    padding: "0 10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    minWidth: "290px",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6)",
+                    border: "1px solid #c4ff20"
+                  }}>
+                    {/* Team Matchup (BCH v RCC) */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                      <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
+                        {bowlTeamShort}
+                      </span>
+                      <span style={{ color: "#001e30", fontWeight: 800, fontSize: "8px", opacity: 0.85 }}>
+                        v
+                      </span>
+                      <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
+                        {batTeamShort}
+                      </span>
+                    </div>
 
-                {/* Batsmen */}
-                <div style={{ display: "flex", alignItems: "center", flex: 1, padding: "0 20px", gap: "18px", minWidth: 0 }}>
-                  {/* Striker */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ color: "#fbbf24", fontSize: "8px" }}>▶</span>
-                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-                      <span style={{ color: "#fde68a", fontWeight: "800", fontSize: "11px", letterSpacing: "0.3px" }}>{scoringState.striker ? scoringState.striker.split(" ").pop() : "STRIKER"}</span>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "16px" }}>{striker?.runs ?? 0}</span>
-                        <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "10px", fontWeight: "700" }}>({striker?.balls ?? 0})</span>
-                      </div>
+                    {/* Main Score (0-0) */}
+                    <div style={{
+                      color: "#001a2e",
+                      fontWeight: 950,
+                      fontSize: "17px",
+                      letterSpacing: "-0.5px",
+                      lineHeight: 1,
+                      padding: "0 8px"
+                    }}>
+                      {scoringState.score}-{scoringState.wickets}
+                    </div>
+
+                    {/* Overs (0.0(20)) */}
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                      <span style={{ color: "#001a2e", fontWeight: 950, fontSize: "12px", letterSpacing: "-0.2px" }}>
+                        {fmtOv(scoringState.balls, bpo)}
+                      </span>
+                      <span style={{ color: "#001a2e", fontWeight: 900, fontSize: "9.5px", opacity: 0.9 }}>
+                        ({match.overs})
+                      </span>
                     </div>
                   </div>
-                  {/* Divider */}
-                  <div style={{ width: "1px", height: "22px", background: "rgba(251,191,36,0.15)", flexShrink: 0 }} />
-                  {/* Non-Striker */}
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
-                    <span style={{ color: "rgba(253,230,138,0.55)", fontWeight: "700", fontSize: "11px" }}>{scoringState.nonStriker ? scoringState.nonStriker.split(" ").pop() : "NON-STRIKER"}</span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                      <span style={{ color: "rgba(255,255,255,0.65)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0}</span>
-                      <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "9px" }}>({nonStriker?.balls ?? 0})</span>
+                )}
+
+                {/* ── BOTTOM TIER: Two Golden Batsmen Capsules Side-by-Side ── */}
+                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+
+                  {/* Striker Capsule */}
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
+                    border: "1.2px solid #a3e635",
+                    borderRadius: "7px",
+                    padding: "1px 7px 1px 5px",
+                    height: "17px",
+                    flex: 1,
+                    minWidth: "142px",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px", minWidth: 0, overflow: "hidden" }}>
+                      <span style={{ color: "#facc15", fontSize: "9px", lineHeight: 1, flexShrink: 0 }}>🏏</span>
+                      <span style={{
+                        color: "#ffffff",
+                        fontWeight: 950,
+                        fontSize: "9.5px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.2px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}>
+                        {(scoringState.striker || "STRIKER").split(" ").pop()}
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
+                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
+                        {striker?.runs ?? 0}
+                      </span>
+                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
+                        {striker?.balls ?? 0}
+                      </span>
                     </div>
                   </div>
+
+                  {/* Non-Striker Capsule */}
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
+                    border: "1.2px solid #a3e635",
+                    borderRadius: "7px",
+                    padding: "1px 7px 1px 6px",
+                    height: "17px",
+                    flex: 1,
+                    minWidth: "142px",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                  }}>
+                    <span style={{
+                      color: "#ffffff",
+                      fontWeight: 950,
+                      fontSize: "9.5px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.2px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis"
+                    }}>
+                      {(scoringState.nonStriker || "NON-STRIKER").split(" ").pop()}
+                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
+                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
+                        {nonStriker?.runs ?? 0}
+                      </span>
+                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
+                        {nonStriker?.balls ?? 0}
+                      </span>
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
 
-              {/* ── CENTER STATUS (fixed 200px, truly centered) ── */}
+              {/* ── CENTER: TOSS Block ── */}
               <div style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "200px",
+                padding: "0 10px",
+                minWidth: "80px",
                 flexShrink: 0,
-                background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(180deg, rgba(124,58,237,0.3) 0%, rgba(0,0,0,0) 100%)",
-                borderLeft: "1px solid rgba(251,191,36,0.18)",
-                borderRight: "1px solid rgba(251,191,36,0.18)",
-                transition: "all 0.3s ease"
+                borderRight: "1px solid rgba(56, 189, 248, 0.25)",
+                height: "36px"
               }}>
-                {activeNotification ? (
-                  <span style={{ color: getNotificationStyles(activeNotification).textColor, fontSize: "11px", fontWeight: "950", letterSpacing: "0.5px", textAlign: "center", textTransform: "uppercase", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>{activeNotification}</span>
-                ) : scoringState.target !== null ? (
-                  <>
-                    <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: "900", letterSpacing: "0.5px" }}>TARGET</span>
-                    <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "950" }}>{scoringState.target}</span>
-                    <span style={{ color: "#a78bfa", fontSize: "9px", fontWeight: "800" }}>NEED {need} IN {bLeft}b</span>
-                  </>
-                ) : (
-                  <>
-                    <span style={{ color: "rgba(251,191,36,0.5)", fontSize: "8px", fontWeight: "900", letterSpacing: "2px", textTransform: "uppercase" }}>IPL 2025</span>
-                    <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: "950", letterSpacing: "1px" }}>LIVE</span>
-                  </>
-                )}
+                <span style={{
+                  color: "#facc15",
+                  fontWeight: 950,
+                  fontSize: "7.5px",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  lineHeight: 1
+                }}>
+                  TOSS
+                </span>
+                <span style={{
+                  color: "#a3e635",
+                  fontWeight: 950,
+                  fontSize: "9.5px",
+                  marginTop: "2px",
+                  textAlign: "center",
+                  lineHeight: 1.1,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2px"
+                }}>
+                  {tossWinnerShort} ({tossDecision})
+                </span>
               </div>
 
-              {/* ── RIGHT WRAPPER (flex:1): Bowler + Over balls + Purple cap ── */}
-              <div style={{ display: "flex", alignItems: "stretch", flex: "1 1 0%", minWidth: 0, overflow: "hidden", justifyContent: "flex-end" }}>
+              {/* ── RIGHT: Bowler Pill (Top) + THIS OVER Boxes (Bottom) ── */}
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                flex: 1,
+                padding: "2px 8px 2px 10px",
+                gap: "2px",
+                minWidth: 0
+              }}>
 
-                {/* Bowler + over balls */}
-                <div style={{ display: "flex", alignItems: "center", flex: 1, padding: "0 20px", gap: "16px", justifyContent: "flex-end", minWidth: 0 }}>
-                  {/* Bowler info */}
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, alignItems: "flex-end" }}>
-                    <span style={{ color: "rgba(253,230,138,0.6)", fontWeight: "700", fontSize: "11px", letterSpacing: "0.3px" }}>{scoringState.bowler ? scoringState.bowler.split(" ").pop() : "BOWLER"}</span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "16px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
-                      <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "10px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
-                    </div>
+                {/* Top Bowler Capsule */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  background: "linear-gradient(180deg, rgba(8,24,14,0.92) 0%, rgba(20,52,28,0.85) 50%, rgba(8,24,14,0.92) 100%)",
+                  border: "1.2px solid #a3e635",
+                  borderRadius: "7px",
+                  height: "20px",
+                  padding: "0 8px 0 6px",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
+                    <span style={{
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      background: "#ffffff",
+                      display: "inline-block",
+                      flexShrink: 0
+                    }} />
+                    <span style={{
+                      color: "#ffffff",
+                      fontWeight: 950,
+                      fontSize: "9.5px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.2px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis"
+                    }}>
+                      {(scoringState.bowler || "BOWLER").toUpperCase()}
+                    </span>
                   </div>
-                  {/* Over ball dots */}
-                  <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
+
+                  <div style={{
+                    color: "#ffffff",
+                    fontWeight: 950,
+                    fontSize: "10.5px",
+                    letterSpacing: "0.3px",
+                    flexShrink: 0,
+                    marginLeft: "6px"
+                  }}>
+                    {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}&nbsp;&nbsp;{fmtOv(bowler?.ballsBowled ?? 0, bpo)}
+                  </div>
+                </div>
+
+                {/* Bottom THIS OVER + 6 Outline Boxes */}
+                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  <span style={{
+                    color: "#ffffff",
+                    fontWeight: 950,
+                    fontSize: "8px",
+                    letterSpacing: "0.6px",
+                    textTransform: "uppercase",
+                    flexShrink: 0
+                  }}>
+                    THIS OVER
+                  </span>
+
+                  <div style={{ display: "flex", gap: "2.5px", alignItems: "center" }}>
                     {(() => {
-                      const bpo = match?.ballsPerOver || 6;
                       const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                      const totalCount = bpo + extrasCount;
+                      return Array.from({ length: totalCount }).map((_, i) => {
                         const val = thisOver[i];
-                        let bg = "rgba(255,255,255,0.06)";
+                        let bg = "transparent";
                         let color = "#ffffff";
-                        let border = "1px solid rgba(251,191,36,0.2)";
+                        let border = "1.2px solid #38bdf8";
+
                         if (val) {
-                          border = "none";
-                          if (val === "4" || val === "4s") { bg = "#3b82f6"; color = "#fff"; }
-                          else if (val === "6" || val === "6s") { bg = "#fbbf24"; color = "#000"; }
-                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { bg = "#ef4444"; color = "#fff"; }
-                          else if (isExtraBall(val)) { bg = "#a855f7"; color = "#fff"; }
-                          else { bg = "rgba(255,255,255,0.15)"; color = "#fff"; }
+                          if (val === "4" || val === "4s") {
+                            bg = "#3b82f6"; color = "#ffffff"; border = "1.2px solid #60a5fa";
+                          } else if (val === "6" || val === "6s") {
+                            bg = "#a3e635"; color = "#000000"; border = "1.2px solid #bef264";
+                          } else if (val === "W" || val?.startsWith("W+") || val === "Wk") {
+                            bg = "#ef4444"; color = "#ffffff"; border = "1.2px solid #f87171";
+                          } else if (isExtraBall(val)) {
+                            bg = "#a855f7"; color = "#ffffff"; border = "1.2px solid #c084fc";
+                          } else {
+                            bg = "rgba(56, 189, 248, 0.25)"; color = "#ffffff"; border = "1.2px solid #38bdf8";
+                          }
                         }
+
                         return (
-                          <div key={i} style={{ width: "20px", height: "20px", borderRadius: "3px", background: bg, color, border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "11px")), fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
-                            {renderOutcomeText(val, 20)}
+                          <div
+                            key={i}
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              borderRadius: "2.5px",
+                              background: bg,
+                              color,
+                              border,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: val && val.includes("+") ? undefined : (val && val.length > 2 ? "5px" : "7px"),
+                              fontWeight: 950,
+                              lineHeight: 1,
+                              flexShrink: 0,
+                              whiteSpace: "nowrap"
+                            }}
+                          >
+                            {val && (val.includes("+") ? renderOutcomeText(val, 12) : val)}
                           </div>
                         );
                       });
@@ -10069,20 +11654,46 @@ export default function OverlayPage() {
                   </div>
                 </div>
 
-                {/* Purple right cap */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%)", padding: "0 16px 0 28px", width: "90px", flexShrink: 0, clipPath: "polygon(14px 0, 100% 0, 100% 100%, 0 100%)" }}>
-                  <span style={{ color: "#fde68a", fontWeight: 950, fontSize: "15px", letterSpacing: "0.5px" }}>{bowlTeamShort}</span>
-                </div>
+              </div>
 
+              {/* ── FAR RIGHT: Bowling Team Lime-Green Floral Tab ── */}
+              <div style={{
+                width: "52px",
+                height: "100%",
+                background: "linear-gradient(135deg, #1e1b4b 0%, #4d7c0f 40%, #84cc16 100%)",
+                borderRadius: "0 11px 11px 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                overflow: "hidden",
+                flexShrink: 0
+              }}>
+                {/* Flower watermark outline */}
+                <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
+                  <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                  <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+                  <circle cx="50" cy="50" r="6" fill="currentColor" />
+                </svg>
+                <span style={{
+                  color: "#ffffff",
+                  fontWeight: 950,
+                  fontSize: "12.5px",
+                  letterSpacing: "0.5px",
+                  position: "relative",
+                  zIndex: 2,
+                  textShadow: "0 1px 3px rgba(0,0,0,0.6)"
+                }}>
+                  {bowlTeamShort}
+                </span>
               </div>
 
             </div>
           </div>
-
         ) : (
-          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "rgba(24, 10, 48, 0.95)", border: "2px solid #fbbf24", borderRadius: 12, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
-            <div style={{ color: "#fbbf24", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
-            <div style={{ color: "#cbd5e1", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
+          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#030d30", border: "2px solid #a3e635", borderRadius: 14, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
+            <div style={{ color: "#a3e635", fontWeight: 950, fontSize: "20px" }}>{match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}</div>
+            <div style={{ color: "#94a3b8", fontSize: "11px", fontWeight: "700", marginTop: "8px" }}>MATCH NOT STARTED</div>
           </div>
         )}
       </div>

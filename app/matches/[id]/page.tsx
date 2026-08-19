@@ -1150,10 +1150,12 @@ export default function MatchScoringPage() {
 
   const handleUpdateDisplayScreen = (screenName: string) => {
     if (!scoringState) return;
-    const updated = { ...scoringState, displayScreen: screenName };
+    const isAlreadyActive = scoringState.displayScreen?.toUpperCase() === screenName.toUpperCase();
+    const targetScreen = isAlreadyActive ? "default" : screenName;
+    const updated = { ...scoringState, displayScreen: targetScreen };
     setScoringState(updated);
     saveScoringState(updated);
-    showToast(`Display screen updated: ${screenName.toUpperCase()}`);
+    showToast(isAlreadyActive ? "Screen turned off (Showing default)" : `Display screen updated: ${screenName.toUpperCase()}`);
   };
 
   const handleNewBowlerSubmit = () => {
@@ -2007,22 +2009,34 @@ export default function MatchScoringPage() {
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("B1")}
-                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
+                      scoringState?.displayScreen?.toUpperCase() === "B1"
+                        ? "bg-teal-500/40 border-teal-300 ring-2 ring-teal-400 shadow-teal-500/30"
+                        : "border-white/10"
+                    }`}
+                    style={{ background: scoringState?.displayScreen?.toUpperCase() === "B1" ? "linear-gradient(135deg, #0d9488, #115e59)" : "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
                   >
                     B1
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("B2")}
-                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #d946ef, #701a75)" }}
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
+                      scoringState?.displayScreen?.toUpperCase() === "B2"
+                        ? "bg-fuchsia-500/40 border-fuchsia-300 ring-2 ring-fuchsia-400 shadow-fuchsia-500/30"
+                        : "border-white/10"
+                    }`}
+                    style={{ background: scoringState?.displayScreen?.toUpperCase() === "B2" ? "linear-gradient(135deg, #c026d3, #86198f)" : "linear-gradient(135deg, #d946ef, #701a75)" }}
                   >
                     B2
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("BOWLER")}
-                    className="w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #06b6d4, #2563eb)" }}
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
+                      scoringState?.displayScreen?.toUpperCase() === "BOWLER"
+                        ? "bg-cyan-500/40 border-cyan-300 ring-2 ring-cyan-400 shadow-cyan-500/30"
+                        : "border-white/10"
+                    }`}
+                    style={{ background: scoringState?.displayScreen?.toUpperCase() === "BOWLER" ? "linear-gradient(135deg, #0284c7, #0369a1)" : "linear-gradient(135deg, #06b6d4, #2563eb)" }}
                   >
                     BOWLER
                   </button>
@@ -2032,15 +2046,23 @@ export default function MatchScoringPage() {
                 <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
-                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #ec4899, #db2777)" }}
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
+                      scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT"
+                        ? "bg-pink-500/40 border-pink-300 ring-2 ring-pink-400 shadow-pink-500/30"
+                        : "border-white/10"
+                    }`}
+                    style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT") ? "linear-gradient(135deg, #be185d, #9d174d)" : "linear-gradient(135deg, #ec4899, #db2777)" }}
                   >
                     Batting
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
-                    className="flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10"
-                    style={{ background: "linear-gradient(135deg, #881337, #4c0519)" }}
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
+                      scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL"
+                        ? "bg-rose-900 border-rose-400 ring-2 ring-rose-400 shadow-rose-500/30"
+                        : "border-white/10"
+                    }`}
+                    style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL") ? "linear-gradient(135deg, #701a75, #4a044e)" : "linear-gradient(135deg, #881337, #4c0519)" }}
                   >
                     Bowling
                   </button>
@@ -2517,7 +2539,9 @@ export default function MatchScoringPage() {
                   { label: "BOWLER", color: "bg-lime-600", hover: "hover:bg-lime-700", selected: "bg-lime-400/30 border-lime-400 text-lime-300" },
                   { label: "TARGET", color: "bg-orange-600", hover: "hover:bg-orange-700", selected: "bg-orange-400/30 border-orange-400 text-orange-300" },
                   { label: "PARTNERSHIP", color: "bg-amber-600", hover: "hover:bg-amber-700", selected: "bg-amber-400/30 border-amber-400 text-amber-300" },
-                  { label: "TEAMS PLAYERS", color: "bg-violet-600", hover: "hover:bg-violet-700", selected: "bg-violet-400/30 border-violet-400 text-violet-300" },
+                  { label: "TEAM 1", color: "bg-violet-600", hover: "hover:bg-violet-700", selected: "bg-violet-400/30 border-violet-400 text-violet-300" },
+                  { label: "TEAM 2", color: "bg-fuchsia-600", hover: "hover:bg-fuchsia-700", selected: "bg-fuchsia-400/30 border-fuchsia-400 text-fuchsia-300" },
+                  { label: "TEAMS PLAYERS", color: "bg-purple-600", hover: "hover:bg-purple-700", selected: "bg-purple-400/30 border-purple-400 text-purple-300" },
                 ].map((screen) => (
                   <button
                     key={screen.label}
