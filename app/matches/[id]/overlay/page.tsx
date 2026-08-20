@@ -43,13 +43,13 @@ interface Match {
 
 const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: string; accent: string; accentText: string; textPrimary: string; textSecondary: string; scoreBg: string; scoreText: string; borderColor: string; headerBg: string; ballColors: { runs: string; four: string; six: string; wicket: string; extra: string }; bgUrl: string; }> = {
   "asia-cup": { name: "Asia Cup", primaryBg: "rgba(20,34,72,0.98)", secondaryBg: "rgba(12,21,45,0.95)", accent: "#E58808", accentText: "#FDFDFE", textPrimary: "#FDFDFE", textSecondary: "#cbd5e1", scoreBg: "rgba(229,136,8,0.18)", scoreText: "#E58808", borderColor: "#E58808", headerBg: "rgba(12,21,45,0.99)", ballColors: { runs: "#142248", four: "#E58808", six: "#f59e0b", wicket: "#dc2626", extra: "#7c3aed" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
-  "cwc-19": { name: "CWC 19", primaryBg: "rgba(10,40,90,0.92)", secondaryBg: "rgba(14,60,120,0.85)", accent: "#38bdf8", accentText: "#7dd3fc", textPrimary: "#ffffff", textSecondary: "#bae6fd", scoreBg: "rgba(56,189,248,0.15)", scoreText: "#e0f2fe", borderColor: "#38bdf8", headerBg: "rgba(5,25,60,0.98)", ballColors: { runs: "#0284c7", four: "#facc15", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
-  "champions-trophy-2025": { name: "Champions Trophy 2025", primaryBg: "rgba(2,30,15,0.94)", secondaryBg: "rgba(4,50,25,0.85)", accent: "#34d399", accentText: "#34d399", textPrimary: "#ffffff", textSecondary: "#a7f3d0", scoreBg: "rgba(52,211,153,0.15)", scoreText: "#34d399", borderColor: "#10b981", headerBg: "rgba(1,15,8,0.98)", ballColors: { runs: "#059669", four: "#fde68a", six: "#fbbf24", wicket: "#f87171", extra: "#c084fc" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
+  "cwc-19": { name: "CWC 19", primaryBg: "rgba(7,21,43,0.98)", secondaryBg: "rgba(10,30,60,0.95)", accent: "#02B3E4", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#bae6fd", scoreBg: "rgba(2,179,228,0.18)", scoreText: "#02B3E4", borderColor: "#02B3E4", headerBg: "rgba(7,21,43,0.99)", ballColors: { runs: "#07152B", four: "#02B3E4", six: "#38bdf8", wicket: "#DC2626", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
+  "champions-trophy-2025": { name: "Champions Trophy 2025", primaryBg: "rgba(10,18,42,0.98)", secondaryBg: "rgba(15,28,64,0.95)", accent: "#03A360", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#a7f3d0", scoreBg: "rgba(3,163,96,0.18)", scoreText: "#03A360", borderColor: "#03A360", headerBg: "rgba(10,18,42,0.99)", ballColors: { runs: "#0A122A", four: "#03A360", six: "#34d399", wicket: "#ef4444", extra: "#c084fc" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
   "cwc-25-india": { name: "CWC 25 India", primaryBg: "rgba(20,18,42,0.98)", secondaryBg: "rgba(12,10,28,0.95)", accent: "#0373AF", accentText: "#FFFFFF", textPrimary: "#FFFFFF", textSecondary: "#cbd5e1", scoreBg: "rgba(3,115,175,0.18)", scoreText: "#0373AF", borderColor: "#0373AF", headerBg: "rgba(12,10,28,0.99)", ballColors: { runs: "#14122A", four: "#0373AF", six: "#0284c7", wicket: "#dc2626", extra: "#7c3aed" }, bgUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1920&auto=format&fit=crop" },
-  "wcl-fancode": { name: "WCL (Fancode)", primaryBg: "rgba(50,0,50,0.94)", secondaryBg: "rgba(80,0,80,0.85)", accent: "#f0abfc", accentText: "#e879f9", textPrimary: "#ffffff", textSecondary: "#f5d0fe", scoreBg: "rgba(232,121,249,0.15)", scoreText: "#e879f9", borderColor: "#d946ef", headerBg: "rgba(30,0,35,0.98)", ballColors: { runs: "#a21caf", four: "#fbbf24", six: "#f0abfc", wicket: "#ef4444", extra: "#818cf8" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
+  "wcl-fancode": { name: "WCL (Fancode)", primaryBg: "rgba(31,41,55,0.98)", secondaryBg: "rgba(17,24,39,0.95)", accent: "#0284C7", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#bae6fd", scoreBg: "rgba(2,132,199,0.18)", scoreText: "#0284C7", borderColor: "#0284C7", headerBg: "rgba(17,24,39,0.99)", ballColors: { runs: "#1F2937", four: "#0284C7", six: "#38bdf8", wicket: "#ef4444", extra: "#c084fc" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
   "cwc-23-india": { name: "CWC 23 India", primaryBg: "rgba(8,7,33,0.98)", secondaryBg: "rgba(5,4,20,0.95)", accent: "#D946EF", accentText: "#FFFFFF", textPrimary: "#FFFFFF", textSecondary: "#f5d0fe", scoreBg: "rgba(217,70,239,0.18)", scoreText: "#D946EF", borderColor: "#D946EF", headerBg: "rgba(8,7,33,0.99)", ballColors: { runs: "#080721", four: "#D946EF", six: "#e879f9", wicket: "#dc2626", extra: "#7c3aed" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
   "bbl-black": { name: "BBL Black", primaryBg: "rgba(34,9,90,0.98)", secondaryBg: "rgba(22,5,59,0.95)", accent: "#ec4899", accentText: "#FDFDFE", textPrimary: "#FDFDFE", textSecondary: "#fbcfe8", scoreBg: "rgba(236,72,153,0.18)", scoreText: "#ec4899", borderColor: "#ec4899", headerBg: "rgba(22,5,59,0.99)", ballColors: { runs: "#22095A", four: "#ec4899", six: "#a855f7", wicket: "#ef4444", extra: "#06b6d4" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
-  "cricfusion": { name: "CricFusion Theme", primaryBg: "rgba(20,4,40,0.94)", secondaryBg: "rgba(40,8,60,0.85)", accent: "#f97316", accentText: "#fb923c", textPrimary: "#ffffff", textSecondary: "#ede9fe", scoreBg: "rgba(249,115,22,0.15)", scoreText: "#f97316", borderColor: "#c026d3", headerBg: "rgba(12,2,25,0.98)", ballColors: { runs: "#7c3aed", four: "#f97316", six: "#f0abfc", wicket: "#ef4444", extra: "#818cf8" }, bgUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1920&auto=format&fit=crop" },
+  "cricfusion": { name: "CricFusion Theme", primaryBg: "rgba(18,4,6,0.98)", secondaryBg: "rgba(30,8,11,0.95)", accent: "#CC271F", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#fecaca", scoreBg: "rgba(204,39,31,0.18)", scoreText: "#CC271F", borderColor: "#CC271F", headerBg: "rgba(18,4,6,0.99)", ballColors: { runs: "#120406", four: "#CC271F", six: "#ef4444", wicket: "#dc2626", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1920&auto=format&fit=crop" },
   "t20-emerging-asia-cup": { name: "T20 Emerging Asia Cup 2024", primaryBg: "rgba(12,37,96,0.98)", secondaryBg: "rgba(120,16,16,0.95)", accent: "#facc15", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#e2e8f0", scoreBg: "rgba(250,204,21,0.18)", scoreText: "#facc15", borderColor: "#16469d", headerBg: "rgba(12,37,96,0.99)", ballColors: { runs: "#16469d", four: "#f59e0b", six: "#3b82f6", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
   "sa20": { name: "SA20", primaryBg: "rgba(23,23,5,0.98)", secondaryBg: "rgba(35,35,10,0.95)", accent: "#EBB509", accentText: "#171705", textPrimary: "#FFFFFF", textSecondary: "#fef9c3", scoreBg: "rgba(235,181,9,0.18)", scoreText: "#EBB509", borderColor: "#EBB509", headerBg: "rgba(23,23,5,0.99)", ballColors: { runs: "#171705", four: "#EBB509", six: "#fde047", wicket: "#ef4444", extra: "#a78bfa" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
   "jiocinema": { name: "Jio Cinema", primaryBg: "rgba(13,19,34,0.98)", secondaryBg: "rgba(20,28,48,0.95)", accent: "#FDFEFE", accentText: "#0D1322", textPrimary: "#FDFEFE", textSecondary: "#cbd5e1", scoreBg: "rgba(253,254,254,0.18)", scoreText: "#FDFEFE", borderColor: "#FDFEFE", headerBg: "rgba(13,19,34,0.99)", ballColors: { runs: "#0D1322", four: "#FDFEFE", six: "#38bdf8", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1920&auto=format&fit=crop" },
@@ -57,7 +57,7 @@ const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: 
   "wt20-2024": { name: "WT20 2024", primaryBg: "rgba(20,18,42,0.98)", secondaryBg: "rgba(12,10,28,0.95)", accent: "#0373AF", accentText: "#FFFFFF", textPrimary: "#FFFFFF", textSecondary: "#cbd5e1", scoreBg: "rgba(3,115,175,0.18)", scoreText: "#0373AF", borderColor: "#0373AF", headerBg: "rgba(12,10,28,0.99)", ballColors: { runs: "#14122A", four: "#0373AF", six: "#0284c7", wicket: "#dc2626", extra: "#7c3aed" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
   "bbl-starsports": { name: "BBL Star Sports", primaryBg: "rgba(0,18,72,0.98)", secondaryBg: "rgba(0,31,112,0.92)", accent: "#00a0e9", accentText: "#00a0e9", textPrimary: "#ffffff", textSecondary: "#bae6fd", scoreBg: "rgba(0,160,233,0.15)", scoreText: "#ffffff", borderColor: "#00a0e9", headerBg: "rgba(0,10,38,0.99)", ballColors: { runs: "#0284c7", four: "#facc15", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
   "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(11,11,11,0.98)", secondaryBg: "rgba(18,18,18,0.92)", accent: "#c8e63c", accentText: "#c8e63c", textPrimary: "#ffffff", textSecondary: "#d4d4d8", scoreBg: "linear-gradient(135deg, rgba(200,230,60,0.18), rgba(0, 0, 0, 0.5))", scoreText: "#c8e63c", borderColor: "#c8e63c", headerBg: "rgba(8,8,8,0.99)", ballColors: { runs: "rgba(255,255,255,0.2)", four: "#3b82f6", six: "#c8e63c", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
-  "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(9,13,22,0.97)", secondaryBg: "rgba(15,22,38,0.95)", accent: "#76ff03", accentText: "#b2ff59", textPrimary: "#ffffff", textSecondary: "#ccff90", scoreBg: "rgba(118,255,3,0.15)", scoreText: "#76ff03", borderColor: "#76ff03", headerBg: "rgba(5,10,18,0.99)", ballColors: { runs: "#76ff03", four: "#fbbf24", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "" },
+  "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(9,17,32,0.98)", secondaryBg: "rgba(15,28,52,0.95)", accent: "#74FB05", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#bbf7d0", scoreBg: "rgba(116,251,5,0.18)", scoreText: "#74FB05", borderColor: "#74FB05", headerBg: "rgba(9,17,32,0.99)", ballColors: { runs: "#091120", four: "#74FB05", six: "#86efac", wicket: "#ef4444", extra: "#c084fc" }, bgUrl: "" },
 };
 const DEFAULT_THEME = THEME_MAP["ipl"];
 const THEME_FONTS: Record<string, string> = {
@@ -68,7 +68,7 @@ const THEME_FONTS: Record<string, string> = {
   "t20-emerging-asia-cup": "'Outfit', Arial, sans-serif", "sa20": "'Rubik', sans-serif",
   "jiocinema": "'Rubik', sans-serif", "ipl": "'Outfit', sans-serif",
   "wt20-2024": "'Outfit', Arial, sans-serif", "bbl-starsports": "'Outfit', Arial, sans-serif",
-  "ipl-2025": "'Outfit', sans-serif",
+  "ipl-2025": "'Outfit', sans-serif", "crioverlay-green": "'Outfit', sans-serif",
 };
 
 const PANEL_THEMES: Record<string, {
@@ -127,36 +127,36 @@ const PANEL_THEMES: Record<string, {
     font: "'Outfit', sans-serif"
   },
   "champions-trophy-2025": {
-    bg: "#0a1128",
-    border: "2px solid rgba(0, 204, 68, 0.45)",
-    borderLeft: "5px solid #00cc44",
-    accent: "#00cc44",
-    accentText: "#ffffff",
-    textSecondary: "#94a3b8",
-    shadow: "0 8px 32px rgba(0, 204, 68, 0.35)",
+    bg: "#0A122A",
+    border: "2px solid #03A360",
+    borderLeft: "5px solid #03A360",
+    accent: "#03A360",
+    accentText: "#FFFFFF",
+    textSecondary: "#a7f3d0",
+    shadow: "0 8px 32px rgba(3, 163, 96, 0.4)",
     radius: "14px",
     font: "'Outfit', sans-serif"
   },
   "cricfusion": {
-    bg: "#110b38",
-    border: "2px solid rgba(220, 38, 38, 0.45)",
-    borderLeft: "5px solid #dc2626",
-    accent: "#dc2626",
-    accentText: "#ffffff",
-    textSecondary: "#c084fc",
-    shadow: "0 8px 32px rgba(220, 38, 38, 0.35)",
+    bg: "#120406",
+    border: "2px solid #CC271F",
+    borderLeft: "5px solid #CC271F",
+    accent: "#CC271F",
+    accentText: "#FFFFFF",
+    textSecondary: "#fecaca",
+    shadow: "0 8px 32px rgba(204, 39, 31, 0.4)",
     radius: "14px",
     font: "'Outfit', sans-serif"
   },
   "wcl-fancode": {
-    bg: "#081225",
-    border: "2px solid rgba(0, 212, 255, 0.45)",
-    borderLeft: "5px solid #00d4ff",
-    accent: "#00d4ff",
-    accentText: "#ffffff",
-    textSecondary: "#facc15",
-    shadow: "0 8px 32px rgba(0, 212, 255, 0.35)",
-    radius: "12px",
+    bg: "#1F2937",
+    border: "2px solid #0284C7",
+    borderLeft: "5px solid #0284C7",
+    accent: "#0284C7",
+    accentText: "#FFFFFF",
+    textSecondary: "#bae6fd",
+    shadow: "0 8px 32px rgba(2, 132, 199, 0.4)",
+    radius: "14px",
     font: "'Outfit', sans-serif"
   },
   "bbl-black": {
@@ -215,15 +215,15 @@ const PANEL_THEMES: Record<string, {
     font: "'Outfit', sans-serif"
   },
   "cwc-19": {
-    bg: "#030b1c",
-    border: "2px solid rgba(56, 189, 248, 0.45)",
-    borderLeft: "5px solid #38bdf8",
-    accent: "#38bdf8",
-    accentText: "#ffffff",
+    bg: "#07152B",
+    border: "2px solid #02B3E4",
+    borderLeft: "5px solid #DC2626",
+    accent: "#02B3E4",
+    accentText: "#FFFFFF",
     textSecondary: "#bae6fd",
-    shadow: "0 8px 32px rgba(56, 189, 248, 0.35)",
-    radius: "12px",
-    font: "'Space Grotesk', sans-serif"
+    shadow: "0 8px 32px rgba(2, 179, 228, 0.4)",
+    radius: "14px",
+    font: "'Outfit', sans-serif"
   },
   "cwc-23-india": {
     bg: "#080721",
@@ -260,15 +260,15 @@ const PANEL_THEMES: Record<string, {
     font: "'Orbitron', sans-serif"
   },
   "crioverlay-green": {
-    bg: "#050b14",
-    border: "2px solid rgba(118, 255, 3, 0.45)",
-    borderLeft: "5px solid #76ff03",
-    accent: "#76ff03",
-    accentText: "#ffffff",
-    textSecondary: "#00e5ff",
-    shadow: "0 8px 32px rgba(118, 255, 3, 0.35)",
+    bg: "#091120",
+    border: "2px solid #74FB05",
+    borderLeft: "5px solid #74FB05",
+    accent: "#74FB05",
+    accentText: "#FFFFFF",
+    textSecondary: "#bbf7d0",
+    shadow: "0 8px 32px rgba(116, 251, 5, 0.4)",
     radius: "14px",
-    font: "'Montserrat', sans-serif"
+    font: "'Outfit', sans-serif"
   }
 };
 
@@ -389,6 +389,23 @@ const GLOBAL_CSS = `
   @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   @keyframes rowIn { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
   @keyframes batSwing { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+  @keyframes scoreboardSweepIn {
+    0% { transform: translateX(-100%); opacity: 0; }
+    60% { transform: translateX(2%); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes marqueeScrollLTR {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
+  }
+  @keyframes sweepShimmer {
+    0% { transform: translateX(-150%) skewX(-25deg); }
+    100% { transform: translateX(250%) skewX(-25deg); }
+  }
+  @keyframes bannerTextPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
   .slide-up {
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     zoom: 1.35 !important;
@@ -1188,7 +1205,7 @@ export default function OverlayPage() {
       // Use real stats if available; fall back to zeros for a player who hasn't batted yet
       const stats = batterPanelStats ?? { runs: 0, avg: "—", sr: "—", hs: "—", fours: 0, sixes: 0, wickets: 0, economy: "—", best: "—", matches: 0 };
 
-      if (themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
+      if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
         const liveBatter = scoringState.batsmen?.find(b => b.name?.trim().toLowerCase() === batterPanelPlayer?.trim().toLowerCase());
         const matchesCount = stats.matches > 0 ? stats.matches : 1;
         const runsVal = liveBatter?.runs ?? stats.runs ?? 0;
@@ -1199,6 +1216,11 @@ export default function OverlayPage() {
         const bestVal = `${runsVal}${ballsVal > 0 ? ` (${ballsVal})` : ""}`;
         const teamNameVal = currentBatTeam;
 
+        const isCri = themeSlug === "crioverlay-green";
+        const isWcl = themeSlug === "wcl-fancode";
+        const isCwc19 = themeSlug === "cwc-19";
+        const isCt25 = themeSlug === "champions-trophy-2025";
+        const isFusion = themeSlug === "cricfusion";
         const isSa20 = themeSlug === "sa20";
         const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
         const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -1207,17 +1229,17 @@ export default function OverlayPage() {
         const isCwc23 = themeSlug === "cwc-23-india";
         const isBblBlack = themeSlug === "bbl-black";
         const isIpl = themeSlug === "ipl";
-        const panelBg = isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#00a0e9";
-        const panelBorder = isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(0, 160, 233, 0.4)";
-        const headerTextColor = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#001248";
-        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20) ? "#FFFFFF" : "#000000";
-        const batFill = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#ffffff";
-        const ribbonBg = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
-        const ribbonTextColor = isSa20 ? "#171705" : isGeo ? "#0D1322" : (isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
-        const rowBorder = isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #00a0e9";
-        const labelTextColor = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20) ? "#FFFFFF" : "#ffffff";
-        const valTextColor = isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
+        const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#00a0e9";
+        const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(0, 160, 233, 0.4)";
+        const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#001248";
+        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
+        const batFill = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#ffffff";
+        const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
+        const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
+        const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #00a0e9";
+        const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
+        const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
 
         return (
           <div
@@ -1575,7 +1597,7 @@ export default function OverlayPage() {
     // Use real stats if available; fall back to zeros/defaults for a bowler with no stats yet
     const stats = bowlerPanelStats ?? { wickets: 0, economy: "—", bowlAvg: "—", bowlSr: "—", best: "—", runsConceded: 0, matches: 0 };
 
-    if (themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
+    if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
       const liveBowler = scoringState.bowlers?.find(b => b.name?.trim().toLowerCase() === bowlerPanelPlayer?.trim().toLowerCase());
       const bpo = match.ballsPerOver || 6;
       const matchesCount = stats.matches > 0 ? stats.matches : 1;
@@ -1587,6 +1609,11 @@ export default function OverlayPage() {
       const bestVal = `${wicketsVal} - ${runsConcVal} (${Math.floor(ballsBowledVal / bpo)})`;
       const teamNameVal = currentBowlTeam;
 
+        const isCri = themeSlug === "crioverlay-green";
+        const isWcl = themeSlug === "wcl-fancode";
+        const isCwc19 = themeSlug === "cwc-19";
+        const isCt25 = themeSlug === "champions-trophy-2025";
+        const isFusion = themeSlug === "cricfusion";
         const isSa20 = themeSlug === "sa20";
         const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
         const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -1595,17 +1622,17 @@ export default function OverlayPage() {
         const isCwc23 = themeSlug === "cwc-23-india";
         const isBblBlack = themeSlug === "bbl-black";
         const isIpl = themeSlug === "ipl";
-        const panelBg = isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
-        const panelBorder = isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
-        const headerTextColor = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20) ? "#FFFFFF" : "#000000";
-        const ballStroke = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const ribbonBg = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
-        const ribbonTextColor = isSa20 ? "#171705" : isGeo ? "#0D1322" : (isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
-        const rowBorder = isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
-        const labelTextColor = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20) ? "#FFFFFF" : "#ffffff";
-        const valTextColor = isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
+        const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
+        const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
+        const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
+        const ballStroke = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+        const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
+        const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
+        const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
+        const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
+        const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
 
       return (
         <div
@@ -2153,6 +2180,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -2161,72 +2193,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -2589,6 +2651,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -2597,72 +2664,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -2971,6 +3068,11 @@ export default function OverlayPage() {
       const bpo = match.ballsPerOver || 6;
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -2979,72 +3081,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -3370,6 +3502,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -3378,72 +3515,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -3894,6 +4061,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -3902,72 +4074,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -4253,6 +4455,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -4261,72 +4468,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -4570,6 +4807,11 @@ export default function OverlayPage() {
       const bpo = match.ballsPerOver || 6;
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -4578,72 +4820,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -4947,6 +5219,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -4955,72 +5232,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const tossWinnerName = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
@@ -5352,6 +5659,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -5360,72 +5672,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -5718,6 +6060,11 @@ export default function OverlayPage() {
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -5726,72 +6073,102 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isCri
+        ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                    : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isCri
+        ? "linear-gradient(180deg, #050b14 0%, #091120 50%, #050b14 100%)"
+        : isWcl
+          ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+          : isCwc19
+            ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+            : isCt25
+              ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+              : isFusion
+                ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+                : isSa20
+                  ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                  : isGeo
+                    ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                    : isEac
+                      ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                      : isIpl
+                        ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                          : isCwc23
+                            ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                            : isCwc25
+                              ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                    : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isCri
+        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        : isWcl
+          ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+          : isCwc19
+            ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+            : isCt25
+              ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+              : isFusion
+                ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+                : isSa20
+                  ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                  : isGeo
+                    ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                    : isEac
+                      ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                      : isIpl
+                        ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                        : isBblBlack
+                          ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                          : isCwc23
+                            ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                            : isCwc25
+                              ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                              : isAsiaCup
+                                ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                                : isBblStar
+                                  ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                  : isIpl2025
+                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -6092,6 +6469,10 @@ export default function OverlayPage() {
       const leader = bowlersList[0];
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
       const isSa20 = themeSlug === "sa20";
       const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
       const isEac = themeSlug === "t20-emerging-asia-cup";
@@ -6100,72 +6481,96 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const cardAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
-      const cardAccent2 = isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
-      const headerBgGrad = isSa20
-        ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
-                          : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
-      const bodyBgGrad = isSa20
-        ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
-        : isGeo
-          ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
-          : isEac
-            ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
-            : isIpl
-              ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
-              : isBblBlack
-                ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
-                : isCwc23
-                  ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
-                  : isCwc25
-                    ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
-                      : isBblStar
-                        ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
-                          : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
-      const bottomPillBgGrad = isSa20
-        ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
-        : isGeo
-          ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
-          : isEac
-            ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
-            : isIpl
-              ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
-              : isBblBlack
-                ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
-                : isCwc23
-                  ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
-                  : isCwc25
-                    ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
-                    : isAsiaCup
-                      ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
-                      : isBblStar
-                        ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
-                        : isIpl2025
-                          ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
-                          : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
+      const cardAccent = isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
+      const cardAccent2 = isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
+      const cardTitleAccent = isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const headerBgGrad = isWcl
+        ? "linear-gradient(180deg, #1F2937 0%, #111827 100%)"
+        : isCwc19
+          ? "linear-gradient(180deg, #07152B 0%, #0d284f 100%)"
+          : isCt25
+            ? "linear-gradient(180deg, #0A122A 0%, #152248 100%)"
+            : isFusion
+              ? "linear-gradient(180deg, #120406 0%, #22080c 100%)"
+              : isSa20
+                ? "linear-gradient(180deg, #171705 0%, #2b2b0a 100%)"
+                : isGeo
+                  ? "linear-gradient(180deg, #0D1322 0%, #172138 100%)"
+                  : isEac
+                    ? "linear-gradient(180deg, #0C2560 0%, #153782 100%)"
+                    : isIpl
+                      ? "linear-gradient(180deg, #0A112E 0%, #17204f 100%)"
+                      : isBblBlack
+                        ? "linear-gradient(180deg, #22095A 0%, #310f7d 100%)"
+                        : isCwc23
+                          ? "linear-gradient(180deg, #080721 0%, #150f38 100%)"
+                          : isCwc25
+                            ? "linear-gradient(180deg, #14122A 0%, #1e1a40 100%)"
+                            : isAsiaCup
+                              ? "linear-gradient(180deg, #142248 0%, #1c3066 100%)"
+                              : isBblStar
+                                ? "linear-gradient(180deg, #001248 0%, #001f70 100%)"
+                                : isIpl2025
+                                  ? "linear-gradient(180deg, rgba(8, 28, 12, 0.95) 0%, rgba(18, 55, 24, 0.92) 50%, rgba(8, 28, 12, 0.95) 100%)"
+                                  : `linear-gradient(180deg, ${theme.headerBg || "rgba(10,15,30,0.98)"} 0%, ${theme.primaryBg || "rgba(15,25,50,0.95)"} 100%)`;
+      const bodyBgGrad = isWcl
+        ? "linear-gradient(180deg, #111827 0%, #1F2937 50%, #111827 100%)"
+        : isCwc19
+          ? "linear-gradient(180deg, #040c18 0%, #07152B 50%, #040c18 100%)"
+          : isCt25
+            ? "linear-gradient(180deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)"
+            : isFusion
+              ? "linear-gradient(180deg, #0a0203 0%, #120406 50%, #0a0203 100%)"
+              : isSa20
+                ? "linear-gradient(180deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)"
+                : isGeo
+                  ? "linear-gradient(180deg, #070b14 0%, #0D1322 50%, #070b14 100%)"
+                  : isEac
+                    ? "linear-gradient(180deg, #07173e 0%, #0C2560 50%, #07173e 100%)"
+                    : isIpl
+                      ? "linear-gradient(180deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)"
+                      : isBblBlack
+                        ? "linear-gradient(180deg, #16053b 0%, #22095A 50%, #16053b 100%)"
+                        : isCwc23
+                          ? "linear-gradient(180deg, #050414 0%, #080721 50%, #050414 100%)"
+                          : isCwc25
+                            ? "linear-gradient(180deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)"
+                            : isAsiaCup
+                              ? "linear-gradient(180deg, #0c152d 0%, #142248 50%, #0c152d 100%)"
+                              : isBblStar
+                                ? "linear-gradient(180deg, #000c36 0%, #00144e 50%, #000c36 100%)"
+                                : isIpl2025
+                                  ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
+                                  : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
+      const bottomPillBgGrad = isWcl
+        ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
+        : isCwc19
+          ? "linear-gradient(90deg, #02B3E4 0%, #38bdf8 50%, #02B3E4 100%)"
+          : isCt25
+            ? "linear-gradient(90deg, #03A360 0%, #34d399 50%, #03A360 100%)"
+            : isFusion
+              ? "linear-gradient(90deg, #CC271F 0%, #ef4444 50%, #CC271F 100%)"
+              : isSa20
+                ? "linear-gradient(90deg, #EBB509 0%, #facc15 50%, #EBB509 100%)"
+                : isGeo
+                  ? "linear-gradient(90deg, #FDFEFE 0%, #cbd5e1 50%, #FDFEFE 100%)"
+                  : isEac
+                    ? "linear-gradient(90deg, #781010 0%, #a81c1c 50%, #781010 100%)"
+                    : isIpl
+                      ? "linear-gradient(90deg, #F3A714 0%, #fbbf24 50%, #F3A714 100%)"
+                      : isBblBlack
+                        ? "linear-gradient(90deg, #ec4899 0%, #f472b6 50%, #ec4899 100%)"
+                        : isCwc23
+                          ? "linear-gradient(90deg, #D946EF 0%, #e879f9 50%, #D946EF 100%)"
+                          : isCwc25
+                            ? "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)"
+                            : isAsiaCup
+                              ? "linear-gradient(90deg, #E58808 0%, #f59e0b 50%, #E58808 100%)"
+                              : isBblStar
+                                ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
+                                : isIpl2025
+                                  ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                  : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const getShortNameLocal = (name: string) => {
@@ -7159,6 +7564,399 @@ export default function OverlayPage() {
     }
   }
 
+  // ════════════════════ SCOREBOARD MARQUEE TICKER ANIMATION (ALL 16 THEMES) ════════════════════
+  const renderScoreboardMarqueeRibbon = (
+    currentThemeSlug: string,
+    currentScoringState: any,
+    currentMatch: any,
+    batTeam: string,
+    bowlTeam: string,
+    bowlerObj: any
+  ) => {
+    const anim = (currentScoringState.animation || (currentScoringState.decision === "OUT" ? "OUT" : currentScoringState.decision === "NOT OUT" ? "NOT OUT" : currentScoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+    if (!anim) return null;
+
+    let marqueeWord = anim;
+    if (anim === "FOUR" || anim === "4" || anim === "4S" || anim === "FOUR!") marqueeWord = "FOUR";
+    else if (anim === "SIX" || anim === "6" || anim === "6S" || anim === "SIX!") marqueeWord = "SIX";
+    else if (anim === "WICKET" || anim === "OUT" || anim === "W" || anim === "WICKET!") marqueeWord = anim === "OUT" ? "OUT" : "WICKET";
+    else if (anim === "NOT OUT" || anim === "NOT_OUT" || anim === "NOTOUT") marqueeWord = "NOT OUT";
+    else if (anim === "FREE HIT" || anim === "FREE_HIT" || anim === "FREEHIT") marqueeWord = "FREE HIT";
+    else if (anim === "HAT-TRICK BALL" || anim === "HAT-TRICK" || anim === "HATTRICK") marqueeWord = "HAT-TRICK";
+    else if (anim === "POWERPLAY" || anim === "PP") marqueeWord = "POWERPLAY";
+    else if (anim === "TOUR BOUNDARIES" || anim === "BOUNDARIES") marqueeWord = "BOUNDARIES";
+    else if (anim === "REVIEW" || anim === "PENDING" || anim === "DRS") marqueeWord = "DRS REVIEW";
+
+    const marqueeRepeated = Array(12).fill(marqueeWord).join("       ");
+
+    // Theme-tailored Color Palettes for each of the 16 scoreboards
+    let ribbonBg = "linear-gradient(90deg, #38bdf8 0%, #7dd3fc 20%, #38bdf8 50%, #7dd3fc 80%, #38bdf8 100%)";
+    let ribbonBorder = "#0284c7";
+    let ribbonShadow = "0 0 25px rgba(2, 179, 228, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+    let textStroke = "1.5px #0284c7";
+    let textShadow = "0 0 16px rgba(2, 132, 199, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+    let scoreBoxBg = "linear-gradient(180deg, #07152b 0%, #0c2042 100%)";
+    let scoreBoxBorder = "#02b3e4";
+    let bowlerBoxBg = "linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%)";
+    let bowlerBoxBorder = "#d97706";
+    let bowlerTextColor = "#000000";
+    let batCrestBorder = "#0284c7";
+    let batCrestBg = "#0284c7";
+    let bowlCrestBorder = "#dc2626";
+    let bowlCrestBg = "#dc2626";
+
+    if (currentThemeSlug === "crioverlay-green") {
+      ribbonBg = "linear-gradient(90deg, #74fb05 0%, #a3e635 25%, #74fb05 50%, #a3e635 75%, #74fb05 100%)";
+      ribbonBorder = "#74fb05";
+      ribbonShadow = "0 8px 32px rgba(116, 251, 5, 0.45), inset 0 0 20px rgba(255,255,255,0.4)";
+      textStroke = "2.5px #091120";
+      textShadow = "0 0 20px rgba(9, 17, 32, 0.9), 0 4px 10px rgba(0,0,0,0.6)";
+      scoreBoxBg = "linear-gradient(180deg, #091120 0%, #13223f 100%)";
+      scoreBoxBorder = "#74fb05";
+      bowlerBoxBg = "linear-gradient(180deg, #091120 0%, #13223f 100%)";
+      bowlerBoxBorder = "#74fb05";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#ffffff";
+      batCrestBg = "radial-gradient(circle, #eab308 0%, #854d0e 70%, #000 100%)";
+      bowlCrestBorder = "#ffffff";
+      bowlCrestBg = "radial-gradient(circle, #b2ff59 0%, #4d7c0f 70%, #000 100%)";
+    } else if (currentThemeSlug === "champions-trophy-2025") {
+      ribbonBg = "linear-gradient(90deg, #03a360 0%, #10b981 25%, #059669 50%, #10b981 75%, #03a360 100%)";
+      ribbonBorder = "#03a360";
+      ribbonShadow = "0 0 25px rgba(3, 163, 96, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #0a122a";
+      textShadow = "0 0 16px rgba(10, 18, 42, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0a122a 0%, #14224d 100%)";
+      scoreBoxBorder = "#03a360";
+      bowlerBoxBg = "linear-gradient(180deg, #0a122a 0%, #14224d 100%)";
+      bowlerBoxBorder = "#03a360";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#03a360";
+      batCrestBg = "#03a360";
+      bowlCrestBorder = "#03a360";
+      bowlCrestBg = "#0a122a";
+    } else if (currentThemeSlug === "wcl-fancode") {
+      ribbonBg = "linear-gradient(90deg, #0284c7 0%, #38bdf8 25%, #0369a1 50%, #38bdf8 75%, #0284c7 100%)";
+      ribbonBorder = "#0284c7";
+      ribbonShadow = "0 0 25px rgba(2, 132, 199, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #1f2937";
+      textShadow = "0 0 16px rgba(31, 41, 55, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #1f2937 0%, #111827 100%)";
+      scoreBoxBorder = "#0284c7";
+      bowlerBoxBg = "linear-gradient(180deg, #1f2937 0%, #111827 100%)";
+      bowlerBoxBorder = "#0284c7";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#0284c7";
+      batCrestBg = "#0284c7";
+      bowlCrestBorder = "#0284c7";
+      bowlCrestBg = "#1f2937";
+    } else if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup") {
+      ribbonBg = "linear-gradient(90deg, #0047ab 0%, #3b82f6 25%, #f59e0b 50%, #3b82f6 75%, #0047ab 100%)";
+      ribbonBorder = "#f59e0b";
+      ribbonShadow = "0 0 25px rgba(245, 158, 11, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #0047ab";
+      textShadow = "0 0 16px rgba(0, 71, 171, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)";
+      scoreBoxBorder = "#f59e0b";
+      bowlerBoxBg = "linear-gradient(180deg, #f59e0b 0%, #d97706 100%)";
+      bowlerBoxBorder = "#b45309";
+      bowlerTextColor = "#000000";
+      batCrestBorder = "#0047ab";
+      batCrestBg = "#0047ab";
+      bowlCrestBorder = "#f59e0b";
+      bowlCrestBg = "#f59e0b";
+    } else if (currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024") {
+      ribbonBg = "linear-gradient(90deg, #1e3a8a 0%, #3b82f6 25%, #f97316 50%, #3b82f6 75%, #1e3a8a 100%)";
+      ribbonBorder = "#f97316";
+      ribbonShadow = "0 0 25px rgba(249, 115, 22, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #1e3a8a";
+      textShadow = "0 0 16px rgba(30, 58, 138, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%)";
+      scoreBoxBorder = "#f97316";
+      bowlerBoxBg = "linear-gradient(180deg, #f97316 0%, #ea580c 100%)";
+      bowlerBoxBorder = "#c2410c";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#3b82f6";
+      batCrestBg = "#1e3a8a";
+      bowlCrestBorder = "#f97316";
+      bowlCrestBg = "#ea580c";
+    } else if (currentThemeSlug === "cwc-23-india") {
+      ribbonBg = "linear-gradient(90deg, #1e1b4b 0%, #e11d48 30%, #f59e0b 70%, #1e1b4b 100%)";
+      ribbonBorder = "#f59e0b";
+      ribbonShadow = "0 0 25px rgba(245, 158, 11, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #1e1b4b";
+      textShadow = "0 0 16px rgba(30, 27, 75, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%)";
+      scoreBoxBorder = "#f59e0b";
+      bowlerBoxBg = "linear-gradient(180deg, #e11d48 0%, #be123c 100%)";
+      bowlerBoxBorder = "#9f1239";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#f59e0b";
+      batCrestBg = "#1e1b4b";
+      bowlCrestBorder = "#e11d48";
+      bowlCrestBg = "#be123c";
+    } else if (currentThemeSlug === "bbl-black") {
+      ribbonBg = "linear-gradient(90deg, #0f172a 0%, #0284c7 35%, #facc15 70%, #0f172a 100%)";
+      ribbonBorder = "#38bdf8";
+      ribbonShadow = "0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #0f172a";
+      textShadow = "0 0 16px rgba(15, 23, 42, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0f172a 0%, #020617 100%)";
+      scoreBoxBorder = "#38bdf8";
+      bowlerBoxBg = "linear-gradient(180deg, #facc15 0%, #eab308 100%)";
+      bowlerBoxBorder = "#ca8a04";
+      bowlerTextColor = "#000000";
+      batCrestBorder = "#38bdf8";
+      batCrestBg = "#0f172a";
+      bowlCrestBorder = "#facc15";
+      bowlCrestBg = "#facc15";
+    } else if (currentThemeSlug === "cricfusion") {
+      ribbonBg = "linear-gradient(90deg, #6366f1 0%, #a855f7 30%, #ec4899 70%, #6366f1 100%)";
+      ribbonBorder = "#ec4899";
+      ribbonShadow = "0 0 25px rgba(236, 72, 153, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #312e81";
+      textShadow = "0 0 16px rgba(49, 46, 129, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%)";
+      scoreBoxBorder = "#ec4899";
+      bowlerBoxBg = "linear-gradient(180deg, #ec4899 0%, #db2777 100%)";
+      bowlerBoxBorder = "#be185d";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#6366f1";
+      batCrestBg = "#6366f1";
+      bowlCrestBorder = "#ec4899";
+      bowlCrestBg = "#db2777";
+    } else if (currentThemeSlug === "sa20") {
+      ribbonBg = "linear-gradient(90deg, #047857 0%, #10b981 30%, #eab308 70%, #047857 100%)";
+      ribbonBorder = "#eab308";
+      ribbonShadow = "0 0 25px rgba(234, 179, 8, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #047857";
+      textShadow = "0 0 16px rgba(4, 120, 87, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)";
+      scoreBoxBorder = "#eab308";
+      bowlerBoxBg = "linear-gradient(180deg, #eab308 0%, #ca8a04 100%)";
+      bowlerBoxBorder = "#a16207";
+      bowlerTextColor = "#000000";
+      batCrestBorder = "#047857";
+      batCrestBg = "#047857";
+      bowlCrestBorder = "#eab308";
+      bowlCrestBg = "#ca8a04";
+    } else if (currentThemeSlug === "jiocinema" || currentThemeSlug === "geo-cinema") {
+      ribbonBg = "linear-gradient(90deg, #be185d 0%, #db2777 30%, #0284c7 70%, #be185d 100%)";
+      ribbonBorder = "#db2777";
+      ribbonShadow = "0 0 25px rgba(219, 39, 119, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #831843";
+      textShadow = "0 0 16px rgba(131, 24, 67, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)";
+      scoreBoxBorder = "#db2777";
+      bowlerBoxBg = "linear-gradient(180deg, #db2777 0%, #be185d 100%)";
+      bowlerBoxBorder = "#9d174d";
+      bowlerTextColor = "#ffffff";
+      batCrestBorder = "#db2777";
+      batCrestBg = "#db2777";
+      bowlCrestBorder = "#0284c7";
+      bowlCrestBg = "#0284c7";
+    } else if (currentThemeSlug === "ipl" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports") {
+      ribbonBg = "linear-gradient(90deg, #1e40af 0%, #3b82f6 30%, #f59e0b 70%, #1e40af 100%)";
+      ribbonBorder = "#f59e0b";
+      ribbonShadow = "0 0 25px rgba(245, 158, 11, 0.6), inset 0 0 15px rgba(255,255,255,0.4)";
+      textStroke = "1.5px #1e40af";
+      textShadow = "0 0 16px rgba(30, 64, 175, 0.8), 0 2px 4px rgba(0,0,0,0.3)";
+      scoreBoxBg = "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)";
+      scoreBoxBorder = "#f59e0b";
+      bowlerBoxBg = "linear-gradient(180deg, #f59e0b 0%, #d97706 100%)";
+      bowlerBoxBorder = "#b45309";
+      bowlerTextColor = "#000000";
+      batCrestBorder = "#3b82f6";
+      batCrestBg = "#1e40af";
+      bowlCrestBorder = "#f59e0b";
+      bowlCrestBg = "#f59e0b";
+    }
+
+    const getShortLocal = (name: string) => {
+      const words = name.trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return name.slice(0, 3).toUpperCase();
+    };
+
+    const batTeamShort = getShortLocal(batTeam);
+    const bowlTeamShort = getShortLocal(bowlTeam);
+
+    const isGreenTheme = currentThemeSlug === "crioverlay-green";
+    const ribbonHeight = isGreenTheme ? "80px" : "56px";
+    const marqueeFontSize = isGreenTheme ? "54px" : "42px";
+    const badgeSize = isGreenTheme ? "62px" : "44px";
+
+    return (
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: ribbonHeight,
+        background: ribbonBg,
+        overflow: "hidden",
+        borderRadius: isGreenTheme ? "16px" : "8px",
+        border: isGreenTheme ? `3px solid ${ribbonBorder}` : `2px solid ${ribbonBorder}`,
+        position: "relative",
+        padding: "0 14px",
+        boxShadow: ribbonShadow,
+        width: "100%",
+      }}>
+        {/* Inline CSS Keyframes ensure the ticker runs in every environment */}
+        <style>{`
+          @keyframes marqueeScrollLTR {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+          }
+        `}</style>
+
+        {/* Continuous Left-to-Right Scrolling Marquee Ticker */}
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "200%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          whiteSpace: "nowrap",
+          animation: "marqueeScrollLTR 6.5s linear infinite",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}>
+          <span style={{
+            fontSize: marqueeFontSize,
+            fontWeight: "950",
+            letterSpacing: isGreenTheme ? "10px" : "8px",
+            color: "#FFFFFF",
+            WebkitTextStroke: textStroke,
+            textShadow: textShadow,
+            paddingRight: "80px",
+            textTransform: "uppercase",
+            display: "inline-block",
+          }}>
+            {marqueeRepeated}
+          </span>
+          <span style={{
+            fontSize: marqueeFontSize,
+            fontWeight: "950",
+            letterSpacing: isGreenTheme ? "10px" : "8px",
+            color: "#FFFFFF",
+            WebkitTextStroke: textStroke,
+            textShadow: textShadow,
+            paddingRight: "80px",
+            textTransform: "uppercase",
+            display: "inline-block",
+          }}>
+            {marqueeRepeated}
+          </span>
+        </div>
+
+        {/* Left Floating Score Box */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", position: "relative", zIndex: 5 }}>
+          {/* Team Crest Ring */}
+          <div style={{ width: badgeSize, height: badgeSize, borderRadius: "50%", border: isGreenTheme ? "3px solid #ffffff" : `3px solid ${batCrestBorder}`, display: "flex", alignItems: "center", justifyContent: "center", background: batCrestBg, padding: "3px", textAlign: "center", boxShadow: "0 3px 10px rgba(0,0,0,0.4)" }}>
+            <span style={{ color: "#FFFFFF", fontWeight: 900, fontSize: isGreenTheme ? "11px" : "8.5px", lineHeight: "1.1", textTransform: "uppercase" }}>
+              {batTeam.split(" ").slice(0, 2).join("\n")}
+            </span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ color: "#FFFFFF", fontWeight: 950, fontSize: isGreenTheme ? "18px" : "16px", lineHeight: 1, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>{batTeamShort}</span>
+            <span style={{ color: isGreenTheme ? "#74fb05" : "rgba(255,255,255,0.85)", fontWeight: 800, fontSize: isGreenTheme ? "12px" : "10.5px", marginTop: "2px", textShadow: "0 1px 3px rgba(0,0,0,0.8)" }}>v {bowlTeamShort}</span>
+          </div>
+
+          {/* Dark Score Container with Gold/Green Brackets */}
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            background: scoreBoxBg,
+            padding: isGreenTheme ? "4px 18px" : "3px 14px",
+            borderRadius: isGreenTheme ? "10px" : "6px",
+            border: isGreenTheme ? `2px solid ${scoreBoxBorder}` : `1.5px solid ${scoreBoxBorder}`,
+            boxShadow: "0 4px 14px rgba(0,0,0,0.5)",
+            marginLeft: "8px",
+          }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+              <span style={{ color: isGreenTheme ? "#74fb05" : "#facc15", fontSize: isGreenTheme ? "20px" : "17px", fontWeight: "900" }}>(</span>
+              <span style={{ color: "#FFFFFF", fontSize: isGreenTheme ? "28px" : "24px", fontWeight: "950", lineHeight: 1, letterSpacing: "-0.5px", fontFamily: isGreenTheme ? "'Teko', sans-serif" : undefined }}>{currentScoringState.score} - {currentScoringState.wickets}</span>
+              <span style={{ color: isGreenTheme ? "#74fb05" : "#38bdf8", fontSize: isGreenTheme ? "15px" : "13px", fontWeight: "800" }}>{fmtOv(currentScoringState.balls, currentMatch.ballsPerOver)}</span>
+              <span style={{ color: isGreenTheme ? "#74fb05" : "#facc15", fontSize: isGreenTheme ? "20px" : "17px", fontWeight: "900" }}>)</span>
+            </div>
+            <span style={{ color: isGreenTheme ? "#74fb05" : "#facc15", fontSize: isGreenTheme ? "10.5px" : "9.5px", fontWeight: "900", marginTop: "1px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+              {currentScoringState.target !== null ? `TARGET - ${currentScoringState.target}` : (currentScoringState.customInputText || "MATCH IN PROGRESS")}
+            </span>
+          </div>
+        </div>
+
+        {/* Right Floating Bowler Box */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", position: "relative", zIndex: 5 }}>
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "3px",
+            padding: isGreenTheme ? "5px 16px" : "4px 14px",
+            background: bowlerBoxBg,
+            borderRadius: isGreenTheme ? "10px" : "6px",
+            border: isGreenTheme ? `2px solid ${bowlerBoxBorder}` : `1.5px solid ${bowlerBoxBorder}`,
+            boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ color: isGreenTheme ? "#74fb05" : bowlerTextColor, fontWeight: "900", fontSize: isGreenTheme ? "14px" : "12.5px", textTransform: "uppercase" }}>
+                {currentScoringState.bowler || "—"}
+              </span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginLeft: "auto" }}>
+                <span style={{ color: bowlerTextColor, fontWeight: "950", fontSize: isGreenTheme ? "17px" : "15px" }}>{bowlerObj?.wickets ?? 0}-{bowlerObj?.runsConceded ?? 0}</span>
+                <span style={{ color: isGreenTheme ? "#94a3b8" : (bowlerTextColor === "#000000" ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)"), fontWeight: "700", fontSize: "10.5px" }}>({fmtOv(bowlerObj?.ballsBowled ?? 0, currentMatch.ballsPerOver)})</span>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <span style={{ color: isGreenTheme ? "#94a3b8" : bowlerTextColor, fontWeight: "900", fontSize: "8.5px", letterSpacing: "0.5px", textTransform: "uppercase" }}>OVER:</span>
+              {(() => {
+                const bpo = currentMatch?.ballsPerOver || 6;
+                const thisOver = currentScoringState.thisOver || [];
+                const extrasCount = thisOver.filter(isExtraBall).length;
+                const totalCirclesCount = bpo + extrasCount;
+                return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                  const val = thisOver[i];
+                  let cellBg = bowlerTextColor === "#000000" ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.12)";
+                  let cellColor = bowlerTextColor;
+                  let borderStyle = isGreenTheme ? "1px solid #74fb05" : "1px solid rgba(0,0,0,0.2)";
+                  if (val) {
+                    borderStyle = "none";
+                    if (val === "4" || val === "4s") { cellBg = isGreenTheme ? "#74fb05" : "#0284c7"; cellColor = isGreenTheme ? "#091120" : "#ffffff"; }
+                    else if (val === "6" || val === "6s") { cellBg = "#7c3aed"; cellColor = "#ffffff"; }
+                    else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#dc2626"; cellColor = "#ffffff"; }
+                    else if (isExtraBall(val)) { cellBg = "#9333ea"; cellColor = "#ffffff"; }
+                    else { cellBg = "rgba(0, 0, 0, 0.4)"; cellColor = "#ffffff"; }
+                  }
+                  return (
+                    <div key={i} style={{ width: isGreenTheme ? "19px" : "17px", height: isGreenTheme ? "19px" : "17px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6.5px" : (val && val.length > 1 ? "8px" : "10px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                      {renderOutcomeText(val, isGreenTheme ? 19 : 17)}
+                    </div>
+                  );
+                });
+              })()}
+            </div>
+          </div>
+
+          {/* Bowling Team Logo & Badge */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ width: badgeSize, height: badgeSize, borderRadius: "50%", border: isGreenTheme ? "3px solid #ffffff" : `3px solid ${bowlCrestBorder}`, display: "flex", alignItems: "center", justifyContent: "center", background: bowlCrestBg, padding: "3px", textAlign: "center", boxShadow: "0 3px 10px rgba(0,0,0,0.4)" }}>
+              <span style={{ color: "#FFFFFF", fontWeight: 900, fontSize: isGreenTheme ? "11px" : "8.5px", lineHeight: "1.1", textTransform: "uppercase" }}>
+                {bowlTeam.split(" ").slice(0, 2).join("\n")}
+              </span>
+            </div>
+            <div style={{ width: isGreenTheme ? "28px" : "24px", height: isGreenTheme ? "28px" : "24px", background: "#091120", border: "1.5px solid #74fb05", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", color: "#74fb05", fontSize: "13px", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>
+              🏏
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ════════════════════ 6. DEFAULT LOWER THIRD ════════════════════
   // ════════════════════ THEME 16: CRIOVERLAY GREEN ════════════════════
   if (themeSlug === "crioverlay-green") {
@@ -7230,99 +8028,102 @@ export default function OverlayPage() {
     return (
       <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 15, overflow: "hidden" }}>
         <style>{GREEN_CSS}</style>
+        <style>{GLOBAL_CSS}</style>
         {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
         <div className="g-canvas">
-          <div className="g-bar">
-            {/* Left badge */}
-            <div className="g-badge g-badge-l">{abbr(match.team1Name)}</div>
+          {renderScoreboardMarqueeRibbon("crioverlay-green", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+            <div className="g-bar">
+              {/* Left badge */}
+              <div className="g-badge g-badge-l">{abbr(match.team1Name)}</div>
 
-            {/* Main score box */}
-            <div className="g-main-box" style={{ position: "relative" }}>
-              {scoringState.target !== null && (
-                <div style={{
-                  position: "absolute",
-                  top: "-22px",
-                  left: "18px",
-                  background: "#000",
-                  border: "1.5px solid #76ff03",
-                  borderRadius: "6px 6px 0 0",
-                  padding: "1px 10px",
-                  color: "#76ff03",
-                  fontSize: "9px",
-                  fontWeight: 900,
-                  letterSpacing: "1px",
-                  zIndex: 10
-                }}>
-                  TARGET: {scoringState.target} {need !== null && bLeft !== null && `| NEED ${need} OFF ${bLeft} BALLS`}
-                </div>
-              )}
-              {/* Top green bar */}
-              <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
-                {animTextContent ? (
-                  <div className="g-anim" style={{ display: "block" }}>{animTextContent}</div>
-                ) : (
-                  <>
-                    <span className="g-teams">{teamsHeader}</span>
-                    <span className="g-runs">{currentScore}</span>
-                    <span className="g-overs">{currentOvers}</span>
-                  </>
+              {/* Main score box */}
+              <div className="g-main-box" style={{ position: "relative" }}>
+                {scoringState.target !== null && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-22px",
+                    left: "18px",
+                    background: "#000",
+                    border: "1.5px solid #76ff03",
+                    borderRadius: "6px 6px 0 0",
+                    padding: "1px 10px",
+                    color: "#76ff03",
+                    fontSize: "9px",
+                    fontWeight: 900,
+                    letterSpacing: "1px",
+                    zIndex: 10
+                  }}>
+                    TARGET: {scoringState.target} {need !== null && bLeft !== null && `| NEED ${need} OFF ${bLeft} BALLS`}
+                  </div>
                 )}
-              </div>
+                {/* Top green bar */}
+                <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
+                  {animTextContent ? (
+                    <div className="g-anim" style={{ display: "block" }}>{animTextContent}</div>
+                  ) : (
+                    <>
+                      <span className="g-teams">{teamsHeader}</span>
+                      <span className="g-runs">{currentScore}</span>
+                      <span className="g-overs">{currentOvers}</span>
+                    </>
+                  )}
+                </div>
 
-              {/* Batsmen strip */}
-              <div className="g-bat-bar">
-                <div className="g-pill active">
-                  <span>🏏 {scoringState.striker || "STRIKER"}</span>
-                  <span>{striker ? `${striker.runs} ${striker.balls}` : "0 0"}</span>
-                </div>
-                <div className="g-pill">
-                  <span>{scoringState.nonStriker || "NON-STRIKER"}</span>
-                  <span>{nonStriker ? `${nonStriker.runs} ${nonStriker.balls}` : "0 0"}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right navy panel */}
-            <div className="g-navy">
-              {scoringState.target !== null ? (
-                <div className="g-toss">
-                  <span className="g-toss-l" style={{ color: "#76ff03" }}>TARGET</span>
-                  <span className="g-toss-v" style={{ color: "#fff" }}>{scoringState.target}</span>
-                </div>
-              ) : (
-                <div className="g-toss">
-                  <span className="g-toss-l">TOSS</span>
-                  <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
-                </div>
-              )}
-              <div className="g-bowl-sec">
-                <div className="g-bowl-row">
-                  <span>● {(scoringState.bowler || "BOWLER").toUpperCase()}</span>
-                  <span>{bowler ? `${bowler.wickets}-${bowler.runsConceded} ${oversBowled}` : "0-0 0.0"}</span>
-                </div>
-                <div className="g-over-row">
-                  <span>THIS OVER</span>
-                  <div className="g-balls">
-                    {(() => {
-                      const extrasCount = (scoringState.thisOver || []).filter(isExtraBall).length;
-                      const total = bpo + extrasCount;
-                      return Array.from({ length: total }).map((_, i) => {
-                        const v = scoringState.thisOver[i];
-                        return (
-                          <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" || v?.startsWith("W+") ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
-                            {v && v.includes("+") ? renderOutcomeText(v, 20) : (v ?? "")}
-                          </div>
-                        );
-                      });
-                    })()}
+                {/* Batsmen strip */}
+                <div className="g-bat-bar">
+                  <div className="g-pill active">
+                    <span>🏏 {scoringState.striker || "STRIKER"}</span>
+                    <span>{striker ? `${striker.runs} ${striker.balls}` : "0 0"}</span>
+                  </div>
+                  <div className="g-pill">
+                    <span>{scoringState.nonStriker || "NON-STRIKER"}</span>
+                    <span>{nonStriker ? `${nonStriker.runs} ${nonStriker.balls}` : "0 0"}</span>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right badge */}
-            <div className="g-badge g-badge-r">{abbr(match.team2Name)}</div>
-          </div>
+              {/* Right navy panel */}
+              <div className="g-navy">
+                {scoringState.target !== null ? (
+                  <div className="g-toss">
+                    <span className="g-toss-l" style={{ color: "#76ff03" }}>TARGET</span>
+                    <span className="g-toss-v" style={{ color: "#fff" }}>{scoringState.target}</span>
+                  </div>
+                ) : (
+                  <div className="g-toss">
+                    <span className="g-toss-l">TOSS</span>
+                    <span className="g-toss-v">{abbr(tossWinner)} ({tossChoice === "Bat" ? "BAT" : "BWL"})</span>
+                  </div>
+                )}
+                <div className="g-bowl-sec">
+                  <div className="g-bowl-row">
+                    <span>● {(scoringState.bowler || "BOWLER").toUpperCase()}</span>
+                    <span>{bowler ? `${bowler.wickets}-${bowler.runsConceded} ${oversBowled}` : "0-0 0.0"}</span>
+                  </div>
+                  <div className="g-over-row">
+                    <span>THIS OVER</span>
+                    <div className="g-balls">
+                      {(() => {
+                        const extrasCount = (scoringState.thisOver || []).filter(isExtraBall).length;
+                        const total = bpo + extrasCount;
+                        return Array.from({ length: total }).map((_, i) => {
+                          const v = scoringState.thisOver[i];
+                          return (
+                            <div key={i} className="g-ball" style={{ background: ballBg(v), borderColor: v === "W" || v?.startsWith("W+") ? "#ef4444" : v === "4" ? "#ca8a04" : v === "6" ? "#7c3aed" : "#38bdf8" }}>
+                              {v && v.includes("+") ? renderOutcomeText(v, 20) : (v ?? "")}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right badge */}
+              <div className="g-badge g-badge-r">{abbr(match.team2Name)}</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -7348,168 +8149,171 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "94vw", maxWidth: "1060px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
+            {renderScoreboardMarqueeRibbon("asia-cup", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* The main scoreboard row */}
+                <div style={{ display: "flex", alignItems: "stretch", height: "40px", background: "transparent", overflow: "hidden", borderRadius: "6px 6px 0 0", border: "1.5px solid rgba(229, 136, 8, 0.35)", borderBottom: "none" }}>
 
-            {/* The main scoreboard row */}
-            <div style={{ display: "flex", alignItems: "stretch", height: "40px", background: "transparent", overflow: "hidden", borderRadius: "6px 6px 0 0", border: "1.5px solid rgba(229, 136, 8, 0.35)", borderBottom: "none" }}>
-
-              {/* Team 1 Section */}
-              <div style={{ display: "flex", alignItems: "center", background: "#FDFDFE", padding: "0 14px", position: "relative", flexShrink: 0, minWidth: "115px" }}>
-                <span style={{ color: "#142248", fontWeight: 950, fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                  {match.team1Name}
-                </span>
-                {/* Left decorative splash */}
-                <div style={{ position: "absolute", bottom: 0, left: 0, width: "22px", height: "4px", background: "#E58808", borderRadius: "0 3px 0 0" }} />
-              </div>
-
-              {/* Blue curved transition left */}
-              <div style={{ width: "12px", background: "#FDFDFE", clipPath: "polygon(0 0, 100% 0, 0 100%)", flexShrink: 0 }} />
-
-              {/* Score / Overs Section */}
-              <div style={{ background: "linear-gradient(180deg, #142248 0%, #0c152d 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 14px", position: "relative", minWidth: "115px", flexShrink: 0, borderLeft: "1.5px solid #E58808", borderRight: "1.5px solid #E58808" }}>
-                {/* Gold Parentheses decoration */}
-                <div style={{ display: "flex", alignItems: "center", gap: "4px", lineHeight: 1 }}>
-                  <span style={{ color: "#E58808", fontSize: "15px", fontWeight: "900" }}>(</span>
-                  <span style={{ color: "#FDFDFE", fontSize: "15.5px", fontWeight: "950", letterSpacing: "-0.5px" }}>{scoringState.score} - {scoringState.wickets}</span>
-                  <span style={{ color: "#cbd5e1", fontSize: "10px", fontWeight: "700", marginLeft: "2px" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
-                  <span style={{ color: "#E58808", fontSize: "15px", fontWeight: "900" }}>)</span>
-                </div>
-                {/* Group Stage banner */}
-                <div style={{ background: "#E58808", padding: "1px 8px", borderRadius: "2px", fontSize: "6.5px", fontWeight: "950", color: "#142248", letterSpacing: "0.8px", textTransform: "uppercase", whiteSpace: "nowrap", marginTop: "2px" }}>
-                  GROUP STAGE
-                </div>
-              </div>
-
-              {/* Blue curved transition right */}
-              <div style={{ width: "12px", background: "#FDFDFE", clipPath: "polygon(100% 0, 100% 100%, 0 100%)", flexShrink: 0 }} />
-
-              {/* Batsmen details */}
-              <div style={{ background: "#FDFDFE", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 12px", flex: 1, minWidth: "140px" }}>
-                {/* Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                    <span style={{ color: "#E58808", fontSize: "10px", fontWeight: 900 }}>•</span>
-                    <span style={{ color: "#142248", fontWeight: "900", fontSize: "11px" }}>{scoringState.striker || "—"}</span>
+                  {/* Team 1 Section */}
+                  <div style={{ display: "flex", alignItems: "center", background: "#FDFDFE", padding: "0 14px", position: "relative", flexShrink: 0, minWidth: "115px" }}>
+                    <span style={{ color: "#142248", fontWeight: 950, fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {match.team1Name}
+                    </span>
+                    {/* Left decorative splash */}
+                    <div style={{ position: "absolute", bottom: 0, left: 0, width: "22px", height: "4px", background: "#E58808", borderRadius: "0 3px 0 0" }} />
                   </div>
-                  <div style={{ display: "flex", gap: "6px", fontSize: "11.5px", fontWeight: "900", color: "#142248" }}>
-                    <span style={{ minWidth: "18px", textAlign: "right" }}>{striker?.runs ?? 0}</span>
-                    <span style={{ color: "#64748b", fontWeight: "600", fontSize: "9.5px", minWidth: "14px", textAlign: "right" }}>({striker?.balls ?? 0})</span>
-                  </div>
-                </div>
-                {/* Non Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                    <span style={{ color: "transparent", fontSize: "10px" }}>•</span>
-                    <span style={{ color: "#475569", fontWeight: "700", fontSize: "10px" }}>{scoringState.nonStriker || "—"}</span>
-                  </div>
-                  <div style={{ display: "flex", gap: "6px", fontSize: "10.5px", fontWeight: "700", color: "#475569" }}>
-                    <span style={{ minWidth: "18px", textAlign: "right" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "#94a3b8", fontWeight: "500", fontSize: "8.5px", minWidth: "14px", textAlign: "right" }}>({nonStriker?.balls ?? 0})</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Target / Match Equation Section */}
-              {scoringState.target !== null ? (
-                <div style={{ background: "linear-gradient(180deg, #E58808 0%, #c97300 100%)", display: "flex", alignItems: "center", padding: "0 14px", flexShrink: 0, position: "relative" }}>
-                  {/* Left curved accent boundary */}
-                  <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "3px", background: "#142248" }} />
+                  {/* Blue curved transition left */}
+                  <div style={{ width: "12px", background: "#FDFDFE", clipPath: "polygon(0 0, 100% 0, 0 100%)", flexShrink: 0 }} />
 
-                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>REQ. RUNS</span>
-                      <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{need}</span>
+                  {/* Score / Overs Section */}
+                  <div style={{ background: "linear-gradient(180deg, #142248 0%, #0c152d 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 14px", position: "relative", minWidth: "115px", flexShrink: 0, borderLeft: "1.5px solid #E58808", borderRight: "1.5px solid #E58808" }}>
+                    {/* Gold Parentheses decoration */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px", lineHeight: 1 }}>
+                      <span style={{ color: "#E58808", fontSize: "15px", fontWeight: "900" }}>(</span>
+                      <span style={{ color: "#FDFDFE", fontSize: "15.5px", fontWeight: "950", letterSpacing: "-0.5px" }}>{scoringState.score} - {scoringState.wickets}</span>
+                      <span style={{ color: "#cbd5e1", fontSize: "10px", fontWeight: "700", marginLeft: "2px" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                      <span style={{ color: "#E58808", fontSize: "15px", fontWeight: "900" }}>)</span>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>BALLS</span>
-                      <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{bLeft}</span>
+                    {/* Group Stage banner */}
+                    <div style={{ background: "#E58808", padding: "1px 8px", borderRadius: "2px", fontSize: "6.5px", fontWeight: "950", color: "#142248", letterSpacing: "0.8px", textTransform: "uppercase", whiteSpace: "nowrap", marginTop: "2px" }}>
+                      GROUP STAGE
                     </div>
                   </div>
 
-                  {/* Right curved accent boundary */}
-                  <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "3px", background: "#142248" }} />
-                </div>
-              ) : (
-                /* Innings 1: Show current run rate */
-                <div style={{ background: "linear-gradient(180deg, #E58808 0%, #c97300 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 14px", flexShrink: 0 }}>
-                  <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>RUN RATE</span>
-                  <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{calcRR(scoringState)}</span>
-                </div>
-              )}
+                  {/* Blue curved transition right */}
+                  <div style={{ width: "12px", background: "#FDFDFE", clipPath: "polygon(100% 0, 100% 100%, 0 100%)", flexShrink: 0 }} />
 
-              {/* Team 2 / Bowling Team Section with Bowler info */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", background: "#FDFDFE", padding: "0 14px", position: "relative", flexShrink: 0, minWidth: "125px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                  <span style={{ color: "#142248", fontWeight: 950, fontSize: "12px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                    {currentBowlTeam || match.team2Name}
-                  </span>
-                  {/* CricScorer/Bat badge */}
-                  <div style={{ width: "16px", height: "16px", background: "#142248", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", color: "#E58808", fontSize: "8.5px", fontWeight: "bold" }}>
-                    🏏
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
-                  <span style={{ color: "#E58808", fontSize: "7.5px", fontWeight: 950, letterSpacing: "0.5px" }}>BOWL:</span>
-                  <span style={{ color: "#142248", fontSize: "9.5px", fontWeight: 800, maxWidth: "80px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {scoringState.bowler ? scoringState.bowler.split(" ").pop() : "—"}
-                  </span>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Bottom blue strip */}
-            <div style={{
-              background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #142248 0%, #1c3066 50%, #142248 100%)",
-              border: "1.5px solid rgba(229, 136, 8, 0.35)",
-              borderTop: "none",
-              borderRadius: "0 0 6px 6px",
-              padding: "3px 16px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              transition: "all 0.3s ease"
-            }}>
-              {activeNotification ? (
-                <div style={{ width: "100%", textAlign: "center", color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FDFDFE", fontWeight: "950", fontSize: "11px", letterSpacing: "1.5px", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
-                  {activeNotification}
-                </div>
-              ) : (
-                <>
-                  {/* Bowler figures strip */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                    <span style={{ color: "#E58808", fontWeight: 950, fontSize: "8px", letterSpacing: "0.8px" }}>BOWLER:</span>
-                    <span style={{ color: "#FDFDFE", fontWeight: 900, fontSize: "10.5px" }}>{scoringState.bowler || "—"}</span>
-                    <span style={{ color: "#E58808", fontWeight: 950, fontSize: "11px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
-                    <span style={{ color: "#cbd5e1", fontWeight: 600, fontSize: "8.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                  {/* Batsmen details */}
+                  <div style={{ background: "#FDFDFE", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 12px", flex: 1, minWidth: "140px" }}>
+                    {/* Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                        <span style={{ color: "#E58808", fontSize: "10px", fontWeight: 900 }}>•</span>
+                        <span style={{ color: "#142248", fontWeight: "900", fontSize: "11px" }}>{scoringState.striker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", gap: "6px", fontSize: "11.5px", fontWeight: "900", color: "#142248" }}>
+                        <span style={{ minWidth: "18px", textAlign: "right" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "#64748b", fontWeight: "600", fontSize: "9.5px", minWidth: "14px", textAlign: "right" }}>({striker?.balls ?? 0})</span>
+                      </div>
+                    </div>
+                    {/* Non Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                        <span style={{ color: "transparent", fontSize: "10px" }}>•</span>
+                        <span style={{ color: "#475569", fontWeight: "700", fontSize: "10px" }}>{scoringState.nonStriker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", gap: "6px", fontSize: "10.5px", fontWeight: "700", color: "#475569" }}>
+                        <span style={{ minWidth: "18px", textAlign: "right" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "#94a3b8", fontWeight: "500", fontSize: "8.5px", minWidth: "14px", textAlign: "right" }}>({nonStriker?.balls ?? 0})</span>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* This Over strip */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                    <span style={{ fontSize: "8px", color: "#E58808", fontWeight: "900", letterSpacing: "0.8px" }}>THIS OVER:</span>
-                    {(() => {
-                      const bpo = match?.ballsPerOver || 6;
-                      const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => (
-                        <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={15} />
-                      ));
-                    })()}
-                  </div>
+                  {/* Target / Match Equation Section */}
+                  {scoringState.target !== null ? (
+                    <div style={{ background: "linear-gradient(180deg, #E58808 0%, #c97300 100%)", display: "flex", alignItems: "center", padding: "0 14px", flexShrink: 0, position: "relative" }}>
+                      {/* Left curved accent boundary */}
+                      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "3px", background: "#142248" }} />
 
-                  {/* Required RR or Boundaries stats */}
-                  {rrr ? (
-                    <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
-                      REQ RR: {rrr}
+                      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                          <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>REQ. RUNS</span>
+                          <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{need}</span>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                          <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>BALLS</span>
+                          <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{bLeft}</span>
+                        </div>
+                      </div>
+
+                      {/* Right curved accent boundary */}
+                      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "3px", background: "#142248" }} />
                     </div>
                   ) : (
-                    <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
-                      4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
+                    /* Innings 1: Show current run rate */
+                    <div style={{ background: "linear-gradient(180deg, #E58808 0%, #c97300 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 14px", flexShrink: 0 }}>
+                      <span style={{ fontSize: "7px", fontWeight: "950", color: "#142248", letterSpacing: "0.5px" }}>RUN RATE</span>
+                      <span style={{ fontSize: "17px", fontWeight: "950", color: "#142248", lineHeight: 1, marginTop: "1px" }}>{calcRR(scoringState)}</span>
                     </div>
                   )}
-                </>
-              )}
-            </div>
+
+                  {/* Team 2 / Bowling Team Section with Bowler info */}
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", background: "#FDFDFE", padding: "0 14px", position: "relative", flexShrink: 0, minWidth: "125px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                      <span style={{ color: "#142248", fontWeight: 950, fontSize: "12px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                        {currentBowlTeam || match.team2Name}
+                      </span>
+                      {/* CricScorer/Bat badge */}
+                      <div style={{ width: "16px", height: "16px", background: "#142248", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", color: "#E58808", fontSize: "8.5px", fontWeight: "bold" }}>
+                        🏏
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
+                      <span style={{ color: "#E58808", fontSize: "7.5px", fontWeight: 950, letterSpacing: "0.5px" }}>BOWL:</span>
+                      <span style={{ color: "#142248", fontSize: "9.5px", fontWeight: 800, maxWidth: "80px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {scoringState.bowler ? scoringState.bowler.split(" ").pop() : "—"}
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Bottom blue strip */}
+                <div style={{
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #142248 0%, #1c3066 50%, #142248 100%)",
+                  border: "1.5px solid rgba(229, 136, 8, 0.35)",
+                  borderTop: "none",
+                  borderRadius: "0 0 6px 6px",
+                  padding: "3px 16px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  transition: "all 0.3s ease"
+                }}>
+                  {activeNotification ? (
+                    <div style={{ width: "100%", textAlign: "center", color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FDFDFE", fontWeight: "950", fontSize: "11px", letterSpacing: "1.5px", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
+                      {activeNotification}
+                    </div>
+                  ) : (
+                    <>
+                      {/* Bowler figures strip */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <span style={{ color: "#E58808", fontWeight: 950, fontSize: "8px", letterSpacing: "0.8px" }}>BOWLER:</span>
+                        <span style={{ color: "#FDFDFE", fontWeight: 900, fontSize: "10.5px" }}>{scoringState.bowler || "—"}</span>
+                        <span style={{ color: "#E58808", fontWeight: 950, fontSize: "11px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                        <span style={{ color: "#cbd5e1", fontWeight: 600, fontSize: "8.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                      </div>
+
+                      {/* This Over strip */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <span style={{ fontSize: "8px", color: "#E58808", fontWeight: "900", letterSpacing: "0.8px" }}>THIS OVER:</span>
+                        {(() => {
+                          const bpo = match?.ballsPerOver || 6;
+                          const thisOver = scoringState.thisOver || [];
+                          const extrasCount = thisOver.filter(isExtraBall).length;
+                          const totalCirclesCount = bpo + extrasCount;
+                          return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                            <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={15} />
+                          ));
+                        })()}
+                      </div>
+
+                      {/* Required RR or Boundaries stats */}
+                      {rrr ? (
+                        <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
+                          REQ RR: {rrr}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
+                          4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -7551,6 +8355,62 @@ export default function OverlayPage() {
       ? scoringState.customInputText.toUpperCase()
       : (scoringState.target !== null ? `TARGET - ${scoringState.target}` : "MATCH IN PROGRESS");
 
+    const activeAnim = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+
+    let marqueeWord = activeAnim;
+    let animBarBg = "linear-gradient(90deg, #02b3e4 0%, #38bdf8 25%, #0284c7 50%, #38bdf8 75%, #02b3e4 100%)";
+    let animTextStroke = "1.5px #0284c7";
+    let animTextShadow = "0 0 15px rgba(2, 179, 228, 0.8), 0 2px 5px rgba(0,0,0,0.5)";
+
+    if (activeAnim === "FOUR" || activeAnim === "4" || activeAnim === "4S" || activeAnim === "FOUR!") {
+      marqueeWord = "FOUR";
+      animBarBg = "linear-gradient(90deg, #02b3e4 0%, #0284c7 40%, #0369a1 70%, #02b3e4 100%)";
+      animTextStroke = "1.5px #0284c7";
+      animTextShadow = "0 0 18px rgba(2, 179, 228, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "SIX" || activeAnim === "6" || activeAnim === "6S" || activeAnim === "SIX!") {
+      marqueeWord = "SIX";
+      animBarBg = "linear-gradient(90deg, #02b3e4 0%, #1e1b4b 30%, #4c0519 70%, #dc2626 100%)";
+      animTextStroke = "1.5px #facc15";
+      animTextShadow = "0 0 18px rgba(250, 204, 21, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "WICKET" || activeAnim === "OUT" || activeAnim === "W" || activeAnim === "WICKET!") {
+      marqueeWord = activeAnim === "OUT" ? "OUT" : "WICKET";
+      animBarBg = "linear-gradient(90deg, #02b3e4 0%, #38bdf8 30%, #38bdf8 70%, #02b3e4 100%)";
+      animTextStroke = "1.5px #0284c7";
+      animTextShadow = "0 0 16px rgba(2, 179, 228, 0.8), 0 2px 6px rgba(0,0,0,0.5)";
+    } else if (activeAnim === "NOT OUT" || activeAnim === "NOT_OUT" || activeAnim === "NOTOUT") {
+      marqueeWord = "NOT OUT";
+      animBarBg = "linear-gradient(90deg, #059669 0%, #10b981 40%, #059669 100%)";
+      animTextStroke = "1.5px #064e3b";
+      animTextShadow = "0 0 18px rgba(16, 185, 129, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "FREE HIT" || activeAnim === "FREE_HIT" || activeAnim === "FREEHIT") {
+      marqueeWord = "FREE HIT";
+      animBarBg = "linear-gradient(90deg, #02b3e4 0%, #14b8a6 50%, #02b3e4 100%)";
+      animTextStroke = "1.5px #0d9488";
+      animTextShadow = "0 0 18px rgba(20, 184, 166, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "HAT-TRICK BALL" || activeAnim === "HAT-TRICK" || activeAnim === "HATTRICK") {
+      marqueeWord = "HAT-TRICK";
+      animBarBg = "linear-gradient(90deg, #7c3aed 0%, #9333ea 50%, #dc2626 100%)";
+      animTextStroke = "1.5px #6b21a8";
+      animTextShadow = "0 0 18px rgba(168, 85, 247, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "POWERPLAY" || activeAnim === "PP") {
+      marqueeWord = "POWERPLAY";
+      animBarBg = "linear-gradient(90deg, #02b3e4 0%, #0284c7 50%, #0369a1 100%)";
+      animTextStroke = "1.5px #0284c7";
+      animTextShadow = "0 0 18px rgba(2, 179, 228, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "TOUR BOUNDARIES" || activeAnim === "BOUNDARIES") {
+      marqueeWord = "BOUNDARIES";
+      animBarBg = "linear-gradient(90deg, #d946ef 0%, #a21caf 50%, #02b3e4 100%)";
+      animTextStroke = "1.5px #86198f";
+      animTextShadow = "0 0 18px rgba(217, 70, 239, 0.9), 0 0 30px #ffffff";
+    } else if (activeAnim === "REVIEW" || activeAnim === "PENDING" || activeAnim === "DRS") {
+      marqueeWord = "DRS REVIEW";
+      animBarBg = "linear-gradient(90deg, #0284c7 0%, #f59e0b 50%, #07152b 100%)";
+      animTextStroke = "1.5px #d97706";
+      animTextShadow = "0 0 18px rgba(245, 158, 11, 0.9), 0 0 30px #ffffff";
+    }
+
+    const marqueeRepeated = Array(12).fill(marqueeWord).join("       ");
+
     return (
       <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
         <style>{GLOBAL_CSS}</style>
@@ -7564,161 +8424,323 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.6))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "transparent", overflow: "hidden", borderRadius: "8px", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
+            {activeAnim ? (
+              /* ─── ANIMATION MODE: Exactly matches reference image ─── */
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "56px",
+                background: "linear-gradient(90deg, #38bdf8 0%, #7dd3fc 20%, #38bdf8 50%, #7dd3fc 80%, #38bdf8 100%)",
+                overflow: "hidden",
+                borderRadius: "8px",
+                border: "2px solid #0284c7",
+                position: "relative",
+                padding: "0 14px",
+                boxShadow: "0 0 25px rgba(2, 179, 228, 0.6), inset 0 0 15px rgba(255,255,255,0.4)",
+              }}>
+                {/* Continuous Left-to-Right Scrolling Marquee Ticker */}
+                <div style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "200%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap",
+                  animation: "marqueeScrollLTR 6.5s linear infinite",
+                  pointerEvents: "none",
+                  zIndex: 1,
+                }}>
+                  <span style={{
+                    fontSize: "42px",
+                    fontWeight: "950",
+                    letterSpacing: "8px",
+                    color: "#FFFFFF",
+                    WebkitTextStroke: "1.5px #0284c7",
+                    textShadow: "0 0 16px rgba(2, 132, 199, 0.8), 0 2px 4px rgba(0,0,0,0.3)",
+                    paddingRight: "80px",
+                    textTransform: "uppercase",
+                    display: "inline-block",
+                  }}>
+                    {marqueeRepeated}
+                  </span>
+                  <span style={{
+                    fontSize: "42px",
+                    fontWeight: "950",
+                    letterSpacing: "8px",
+                    color: "#FFFFFF",
+                    WebkitTextStroke: "1.5px #0284c7",
+                    textShadow: "0 0 16px rgba(2, 132, 199, 0.8), 0 2px 4px rgba(0,0,0,0.3)",
+                    paddingRight: "80px",
+                    textTransform: "uppercase",
+                    display: "inline-block",
+                  }}>
+                    {marqueeRepeated}
+                  </span>
+                </div>
 
-              {/* LEFT HALF: Sky Blue Background */}
-              <div style={{ background: "#02b3e4", display: "flex", alignItems: "center", padding: "0 18px", flex: "1 1 0%", minWidth: 0, width: 0, overflow: "hidden" }}>
-
-                {/* Batting Team Logo/Crest in Ring */}
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.05)", padding: "4px", textAlign: "center" }}>
-                    <span style={{ color: "#000000", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
+                {/* Left Floating Score Box (Matching Reference Image) */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", position: "relative", zIndex: 5 }}>
+                  {/* Team Crest Ring */}
+                  <div style={{ width: "44px", height: "44px", borderRadius: "50%", border: "3px solid #0284c7", display: "flex", alignItems: "center", justifyContent: "center", background: "#0284c7", padding: "3px", textAlign: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>
+                    <span style={{ color: "#FFFFFF", fontWeight: 900, fontSize: "8.5px", lineHeight: "1.1", textTransform: "uppercase" }}>
                       {currentBatTeam.split(" ").slice(0, 2).join("\n")}
                     </span>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ color: "#000000", fontWeight: 900, fontSize: "16px", lineHeight: 1 }}>{batTeamShort}</span>
-                    <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: 700, fontSize: "11px", marginTop: "2px" }}>v {bowlTeamShort}</span>
+                    <span style={{ color: "#000000", fontWeight: 950, fontSize: "16px", lineHeight: 1 }}>{batTeamShort}</span>
+                    <span style={{ color: "rgba(0,0,0,0.65)", fontWeight: 800, fontSize: "10.5px", marginTop: "2px" }}>v {bowlTeamShort}</span>
+                  </div>
+
+                  {/* Dark Navy Score Container with Gold Brackets */}
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    background: "linear-gradient(180deg, #07152b 0%, #0c2042 100%)",
+                    padding: "3px 14px",
+                    borderRadius: "6px",
+                    border: "1.5px solid #02b3e4",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                    marginLeft: "8px",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+                      <span style={{ color: "#facc15", fontSize: "17px", fontWeight: "900" }}>(</span>
+                      <span style={{ color: "#FFFFFF", fontSize: "24px", fontWeight: "950", lineHeight: 1, letterSpacing: "-0.5px" }}>{scoringState.score} - {scoringState.wickets}</span>
+                      <span style={{ color: "#38bdf8", fontSize: "13px", fontWeight: "800" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                      <span style={{ color: "#facc15", fontSize: "17px", fontWeight: "900" }}>)</span>
+                    </div>
+                    <span style={{ color: "#facc15", fontSize: "9.5px", fontWeight: "900", marginTop: "1px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {scoringState.target !== null ? `TARGET - ${scoringState.target}` : (scoringState.customInputText || "MATCH IN PROGRESS")}
+                    </span>
                   </div>
                 </div>
 
-                {/* Score / Overs Area */}
-                <div style={{ display: "flex", flexDirection: "column", marginLeft: "32px", minWidth: "120px" }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-                    <span style={{ color: "#1e1b4b", fontSize: "30px", fontWeight: "950", lineHeight: 1 }}>{scoringState.score}-{scoringState.wickets}</span>
-                    <span style={{ color: "#1e1b4b", fontSize: "14px", fontWeight: "800" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                {/* Right Floating Bowler Box (Matching Reference Image) */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", position: "relative", zIndex: 5 }}>
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "3px",
+                    padding: "4px 14px",
+                    background: "linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%)",
+                    borderRadius: "6px",
+                    border: "1.5px solid #d97706",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ color: "#000000", fontWeight: "900", fontSize: "12.5px", textTransform: "uppercase" }}>
+                        {scoringState.bowler || "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginLeft: "auto" }}>
+                        <span style={{ color: "#000000", fontWeight: "950", fontSize: "15px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                        <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "700", fontSize: "10.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      <span style={{ color: "#000000", fontWeight: "900", fontSize: "8.5px", letterSpacing: "0.5px", textTransform: "uppercase" }}>OVER:</span>
+                      {(() => {
+                        const bpo = match?.ballsPerOver || 6;
+                        const thisOver = scoringState.thisOver || [];
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCirclesCount = bpo + extrasCount;
+                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                          const val = thisOver[i];
+                          let cellBg = "rgba(0,0,0,0.15)";
+                          let cellColor = "#000000";
+                          let borderStyle = "1px solid rgba(0,0,0,0.2)";
+                          if (val) {
+                            borderStyle = "none";
+                            if (val === "4" || val === "4s") { cellBg = "#0284c7"; cellColor = "#ffffff"; }
+                            else if (val === "6" || val === "6s") { cellBg = "#7c3aed"; cellColor = "#ffffff"; }
+                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#dc2626"; cellColor = "#ffffff"; }
+                            else if (isExtraBall(val)) { cellBg = "#9333ea"; cellColor = "#ffffff"; }
+                            else { cellBg = "rgba(0, 0, 0, 0.4)"; cellColor = "#ffffff"; }
+                          }
+                          return (
+                            <div key={i} style={{ width: "17px", height: "17px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6.5px" : (val && val.length > 1 ? "8px" : "10px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                              {renderOutcomeText(val, 17)}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
                   </div>
-                  {scoringState.target !== null && (
-                    <span style={{ color: "#000000", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px" }}>
-                      TARGET - {scoringState.target}
-                    </span>
+
+                  {/* Bowling Team Logo & CricScorer Badge */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ width: "44px", height: "44px", borderRadius: "50%", border: "3px solid #dc2626", display: "flex", alignItems: "center", justifyContent: "center", background: "#dc2626", padding: "3px", textAlign: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: 900, fontSize: "8.5px", lineHeight: "1.1", textTransform: "uppercase" }}>
+                        {currentBowlTeam.split(" ").slice(0, 2).join("\n")}
+                      </span>
+                    </div>
+                    <div style={{ width: "24px", height: "24px", background: "#07152b", border: "1.5px solid #02b3e4", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#facc15", fontSize: "12px", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>
+                      🏏
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* ─── NORMAL SCOREBOARD MODE: Exact Pristine CWC 19 Layout ─── */
+              <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "transparent", overflow: "hidden", borderRadius: "8px", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
+
+                {/* LEFT HALF: Sky Blue Background */}
+                <div style={{ background: "#02b3e4", display: "flex", alignItems: "center", padding: "0 18px", flex: "1 1 0%", minWidth: 0, width: 0, overflow: "hidden" }}>
+
+                  {/* Batting Team Logo/Crest in Ring */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.05)", padding: "4px", textAlign: "center" }}>
+                      <span style={{ color: "#000000", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
+                        {currentBatTeam.split(" ").slice(0, 2).join("\n")}
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span style={{ color: "#000000", fontWeight: 900, fontSize: "16px", lineHeight: 1 }}>{batTeamShort}</span>
+                      <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: 700, fontSize: "11px", marginTop: "2px" }}>v {bowlTeamShort}</span>
+                    </div>
+                  </div>
+
+                  {/* Score / Overs Area */}
+                  <div style={{ display: "flex", flexDirection: "column", marginLeft: "32px", minWidth: "120px" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                      <span style={{ color: "#1e1b4b", fontSize: "30px", fontWeight: "950", lineHeight: 1 }}>{scoringState.score}-{scoringState.wickets}</span>
+                      <span style={{ color: "#1e1b4b", fontSize: "14px", fontWeight: "800" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                    </div>
+                    {scoringState.target !== null && (
+                      <span style={{ color: "#000000", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px" }}>
+                        TARGET - {scoringState.target}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Separator Line */}
+                  <div style={{ width: "1.5px", height: "36px", background: "rgba(0,0,0,0.15)", margin: "0 24px" }} />
+
+                  {/* Batsmen Area */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1 }}>
+                    {/* Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span style={{ color: "#000000", fontWeight: "800", fontSize: "13px" }}>
+                        &gt; {scoringState.striker || "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                        <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: "700", fontSize: "11px" }}>{striker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                    {/* Non-Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "700", fontSize: "13px", paddingLeft: "10px" }}>
+                        {scoringState.nonStriker || "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                        <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(0,0,0,0.5)", fontWeight: "600", fontSize: "10px" }}>{nonStriker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* CENTER TRANSITION: Gradient Background with Status */}
+                <div style={{
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #02b3e4 0%, #000000 35%, #000000 65%, #dc2626 100%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 24px",
+                  minWidth: "180px",
+                  flexShrink: 0,
+                  transition: "all 0.3s ease"
+                }}>
+                  {activeNotification ? (
+                    <span style={{
+                      color: getNotificationStyles(activeNotification).textColor,
+                      fontSize: "11px",
+                      fontWeight: "900",
+                      letterSpacing: "0.5px",
+                      textAlign: "center",
+                      textTransform: "uppercase",
+                      animation: "pulseGlow 1s ease-in-out infinite alternate"
+                    }}>{activeNotification}</span>
+                  ) : (
+                    <>
+                      <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine1}</span>
+                      <span style={{ color: "#facc15", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine2}</span>
+                    </>
                   )}
                 </div>
 
-                {/* Separator Line */}
-                <div style={{ width: "1.5px", height: "36px", background: "rgba(0,0,0,0.15)", margin: "0 24px" }} />
+                {/* RIGHT HALF: Red Background */}
+                <div style={{ background: "#dc2626", display: "flex", alignItems: "center", padding: "0 18px", flex: 1, minWidth: "450px", justifyContent: "space-between" }}>
 
-                {/* Batsmen Area */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1 }}>
-                  {/* Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <span style={{ color: "#000000", fontWeight: "800", fontSize: "13px" }}>
-                      &gt; {scoringState.striker || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                      <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px" }}>{striker?.runs ?? 0}</span>
-                      <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: "700", fontSize: "11px" }}>{striker?.balls ?? 0}</span>
+                  {/* Bowler Details & This Over */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, paddingRight: "16px" }}>
+                    {/* Bowler Stats */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>
+                        {scoringState.bowler || "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginLeft: "auto" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "16px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "700", fontSize: "11px" }}>{fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver).split(".")[1] || 0}</span>
+                      </div>
                     </div>
-                  </div>
-                  {/* Non-Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "700", fontSize: "13px", paddingLeft: "10px" }}>
-                      {scoringState.nonStriker || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                      <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0}</span>
-                      <span style={{ color: "rgba(0,0,0,0.5)", fontWeight: "600", fontSize: "10px" }}>{nonStriker?.balls ?? 0}</span>
-                    </div>
-                  </div>
-                </div>
 
-              </div>
-
-              {/* CENTER TRANSITION: Gradient Background with Status */}
-              <div style={{
-                background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #02b3e4 0%, #000000 35%, #000000 65%, #dc2626 100%)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 24px",
-                minWidth: "180px",
-                flexShrink: 0,
-                transition: "all 0.3s ease"
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: getNotificationStyles(activeNotification).textColor,
-                    fontSize: "11px",
-                    fontWeight: "900",
-                    letterSpacing: "0.5px",
-                    textAlign: "center",
-                    textTransform: "uppercase",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate"
-                  }}>{activeNotification}</span>
-                ) : (
-                  <>
-                    <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine1}</span>
-                    <span style={{ color: "#facc15", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine2}</span>
-                  </>
-                )}
-              </div>
-
-              {/* RIGHT HALF: Red Background */}
-              <div style={{ background: "#dc2626", display: "flex", alignItems: "center", padding: "0 18px", flex: 1, minWidth: "450px", justifyContent: "space-between" }}>
-
-                {/* Bowler Details & This Over */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, paddingRight: "16px" }}>
-                  {/* Bowler Stats */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>
-                      {scoringState.bowler || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginLeft: "auto" }}>
-                      <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "16px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
-                      <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "700", fontSize: "11px" }}>{fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver).split(".")[1] || 0}</span>
+                    {/* This Over outcomes (Square boxes) */}
+                    <div style={{ display: "flex", gap: "4px" }}>
+                      {(() => {
+                        const bpo = match?.ballsPerOver || 6;
+                        const thisOver = scoringState.thisOver || [];
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCirclesCount = bpo + extrasCount;
+                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                          const val = thisOver[i];
+                          let cellBg = "rgba(255, 255, 255, 0.08)";
+                          let cellColor = "#ffffff";
+                          let borderStyle = "1px solid rgba(255,255,255,0.15)";
+                          if (val) {
+                            borderStyle = "none";
+                            if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
+                            else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
+                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                            else if (isExtraBall(val)) { cellBg = "#a855f7"; cellColor = "#ffffff"; }
+                            else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
+                          }
+                          return (
+                            <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "7px" : (val && val.length > 1 ? "9px" : "11px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                              {renderOutcomeText(val, 20)}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
 
-                  {/* This Over outcomes (Square boxes) */}
-                  <div style={{ display: "flex", gap: "4px" }}>
-                    {(() => {
-                      const bpo = match?.ballsPerOver || 6;
-                      const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                        const val = thisOver[i];
-                        let cellBg = "rgba(255, 255, 255, 0.08)";
-                        let cellColor = "#ffffff";
-                        let borderStyle = "1px solid rgba(255,255,255,0.15)";
-                        if (val) {
-                          borderStyle = "none";
-                          if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
-                          else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
-                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                          else if (isExtraBall(val)) { cellBg = "#a855f7"; cellColor = "#ffffff"; }
-                          else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
-                        }
-                        return (
-                          <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "7px" : (val && val.length > 1 ? "9px" : "11px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
-                            {renderOutcomeText(val, 20)}
-                          </div>
-                        );
-                      });
-                    })()}
+                  {/* Bowling Team Logo/Crest wrapper on the right */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "15px", lineHeight: 1 }}>{bowlTeamShort}</span>
+                    </div>
+                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.15)", padding: "4px", textAlign: "center" }}>
+                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
+                        {currentBowlTeam.split(" ").slice(0, 2).join("\n")}
+                      </span>
+                    </div>
+                    {/* Logo overlay badge */}
+                    <div style={{ width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px" }}>
+                      🏏
+                    </div>
                   </div>
-                </div>
 
-                {/* Bowling Team Logo/Crest wrapper on the right */}
-                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                    <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "15px", lineHeight: 1 }}>{bowlTeamShort}</span>
-                  </div>
-                  <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.15)", padding: "4px", textAlign: "center" }}>
-                    <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
-                      {currentBowlTeam.split(" ").slice(0, 2).join("\n")}
-                    </span>
-                  </div>
-                  {/* Logo overlay badge */}
-                  <div style={{ width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px" }}>
-                    🏏
-                  </div>
                 </div>
 
               </div>
-
-            </div>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -7782,246 +8804,249 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.35))", margin: "0 0 12px" }}>
+            {renderScoreboardMarqueeRibbon("champions-trophy-2025", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Target Display Box (Floating Above Center) */}
+                {scoringState.target !== null && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-22px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
+                    border: "1.5px solid #00cc44",
+                    borderRadius: "20px",
+                    padding: "2px 16px",
+                    color: "#ffffff",
+                    fontSize: "10.5px",
+                    fontWeight: "900",
+                    letterSpacing: "0.8px",
+                    zIndex: 10,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.35)"
+                  }}>
+                    TARGET: <span style={{ color: "#00cc44" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
+                  </div>
+                )}
 
-            {/* Target Display Box (Floating Above Center) */}
-            {scoringState.target !== null && (
-              <div style={{
-                position: "absolute",
-                top: "-22px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
-                border: "1.5px solid #00cc44",
-                borderRadius: "20px",
-                padding: "2px 16px",
-                color: "#ffffff",
-                fontSize: "10.5px",
-                fontWeight: "900",
-                letterSpacing: "0.8px",
-                zIndex: 10,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.35)"
-              }}>
-                TARGET: <span style={{ color: "#00cc44" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
-              </div>
-            )}
-
-            {/* Main horizontal white container with 3-Column Symmetrical Grid */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr auto 1fr",
-              alignItems: "center",
-              background: "#ffffff",
-              height: "64px",
-              borderRadius: "16px",
-              border: "1.5px solid rgba(0,0,0,0.08)",
-              padding: "0 14px",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.12)",
-              gap: "12px",
-              boxSizing: "border-box"
-            }}>
-
-              {/* LEFT WING: Batting Team Green Pill + Batsmen */}
-              <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start", gap: "10px" }}>
-                {/* Batting Team Green Pill */}
+                {/* Main horizontal white container with 3-Column Symmetrical Grid */}
                 <div style={{
-                  background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
-                  borderRadius: "10px",
-                  padding: "0 12px",
-                  height: "46px",
-                  display: "flex",
-                  flexDirection: "column",
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
                   alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: "105px",
-                  maxWidth: "125px",
-                  border: "1.5px solid rgba(255,255,255,0.4)",
-                  boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
-                  flexShrink: 0
+                  background: "#ffffff",
+                  height: "64px",
+                  borderRadius: "16px",
+                  border: "1.5px solid rgba(0,0,0,0.08)",
+                  padding: "0 14px",
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.12)",
+                  gap: "12px",
+                  boxSizing: "border-box"
                 }}>
-                  <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                    {currentBatTeam}
-                  </span>
-                  <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
-                    BATTING
-                  </span>
-                </div>
 
-                {/* Striker & Non-Striker details */}
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
-                  {/* Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "21px", gap: "6px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
-                      <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "13px" }}>/</span>
-                      <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "13px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {scoringState.striker || "—"}
+                  {/* LEFT WING: Batting Team Green Pill + Batsmen */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start", gap: "10px" }}>
+                    {/* Batting Team Green Pill */}
+                    <div style={{
+                      background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
+                      borderRadius: "10px",
+                      padding: "0 12px",
+                      height: "46px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "105px",
+                      maxWidth: "125px",
+                      border: "1.5px solid rgba(255,255,255,0.4)",
+                      boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
+                      flexShrink: 0
+                    }}>
+                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {currentBatTeam}
+                      </span>
+                      <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
+                        BATTING
                       </span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "950", flexShrink: 0 }}>
-                      <span style={{ color: "#0a1128", fontSize: "14px", lineHeight: 1 }}>{striker?.runs ?? 0}</span>
-                      <span style={{ color: "#64748b", fontSize: "10px", fontWeight: "800" }}>({striker?.balls ?? 0})</span>
-                    </div>
-                  </div>
-                  {/* Non-Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "20px", gap: "6px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
-                      <span style={{ color: "transparent", fontSize: "13px", userSelect: "none" }}>/</span>
-                      <span style={{ color: "#475569", fontWeight: "750", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {scoringState.nonStriker || "—"}
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", flexShrink: 0 }}>
-                      <span style={{ color: "#475569", fontSize: "13px", lineHeight: 1 }}>{nonStriker?.runs ?? 0}</span>
-                      <span style={{ color: "#94a3b8", fontSize: "9.5px", fontWeight: "700" }}>({nonStriker?.balls ?? 0})</span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginLeft: "4px", flexShrink: 0 }} />
-              </div>
-
-              {/* CENTER MODULE: Dead-Center Dark Indigo Capsule */}
-              <div style={{
-                background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
-                height: "48px",
-                borderRadius: "24px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px",
-                width: "320px",
-                flexShrink: 0,
-                boxShadow: "0 4px 16px rgba(10,17,40,0.3), inset 0 1px 1px rgba(255,255,255,0.15)",
-                border: "1px solid rgba(255,255,255,0.1)"
-              }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                  {/* Left: Bowl V Bat */}
-                  <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                    {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9px" }}>V</span> {batTeamShort}
-                  </span>
-
-                  {/* Score box */}
-                  <div style={{ background: "#ffffff", borderRadius: "6px", padding: "2px 10px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
-                    <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "17px", lineHeight: 1, letterSpacing: "0.5px" }}>
-                      {scoringState.score} - {scoringState.wickets}
-                    </span>
-                  </div>
-
-                  {/* Right: Overs */}
-                  <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px" }}>
-                    {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OV
-                  </span>
-                </div>
-
-                {/* Bottom summary text in capsule */}
-                <div style={{
-                  fontSize: activeNotification ? "10px" : "8.5px",
-                  fontWeight: "900",
-                  color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
-                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
-                  padding: activeNotification ? "2px 8px" : "0",
-                  borderRadius: "4px",
-                  letterSpacing: "0.5px",
-                  marginTop: "2px",
-                  textTransform: "uppercase",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  textAlign: "center",
-                  width: "100%",
-                  animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-                }}>
-                  {activeNotification || statusLine}
-                </div>
-              </div>
-
-              {/* RIGHT WING: Bowler Details & outcomes + Bowling Team Green Pill */}
-              <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginRight: "4px", flexShrink: 0 }} />
-
-                {/* Bowler Details & outcomes */}
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
-                  {/* Bowler details */}
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#0a1128", fontWeight: "950", fontSize: "13px", height: "21px", gap: "6px" }}>
-                    <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
-                      {scoringState.bowler || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", flexShrink: 0 }}>
-                      <span style={{ fontSize: "14px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
-                      <span style={{ color: "#64748b", fontWeight: "800", fontSize: "10px", marginLeft: "2px" }}>
-                        ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Outcome circles */}
-                  <div style={{ display: "flex", gap: "4.5px", alignItems: "center", height: "20px" }}>
-                    {Array.from({ length: totalBallSlots }).map((_, i) => {
-                      const val = thisOver[i];
-                      let cellBg = "rgba(10, 17, 40, 0.08)";
-                      let cellColor = "#0a1128";
-                      let borderStyle = "1px solid rgba(10,17,40,0.12)";
-                      if (val) {
-                        borderStyle = "none";
-                        if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; }
-                        else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
-                        else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                        else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
-                        else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
-                      }
-                      return (
-                        <div key={i} style={{
-                          width: "18px",
-                          height: "18px",
-                          background: cellBg,
-                          color: cellColor,
-                          border: borderStyle,
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "10px")),
-                          letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
-                          fontWeight: "950",
-                          lineHeight: 1,
-                          whiteSpace: "nowrap",
-                          flexShrink: 0
-                        }}>
-                          {val === "." ? "" : renderOutcomeText(val, 18)}
+                    {/* Striker & Non-Striker details */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
+                      {/* Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "21px", gap: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
+                          <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "13px" }}>/</span>
+                          <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "13px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.striker || "—"}
+                          </span>
                         </div>
-                      );
-                    })}
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "950", flexShrink: 0 }}>
+                          <span style={{ color: "#0a1128", fontSize: "14px", lineHeight: 1 }}>{striker?.runs ?? 0}</span>
+                          <span style={{ color: "#64748b", fontSize: "10px", fontWeight: "800" }}>({striker?.balls ?? 0})</span>
+                        </div>
+                      </div>
+                      {/* Non-Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "20px", gap: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
+                          <span style={{ color: "transparent", fontSize: "13px", userSelect: "none" }}>/</span>
+                          <span style={{ color: "#475569", fontWeight: "750", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.nonStriker || "—"}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", flexShrink: 0 }}>
+                          <span style={{ color: "#475569", fontSize: "13px", lineHeight: 1 }}>{nonStriker?.runs ?? 0}</span>
+                          <span style={{ color: "#94a3b8", fontSize: "9.5px", fontWeight: "700" }}>({nonStriker?.balls ?? 0})</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginLeft: "4px", flexShrink: 0 }} />
                   </div>
-                </div>
 
-                {/* Bowling Team Green Pill */}
-                <div style={{
-                  background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
-                  borderRadius: "10px",
-                  padding: "0 12px",
-                  height: "46px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: "105px",
-                  maxWidth: "125px",
-                  border: "1.5px solid rgba(255,255,255,0.4)",
-                  boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
-                  flexShrink: 0
-                }}>
-                  <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                    {currentBowlTeam}
-                  </span>
-                  <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
-                    BOWLING
-                  </span>
-                </div>
-              </div>
+                  {/* CENTER MODULE: Dead-Center Dark Indigo Capsule */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
+                    height: "48px",
+                    borderRadius: "24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 18px",
+                    width: "320px",
+                    flexShrink: 0,
+                    boxShadow: "0 4px 16px rgba(10,17,40,0.3), inset 0 1px 1px rgba(255,255,255,0.15)",
+                    border: "1px solid rgba(255,255,255,0.1)"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                      {/* Left: Bowl V Bat */}
+                      <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                        {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9px" }}>V</span> {batTeamShort}
+                      </span>
 
-            </div>
+                      {/* Score box */}
+                      <div style={{ background: "#ffffff", borderRadius: "6px", padding: "2px 10px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
+                        <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "17px", lineHeight: 1, letterSpacing: "0.5px" }}>
+                          {scoringState.score} - {scoringState.wickets}
+                        </span>
+                      </div>
+
+                      {/* Right: Overs */}
+                      <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px" }}>
+                        {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OV
+                      </span>
+                    </div>
+
+                    {/* Bottom summary text in capsule */}
+                    <div style={{
+                      fontSize: activeNotification ? "10px" : "8.5px",
+                      fontWeight: "900",
+                      color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                      background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                      padding: activeNotification ? "2px 8px" : "0",
+                      borderRadius: "4px",
+                      letterSpacing: "0.5px",
+                      marginTop: "2px",
+                      textTransform: "uppercase",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      textAlign: "center",
+                      width: "100%",
+                      animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                    }}>
+                      {activeNotification || statusLine}
+                    </div>
+                  </div>
+
+                  {/* RIGHT WING: Bowler Details & outcomes + Bowling Team Green Pill */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginRight: "4px", flexShrink: 0 }} />
+
+                    {/* Bowler Details & outcomes */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
+                      {/* Bowler details */}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#0a1128", fontWeight: "950", fontSize: "13px", height: "21px", gap: "6px" }}>
+                        <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
+                          {scoringState.bowler || "—"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", flexShrink: 0 }}>
+                          <span style={{ fontSize: "14px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
+                          <span style={{ color: "#64748b", fontWeight: "800", fontSize: "10px", marginLeft: "2px" }}>
+                            ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Outcome circles */}
+                      <div style={{ display: "flex", gap: "4.5px", alignItems: "center", height: "20px" }}>
+                        {Array.from({ length: totalBallSlots }).map((_, i) => {
+                          const val = thisOver[i];
+                          let cellBg = "rgba(10, 17, 40, 0.08)";
+                          let cellColor = "#0a1128";
+                          let borderStyle = "1px solid rgba(10,17,40,0.12)";
+                          if (val) {
+                            borderStyle = "none";
+                            if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; }
+                            else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
+                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                            else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
+                            else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
+                          }
+                          return (
+                            <div key={i} style={{
+                              width: "18px",
+                              height: "18px",
+                              background: cellBg,
+                              color: cellColor,
+                              border: borderStyle,
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "10px")),
+                              letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
+                              fontWeight: "950",
+                              lineHeight: 1,
+                              whiteSpace: "nowrap",
+                              flexShrink: 0
+                            }}>
+                              {val === "." ? "" : renderOutcomeText(val, 18)}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Bowling Team Green Pill */}
+                    <div style={{
+                      background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
+                      borderRadius: "10px",
+                      padding: "0 12px",
+                      height: "46px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "105px",
+                      maxWidth: "125px",
+                      border: "1.5px solid rgba(255,255,255,0.4)",
+                      boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
+                      flexShrink: 0
+                    }}>
+                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {currentBowlTeam}
+                      </span>
+                      <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
+                        BOWLING
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -8073,199 +9098,202 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "92vw", maxWidth: "1050px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
-            <div style={{ display: "flex", alignItems: "stretch", height: "44px", background: "transparent", overflow: "hidden" }}>
+            {renderScoreboardMarqueeRibbon("cwc-25-india", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                <div style={{ display: "flex", alignItems: "stretch", height: "44px", background: "transparent", overflow: "hidden" }}>
 
-              {/* Batting Team Trapezoid Name Block (Left End) */}
-              <div style={{
-                background: "#14122A",
-                borderTop: "3px solid #0373AF",
-                padding: "0 14px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "115px",
-                clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "left", width: "100%", paddingRight: "8px" }}>
-                  {currentBatTeam}
-                </span>
-              </div>
-
-              {/* Batsmen details section */}
-              <div style={{
-                background: "rgba(20, 18, 42, 0.96)",
-                borderTop: "3px solid #0373AF",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "0 14px",
-                flex: 1,
-                minWidth: "140px",
-                marginLeft: "-12px",
-                paddingLeft: "20px"
-              }}>
-                {/* Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                    <span style={{ color: "#0373AF", fontSize: "10px" }}>▶</span>
-                    <span style={{ color: "#FFFFFF", fontWeight: "800", fontSize: "11.5px" }}>{scoringState.striker || "—"}</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", color: "#FFFFFF" }}>
-                    <span style={{ fontSize: "12.5px" }}>{striker?.runs ?? 0}</span>
-                    <span style={{ color: "#cbd5e1", fontSize: "9px" }}>{striker?.balls ?? 0}</span>
-                  </div>
-                </div>
-                {/* Non-Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px", paddingLeft: "10px" }}>
-                    <span style={{ color: "#cbd5e1", fontWeight: "600", fontSize: "10.5px" }}>{scoringState.nonStriker || "—"}</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "600", color: "#cbd5e1" }}>
-                    <span style={{ fontSize: "11.5px" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ fontSize: "8.5px" }}>{nonStriker?.balls ?? 0}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Center scoreboard display block */}
-              <div style={{ display: "flex", alignItems: "stretch", flexShrink: 0 }}>
-
-                {/* Batting Team Short Name (e.g. MUM) */}
-                <div style={{ background: "#14122A", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 10px", borderBottom: "2.5px solid #0373AF", minWidth: "48px" }}>
-                  <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px" }}>{batTeamShort}</span>
-                </div>
-
-                {/* Score Rhombus Box */}
-                <div style={{
-                  background: "linear-gradient(135deg, #0373AF 0%, #025380 100%)",
-                  padding: "0 16px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: "85px",
-                  clipPath: "polygon(12% 0, 100% 0, 88% 100%, 0 100%)",
-                  marginLeft: "-8px",
-                  marginRight: "-8px",
-                  zIndex: 2
-                }}>
-                  {/* Score format: Wickets / Runs (like 2/42) */}
-                  <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "20px", letterSpacing: "-0.5px" }}>
-                    {scoringState.wickets}/{scoringState.score}
-                  </span>
-                </div>
-
-                {/* Overs Rhombus Box */}
-                <div style={{
-                  background: "rgba(20, 18, 42, 0.98)",
-                  padding: "0 14px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: "72px",
-                  clipPath: "polygon(14% 0, 100% 0, 86% 100%, 0 100%)"
-                }}>
-                  <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "13px", lineHeight: 1 }}>
-                    {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
-                  </span>
-                  <span style={{ color: "#cbd5e1", fontSize: "7.5px", fontWeight: "800", letterSpacing: "0.5px", marginTop: "1px" }}>OVERS</span>
-                </div>
-
-              </div>
-
-              {/* Bowler Details & outcomes */}
-              <div style={{
-                background: "rgba(20, 18, 42, 0.96)",
-                borderTop: "3px solid #0373AF",
-                display: "flex",
-                alignItems: "center",
-                flex: 1.1,
-                paddingLeft: "12px",
-                marginLeft: "-10px",
-                paddingRight: "12px"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "1px", flex: 1 }}>
-                  {/* Bowler Stats */}
-                  <div style={{ display: "flex", justifyContent: "space-between", color: "#FFFFFF", fontWeight: "800", fontSize: "11.5px" }}>
-                    <span style={{ textTransform: "uppercase" }}>{scoringState.bowler || "—"}</span>
-                    <span>
-                      {bowler?.wickets ?? 0}/{bowler?.runsConceded ?? 0}
-                      <span style={{ color: "#cbd5e1", fontWeight: "500", fontSize: "9px", marginLeft: "4px" }}>
-                        {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
-                      </span>
+                  {/* Batting Team Trapezoid Name Block (Left End) */}
+                  <div style={{
+                    background: "#14122A",
+                    borderTop: "3px solid #0373AF",
+                    padding: "0 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "115px",
+                    clipPath: "polygon(0 0, 85% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "left", width: "100%", paddingRight: "8px" }}>
+                      {currentBatTeam}
                     </span>
                   </div>
 
-                  {/* Underlined outcome details */}
-                  <div style={{ display: "flex", gap: "7px", height: "14px", alignItems: "center" }}>
-                    {(() => {
-                      const bpo = match?.ballsPerOver || 6;
-                      const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                        const val = thisOver[i];
-                        return (
-                          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "10px" }}>
-                            <span style={{ color: val ? "#FFFFFF" : "rgba(255,255,255,0.25)", fontSize: val && val.length > 3 ? "7.5px" : (val && val.length > 1 ? "9px" : "11px"), fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
-                              {val || "•"}
-                            </span>
-                            {val && <div style={{ width: "8px", height: "1.5px", background: "#0373AF", marginTop: "1px" }} />}
-                          </div>
-                        );
-                      });
-                    })()}
+                  {/* Batsmen details section */}
+                  <div style={{
+                    background: "rgba(20, 18, 42, 0.96)",
+                    borderTop: "3px solid #0373AF",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "0 14px",
+                    flex: 1,
+                    minWidth: "140px",
+                    marginLeft: "-12px",
+                    paddingLeft: "20px"
+                  }}>
+                    {/* Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <span style={{ color: "#0373AF", fontSize: "10px" }}>▶</span>
+                        <span style={{ color: "#FFFFFF", fontWeight: "800", fontSize: "11.5px" }}>{scoringState.striker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", color: "#FFFFFF" }}>
+                        <span style={{ fontSize: "12.5px" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "#cbd5e1", fontSize: "9px" }}>{striker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                    {/* Non-Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", paddingLeft: "10px" }}>
+                        <span style={{ color: "#cbd5e1", fontWeight: "600", fontSize: "10.5px" }}>{scoringState.nonStriker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "600", color: "#cbd5e1" }}>
+                        <span style={{ fontSize: "11.5px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ fontSize: "8.5px" }}>{nonStriker?.balls ?? 0}</span>
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Center scoreboard display block */}
+                  <div style={{ display: "flex", alignItems: "stretch", flexShrink: 0 }}>
+
+                    {/* Batting Team Short Name (e.g. MUM) */}
+                    <div style={{ background: "#14122A", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 10px", borderBottom: "2.5px solid #0373AF", minWidth: "48px" }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px" }}>{batTeamShort}</span>
+                    </div>
+
+                    {/* Score Rhombus Box */}
+                    <div style={{
+                      background: "linear-gradient(135deg, #0373AF 0%, #025380 100%)",
+                      padding: "0 16px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "85px",
+                      clipPath: "polygon(12% 0, 100% 0, 88% 100%, 0 100%)",
+                      marginLeft: "-8px",
+                      marginRight: "-8px",
+                      zIndex: 2
+                    }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "17.5px", letterSpacing: "-0.5px" }}>
+                        {scoringState.score} - {scoringState.wickets}
+                      </span>
+                    </div>
+
+                    {/* Overs Trapezoid Box */}
+                    <div style={{
+                      background: "rgba(20, 18, 42, 0.98)",
+                      padding: "0 14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "72px",
+                      clipPath: "polygon(14% 0, 100% 0, 86% 100%, 0 100%)"
+                    }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "13px", lineHeight: 1 }}>
+                        {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
+                      </span>
+                      <span style={{ color: "#cbd5e1", fontSize: "7.5px", fontWeight: "800", letterSpacing: "0.5px", marginTop: "1px" }}>OVERS</span>
+                    </div>
+
+                  </div>
+
+                  {/* Bowler Details & outcomes */}
+                  <div style={{
+                    background: "rgba(20, 18, 42, 0.96)",
+                    borderTop: "3px solid #0373AF",
+                    display: "flex",
+                    alignItems: "center",
+                    flex: 1.1,
+                    paddingLeft: "12px",
+                    marginLeft: "-10px",
+                    paddingRight: "12px"
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1px", flex: 1 }}>
+                      {/* Bowler Stats */}
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "#FFFFFF", fontWeight: "800", fontSize: "11.5px" }}>
+                        <span style={{ textTransform: "uppercase" }}>{scoringState.bowler || "—"}</span>
+                        <span>
+                          {bowler?.wickets ?? 0}/{bowler?.runsConceded ?? 0}
+                          <span style={{ color: "#cbd5e1", fontWeight: "500", fontSize: "9px", marginLeft: "4px" }}>
+                            {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                          </span>
+                        </span>
+                      </div>
+
+                      {/* Underlined outcome details */}
+                      <div style={{ display: "flex", gap: "7px", height: "14px", alignItems: "center" }}>
+                        {(() => {
+                          const bpo = match?.ballsPerOver || 6;
+                          const thisOver = scoringState.thisOver || [];
+                          const extrasCount = thisOver.filter(isExtraBall).length;
+                          const totalCirclesCount = bpo + extrasCount;
+                          return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                            const val = thisOver[i];
+                            return (
+                              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "10px" }}>
+                                <span style={{ color: val ? "#FFFFFF" : "rgba(255,255,255,0.25)", fontSize: val && val.length > 3 ? "7.5px" : (val && val.length > 1 ? "9px" : "11px"), fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                                  {val || "•"}
+                                </span>
+                                {val && <div style={{ width: "8px", height: "1.5px", background: "#0373AF", marginTop: "1px" }} />}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bowling Team Name Block (Right End) */}
+                  <div style={{
+                    background: "#14122A",
+                    borderTop: "3px solid #0373AF",
+                    padding: "0 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    minWidth: "115px",
+                    clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)",
+                    marginLeft: "-12px",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "right", width: "100%" }}>
+                      {currentBowlTeam}
+                    </span>
+                    {/* Logo badge overlay */}
+                    <div style={{ marginLeft: "8px", width: "18px", height: "18px", background: "#14122A", border: "1px solid #0373AF", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#0373AF", fontSize: "9.5px", flexShrink: 0 }}>
+                      🏏
+                    </div>
+                  </div>
+
                 </div>
-              </div>
 
-              {/* Bowling Team Name Block (Right End) */}
-              <div style={{
-                background: "#14122A",
-                borderTop: "3px solid #0373AF",
-                padding: "0 14px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-                minWidth: "115px",
-                clipPath: "polygon(15% 0, 100% 0, 100% 100%, 0 100%)",
-                marginLeft: "-12px",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "right", width: "100%" }}>
-                  {currentBowlTeam}
-                </span>
-                {/* Logo badge overlay */}
-                <div style={{ marginLeft: "8px", width: "18px", height: "18px", background: "#14122A", border: "1px solid #0373AF", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#0373AF", fontSize: "9.5px", flexShrink: 0 }}>
-                  🏏
+                {/* Bottom summary status line bar */}
+                <div style={{
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
+                  padding: "3px 16px",
+                  display: "flex",
+                  justifyContent: "center",
+                  borderRadius: "0 0 7px 7px",
+                  border: "1.5px solid #0373AF",
+                  borderTop: "none",
+                  transition: "all 0.3s ease"
+                }}>
+                  <span style={{
+                    color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
+                    fontSize: "9.5px",
+                    fontWeight: "900",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                  }}>
+                    {activeNotification || statusLine}
+                  </span>
                 </div>
-              </div>
-
-            </div>
-
-            {/* Bottom summary status line bar */}
-            <div style={{
-              background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
-              padding: "3px 16px",
-              display: "flex",
-              justifyContent: "center",
-              borderRadius: "0 0 7px 7px",
-              border: "1.5px solid #0373AF",
-              borderTop: "none",
-              transition: "all 0.3s ease"
-            }}>
-              <span style={{
-                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
-                fontSize: "9.5px",
-                fontWeight: "900",
-                letterSpacing: "1px",
-                textTransform: "uppercase",
-                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-              }}>
-                {activeNotification || statusLine}
-              </span>
-            </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -8317,13 +9345,15 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 14px 30px rgba(0,0,0,0.55))" }}>
-            {/* Floating TARGET pill above center if chasing */}
-            {scoringState.target !== null && (
-              <div style={{
-                position: "absolute",
-                top: "-24px",
-                left: "50%",
-                transform: "translateX(-50%)",
+            {renderScoreboardMarqueeRibbon("wcl-fancode", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Floating TARGET pill above center if chasing */}
+                {scoringState.target !== null && (
+                  <div style={{
+                    position: "absolute",
+                    top: "-24px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
                 background: "linear-gradient(135deg, #1e3a8a 0%, #172554 100%)",
                 border: "1.5px solid #38bdf8",
                 borderRadius: "4px",
@@ -8591,6 +9621,8 @@ export default function OverlayPage() {
               </div>
 
             </div>
+              </>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -8640,9 +9672,10 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))" }}>
-
-            {/* Target Display Box (Floating Above Center) */}
-            {scoringState.target !== null && (
+            {renderScoreboardMarqueeRibbon("cwc-23-india", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Target Display Box (Floating Above Center) */}
+                {scoringState.target !== null && (
               <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#0a1128", border: "1.5px solid #d946ef", borderRadius: "6px", padding: "2px 16px", color: "#ffffff", fontSize: "11px", fontWeight: "900", letterSpacing: "0.5px", zIndex: 2 }}>
                 TARGET - {scoringState.target}
               </div>
@@ -8846,6 +9879,8 @@ export default function OverlayPage() {
                 </span>
               </div>
             )}
+              </>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -8897,9 +9932,10 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1120px", position: "relative", zIndex: 1, filter: "drop-shadow(0 14px 28px rgba(0,0,0,0.75))" }}>
-
-            {/* ── MAIN HORIZONTAL SCOREBOARD DECK ── */}
-            <div style={{
+            {renderScoreboardMarqueeRibbon("bbl-black", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* ── MAIN HORIZONTAL SCOREBOARD DECK ── */}
+                <div style={{
               display: "flex",
               alignItems: "stretch",
               height: "48px",
@@ -9249,6 +10285,8 @@ export default function OverlayPage() {
                 </span>
               </div>
             )}
+              </>
+            )}
 
           </div>
         ) : (
@@ -9317,9 +10355,10 @@ export default function OverlayPage() {
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1320px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 30px rgba(0,0,0,0.28))" }}>
-
-            {/* Floating TARGET pill above scoreboard */}
-            {scoringState.target !== null && (
+            {renderScoreboardMarqueeRibbon("cricfusion", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Floating TARGET pill above scoreboard */}
+                {scoringState.target !== null && (
               <div style={{
                 position: "absolute",
                 top: "-25px",
@@ -9609,6 +10648,8 @@ flexShrink: 0,
               </div>
 
             </div>
+              </>
+            )}
           </div>
         ) : (
           /* Match not started */
@@ -9680,9 +10721,10 @@ flexShrink: 0,
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1350px", position: "relative", zIndex: 1, filter: "drop-shadow(0 14px 28px rgba(0,0,0,0.75))" }}>
-
-            {/* Floating TARGET Capsule (Only in 2nd Innings) */}
-            {scoringState.target !== null && (
+            {renderScoreboardMarqueeRibbon("t20-emerging-asia-cup", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Floating TARGET Capsule (Only in 2nd Innings) */}
+                {scoringState.target !== null && (
               <div style={{
                 position: "absolute",
                 top: "-26px",
@@ -10012,6 +11054,8 @@ flexShrink: 0,
               </div>
 
             </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -10071,9 +11115,10 @@ flexShrink: 0,
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "95vw", maxWidth: "1280px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 24px rgba(0,0,0,0.7))" }}>
-
-            {/* Target pill */}
-            {scoringState.target !== null && (
+            {renderScoreboardMarqueeRibbon("sa20", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Target pill */}
+                {scoringState.target !== null && (
               <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#facc15", color: "#000", borderRadius: "4px", padding: "2px 14px", fontSize: "10px", fontWeight: "900", letterSpacing: "1px", zIndex: 5, whiteSpace: "nowrap" }}>
                 TARGET: {scoringState.target}
               </div>
@@ -10257,6 +11302,8 @@ flexShrink: 0,
               </div>
 
             </div>
+              </>
+            )}
           </div>
         ) : (
           <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#111", border: "2px solid #facc15", borderRadius: 8, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
@@ -10345,8 +11392,9 @@ flexShrink: 0,
             zIndex: 1,
             filter: "drop-shadow(0 14px 35px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(225, 29, 72, 0.25))"
           }}>
-
-            {/* ── TOP MATCH SITUATION RIBBON / HEADER BAR ── */}
+            {renderScoreboardMarqueeRibbon("jiocinema", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* ── TOP MATCH SITUATION RIBBON / HEADER BAR ── */}
             <div style={{
               background: "linear-gradient(90deg, #111827 0%, #1e1b4b 25%, #4c0519 50%, #1e1b4b 75%, #111827 100%)",
               borderTop: "2px solid #e11d48",
@@ -10825,6 +11873,8 @@ flexShrink: 0,
               </div>
 
             </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -10907,8 +11957,9 @@ flexShrink: 0,
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1360px", position: "relative", zIndex: 1, filter: "drop-shadow(0 14px 30px rgba(0,0,0,0.75)) drop-shadow(0 0 16px rgba(245, 158, 11, 0.18))" }}>
-
-            {/* Top Match Situation Ribbon / Header Bar */}
+            {renderScoreboardMarqueeRibbon("ipl", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* Top Match Situation Ribbon / Header Bar */}
             <div style={{
               background: "linear-gradient(90deg, #090e29 0%, #0f1c4d 25%, #182b68 50%, #0f1c4d 75%, #090e29 100%)",
               borderTop: "2px solid #fbbf24",
@@ -11358,8 +12409,8 @@ flexShrink: 0,
               </div>
 
             </div>
-
-
+              </>
+            )}
 
           </div>
         ) : (
@@ -11442,8 +12493,9 @@ flexShrink: 0,
 
         {scoringState.inningsStarted ? (
           <div className="slide-up" style={{ width: "92vw", maxWidth: "1020px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.7))" }}>
-
-            {/* ── SEAMLESS FLOATING INNINGS / TARGET / CRR EQUATION PILL ── */}
+            {renderScoreboardMarqueeRibbon("wt20-2024", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* ── SEAMLESS FLOATING INNINGS / TARGET / CRR EQUATION PILL ── */}
             <div style={{
               position: "absolute",
               top: "-15px",
@@ -11785,6 +12837,8 @@ flexShrink: 0,
                 {activeNotification || statusLine}
               </span>
             </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -11863,7 +12917,9 @@ flexShrink: 0,
             zIndex: 1,
             filter: "drop-shadow(0 12px 28px rgba(0, 0, 0, 0.9))"
           }}>
-            {/* ── TOP MAIN SCOREBOARD ROW (Exact 44px Height) ── */}
+            {renderScoreboardMarqueeRibbon("bbl-starsports", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* ── TOP MAIN SCOREBOARD ROW (Exact 44px Height) ── */}
             <div style={{
               display: "flex",
               alignItems: "stretch",
@@ -12465,6 +13521,8 @@ flexShrink: 0,
                 </svg>
               </div>
             </div>
+              </>
+            )}
 
           </div>
         ) : (
@@ -12580,8 +13638,8 @@ flexShrink: 0,
             zIndex: 1,
             filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.95))"
           }}>
-            {/* ── MAIN SCOREBOARD HORIZONTAL CHASSIS (Compact 48px) ── */}
-            <div style={{
+            {renderScoreboardMarqueeRibbon("ipl-2025", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <div style={{
               display: "flex",
               alignItems: "center",
               height: "48px",
@@ -13017,6 +14075,7 @@ flexShrink: 0,
               </div>
 
             </div>
+          )}
           </div>
         ) : (
           <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#030d30", border: "2px solid #a3e635", borderRadius: 14, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
@@ -13043,7 +14102,9 @@ flexShrink: 0,
 
       {scoringState.inningsStarted ? (
         <div className="slide-up" style={{ width: "90vw", position: "relative", zIndex: 1 }}>
-          {/* Brand bar */}
+          {renderScoreboardMarqueeRibbon("default", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+            <>
+              {/* Brand bar */}
           <div style={{ background: "linear-gradient(90deg,rgba(5,7,26,0.98),rgba(10,14,46,0.95))", borderTop: `3px solid ${theme.borderColor}`, borderLeft: `3px solid ${theme.borderColor}60`, borderRight: `3px solid ${theme.borderColor}60`, borderRadius: "18px 18px 0 0", padding: "9px 22px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", boxShadow: "0 0 8px #ef4444", display: "inline-block" }} />
@@ -13156,6 +14217,8 @@ flexShrink: 0,
               </div>
             ))}
           </div>}
+            </>
+          )}
         </div>
       ) : (
         /* Match not started */

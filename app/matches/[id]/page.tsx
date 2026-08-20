@@ -2429,47 +2429,65 @@ export default function MatchScoringPage() {
               <h3 className="text-xs font-black tracking-wider text-slate-700 uppercase">Animations</h3>
               <div className="flex flex-wrap items-center gap-3">
                 <button
-                  onClick={() => handleTriggerAnimation("FREE HIT")}
-                  className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
-                >
-                  FREE HIT
-                </button>
-                <button
-                  onClick={() => handleTriggerAnimation("HAT-TRICK BALL")}
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
-                >
-                  HAT-TRICK BALL
-                </button>
-                <button
                   onClick={() => handleTriggerAnimation("FOUR")}
-                  className="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
+                  className="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
                 >
                   FOUR
                 </button>
                 <button
                   onClick={() => handleTriggerAnimation("SIX")}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
                 >
                   SIX
                 </button>
                 <button
                   onClick={() => handleTriggerAnimation("WICKET")}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
                 >
-                  WICKET
+                  WICKET / OUT
+                </button>
+                <button
+                  onClick={() => handleTriggerAnimation("NOT OUT")}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
+                >
+                  NOT OUT
+                </button>
+                <button
+                  onClick={() => handleTriggerAnimation("FREE HIT")}
+                  className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
+                >
+                  FREE HIT
+                </button>
+                <button
+                  onClick={() => handleTriggerAnimation("POWERPLAY")}
+                  className="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
+                >
+                  POWERPLAY
+                </button>
+                <button
+                  onClick={() => handleTriggerAnimation("HAT-TRICK BALL")}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
+                >
+                  HAT-TRICK BALL
                 </button>
                 <button
                   onClick={() => handleTriggerAnimation("TOUR BOUNDARIES")}
-                  className="px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase"
+                  className="px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
                 >
                   TOUR BOUNDARIES
                 </button>
                 <button
+                  onClick={() => handleTriggerAnimation("REVIEW")}
+                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-[10px] tracking-wider rounded-md active:scale-95 cursor-pointer uppercase shadow-sm"
+                >
+                  DRS REVIEW
+                </button>
+                <button
                   onClick={() => handleTriggerAnimation(null)}
-                  className="w-8 h-8 bg-red-800 hover:bg-red-900 rounded-full flex items-center justify-center text-white font-extrabold text-xs tracking-wider active:scale-95 transition-all cursor-pointer"
+                  className="px-3.5 py-2 bg-red-800 hover:bg-red-900 rounded-md flex items-center justify-center text-white font-black text-[10px] tracking-wider active:scale-95 transition-all cursor-pointer uppercase shadow-sm"
                   title="STOP animation"
                 >
-                  STOP
+                  🛑 STOP
                 </button>
                 {/* <button
                   onClick={handleClearAllOverlays}
