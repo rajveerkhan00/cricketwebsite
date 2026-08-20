@@ -140,6 +140,11 @@ export default function MatchScoringPage() {
   const [newBatsmanInput, setNewBatsmanInput] = useState("");
   const [wicketRuns, setWicketRuns] = useState(0);
 
+  // Change Toss Modal
+  const [showChangeTossModal, setShowChangeTossModal] = useState(false);
+  const [tossWonByInput, setTossWonByInput] = useState<"team1" | "team2">("team1");
+  const [optedToInput, setOptedToInput] = useState<"Bat" | "Bowl">("Bat");
+
   // Custom Input & MOM states
   const [customText, setCustomText] = useState("");
   const [selectedMom, setSelectedMom] = useState("");
@@ -249,7 +254,8 @@ export default function MatchScoringPage() {
 
   // Automatically clear standard overlay animations after a timeout
   useEffect(() => {
-    if (scoringState?.animation && scoringState.animation !== "INNINGS BREAK" && scoringState.animation !== "TOUR BOUNDARIES") {
+    if (scoringState?.animation && scoringState.animation !== "INNINGS BREAK") {
+      const duration = scoringState.animation === "TOUR BOUNDARIES" ? 5500 : 4000;
       const timer = setTimeout(() => {
         setScoringState((prev) => {
           if (!prev) return null;
@@ -257,7 +263,7 @@ export default function MatchScoringPage() {
           saveScoringState(updated);
           return updated;
         });
-      }, 4000);
+      }, duration);
       return () => clearTimeout(timer);
     }
   }, [scoringState?.animation]);
@@ -418,6 +424,51 @@ export default function MatchScoringPage() {
       batName,
       bowlName,
     };
+  };
+
+  // Change Toss Handlers
+  const openChangeTossModal = () => {
+    if (!match) return;
+    setTossWonByInput(match.tossWonBy || "team1");
+    setOptedToInput(match.optedTo || "Bat");
+    setShowChangeTossModal(true);
+  };
+
+  const handleChangeTossSubmit = async () => {
+    if (!match) return;
+    try {
+      const updatedMatch = {
+        ...match,
+        tossWonBy: tossWonByInput,
+        optedTo: optedToInput,
+      };
+      setMatch(updatedMatch);
+
+      // If match hasn't started yet, adjust batting/bowling team based on new toss
+      let updatedScoringState = scoringState;
+      if (scoringState && !scoringState.inningsStarted && scoringState.balls === 0 && scoringState.score === 0) {
+        let battingFirst: "team1" | "team2" = "team1";
+        if (tossWonByInput === "team1") {
+          battingFirst = optedToInput === "Bat" ? "team1" : "team2";
+        } else {
+          battingFirst = optedToInput === "Bat" ? "team2" : "team1";
+        }
+        const bowlingFirst = battingFirst === "team1" ? "team2" : "team1";
+        updatedScoringState = {
+          ...scoringState,
+          battingTeam: battingFirst,
+          bowlingTeam: bowlingFirst,
+        };
+        setScoringState(updatedScoringState);
+      }
+
+      await saveScoringState(updatedScoringState, undefined, undefined, undefined, tossWonByInput, optedToInput);
+      setShowChangeTossModal(false);
+      const winnerName = tossWonByInput === "team1" ? match.team1Name : match.team2Name;
+      showToast(`Toss updated: ${winnerName} won the toss and elected to ${optedToInput}!`);
+    } catch (err: any) {
+      showToast(err.message || "Failed to update toss", "error");
+    }
   };
 
   // Initialize Innings Modal
@@ -1534,9 +1585,9 @@ export default function MatchScoringPage() {
           </h2>
         </div>
 
-        {/* ── SEND Button (Top Center, Image 1) ─────────────────────────── */}
+        {/* ── Action Buttons (SEND & CHANGE TOSS) ─────────────────────────── */}
         {isOwner && (
-          <div className="flex justify-center -mt-2">
+          <div className="flex items-center justify-center gap-3 -mt-2">
             <button
               onClick={() => {
                 saveScoringState(scoringState);
@@ -1545,6 +1596,12 @@ export default function MatchScoringPage() {
               className="bg-[#ffcc00] hover:bg-amber-400 text-black font-black text-xs tracking-wider px-6 py-1.5 rounded-md active:scale-95 shadow-md shadow-amber-500/10 transition-all cursor-pointer"
             >
               SEND
+            </button>
+            <button
+              onClick={openChangeTossModal}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs tracking-wider px-4 py-1.5 rounded-md active:scale-95 shadow-md shadow-emerald-600/10 transition-all cursor-pointer flex items-center gap-1"
+            >
+              <span>🪙</span> CHANGE TOSS
             </button>
           </div>
         )}
@@ -1702,14 +1759,26 @@ export default function MatchScoringPage() {
             <div className="text-center">
               <p className="font-extrabold text-sm tracking-wider font-space text-slate-800">INNINGS NOT STARTED</p>
               <p className="text-xs text-slate-500 mt-1">Setup teams and click Start 1st Innings to initialize scoreboard</p>
+              <div className="mt-3 inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-1.5 text-xs font-bold text-emerald-800 shadow-sm">
+                <span>🪙</span>
+                <span>Toss: <strong>{match.tossWonBy === "team1" ? match.team1Name : match.team2Name}</strong> won the toss & elected to <strong>{match.optedTo}</strong></span>
+              </div>
             </div>
             {isOwner && (
-              <button
-                onClick={openStartInnings}
-                className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-lg text-xs font-bold text-white transition-all"
-              >
-                START 1ST INNINGS
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={openChangeTossModal}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-900 rounded-xl text-xs font-bold text-white transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
+                >
+                  <span>🪙</span> CHANGE TOSS
+                </button>
+                <button
+                  onClick={openStartInnings}
+                  className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-xl text-xs font-bold text-white transition-all cursor-pointer active:scale-95 shadow-md shadow-orange-500/20"
+                >
+                  START 1ST INNINGS
+                </button>
+              </div>
             )}
           </div>
         )}
@@ -2002,40 +2071,40 @@ export default function MatchScoringPage() {
                     </button>
                   )}
                   <button
-                    onClick={() => handleUpdateDisplayScreen("TOURNAME")}
-                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border border-white/10 bg-blue-700 ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
+                    onClick={() => handleUpdateDisplayScreen("TOUR")}
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "TOUR" || scoringState?.displayScreen?.toUpperCase() === "TOURNAME" || scoringState?.displayScreen?.toUpperCase() === "TOUR BOUNDARIES"
+                        ? "bg-blue-500/40 border-blue-300 ring-2 ring-blue-400 shadow-blue-500/30"
+                        : "border-white/10 bg-blue-700 hover:bg-blue-600"
+                      } ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
                   >
                     Tour
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("B1")}
-                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
-                      scoringState?.displayScreen?.toUpperCase() === "B1"
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "B1"
                         ? "bg-teal-500/40 border-teal-300 ring-2 ring-teal-400 shadow-teal-500/30"
                         : "border-white/10"
-                    }`}
+                      }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "B1" ? "linear-gradient(135deg, #0d9488, #115e59)" : "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
                   >
                     B1
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("B2")}
-                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
-                      scoringState?.displayScreen?.toUpperCase() === "B2"
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "B2"
                         ? "bg-fuchsia-500/40 border-fuchsia-300 ring-2 ring-fuchsia-400 shadow-fuchsia-500/30"
                         : "border-white/10"
-                    }`}
+                      }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "B2" ? "linear-gradient(135deg, #c026d3, #86198f)" : "linear-gradient(135deg, #d946ef, #701a75)" }}
                   >
                     B2
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("BOWLER")}
-                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
-                      scoringState?.displayScreen?.toUpperCase() === "BOWLER"
+                    className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "BOWLER"
                         ? "bg-cyan-500/40 border-cyan-300 ring-2 ring-cyan-400 shadow-cyan-500/30"
                         : "border-white/10"
-                    }`}
+                      }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "BOWLER" ? "linear-gradient(135deg, #0284c7, #0369a1)" : "linear-gradient(135deg, #06b6d4, #2563eb)" }}
                   >
                     BOWLER
@@ -2046,22 +2115,20 @@ export default function MatchScoringPage() {
                 <div className="flex justify-between gap-2 md:gap-3 px-2 w-full max-w-[480px] mx-auto">
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
-                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
-                      scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT"
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT"
                         ? "bg-pink-500/40 border-pink-300 ring-2 ring-pink-400 shadow-pink-500/30"
                         : "border-white/10"
-                    }`}
+                      }`}
                     style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT") ? "linear-gradient(135deg, #be185d, #9d174d)" : "linear-gradient(135deg, #ec4899, #db2777)" }}
                   >
                     Batting
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
-                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${
-                      scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL"
+                    className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL"
                         ? "bg-rose-900 border-rose-400 ring-2 ring-rose-400 shadow-rose-500/30"
                         : "border-white/10"
-                    }`}
+                      }`}
                     style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL") ? "linear-gradient(135deg, #701a75, #4a044e)" : "linear-gradient(135deg, #881337, #4c0519)" }}
                   >
                     Bowling
@@ -2133,18 +2200,21 @@ export default function MatchScoringPage() {
                 {/* Checkboxes Row 1: Wide | No Ball | Byes */}
                 <div className="flex items-center justify-around py-2 px-2 bg-transparent text-black">
                   {[
-                    { label: "Wide", checked: isWide, set: (val: boolean) => {
+                    {
+                      label: "Wide", checked: isWide, set: (val: boolean) => {
                         // Wide and NoBall are mutually exclusive; Byes/LegByes also off when Wide
                         if (val) { setIsNoBall(false); setIsByes(false); setIsLegByes(false); }
                         setIsWide(val);
                       }
                     },
-                    { label: "No Ball", checked: isNoBall, set: (val: boolean) => {
+                    {
+                      label: "No Ball", checked: isNoBall, set: (val: boolean) => {
                         if (val) { setIsWide(false); setIsByes(false); setIsLegByes(false); }
                         setIsNoBall(val);
                       }
                     },
-                    { label: "Byes", checked: isByes, set: (val: boolean) => {
+                    {
+                      label: "Byes", checked: isByes, set: (val: boolean) => {
                         if (val) { setIsWide(false); setIsNoBall(false); setIsLegByes(false); }
                         setIsByes(val);
                       }
@@ -2165,12 +2235,14 @@ export default function MatchScoringPage() {
                 {/* Checkboxes Row 2: Leg Byes | Wicket */}
                 <div className="flex items-center justify-center gap-8 md:gap-12 py-2 px-2 bg-transparent text-black">
                   {[
-                    { label: "Leg Byes", checked: isLegByes, set: (val: boolean) => {
+                    {
+                      label: "Leg Byes", checked: isLegByes, set: (val: boolean) => {
                         if (val) { setIsWide(false); setIsNoBall(false); setIsByes(false); }
                         setIsLegByes(val);
                       }
                     },
-                    { label: "Wicket", checked: isWicketCheck, set: (val: boolean) => {
+                    {
+                      label: "Wicket", checked: isWicketCheck, set: (val: boolean) => {
                         // Wicket can be combined with Wide/NoBall/Byes/LegByes
                         setIsWicketCheck(val);
                       }, info: true
@@ -2505,25 +2577,33 @@ export default function MatchScoringPage() {
               {/* ── Prominent Summary & Scorecard Broadcast Buttons ── */}
               <div className="flex flex-col gap-2">
                 <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">📡 Live Screen — shows on all scoreboards instantly:</p>
-                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5 md:gap-2">
+                  <button
+                    onClick={() => handleUpdateDisplayScreen("TOSS")}
+                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "TOSS"
+                        ? "bg-emerald-500/30 border-emerald-400 text-emerald-200 shadow-emerald-500/20"
+                        : "bg-gradient-to-br from-emerald-600 to-teal-700 border-emerald-500/40 text-white hover:from-emerald-500 hover:to-teal-600 shadow-emerald-500/10"
+                      }`}
+                  >
+                    <span className="text-sm md:text-xl">🪙</span>
+                    TOSS / PRE-MATCH
+                  </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("SUMMARY")}
-                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
-                      scoringState?.displayScreen === "SUMMARY"
+                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "SUMMARY"
                         ? "bg-cyan-500/30 border-cyan-400 text-cyan-200 shadow-cyan-500/20"
                         : "bg-gradient-to-br from-cyan-600 to-teal-700 border-cyan-500/40 text-white hover:from-cyan-500 hover:to-teal-600 shadow-cyan-500/10"
-                    }`}
+                      }`}
                   >
                     <span className="text-sm md:text-xl">📋</span>
                     VIEW SUMMARY
                   </button>
                   <button
                     onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
-                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${
-                      scoringState?.displayScreen === "FULLSCORE"
+                    className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "FULLSCORE"
                         ? "bg-blue-500/30 border-blue-400 text-blue-200 shadow-blue-500/20"
                         : "bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500/40 text-white hover:from-blue-500 hover:to-indigo-600 shadow-blue-500/10"
-                    }`}
+                      }`}
                   >
                     <span className="text-sm md:text-xl">📊</span>
                     VIEW SCORECARD
@@ -2545,6 +2625,7 @@ export default function MatchScoringPage() {
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   { label: "DEFAULT!", color: "bg-blue-600", hover: "hover:bg-blue-700", selected: "bg-blue-400/30 border-blue-400 text-blue-300" },
+                  { label: "TOSS", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
                   { label: "1BAT", color: "bg-purple-600", hover: "hover:bg-purple-700", selected: "bg-purple-400/30 border-purple-400 text-purple-300" },
                   { label: "1BALL", color: "bg-pink-600", hover: "hover:bg-pink-700", selected: "bg-pink-400/30 border-pink-400 text-pink-300" },
                   { label: "2BAT", color: "bg-indigo-600", hover: "hover:bg-indigo-700", selected: "bg-indigo-400/30 border-indigo-400 text-indigo-300" },
@@ -2560,6 +2641,7 @@ export default function MatchScoringPage() {
                   { label: "TEAM 1", color: "bg-violet-600", hover: "hover:bg-violet-700", selected: "bg-violet-400/30 border-violet-400 text-violet-300" },
                   { label: "TEAM 2", color: "bg-fuchsia-600", hover: "hover:bg-fuchsia-700", selected: "bg-fuchsia-400/30 border-fuchsia-400 text-fuchsia-300" },
                   { label: "TEAMS PLAYERS", color: "bg-purple-600", hover: "hover:bg-purple-700", selected: "bg-purple-400/30 border-purple-400 text-purple-300" },
+                  { label: "TOUR", color: "bg-fuchsia-600", hover: "hover:bg-fuchsia-700", selected: "bg-fuchsia-400/30 border-fuchsia-400 text-fuchsia-300" },
                 ].map((screen) => (
                   <button
                     key={screen.label}
@@ -2762,11 +2844,10 @@ export default function MatchScoringPage() {
                     <button
                       key={mode}
                       onClick={() => handleTourStatsController(mode)}
-                      className={`px-4 py-2 text-black font-black text-[10px] tracking-wider rounded-lg active:scale-95 transition-all cursor-pointer ${
-                        isActive
+                      className={`px-4 py-2 text-black font-black text-[10px] tracking-wider rounded-lg active:scale-95 transition-all cursor-pointer ${isActive
                           ? "bg-amber-400 ring-2 ring-amber-500 shadow-lg shadow-amber-500/20 scale-105"
                           : "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 shadow-md shadow-orange-500/5"
-                      }`}
+                        }`}
                     >
                       {mode}
                     </button>
@@ -3146,11 +3227,10 @@ export default function MatchScoringPage() {
                   <button
                     type="button"
                     onClick={() => setRetireTarget("1")}
-                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
-                      retireTarget === "1"
+                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${retireTarget === "1"
                         ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
                         : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
-                    }`}
+                      }`}
                   >
                     <span className="block text-[9px] uppercase opacity-75">Striker</span>
                     <span className="truncate block mt-0.5">{scoringState.striker}</span>
@@ -3158,11 +3238,10 @@ export default function MatchScoringPage() {
                   <button
                     type="button"
                     onClick={() => setRetireTarget("2")}
-                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
-                      retireTarget === "2"
+                    className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${retireTarget === "2"
                         ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
                         : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
-                    }`}
+                      }`}
                   >
                     <span className="block text-[9px] uppercase opacity-75">Non-Striker</span>
                     <span className="truncate block mt-0.5">{scoringState.nonStriker}</span>
@@ -3297,6 +3376,120 @@ export default function MatchScoringPage() {
                 <button
                   type="button"
                   onClick={() => setShowCustomRunsModal(false)}
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Change Toss Modal ──────────────────────────────────────────────── */}
+      {showChangeTossModal && match && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full overflow-hidden shadow-2xl animate-scale-in">
+            <div className="p-5 border-b border-slate-200 bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex justify-between items-center">
+              <div>
+                <h3 className="font-black text-sm tracking-wider uppercase font-space flex items-center gap-2">
+                  <span>🪙</span> UPDATE MATCH TOSS
+                </h3>
+                <p className="text-[11px] text-emerald-100 mt-0.5">
+                  Select which team won the toss and their decision
+                </p>
+              </div>
+              <button
+                onClick={() => setShowChangeTossModal(false)}
+                className="text-white/80 hover:text-white font-bold text-xl leading-none cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-6 flex flex-col gap-5">
+              {/* Toss Winner Selection */}
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-black uppercase tracking-wider text-slate-700">
+                  Toss Won By
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setTossWonByInput("team1")}
+                    className={`p-3.5 rounded-xl border text-xs font-black transition-all cursor-pointer text-center ${tossWonByInput === "team1"
+                        ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      }`}
+                  >
+                    <span className="block text-[10px] uppercase opacity-75">Team 1</span>
+                    <span className="truncate block mt-1 text-sm">{match.team1Name}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTossWonByInput("team2")}
+                    className={`p-3.5 rounded-xl border text-xs font-black transition-all cursor-pointer text-center ${tossWonByInput === "team2"
+                        ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      }`}
+                  >
+                    <span className="block text-[10px] uppercase opacity-75">Team 2</span>
+                    <span className="truncate block mt-1 text-sm">{match.team2Name}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Opted To Selection */}
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-black uppercase tracking-wider text-slate-700">
+                  Elected To
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setOptedToInput("Bat")}
+                    className={`py-3 px-4 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${optedToInput === "Bat"
+                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25 ring-2 ring-amber-400/40"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      }`}
+                  >
+                    <span>🏏</span>
+                    <span>BAT FIRST</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOptedToInput("Bowl")}
+                    className={`py-3 px-4 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${optedToInput === "Bowl"
+                        ? "bg-cyan-600 border-cyan-700 text-white shadow-md shadow-cyan-600/25 ring-2 ring-cyan-400/40"
+                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      }`}
+                  >
+                    <span>⚾</span>
+                    <span>BOWL FIRST</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Preview Banner */}
+              <div className="bg-slate-100 border border-slate-200 rounded-xl p-3 text-center">
+                <span className="text-[10px] font-bold text-slate-500 uppercase block tracking-wider mb-0.5">Scoreboard Toss Preview</span>
+                <span className="text-xs font-black text-slate-800 uppercase">
+                  {(tossWonByInput === "team1" ? match.team1Name : match.team2Name).toUpperCase()} WON THE TOSS AND ELECTED TO {optedToInput.toUpperCase()}
+                </span>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={handleChangeTossSubmit}
+                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 rounded-xl text-sm tracking-wider active:scale-95 transition-all cursor-pointer shadow-lg shadow-emerald-600/20"
+                >
+                  ✓ Save Toss
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowChangeTossModal(false)}
                   className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold rounded-xl text-sm active:scale-95 transition-all cursor-pointer"
                 >
                   Cancel

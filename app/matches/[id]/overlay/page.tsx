@@ -584,34 +584,8 @@ function GroundBG({ bgUrl }: { bgUrl: string }) {
       {(globalIsPreview || globalIsPrint) && (
         <div style={{ position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 0, backgroundImage: `url(${bgUrl})`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.14) saturate(0.5)", pointerEvents: "none" }} />
       )}
-      {!globalIsPreview && !globalIsPrint && globalRemainingSeconds > 0 && (
-        <div style={{
-          position: "fixed",
-          top: 16,
-          left: 16,
-          background: "rgba(2, 6, 23, 0.9)",
-          border: "1.5px solid rgba(251, 191, 36, 0.5)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.6), 0 0 15px rgba(251, 191, 36, 0.25)",
-          borderRadius: 9999,
-          padding: "10px 20px",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          color: "#fff",
-          fontSize: 12,
-          fontWeight: 900,
-          zIndex: 9999,
-          backdropFilter: "blur(12px)",
-          pointerEvents: "none",
-          fontFamily: "monospace"
-        }}>
-          <span style={{ fontSize: 14 }}>⏳</span>
-          <span style={{ letterSpacing: "1px", color: "rgba(255,255,255,0.7)" }}>UNLOCKED TIMER:</span>
-          <span style={{ color: "#fbbf24", fontSize: 13, textShadow: "0 0 4px rgba(251, 191, 36, 0.5)" }}>
-            {formatCountdown(globalRemainingSeconds)}
-          </span>
-        </div>
-      )}
+
+
     </>
   );
 }
@@ -698,8 +672,8 @@ const demoMatch: Match = {
   ballsPerOver: 6,
   matchType: "Group Stage",
   status: "Live",
-  playersTeam1: ["Virat Kohli", "Rohit Sharma", "MS Dhoni"],
-  playersTeam2: ["Steve Smith", "David Warner", "Pat Cummins"],
+  playersTeam1: ["Virat Kohli (c)", "Rohit Sharma", "Shubman Gill", "Suryakumar Yadav", "KL Rahul", "Hardik Pandya", "Ravindra Jadeja", "Axar Patel", "Kuldeep Yadav", "Jasprit Bumrah", "Mohammed Siraj"],
+  playersTeam2: ["Pat Cummins (c)", "David Warner", "Travis Head", "Mitchell Marsh", "Steve Smith", "Glenn Maxwell", "Josh Inglis", "Marcus Stoinis", "Mitchell Starc", "Adam Zampa", "Josh Hazlewood"],
   scoringState: {
     battingTeam: "team1",
     bowlingTeam: "team2",
@@ -946,15 +920,16 @@ export default function OverlayPage() {
     return () => clearInterval(timer);
   }, [accessGranted, remainingSeconds]);
 
-  // Manage animation overlays client-side for exactly 3 seconds
+  // Manage animation overlays client-side
   useEffect(() => {
     const anim = match?.scoringState?.animation;
     if (anim) {
-      if (anim !== "INNINGS BREAK" && anim !== "TOUR BOUNDARIES") {
+      if (anim !== "INNINGS BREAK") {
         setCurrentAnim(anim);
+        const duration = anim === "TOUR BOUNDARIES" ? 5000 : 3500;
         const timer = setTimeout(() => {
           setCurrentAnim(null);
-        }, 3000);
+        }, duration);
         return () => clearTimeout(timer);
       } else {
         setCurrentAnim(anim);
@@ -1206,14 +1181,12 @@ export default function OverlayPage() {
       const stats = batterPanelStats ?? { runs: 0, avg: "—", sr: "—", hs: "—", fours: 0, sixes: 0, wickets: 0, economy: "—", best: "—", matches: 0 };
 
       if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
-        const liveBatter = scoringState.batsmen?.find(b => b.name?.trim().toLowerCase() === batterPanelPlayer?.trim().toLowerCase());
         const matchesCount = stats.matches > 0 ? stats.matches : 1;
-        const runsVal = liveBatter?.runs ?? stats.runs ?? 0;
-        const ballsVal = liveBatter?.balls ?? (stats as any).balls ?? 0;
-        const foursVal = liveBatter?.fours ?? stats.fours ?? 0;
-        const sixesVal = liveBatter?.sixes ?? stats.sixes ?? 0;
-        const srVal = ballsVal > 0 ? ((runsVal / ballsVal) * 100).toFixed(2) : (stats.sr !== "—" ? stats.sr : "0.00");
-        const bestVal = `${runsVal}${ballsVal > 0 ? ` (${ballsVal})` : ""}`;
+        const runsVal = stats.runs ?? 0;
+        const foursVal = stats.fours ?? 0;
+        const sixesVal = stats.sixes ?? 0;
+        const srVal = stats.sr !== "—" ? stats.sr : "0.00";
+        const bestVal = stats.hs ?? "—";
         const teamNameVal = currentBatTeam;
 
         const isCri = themeSlug === "crioverlay-green";
@@ -2153,7 +2126,7 @@ export default function OverlayPage() {
   // ════════════════════ 5. FULL-SCREEN BROADCAST CARDS ════════════════════
   const activeScreen = (screenParam || scoringState.displayScreen || scoringState.displayStatsMode || "").trim().toUpperCase();
   const ds = activeScreen;
-  const isFS = ds !== "" && ds !== "DEFAULT!" && ds !== "DEFAULT" && ds !== "MINI" && ds !== "DEFAULT / OFF" && ds !== "OFF" && ds !== "NONE" && ds !== "LIVE SCORE" && ds !== "B1" && ds !== "B2" && ds !== "BOWLER";
+  const isFS = ds !== "" && ds !== "DEFAULT!" && ds !== "DEFAULT" && ds !== "MINI" && ds !== "DEFAULT / OFF" && ds !== "OFF" && ds !== "NONE" && ds !== "LIVE SCORE" && ds !== "B1" && ds !== "B2" && ds !== "BOWLER" && ds !== "TOSS" && ds !== "PRE-MATCH" && ds !== "PREMATCH" && ds !== "TOSS / TEAMS" && ds !== "TOSS INFO" && ds !== "TOUR" && ds !== "TOURNAME" && ds !== "TOUR BOUNDARIES" && ds !== "BOUNDARIES" && ds !== "TOURNAMENT BOUNDARIES";
   if (isFS) {
     const isY1Bat = ds === "Y1BAT" || ds === "1BAT" || (ds === "BATTING" && (scoringState.inningsNo === 1 || !scoringState.inningsNo));
     const isY2Bat = ds === "Y2BAT" || ds === "2BAT" || (ds === "BATTING" && scoringState.inningsNo === 2);
@@ -2378,32 +2351,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -2797,32 +2745,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -3362,32 +3285,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -3922,32 +3820,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -4200,32 +4073,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -4596,32 +4444,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -4947,32 +4770,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -5206,16 +5004,26 @@ export default function OverlayPage() {
       );
     }
 
-    // ── SQUADS — Universal Dynamic Modern Playing XI for all 16 themes ──
+    // ── SQUADS / TEAMS PLAYERS — Universal Dynamic Modern Playing XI for all 16 themes ──
     if (isSquads) {
       const isTeam2 = ds === "TEAM2" || ds === "TEAM 2";
       const isTeam1 = ds === "TEAM1" || ds === "TEAM 1";
+      const isBothTeams = !isTeam1 && !isTeam2; // "TEAMS PLAYERS", "TEAMS", "BOTH TEAMS", "PLAYERS", "SQUADS", "PLAYING XI", etc.
+
       const selectedTeam = isTeam2 ? match.team2Name : isTeam1 ? match.team1Name : currentBatTeam;
       const rawPlayers = selectedTeam === match.team2Name ? (match.playersTeam2 || []) : (match.playersTeam1 || []);
 
       const players = [...rawPlayers];
       const row1 = players.length > 6 ? players.slice(0, 6) : players;
       const row2 = players.length > 6 ? players.slice(6) : [];
+
+      const team1Players = (match.playersTeam1 && match.playersTeam1.length > 0)
+        ? match.playersTeam1
+        : ["Virat Kohli (c)", "Rohit Sharma", "Shubman Gill", "Suryakumar Yadav", "KL Rahul", "Hardik Pandya", "Ravindra Jadeja", "Axar Patel", "Kuldeep Yadav", "Jasprit Bumrah", "Mohammed Siraj"];
+
+      const team2Players = (match.playersTeam2 && match.playersTeam2.length > 0)
+        ? match.playersTeam2
+        : ["Pat Cummins (c)", "David Warner", "Travis Head", "Mitchell Marsh", "Steve Smith", "Glenn Maxwell", "Josh Inglis", "Marcus Stoinis", "Mitchell Starc", "Adam Zampa", "Josh Hazlewood"];
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
@@ -5234,7 +5042,7 @@ export default function OverlayPage() {
       const isIpl = themeSlug === "ipl";
       const cardAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
       const cardAccent2 = isCri ? "#FFFFFF" : isWcl ? "#FFFFFF" : isCwc19 ? "#DC2626" : isCt25 ? "#FFFFFF" : isFusion ? "#FFFFFF" : isSa20 ? "#FFFFFF" : isGeo ? "#FFFFFF" : isEac ? "#FFFFFF" : isIpl ? "#FFFFFF" : isBblBlack ? "#FDFDFE" : isCwc23 ? "#FFFFFF" : isCwc25 ? "#FFFFFF" : isAsiaCup ? "#FDFDFE" : isBblStar ? "#ffc72c" : isIpl2025 ? "#bef264" : (theme.accentText || theme.accent);
-      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#c8e63c" : (theme.accent || "#fbbf24");
+      const cardTitleAccent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc25 ? "#0373AF" : isAsiaCup ? "#E58808" : isBblStar ? "#00a0e9" : isIpl2025 ? "#a3e635" : (theme.accent || "#fbbf24");
       const headerBgGrad = isCri
         ? "linear-gradient(180deg, #091120 0%, #102140 100%)"
         : isWcl
@@ -5298,7 +5106,7 @@ export default function OverlayPage() {
                                     ? "linear-gradient(180deg, #040e32 0%, #030a24 50%, #02071d 100%)"
                                     : `linear-gradient(180deg, ${theme.primaryBg || "rgba(10,15,35,0.98)"} 0%, ${theme.secondaryBg || "rgba(5,8,20,0.98)"} 100%)`;
       const bottomPillBgGrad = isCri
-        ? "linear-gradient(90deg, #74FB05 0%, #86efac 50%, #74FB05 100%)"
+        ? "linear-gradient(90deg, #74FB05 0%, #a3e635 50%, #74FB05 100%)"
         : isWcl
           ? "linear-gradient(90deg, #0284C7 0%, #38bdf8 50%, #0284C7 100%)"
           : isCwc19
@@ -5326,12 +5134,19 @@ export default function OverlayPage() {
                                 : isBblStar
                                   ? "linear-gradient(90deg, #00a0e9 0%, #38bdf8 50%, #00a0e9 100%)"
                                   : isIpl2025
-                                    ? "linear-gradient(90deg, #9ae62e 0%, #bef264 50%, #9ae62e 100%)"
+                                    ? "linear-gradient(90deg, #a3e635 0%, #bef264 50%, #a3e635 100%)"
                                     : `linear-gradient(90deg, ${theme.accent} 0%, ${theme.accentText || theme.accent} 50%, ${theme.accent} 100%)`;
       const fontStyle = THEME_FONTS[themeSlug] || panelFont;
 
       const tossWinnerName = (match as any).tossWonBy === "team1" ? match.team1Name : match.team2Name;
       const tossDecisionText = (match as any).optedTo === "Bat" ? "BAT" : "BOWL";
+      const tossBannerText = match.tossWonBy
+        ? `${tossWinnerName.toUpperCase()} WON THE TOSS AND ELECTED TO ${tossDecisionText}`
+        : `🏏 ${match.team1Name.toUpperCase()} VS ${match.team2Name.toUpperCase()} • MATCH IN PROGRESS`;
+
+      const matchSubtitle = (match as any).tournamentStage || match.matchType
+        ? `${((match as any).tournamentStage || match.matchType).toUpperCase()} • ${match.overs} OVERS MATCH`
+        : "HARYAN SUPER LEAGUE (2ND EDITION) JUNIOR";
 
       return (
         <div className="fade-in" style={{
@@ -5349,305 +5164,534 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
-          {/* TOP HEADER PILL */}
-          <div className="animate-slide-up" style={{
-            background: headerBgGrad,
-            border: `2px solid ${cardAccent}`,
-            borderRadius: "18px",
-            padding: "10px 48px",
-            textAlign: "center",
-            position: "relative",
-            overflow: "hidden",
-            boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
-            width: "min(92vw, 1080px)"
-          }}>
-            <div style={{
-              color: cardTitleAccent,
-              fontSize: "24px",
-              fontWeight: 950,
-              letterSpacing: "1px",
-              textTransform: "uppercase",
-              lineHeight: 1.1,
-              textShadow: `0 0 16px ${cardAccent}80`
-            }}>
-              {selectedTeam.toUpperCase()}
-            </div>
-            <div style={{
-              color: "#ffffff",
-              fontSize: "12px",
-              fontWeight: 900,
-              letterSpacing: "2.5px",
-              textTransform: "uppercase",
-              marginTop: "4px",
-              opacity: 0.95
-            }}>
-              PLAYING XI
-            </div>
-          </div>
-
-          {/* MAIN PLAYING XI CARDS CONTAINER */}
-          <div className="animate-slide-up" style={{
-            background: bodyBgGrad,
-            border: `2px solid ${cardAccent}`,
-            borderRadius: "22px",
-            padding: "28px 32px 24px",
-            boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
-            width: "min(92vw, 1080px)",
-            position: "relative",
-            overflow: "hidden"
-          }}>
-            {players.length === 0 ? (
-              <div style={{
-                padding: "48px 24px",
+          {/* ════════════════════ DUAL TEAM TEAMS PLAYERS SCREEN (MATCHING SCREENSHOT 100%) ════════════════════ */}
+          {isBothTeams ? (
+            <>
+              {/* TOP HEADER PILL */}
+              <div className="animate-slide-up" style={{
+                background: headerBgGrad,
+                border: `2px solid ${cardAccent}`,
+                borderRadius: "18px",
+                padding: "10px 48px",
                 textAlign: "center",
-                color: "#94a3b8",
-                fontSize: "14px",
-                fontWeight: 800,
-                letterSpacing: "1px",
-                textTransform: "uppercase"
+                position: "relative",
+                overflow: "hidden",
+                boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+                width: "min(94vw, 980px)"
               }}>
-                No players registered for {selectedTeam} yet.
-              </div>
-            ) : (
-              <>
-                {/* Row 1 */}
                 <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "14px",
-                  marginBottom: row2.length > 0 ? "14px" : "0",
-                  position: "relative",
-                  zIndex: 2,
-                  flexWrap: "wrap"
+                  color: cardTitleAccent,
+                  fontSize: "26px",
+                  fontWeight: 950,
+                  letterSpacing: "2.5px",
+                  textTransform: "uppercase",
+                  lineHeight: 1.1,
+                  textShadow: `0 0 16px ${cardAccent}80`
                 }}>
-                  {row1.map((pName, idx) => {
-                    const isCaptain = idx === 0 || pName.toLowerCase().includes("(c)");
-                    const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
-                    return (
-                      <div
-                        key={idx}
-                        className="table-row-animated"
-                        style={{
-                          animationDelay: `${idx * 0.04}s`,
-                          background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
-                          border: `1.5px solid ${cardAccent}aa`,
-                          borderRadius: "12px 12px 9px 9px",
-                          width: "132px",
-                          height: "124px",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          position: "relative",
-                          overflow: "hidden",
-                          boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
-                        }}
-                      >
-                        {/* Captain Badge */}
-                        {isCaptain && (
-                          <div style={{
-                            position: "absolute",
-                            top: "6px",
-                            right: "6px",
-                            width: "18px",
-                            height: "18px",
-                            borderRadius: "50%",
-                            background: "#ea580c",
-                            border: "1.5px solid #ffffff",
-                            color: "#ffffff",
-                            fontSize: "10px",
-                            fontWeight: 950,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            lineHeight: 1,
-                            boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
-                            zIndex: 3
-                          }}>
-                            c
-                          </div>
-                        )}
-
-                        {/* User Silhouette Avatar */}
-                        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
-                          <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                          </svg>
-                        </div>
-
-                        {/* Bottom Name Banner */}
-                        <div style={{
-                          width: "100%",
-                          background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
-                          borderRadius: "0 0 7px 7px",
-                          padding: "5px 4px",
-                          textAlign: "center",
-                          boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
-                        }}>
-                          <div style={{
-                            color: "#001a2e",
-                            fontSize: "10.5px",
-                            fontWeight: 950,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.3px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis"
-                          }}>
-                            {cleanName}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  TEAMS
                 </div>
+                <div style={{
+                  color: "#ffffff",
+                  fontSize: "11px",
+                  fontWeight: 900,
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginTop: "3px",
+                  opacity: 0.92
+                }}>
+                  {matchSubtitle}
+                </div>
+              </div>
 
-                {/* Row 2 (Centered) */}
-                {row2.length > 0 && (
+              {/* MAIN DUAL-COLUMN PLAYING XI BOX CONTAINER */}
+              <div className="animate-slide-up" style={{
+                background: bodyBgGrad,
+                border: `2px solid ${cardAccent}`,
+                borderRadius: "22px",
+                padding: "20px 24px 22px",
+                boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+                width: "min(94vw, 980px)",
+                position: "relative",
+                overflow: "hidden"
+              }}>
+                {/* Background Floral Watermark Pattern matching screenshot */}
+                <div style={{
+                  position: "absolute",
+                  inset: 0,
+                  pointerEvents: "none",
+                  opacity: 0.14,
+                  backgroundImage: `radial-gradient(circle at 10% 20%, ${cardAccent} 2px, transparent 3px), radial-gradient(circle at 90% 80%, ${cardAccent} 2px, transparent 3px)`,
+                  backgroundSize: "40px 40px"
+                }} />
+
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "18px",
+                  position: "relative",
+                  zIndex: 2
+                }}>
+                  {/* LEFT COLUMN: TEAM 1 */}
                   <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "14px",
-                    position: "relative",
-                    zIndex: 2,
-                    flexWrap: "wrap"
+                    background: "rgba(2, 6, 23, 0.45)",
+                    border: "1.5px solid rgba(255,255,255,0.12)",
+                    borderRadius: "16px",
+                    padding: "12px 16px 14px",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)"
                   }}>
-                    {row2.map((pName, idx) => {
-                      const isCaptain = (idx + 6) === 0 || pName.toLowerCase().includes("(c)");
-                      const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
-                      return (
-                        <div
-                          key={idx + 6}
-                          className="table-row-animated"
-                          style={{
-                            animationDelay: `${(idx + 6) * 0.04}s`,
-                            background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
-                            border: `1.5px solid ${cardAccent}aa`,
-                            borderRadius: "12px 12px 9px 9px",
-                            width: "132px",
-                            height: "124px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            position: "relative",
-                            overflow: "hidden",
-                            boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
-                          }}
-                        >
-                          {/* Captain Badge */}
-                          {isCaptain && (
-                            <div style={{
-                              position: "absolute",
-                              top: "6px",
-                              right: "6px",
-                              width: "18px",
-                              height: "18px",
-                              borderRadius: "50%",
-                              background: "#ea580c",
-                              border: "1.5px solid #ffffff",
-                              color: "#ffffff",
-                              fontSize: "10px",
-                              fontWeight: 950,
+                    {/* Team 1 Header Capsule */}
+                    <div style={{
+                      background: `linear-gradient(180deg, ${cardAccent}35 0%, rgba(0,0,0,0.65) 100%)`,
+                      border: `1.5px solid ${cardAccent}77`,
+                      borderRadius: "10px",
+                      padding: "8px 12px",
+                      textAlign: "center",
+                      marginBottom: "10px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.4)"
+                    }}>
+                      <span style={{
+                        color: "#ffffff",
+                        fontSize: "13.5px",
+                        fontWeight: 950,
+                        letterSpacing: "0.8px",
+                        textTransform: "uppercase"
+                      }}>
+                        {match.team1Name}
+                      </span>
+                    </div>
+
+                    {/* Team 1 Player Rows (11 players) */}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {team1Players.slice(0, 11).map((pName, idx) => {
+                        const isCaptain = idx === 0 || pName.toLowerCase().includes("(c)");
+                        const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
+                        return (
+                          <div
+                            key={idx}
+                            style={{
                               display: "flex",
                               alignItems: "center",
-                              justifyContent: "center",
-                              lineHeight: 1,
-                              boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
-                              zIndex: 3
-                            }}>
-                              c
-                            </div>
-                          )}
-
-                          {/* User Silhouette Avatar */}
-                          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
-                            <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                          </div>
-
-                          {/* Bottom Name Banner */}
-                          <div style={{
-                            width: "100%",
-                            background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
-                            borderRadius: "0 0 7px 7px",
-                            padding: "5px 4px",
-                            textAlign: "center",
-                            boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
-                          }}>
-                            <div style={{
-                              color: "#001a2e",
-                              fontSize: "10.5px",
-                              fontWeight: 950,
-                              textTransform: "uppercase",
-                              letterSpacing: "0.3px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis"
+                              justifyContent: "space-between",
+                              padding: "4.5px 6px",
+                              borderBottom: idx < Math.min(team1Players.length, 11) - 1 ? "1px solid rgba(255,255,255,0.08)" : "none"
+                            }}
+                          >
+                            <span style={{
+                              color: "#ffffff",
+                              fontSize: "12px",
+                              fontWeight: 900,
+                              letterSpacing: "0.5px",
+                              textTransform: "uppercase"
                             }}>
                               {cleanName}
+                            </span>
+                            {isCaptain && (
+                              <div style={{
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "4px",
+                                background: cardAccent,
+                                color: isEac ? "#ffffff" : "#000000",
+                                fontSize: "11px",
+                                fontWeight: 950,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                lineHeight: 1,
+                                boxShadow: "0 1px 4px rgba(0,0,0,0.5)",
+                                flexShrink: 0
+                              }}>
+                                c
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* RIGHT COLUMN: TEAM 2 */}
+                  <div style={{
+                    background: "rgba(2, 6, 23, 0.45)",
+                    border: "1.5px solid rgba(255,255,255,0.12)",
+                    borderRadius: "16px",
+                    padding: "12px 16px 14px",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.4)"
+                  }}>
+                    {/* Team 2 Header Capsule */}
+                    <div style={{
+                      background: `linear-gradient(180deg, ${cardAccent}35 0%, rgba(0,0,0,0.65) 100%)`,
+                      border: `1.5px solid ${cardAccent}77`,
+                      borderRadius: "10px",
+                      padding: "8px 12px",
+                      textAlign: "center",
+                      marginBottom: "10px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.4)"
+                    }}>
+                      <span style={{
+                        color: "#ffffff",
+                        fontSize: "13.5px",
+                        fontWeight: 950,
+                        letterSpacing: "0.8px",
+                        textTransform: "uppercase"
+                      }}>
+                        {match.team2Name}
+                      </span>
+                    </div>
+
+                    {/* Team 2 Player Rows (11 players) */}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {team2Players.slice(0, 11).map((pName, idx) => {
+                        const isCaptain = idx === 0 || pName.toLowerCase().includes("(c)");
+                        const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
+                        return (
+                          <div
+                            key={idx}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              padding: "4.5px 6px",
+                              borderBottom: idx < Math.min(team2Players.length, 11) - 1 ? "1px solid rgba(255,255,255,0.08)" : "none"
+                            }}
+                          >
+                            <span style={{
+                              color: "#ffffff",
+                              fontSize: "12px",
+                              fontWeight: 900,
+                              letterSpacing: "0.5px",
+                              textTransform: "uppercase"
+                            }}>
+                              {cleanName}
+                            </span>
+                            {isCaptain && (
+                              <div style={{
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "4px",
+                                background: cardAccent,
+                                color: isEac ? "#ffffff" : "#000000",
+                                fontSize: "11px",
+                                fontWeight: 950,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                lineHeight: 1,
+                                boxShadow: "0 1px 4px rgba(0,0,0,0.5)",
+                                flexShrink: 0
+                              }}>
+                                c
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* BOTTOM TOSS BANNER PILL */}
+              <div className="animate-slide-up" style={{
+                background: bottomPillBgGrad,
+                borderRadius: "16px",
+                border: `2px solid ${cardAccent}`,
+                padding: "11px 32px",
+                textAlign: "center",
+                boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 18px ${cardAccent}55`,
+                width: "min(94vw, 980px)"
+              }}>
+                <div style={{
+                  color: isEac ? "#ffffff" : "#001a2e",
+                  fontSize: "15px",
+                  fontWeight: 950,
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  lineHeight: 1.2
+                }}>
+                  {tossBannerText}
+                </div>
+              </div>
+            </>
+          ) : (
+            /* ════════════════════ SINGLE TEAM PLAYING XI (TEAM 1 or TEAM 2 BUTTON) ════════════════════ */
+            <>
+              {/* TOP HEADER PILL */}
+              <div className="animate-slide-up" style={{
+                background: headerBgGrad,
+                border: `2px solid ${cardAccent}`,
+                borderRadius: "18px",
+                padding: "10px 48px",
+                textAlign: "center",
+                position: "relative",
+                overflow: "hidden",
+                boxShadow: `0 8px 30px rgba(0,0,0,0.8), 0 0 20px ${cardAccent}40`,
+                width: "min(92vw, 1080px)"
+              }}>
+                <div style={{
+                  color: cardTitleAccent,
+                  fontSize: "24px",
+                  fontWeight: 950,
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  lineHeight: 1.1,
+                  textShadow: `0 0 16px ${cardAccent}80`
+                }}>
+                  {selectedTeam.toUpperCase()}
+                </div>
+                <div style={{
+                  color: "#ffffff",
+                  fontSize: "12px",
+                  fontWeight: 900,
+                  letterSpacing: "2.5px",
+                  textTransform: "uppercase",
+                  marginTop: "4px",
+                  opacity: 0.95
+                }}>
+                  PLAYING XI
+                </div>
+              </div>
+
+              {/* MAIN PLAYING XI CARDS CONTAINER */}
+              <div className="animate-slide-up" style={{
+                background: bodyBgGrad,
+                border: `2px solid ${cardAccent}`,
+                borderRadius: "22px",
+                padding: "28px 32px 24px",
+                boxShadow: `0 20px 60px rgba(0,0,0,0.9), 0 0 24px ${cardAccent}33`,
+                width: "min(92vw, 1080px)",
+                position: "relative",
+                overflow: "hidden"
+              }}>
+                {players.length === 0 ? (
+                  <div style={{
+                    padding: "48px 24px",
+                    textAlign: "center",
+                    color: "#94a3b8",
+                    fontSize: "14px",
+                    fontWeight: 800,
+                    letterSpacing: "1px",
+                    textTransform: "uppercase"
+                  }}>
+                    No players registered for {selectedTeam} yet.
+                  </div>
+                ) : (
+                  <>
+                    {/* Row 1 */}
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "14px",
+                      marginBottom: row2.length > 0 ? "14px" : "0",
+                      position: "relative",
+                      zIndex: 2,
+                      flexWrap: "wrap"
+                    }}>
+                      {row1.map((pName, idx) => {
+                        const isCaptain = idx === 0 || pName.toLowerCase().includes("(c)");
+                        const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
+                        return (
+                          <div
+                            key={idx}
+                            className="table-row-animated"
+                            style={{
+                              animationDelay: `${idx * 0.04}s`,
+                              background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
+                              border: `1.5px solid ${cardAccent}aa`,
+                              borderRadius: "12px 12px 9px 9px",
+                              width: "132px",
+                              height: "124px",
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              position: "relative",
+                              overflow: "hidden",
+                              boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
+                            }}
+                          >
+                            {/* Captain Badge */}
+                            {isCaptain && (
+                              <div style={{
+                                position: "absolute",
+                                top: "6px",
+                                right: "6px",
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "50%",
+                                background: "#ea580c",
+                                border: "1.5px solid #ffffff",
+                                color: "#ffffff",
+                                fontSize: "10px",
+                                fontWeight: 950,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                lineHeight: 1,
+                                boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
+                                zIndex: 3
+                              }}>
+                                c
+                              </div>
+                            )}
+
+                            {/* User Silhouette Avatar */}
+                            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
+                              <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                              </svg>
+                            </div>
+
+                            {/* Bottom Name Banner */}
+                            <div style={{
+                              width: "100%",
+                              background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
+                              borderRadius: "0 0 7px 7px",
+                              padding: "5px 4px",
+                              textAlign: "center",
+                              boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
+                            }}>
+                              <div style={{
+                                color: "#001a2e",
+                                fontSize: "10.5px",
+                                fontWeight: 950,
+                                textTransform: "uppercase",
+                                letterSpacing: "0.3px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                              }}>
+                                {cleanName}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                        );
+                      })}
+                    </div>
 
-          {/* BOTTOM TOSS BANNER PILL */}
-          <div className="animate-slide-up" style={{
-            background: bottomPillBgGrad,
-            borderRadius: "18px",
-            border: `2px solid ${cardAccent}`,
-            padding: "12px 36px",
-            textAlign: "center",
-            boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 18px ${cardAccent}55`,
-            width: "min(92vw, 1080px)"
-          }}>
-            <div style={{
-              color: "#001a2e",
-              fontSize: "16px",
-              fontWeight: 950,
-              letterSpacing: "0.6px",
-              textTransform: "uppercase",
-              lineHeight: 1.2
-            }}>
-              {tossWinnerName.toUpperCase()} WON THE TOSS AND ELECTED TO {tossDecisionText}
-            </div>
-          </div>
+                    {/* Row 2 (Centered) */}
+                    {row2.length > 0 && (
+                      <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "14px",
+                        position: "relative",
+                        zIndex: 2,
+                        flexWrap: "wrap"
+                      }}>
+                        {row2.map((pName, idx) => {
+                          const isCaptain = (idx + 6) === 0 || pName.toLowerCase().includes("(c)");
+                          const cleanName = pName.replace(/\s*\([cC]\)\s*/, "").trim();
+                          return (
+                            <div
+                              key={idx + 6}
+                              className="table-row-animated"
+                              style={{
+                                animationDelay: `${(idx + 6) * 0.04}s`,
+                                background: "linear-gradient(180deg, rgba(8, 24, 60, 0.9) 0%, rgba(3, 10, 30, 0.95) 100%)",
+                                border: `1.5px solid ${cardAccent}aa`,
+                                borderRadius: "12px 12px 9px 9px",
+                                width: "132px",
+                                height: "124px",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                position: "relative",
+                                overflow: "hidden",
+                                boxShadow: "0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)"
+                              }}
+                            >
+                              {/* Captain Badge */}
+                              {isCaptain && (
+                                <div style={{
+                                  position: "absolute",
+                                  top: "6px",
+                                  right: "6px",
+                                  width: "18px",
+                                  height: "18px",
+                                  borderRadius: "50%",
+                                  background: "#ea580c",
+                                  border: "1.5px solid #ffffff",
+                                  color: "#ffffff",
+                                  fontSize: "10px",
+                                  fontWeight: 950,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  lineHeight: 1,
+                                  boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
+                                  zIndex: 3
+                                }}>
+                                  c
+                                </div>
+                              )}
+
+                              {/* User Silhouette Avatar */}
+                              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8px" }}>
+                                <svg style={{ width: "42px", height: "42px", color: "#94a3b8", opacity: 0.65 }} viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                </svg>
+                              </div>
+
+                              {/* Bottom Name Banner */}
+                              <div style={{
+                                width: "100%",
+                                background: `linear-gradient(180deg, ${cardAccent2} 0%, ${cardAccent} 100%)`,
+                                borderRadius: "0 0 7px 7px",
+                                padding: "5px 4px",
+                                textAlign: "center",
+                                boxShadow: "0 -2px 6px rgba(0,0,0,0.3)"
+                              }}>
+                                <div style={{
+                                  color: "#001a2e",
+                                  fontSize: "10.5px",
+                                  fontWeight: 950,
+                                  textTransform: "uppercase",
+                                  letterSpacing: "0.3px",
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis"
+                                }}>
+                                  {cleanName}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+
+              {/* BOTTOM TOSS BANNER PILL */}
+              <div className="animate-slide-up" style={{
+                background: bottomPillBgGrad,
+                borderRadius: "18px",
+                border: `2px solid ${cardAccent}`,
+                padding: "12px 36px",
+                textAlign: "center",
+                boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 18px ${cardAccent}55`,
+                width: "min(92vw, 1080px)"
+              }}>
+                <div style={{
+                  color: isEac ? "#ffffff" : "#001a2e",
+                  fontSize: "16px",
+                  fontWeight: 950,
+                  letterSpacing: "0.6px",
+                  textTransform: "uppercase",
+                  lineHeight: 1.2
+                }}>
+                  {tossBannerText}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       );
     }
@@ -5798,32 +5842,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -6198,32 +6217,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -6601,32 +6595,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -6966,32 +6935,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: isEac ? "#FFFFFF" : "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -7324,32 +7268,7 @@ export default function OverlayPage() {
           <style>{GLOBAL_CSS}</style>
           <GroundBG bgUrl={theme.bgUrl} />
 
-          <button
-            className="no-print"
-            onClick={() => window.print()}
-            style={{
-              position: "fixed",
-              top: 18,
-              right: 22,
-              zIndex: 9999,
-              background: `linear-gradient(135deg, ${cardAccent}, ${cardAccent2})`,
-              color: "#030a24",
-              border: "none",
-              borderRadius: 12,
-              padding: "10px 22px",
-              fontWeight: 950,
-              fontSize: 12,
-              cursor: "pointer",
-              boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 20px ${cardAccent}66`,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              letterSpacing: 1.5,
-              textTransform: "uppercase"
-            }}
-          >
-            🖨️ Save PDF
-          </button>
+
 
           {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
 
@@ -7564,6 +7483,718 @@ export default function OverlayPage() {
     }
   }
 
+  // ════════════════════ SCOREBOARD PRE-MATCH / TOSS RIBBON (ALL 16 THEMES) ════════════════════
+  const renderScoreboardPreMatchRibbon = (
+    currentThemeSlug: string,
+    currentMatch: any
+  ) => {
+    const isGreenTheme = currentThemeSlug === "crioverlay-green";
+    const tossWinnerName = currentMatch?.tossWonBy === "team1" ? currentMatch?.team1Name : currentMatch?.team2Name;
+    const tossDecisionText = currentMatch?.optedTo === "Bat" ? "BAT" : "BOWL";
+    const hasToss = !!currentMatch?.tossWonBy;
+
+    // Themed Colors Palette for All 16 Themes
+    let barBg = "linear-gradient(90deg, rgba(8, 24, 60, 0.95) 0%, rgba(3, 10, 30, 0.98) 50%, rgba(8, 24, 60, 0.95) 100%)";
+    let barBorder = "#38bdf8";
+    let barShadow = "0 8px 30px rgba(0,0,0,0.7), 0 0 20px rgba(56, 189, 248, 0.35)";
+    let team1Color = "#ffffff";
+    let team2Color = "#ffffff";
+    let pillBg = "linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)";
+    let pillTextColor = "#ffffff";
+    let pillBorder = "1.5px solid #ffffff";
+    let pillShadow = "0 0 16px rgba(56, 189, 248, 0.6)";
+
+    if (currentThemeSlug === "crioverlay-green") {
+      barBg = "linear-gradient(90deg, #050b14 0%, #091120 50%, #050b14 100%)";
+      barBorder = "#74fb05";
+      barShadow = "0 8px 32px rgba(0,0,0,0.8), 0 0 24px rgba(116, 251, 5, 0.4)";
+      team1Color = "#b2ff59";
+      team2Color = "#b2ff59";
+      pillBg = "linear-gradient(180deg, #b2ff59 0%, #76ff03 50%, #64dd17 100%)";
+      pillTextColor = "#000000";
+      pillBorder = "2px solid #000000";
+      pillShadow = "0 0 20px rgba(116, 251, 5, 0.75)";
+    } else if (currentThemeSlug === "asia-cup") {
+      barBg = "linear-gradient(90deg, #0c152d 0%, #142248 50%, #0c152d 100%)";
+      barBorder = "#E58808";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(229, 136, 8, 0.4)";
+      team1Color = "#FDFDFE";
+      team2Color = "#FDFDFE";
+      pillBg = "linear-gradient(180deg, #E58808 0%, #ca8a04 100%)";
+      pillTextColor = "#142248";
+      pillBorder = "1.5px solid #FDFDFE";
+      pillShadow = "0 0 16px rgba(229, 136, 8, 0.6)";
+    } else if (currentThemeSlug === "cwc-19") {
+      barBg = "linear-gradient(90deg, #040c18 0%, #07152B 50%, #040c18 100%)";
+      barBorder = "#02B3E4";
+      team1Color = "#02B3E4";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #02B3E4 0%, #0284c7 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(2, 179, 228, 0.6)";
+    } else if (currentThemeSlug === "champions-trophy-2025") {
+      barBg = "linear-gradient(90deg, #060c1c 0%, #0A122A 50%, #060c1c 100%)";
+      barBorder = "#03A360";
+      team1Color = "#34d399";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #03A360 0%, #10b981 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(3, 163, 96, 0.6)";
+    } else if (currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024") {
+      barBg = "linear-gradient(90deg, #0d0c1c 0%, #14122A 50%, #0d0c1c 100%)";
+      barBorder = "#0373AF";
+      team1Color = "#38bdf8";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #0373AF 0%, #0284c7 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(3, 115, 175, 0.6)";
+    } else if (currentThemeSlug === "wcl-fancode") {
+      barBg = "linear-gradient(90deg, #111827 0%, #1F2937 50%, #111827 100%)";
+      barBorder = "#0284C7";
+      team1Color = "#38bdf8";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #0284C7 0%, #38bdf8 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(2, 132, 199, 0.6)";
+    } else if (currentThemeSlug === "cwc-23-india") {
+      barBg = "linear-gradient(90deg, #050414 0%, #080721 50%, #050414 100%)";
+      barBorder = "#D946EF";
+      team1Color = "#f5d0fe";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #D946EF 0%, #c026d3 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(217, 70, 239, 0.6)";
+    } else if (currentThemeSlug === "bbl-black") {
+      barBg = "linear-gradient(90deg, #16053b 0%, #22095A 50%, #16053b 100%)";
+      barBorder = "#ec4899";
+      team1Color = "#f472b6";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #ec4899 0%, #db2777 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(236, 72, 153, 0.6)";
+    } else if (currentThemeSlug === "cricfusion") {
+      barBg = "linear-gradient(90deg, #0a0203 0%, #120406 50%, #0a0203 100%)";
+      barBorder = "#CC271F";
+      team1Color = "#f87171";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #CC271F 0%, #ef4444 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(204, 39, 31, 0.6)";
+    } else if (currentThemeSlug === "t20-emerging-asia-cup") {
+      barBg = "linear-gradient(90deg, #07173e 0%, #0C2560 50%, #07173e 100%)";
+      barBorder = "#facc15";
+      team1Color = "#fde047";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #facc15 0%, #eab308 100%)";
+      pillTextColor = "#000000";
+      pillBorder = "1.5px solid #000000";
+      pillShadow = "0 0 16px rgba(250, 204, 21, 0.6)";
+    } else if (currentThemeSlug === "sa20") {
+      barBg = "linear-gradient(90deg, #0e0e03 0%, #171705 50%, #0e0e03 100%)";
+      barBorder = "#EBB509";
+      team1Color = "#fde047";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #EBB509 0%, #ca8a04 100%)";
+      pillTextColor = "#171705";
+      pillBorder = "1.5px solid #171705";
+      pillShadow = "0 0 16px rgba(235, 181, 9, 0.6)";
+    } else if (currentThemeSlug === "jiocinema" || currentThemeSlug === "geo-cinema") {
+      barBg = "linear-gradient(90deg, #070b14 0%, #0D1322 50%, #070b14 100%)";
+      barBorder = "#db2777";
+      team1Color = "#f472b6";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #db2777 0%, #be185d 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(219, 39, 119, 0.6)";
+    } else if (currentThemeSlug === "ipl") {
+      barBg = "linear-gradient(90deg, #060b1e 0%, #0A112E 50%, #060b1e 100%)";
+      barBorder = "#F3A714";
+      team1Color = "#fbbf24";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #F3A714 0%, #d97706 100%)";
+      pillTextColor = "#000000";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(243, 167, 20, 0.6)";
+    } else if (currentThemeSlug === "bbl-starsports") {
+      barBg = "linear-gradient(90deg, #000c36 0%, #00144e 50%, #000c36 100%)";
+      barBorder = "#00a0e9";
+      team1Color = "#38bdf8";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #00a0e9 0%, #0284c7 100%)";
+      pillTextColor = "#ffffff";
+      pillBorder = "1.5px solid #ffffff";
+      pillShadow = "0 0 16px rgba(0, 160, 233, 0.6)";
+    } else if (currentThemeSlug === "ipl-2025") {
+      barBg = "linear-gradient(90deg, #040e32 0%, #030a24 50%, #02071d 100%)";
+      barBorder = "#c8e63c";
+      team1Color = "#bef264";
+      team2Color = "#ffffff";
+      pillBg = "linear-gradient(180deg, #c8e63c 0%, #a3e635 100%)";
+      pillTextColor = "#000000";
+      pillBorder = "1.5px solid #000000";
+      pillShadow = "0 0 16px rgba(200, 230, 60, 0.6)";
+    }
+
+    if (isGreenTheme) {
+      const abbr = (name: string) => (name || "").slice(0, 3).toUpperCase();
+      return (
+        <div style={{ display: "flex", alignItems: "flex-end", width: "100%", position: "relative" }}>
+          {/* Left badge */}
+          <div className="g-badge g-badge-l">{abbr(currentMatch?.team1Name || "T1")}</div>
+
+          {/* Main pre-match banner matching full scoreboard width */}
+          <div style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "76px",
+            background: barBg,
+            borderRadius: "18px",
+            border: `3px solid ${barBorder}`,
+            boxShadow: barShadow,
+            padding: "8px 24px",
+            position: "relative",
+            zIndex: 20,
+            overflow: "hidden",
+            minWidth: 0
+          }}>
+            {/* Team 1 Left */}
+            <div style={{
+              flex: 1,
+              textAlign: "left",
+              color: team1Color,
+              fontSize: "20px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              paddingLeft: "10px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}>
+              {currentMatch?.team1Name}
+            </div>
+
+            {/* Center Elevated Toss Pill */}
+            <div style={{
+              background: pillBg,
+              color: pillTextColor,
+              border: pillBorder,
+              borderRadius: "16px",
+              padding: "8px 28px",
+              textAlign: "center",
+              boxShadow: pillShadow,
+              margin: "0 12px",
+              flexShrink: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+              {hasToss ? (
+                <>
+                  <span style={{ fontSize: "13px", fontWeight: 950, letterSpacing: "0.8px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                    {tossWinnerName.toUpperCase()} WON THE TOSS
+                  </span>
+                  <span style={{ fontSize: "13px", fontWeight: 950, letterSpacing: "0.8px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                    AND ELECTED TO {tossDecisionText}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span style={{ fontSize: "13px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                    MATCH NOT STARTED
+                  </span>
+                  <span style={{ fontSize: "11.5px", fontWeight: 900, letterSpacing: "0.8px", textTransform: "uppercase", opacity: 0.9, lineHeight: 1.15 }}>
+                    {currentMatch?.overs} OVERS MATCH
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* Team 2 Right */}
+            <div style={{
+              flex: 1,
+              textAlign: "right",
+              color: team2Color,
+              fontSize: "20px",
+              fontWeight: 950,
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+              paddingRight: "10px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}>
+              {currentMatch?.team2Name}
+            </div>
+          </div>
+
+          {/* Right badge */}
+          <div className="g-badge g-badge-r">{abbr(currentMatch?.team2Name || "T2")}</div>
+        </div>
+      );
+    }
+
+    return (
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        height: "48px",
+        minHeight: "48px",
+        background: barBg,
+        borderRadius: "8px",
+        border: `2px solid ${barBorder}`,
+        boxShadow: barShadow,
+        padding: "4px 20px",
+        position: "relative",
+        overflow: "hidden"
+      }}>
+        {/* Team 1 Left */}
+        <div style={{
+          flex: 1,
+          textAlign: "left",
+          color: team1Color,
+          fontSize: "14px",
+          fontWeight: 950,
+          letterSpacing: "1px",
+          textTransform: "uppercase",
+          paddingLeft: "8px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}>
+          {currentMatch?.team1Name}
+        </div>
+
+        {/* Center Elevated Toss Pill */}
+        <div style={{
+          background: pillBg,
+          color: pillTextColor,
+          border: pillBorder,
+          borderRadius: "14px",
+          padding: "5px 22px",
+          textAlign: "center",
+          boxShadow: pillShadow,
+          margin: "0 12px",
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          {hasToss ? (
+            <>
+              <span style={{ fontSize: "11px", fontWeight: 950, letterSpacing: "0.8px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                {tossWinnerName.toUpperCase()} WON THE TOSS
+              </span>
+              <span style={{ fontSize: "11px", fontWeight: 950, letterSpacing: "0.8px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                AND ELECTED TO {tossDecisionText}
+              </span>
+            </>
+          ) : (
+            <>
+              <span style={{ fontSize: "11px", fontWeight: 950, letterSpacing: "1px", textTransform: "uppercase", lineHeight: 1.15 }}>
+                MATCH NOT STARTED
+              </span>
+              <span style={{ fontSize: "10px", fontWeight: 900, letterSpacing: "0.8px", textTransform: "uppercase", opacity: 0.9, lineHeight: 1.15 }}>
+                {currentMatch?.overs} OVERS MATCH
+              </span>
+            </>
+          )}
+        </div>
+
+        {/* Team 2 Right */}
+        <div style={{
+          flex: 1,
+          textAlign: "right",
+          color: team2Color,
+          fontSize: "14px",
+          fontWeight: 950,
+          letterSpacing: "1px",
+          textTransform: "uppercase",
+          paddingRight: "8px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}>
+          {currentMatch?.team2Name}
+        </div>
+      </div>
+    );
+  };
+
+  // ════════════════════ SCOREBOARD TOURNAMENT BOUNDARIES RIBBON (ALL 16 THEMES) ════════════════════
+  const renderScoreboardTourBoundariesRibbon = (
+    currentThemeSlug: string,
+    currentMatch: any,
+    currentTournamentMatches: any[]
+  ) => {
+    const isGreenTheme = currentThemeSlug === "crioverlay-green";
+
+    // Aggregate boundaries (4s and 6s) hit by ALL teams across ALL matches in this tournament
+    let tourTotalFours = 0;
+    let tourTotalSixes = 0;
+
+    const allMatchesMap = new Map<string, any>();
+    if (currentTournamentMatches && currentTournamentMatches.length > 0) {
+      currentTournamentMatches.forEach(m => {
+        if (m._id) allMatchesMap.set(m._id.toString(), m);
+      });
+    }
+    if (currentMatch?._id) {
+      allMatchesMap.set(currentMatch._id.toString(), currentMatch);
+    } else if (allMatchesMap.size === 0 && currentMatch) {
+      allMatchesMap.set("current", currentMatch);
+    }
+
+    const matchesList = Array.from(allMatchesMap.values());
+    matchesList.forEach((m: any) => {
+      // 1st or current innings batsmen from whichever team was batting
+      if (m.scoringState?.batsmen && Array.isArray(m.scoringState.batsmen)) {
+        m.scoringState.batsmen.forEach((b: any) => {
+          tourTotalFours += Number(b.fours || 0);
+          tourTotalSixes += Number(b.sixes || 0);
+        });
+      }
+      // Archived first innings batsmen (when in 2nd innings or completed match)
+      if (m.scoringState?.firstInnings?.batsmen && Array.isArray(m.scoringState.firstInnings.batsmen)) {
+        m.scoringState.firstInnings.batsmen.forEach((b: any) => {
+          tourTotalFours += Number(b.fours || 0);
+          tourTotalSixes += Number(b.sixes || 0);
+        });
+      }
+      // Archived second innings batsmen if present
+      if (m.scoringState?.secondInnings?.batsmen && Array.isArray(m.scoringState.secondInnings.batsmen)) {
+        m.scoringState.secondInnings.batsmen.forEach((b: any) => {
+          tourTotalFours += Number(b.fours || 0);
+          tourTotalSixes += Number(b.sixes || 0);
+        });
+      }
+    });
+
+    const tourTotalBoundaries = tourTotalFours + tourTotalSixes;
+
+    // Themed Colors Palette for All 16 Themes
+    let accentColor = "#38bdf8";
+    let circleBg = "#050b14";
+    let circleBorder = "#38bdf8";
+    let circleShadow = "0 0 18px rgba(56, 189, 248, 0.6)";
+    let circleTextColor = "#ffffff";
+    let barBg = "linear-gradient(90deg, #050b14 0%, #0d1a30 100%)";
+    let barBorder = "1.5px solid rgba(56, 189, 248, 0.4)";
+    let barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(56, 189, 248, 0.25)";
+    let subtitleColor = "#94a3b8";
+
+    if (currentThemeSlug === "crioverlay-green") {
+      accentColor = "#74fb05";
+      circleBg = "#050b14";
+      circleBorder = "#74fb05";
+      circleShadow = "0 0 20px #74fb05, inset 0 0 10px rgba(116, 251, 5, 0.3)";
+      circleTextColor = "#74fb05";
+      barBg = "linear-gradient(90deg, #050b14 0%, #091120 50%, #050b14 100%)";
+      barBorder = "1.5px solid rgba(116, 251, 5, 0.4)";
+      barShadow = "0 8px 32px rgba(0,0,0,0.8), 0 0 24px rgba(116, 251, 5, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "asia-cup") {
+      accentColor = "#E58808";
+      circleBg = "#0c152d";
+      circleBorder = "#E58808";
+      circleShadow = "0 0 18px rgba(229, 136, 8, 0.6)";
+      circleTextColor = "#FDFDFE";
+      barBg = "linear-gradient(90deg, #0c152d 0%, #142248 100%)";
+      barBorder = "1.5px solid #E58808";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(229, 136, 8, 0.4)";
+      subtitleColor = "#cbd5e1";
+    } else if (currentThemeSlug === "cwc-19") {
+      accentColor = "#02B3E4";
+      circleBg = "#040c18";
+      circleBorder = "#02B3E4";
+      circleShadow = "0 0 18px rgba(2, 179, 228, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #040c18 0%, #07152B 100%)";
+      barBorder = "1.5px solid #02B3E4";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(2, 179, 228, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "champions-trophy-2025") {
+      accentColor = "#03A360";
+      circleBg = "#060c1c";
+      circleBorder = "#03A360";
+      circleShadow = "0 0 18px rgba(3, 163, 96, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #060c1c 0%, #0A122A 100%)";
+      barBorder = "1.5px solid #03A360";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(3, 163, 96, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024") {
+      accentColor = "#0373AF";
+      circleBg = "#0d0c1c";
+      circleBorder = "#0373AF";
+      circleShadow = "0 0 18px rgba(3, 115, 175, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #0d0c1c 0%, #14122A 100%)";
+      barBorder = "1.5px solid #0373AF";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(3, 115, 175, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "wcl-fancode") {
+      accentColor = "#0284C7";
+      circleBg = "#111827";
+      circleBorder = "#0284C7";
+      circleShadow = "0 0 18px rgba(2, 132, 199, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #111827 0%, #1F2937 100%)";
+      barBorder = "1.5px solid #0284C7";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(2, 132, 199, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "cwc-23-india") {
+      accentColor = "#D946EF";
+      circleBg = "#050414";
+      circleBorder = "#D946EF";
+      circleShadow = "0 0 18px rgba(217, 70, 239, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #050414 0%, #080721 100%)";
+      barBorder = "1.5px solid #D946EF";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(217, 70, 239, 0.4)";
+      subtitleColor = "#f5d0fe";
+    } else if (currentThemeSlug === "bbl-black") {
+      accentColor = "#ec4899";
+      circleBg = "#16053b";
+      circleBorder = "#ec4899";
+      circleShadow = "0 0 18px rgba(236, 72, 153, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #16053b 0%, #22095A 100%)";
+      barBorder = "1.5px solid #ec4899";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(236, 72, 153, 0.4)";
+      subtitleColor = "#f472b6";
+    } else if (currentThemeSlug === "cricfusion") {
+      accentColor = "#CC271F";
+      circleBg = "#0a0203";
+      circleBorder = "#CC271F";
+      circleShadow = "0 0 18px rgba(204, 39, 31, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #0a0203 0%, #120406 100%)";
+      barBorder = "1.5px solid #CC271F";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(204, 39, 31, 0.4)";
+      subtitleColor = "#f87171";
+    } else if (currentThemeSlug === "t20-emerging-asia-cup") {
+      accentColor = "#facc15";
+      circleBg = "#07173e";
+      circleBorder = "#facc15";
+      circleShadow = "0 0 18px rgba(250, 204, 21, 0.6)";
+      circleTextColor = "#facc15";
+      barBg = "linear-gradient(90deg, #07173e 0%, #0C2560 100%)";
+      barBorder = "1.5px solid #facc15";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(250, 204, 21, 0.4)";
+      subtitleColor = "#fde047";
+    } else if (currentThemeSlug === "sa20") {
+      accentColor = "#EBB509";
+      circleBg = "#0e0e03";
+      circleBorder = "#EBB509";
+      circleShadow = "0 0 18px rgba(235, 181, 9, 0.6)";
+      circleTextColor = "#EBB509";
+      barBg = "linear-gradient(90deg, #0e0e03 0%, #171705 100%)";
+      barBorder = "1.5px solid #EBB509";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(235, 181, 9, 0.4)";
+      subtitleColor = "#fde047";
+    } else if (currentThemeSlug === "jiocinema" || currentThemeSlug === "geo-cinema") {
+      accentColor = "#db2777";
+      circleBg = "#070b14";
+      circleBorder = "#db2777";
+      circleShadow = "0 0 18px rgba(219, 39, 119, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #070b14 0%, #0D1322 100%)";
+      barBorder = "1.5px solid #db2777";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(219, 39, 119, 0.4)";
+      subtitleColor = "#f472b6";
+    } else if (currentThemeSlug === "ipl") {
+      accentColor = "#F3A714";
+      circleBg = "#060b1e";
+      circleBorder = "#F3A714";
+      circleShadow = "0 0 18px rgba(243, 167, 20, 0.6)";
+      circleTextColor = "#fbbf24";
+      barBg = "linear-gradient(90deg, #060b1e 0%, #0A112E 100%)";
+      barBorder = "1.5px solid #F3A714";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(243, 167, 20, 0.4)";
+      subtitleColor = "#cbd5e1";
+    } else if (currentThemeSlug === "bbl-starsports") {
+      accentColor = "#00a0e9";
+      circleBg = "#000c36";
+      circleBorder = "#00a0e9";
+      circleShadow = "0 0 18px rgba(0, 160, 233, 0.6)";
+      circleTextColor = "#ffffff";
+      barBg = "linear-gradient(90deg, #000c36 0%, #00144e 100%)";
+      barBorder = "1.5px solid #00a0e9";
+      barShadow = "0 8px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0, 160, 233, 0.4)";
+      subtitleColor = "#94a3b8";
+    } else if (currentThemeSlug === "ipl-2025") {
+      accentColor = "#c8e63c";
+      circleBg = "#040e32";
+      circleBorder = "#c8e63c";
+      circleShadow = "0 0 20px #c8e63c, inset 0 0 10px rgba(200, 230, 60, 0.3)";
+      circleTextColor = "#c8e63c";
+      barBg = "linear-gradient(90deg, #040e32 0%, #030a24 50%, #02071d 100%)";
+      barBorder = "1.5px solid #c8e63c";
+      barShadow = "0 8px 32px rgba(0,0,0,0.8), 0 0 24px rgba(200, 230, 60, 0.4)";
+      subtitleColor = "#bef264";
+    }
+
+    const teamCrestText = (() => {
+      const str = currentMatch?.tournamentName || "TOUR";
+      const words = str.trim().split(/\s+/).filter(Boolean);
+      if (words.length === 1) return str.slice(0, 4).toUpperCase();
+      return words.map((w: string) => w[0]).join("").slice(0, 4).toUpperCase();
+    })();
+
+    return (
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        position: "relative",
+        zIndex: 20,
+        padding: "4px 0"
+      }}>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+          zIndex: 10
+        }}>
+          {/* Left glowing circle crest matching screenshot */}
+          <div style={{
+            width: isGreenTheme ? "76px" : "52px",
+            height: isGreenTheme ? "76px" : "52px",
+            borderRadius: "50%",
+            background: circleBg,
+            border: isGreenTheme ? `3.5px solid ${circleBorder}` : `3px solid ${circleBorder}`,
+            boxShadow: circleShadow,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 12,
+            marginRight: isGreenTheme ? "-20px" : "-14px",
+            flexShrink: 0
+          }}>
+            <span style={{
+              color: circleTextColor,
+              fontSize: isGreenTheme ? "15px" : "12px",
+              fontWeight: 950,
+              letterSpacing: "0.5px",
+              textTransform: "uppercase"
+            }}>
+              {teamCrestText}
+            </span>
+          </div>
+
+          {/* Main Horizontal Rounded Box matching screenshot */}
+          <div style={{
+            background: barBg,
+            border: barBorder,
+            borderRadius: isGreenTheme ? "18px" : "10px",
+            boxShadow: barShadow,
+            padding: isGreenTheme ? "8px 24px 8px 34px" : "5px 18px 5px 28px",
+            minHeight: isGreenTheme ? "80px" : "auto",
+            minWidth: isGreenTheme ? "520px" : "360px",
+            maxWidth: isGreenTheme ? "680px" : "500px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: isGreenTheme ? "4px" : "2px",
+            position: "relative",
+            overflow: "hidden"
+          }}>
+            {/* Top row: Name & Boundaries score */}
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "12px" }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{
+                  color: accentColor,
+                  fontSize: isGreenTheme ? "16px" : "13.5px",
+                  fontWeight: 950,
+                  letterSpacing: "0.8px",
+                  textTransform: "uppercase",
+                  lineHeight: 1.1
+                }}>
+                  TOURNAMENT BOUNDARIES
+                </span>
+                <span style={{
+                  color: subtitleColor,
+                  fontSize: isGreenTheme ? "10px" : "8.5px",
+                  fontWeight: 800,
+                  letterSpacing: "1.2px",
+                  textTransform: "uppercase",
+                  marginTop: "1px",
+                  opacity: 0.9
+                }}>
+                  {currentMatch?.tournamentName ? `${currentMatch.tournamentName} • ALL TEAMS (4s & 6s)` : "ALL TEAMS COMBINED • 4s & 6s"}
+                </span>
+              </div>
+
+              {/* Right side: Highlight Number */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", flexShrink: 0 }}>
+                <span style={{
+                  color: accentColor,
+                  fontSize: isGreenTheme ? "26px" : "18px",
+                  fontWeight: 950,
+                  lineHeight: 1,
+                  fontFamily: isGreenTheme ? "'Teko', sans-serif" : undefined
+                }}>
+                  {tourTotalBoundaries}
+                </span>
+                <span style={{
+                  color: "#cbd5e1",
+                  fontSize: isGreenTheme ? "11px" : "9px",
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px"
+                }}>
+                  BOUNDARIES
+                </span>
+              </div>
+            </div>
+
+            {/* Bottom row: FOURS X | SIXES Y | TOTAL Z */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: isGreenTheme ? "14px" : "10px",
+              borderTop: "1px solid rgba(255,255,255,0.12)",
+              paddingTop: isGreenTheme ? "5px" : "3px",
+              marginTop: isGreenTheme ? "3px" : "2px",
+              fontSize: isGreenTheme ? "12px" : "10px",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: "0.5px"
+            }}>
+              <div style={{ color: subtitleColor }}>
+                FOURS <span style={{ color: accentColor, fontWeight: 950, marginLeft: "4px" }}>{tourTotalFours}</span>
+              </div>
+              <span style={{ opacity: 0.35, color: "#ffffff" }}>|</span>
+              <div style={{ color: subtitleColor }}>
+                SIXES <span style={{ color: accentColor, fontWeight: 950, marginLeft: "4px" }}>{tourTotalSixes}</span>
+              </div>
+              <span style={{ opacity: 0.35, color: "#ffffff" }}>|</span>
+              <div style={{ color: subtitleColor }}>
+                TOTAL <span style={{ color: "#ffffff", fontWeight: 950, marginLeft: "4px" }}>{tourTotalBoundaries}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ════════════════════ SCOREBOARD MARQUEE TICKER ANIMATION (ALL 16 THEMES) ════════════════════
   const renderScoreboardMarqueeRibbon = (
     currentThemeSlug: string,
@@ -7574,7 +8205,19 @@ export default function OverlayPage() {
     bowlerObj: any
   ) => {
     const anim = (currentScoringState.animation || (currentScoringState.decision === "OUT" ? "OUT" : currentScoringState.decision === "NOT OUT" ? "NOT OUT" : currentScoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
-    if (!anim) return null;
+
+    const isTourBoundaries = anim === "TOUR BOUNDARIES" || anim === "BOUNDARIES" || ds === "TOUR" || ds === "TOURNAME" || ds === "TOUR BOUNDARIES" || ds === "BOUNDARIES" || ds === "TOURNAMENT BOUNDARIES";
+    if (isTourBoundaries) {
+      return renderScoreboardTourBoundariesRibbon(currentThemeSlug, currentMatch, tournamentMatches);
+    }
+
+    const isMatchNotStarted = ds === "TOSS" || ds === "PRE-MATCH" || ds === "PREMATCH" || ds === "TOSS / TEAMS" || ds === "TOSS INFO" || currentMatch?.status === "Not Started" || (!currentScoringState?.inningsStarted && (currentScoringState?.balls === 0 || !currentScoringState?.balls) && (currentScoringState?.score === 0 || !currentScoringState?.score));
+    if (!anim) {
+      if (isMatchNotStarted) {
+        return renderScoreboardPreMatchRibbon(currentThemeSlug, currentMatch);
+      }
+      return null;
+    }
 
     let marqueeWord = anim;
     if (anim === "FOUR" || anim === "4" || anim === "4S" || anim === "FOUR!") marqueeWord = "FOUR";
@@ -7584,7 +8227,6 @@ export default function OverlayPage() {
     else if (anim === "FREE HIT" || anim === "FREE_HIT" || anim === "FREEHIT") marqueeWord = "FREE HIT";
     else if (anim === "HAT-TRICK BALL" || anim === "HAT-TRICK" || anim === "HATTRICK") marqueeWord = "HAT-TRICK";
     else if (anim === "POWERPLAY" || anim === "PP") marqueeWord = "POWERPLAY";
-    else if (anim === "TOUR BOUNDARIES" || anim === "BOUNDARIES") marqueeWord = "BOUNDARIES";
     else if (anim === "REVIEW" || anim === "PENDING" || anim === "DRS") marqueeWord = "DRS REVIEW";
 
     const marqueeRepeated = Array(12).fill(marqueeWord).join("       ");
@@ -7783,9 +8425,9 @@ export default function OverlayPage() {
     const bowlTeamShort = getShortLocal(bowlTeam);
 
     const isGreenTheme = currentThemeSlug === "crioverlay-green";
-    const ribbonHeight = isGreenTheme ? "88px" : "62px";
-    const marqueeFontSize = isGreenTheme ? "56px" : "44px";
-    const badgeSize = isGreenTheme ? "64px" : "46px";
+    const ribbonHeight = isGreenTheme ? "80px" : "62px";
+    const marqueeFontSize = isGreenTheme ? "52px" : "44px";
+    const badgeSize = isGreenTheme ? "68px" : "46px";
 
     return (
       <div style={{
@@ -7996,7 +8638,7 @@ export default function OverlayPage() {
       @import url('https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Montserrat:wght@700;800;900&display=swap');
       html,body{background:transparent!important;overflow:hidden;}
       *{box-sizing:border-box;margin:0;padding:0;}
-      .g-canvas{position:relative;width:100vw;height:100vh;background:transparent;display:flex;flex-direction:column;justify-content:flex-end;padding:20px 16px;overflow:hidden;font-family:'Montserrat',sans-serif;}
+      .g-canvas{position:relative;width:100vw;height:100vh;background:transparent;display:flex;flex-direction:column;justify-content:flex-end;padding:0 16px 10px;overflow:hidden;font-family:'Montserrat',sans-serif;}
       .g-bar{display:flex;align-items:flex-end;justify-content:stretch;width:100%;}
       .g-badge{width:72px;height:72px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;z-index:30;margin-bottom:3px;flex-shrink:0;}
       .g-badge-l{background:radial-gradient(circle,#eab308 0%,#854d0e 70%,#000 100%);margin-right:-16px;}
@@ -8026,7 +8668,7 @@ export default function OverlayPage() {
     `;
 
     return (
-      <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 15, overflow: "hidden" }}>
+      <div style={{ position: "relative", width: "100%", height: "100vh", background: "transparent", display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 0, overflow: "hidden" }}>
         <style>{GREEN_CSS}</style>
         <style>{GLOBAL_CSS}</style>
         {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}
@@ -8137,7 +8779,7 @@ export default function OverlayPage() {
     const totalSixes = (scoringState.batsmen || []).reduce((a, b) => a + (b.sixes || 0), 0);
 
     return (
-      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 20px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
+      <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: isPreview ? "center" : "flex-end", padding: isPreview ? "80px 0 28px" : "0 0 6px", fontFamily: "'Outfit', sans-serif", overflow: "hidden" }}>
         <style>{GLOBAL_CSS}</style>
         <GroundBG bgUrl={theme.bgUrl} />
 
@@ -8318,13 +8960,8 @@ export default function OverlayPage() {
           </div>
         ) : (
           /* Match not started */
-          <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "linear-gradient(135deg, #0a1128 0%, #001f54 100%)", border: "2px solid #f59e0b", borderRadius: 14, padding: "28px 40px", textAlign: "center", boxShadow: "0 16px 32px rgba(0,0,0,0.6)" }}>
-            <div style={{ color: "#f59e0b", fontWeight: 950, fontSize: "18px", letterSpacing: "2.5px" }}>
-              🏏 {match.team1Name.toUpperCase()} vs {match.team2Name.toUpperCase()}
-            </div>
-            <div style={{ color: "#cbd5e1", fontSize: "10px", fontWeight: "700", marginTop: "6px", letterSpacing: "2.5px" }}>
-              MATCH NOT STARTED
-            </div>
+          <div className="slide-up" style={{ width: "94vw", maxWidth: "1060px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
+            {renderScoreboardPreMatchRibbon("asia-cup", match)}
           </div>
         )}
       </div>
