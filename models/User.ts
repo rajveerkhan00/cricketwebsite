@@ -22,6 +22,11 @@ const UserSchema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "approved",
+    },
     restricted: {
       type: Boolean,
       default: false,

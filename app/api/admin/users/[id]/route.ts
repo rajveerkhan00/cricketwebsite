@@ -25,7 +25,7 @@ export async function PUT(
   }
 
   try {
-    const { name, email, password, role } = await req.json();
+    const { name, email, password, role, status } = await req.json();
 
     if (!name || !email) {
       return NextResponse.json({ message: "Name and email are required." }, { status: 400 });
@@ -57,6 +57,10 @@ export async function PUT(
       role: role === "admin" ? "admin" : "user",
     };
 
+    if (status && ["pending", "approved", "rejected"].includes(status)) {
+      updateData.status = status;
+    }
+
     // Only hash & update password if a new one was provided
     if (password && password.trim().length > 0) {
       updateData.password = await bcrypt.hash(password, 12);
@@ -81,7 +85,7 @@ export async function PUT(
   }
 }
 
-// PATCH /api/admin/users/[id] — toggle restricted status
+// PATCH /api/admin/users/[id] — update restricted status or approval status
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -93,17 +97,29 @@ export async function PATCH(
   }
 
   try {
-    const { restricted } = await req.json();
+    const { restricted, status } = await req.json();
     await connectDB();
 
     const currentUserId = (session.user as any).id;
-    if (id === currentUserId) {
+    if (id === currentUserId && restricted !== undefined) {
       return NextResponse.json({ message: "You cannot restrict your own account." }, { status: 400 });
+    }
+
+    const updateData: Record<string, any> = {};
+    if (restricted !== undefined) {
+      updateData.restricted = restricted;
+    }
+    if (status !== undefined && ["pending", "approved", "rejected"].includes(status)) {
+      updateData.status = status;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json({ message: "No valid fields to update." }, { status: 400 });
     }
 
     const user = await User.findByIdAndUpdate(
       id,
-      { restricted },
+      updateData,
       { new: true, select: "-password" }
     );
 
@@ -111,13 +127,15 @@ export async function PATCH(
       return NextResponse.json({ message: "User not found." }, { status: 404 });
     }
 
-    return NextResponse.json(
-      {
-        message: `User ${restricted ? "restricted" : "unrestricted"} successfully.`,
-        user,
-      },
-      { status: 200 }
-    );
+    let message = "User updated successfully.";
+    if (status === "approved") message = `User "${user.name}" has been approved.`;
+    else if (status === "rejected") message = `User "${user.name}" has been rejected.`;
+    else if (status === "pending") message = `User "${user.name}" status set to pending.`;
+    else if (restricted !== undefined) {
+      message = `User ${restricted ? "restricted" : "unrestricted"} successfully.`;
+    }
+
+    return NextResponse.json({ message, user }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ message: "Failed to update user.", error: error.message }, { status: 500 });
   }

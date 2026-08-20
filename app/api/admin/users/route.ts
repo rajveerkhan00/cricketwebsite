@@ -61,6 +61,7 @@ export async function POST(req: Request) {
       email: normalizedEmail,
       password: hashedPassword,
       role: role === "admin" ? "admin" : "user",
+      status: "approved",
       restricted: false,
     });
 

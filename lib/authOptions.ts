@@ -34,11 +34,16 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Your account has been restricted. Please contact the administrator.");
         }
 
+        if (user.status === "rejected") {
+          throw new Error("Your account registration has been rejected. Please contact the administrator.");
+        }
+
         return {
           id: user._id.toString(),
           name: user.name,
           email: user.email,
           role: user.role ?? "user",
+          status: user.status ?? "approved",
         };
       },
     }),
@@ -52,6 +57,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = (user as any).role ?? "user";
+        token.status = (user as any).status ?? "approved";
       }
       return token;
     },
@@ -59,6 +65,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         (session.user as any).id = token.id as string;
         (session.user as any).role = token.role as string;
+        (session.user as any).status = token.status as string;
       }
       return session;
     },

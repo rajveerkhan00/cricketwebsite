@@ -11,6 +11,7 @@ interface UserRecord {
   name: string;
   email: string;
   role: "user" | "admin";
+  status: "pending" | "approved" | "rejected";
   restricted: boolean;
   createdAt: string;
 }
@@ -265,6 +266,7 @@ function EditUserModal({
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"user" | "admin">(user.role);
+  const [status, setStatus] = useState<"pending" | "approved" | "rejected">(user.status || "approved");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -279,7 +281,7 @@ function EditUserModal({
       const res = await fetch(`/api/admin/users/${user._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password: password || undefined, role }),
+        body: JSON.stringify({ name, email, password: password || undefined, role, status }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -374,6 +376,20 @@ function EditUserModal({
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Account Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as "pending" | "approved" | "rejected")}
+              disabled={loading}
+              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="pending">Pending (Awaiting Approval)</option>
+              <option value="approved">Approved (Active)</option>
+              <option value="rejected">Rejected</option>
             </select>
           </div>
 
@@ -1442,6 +1458,7 @@ export default function AdminDashboard() {
   const [deleteTarget, setDeleteTarget] = useState<UserRecord | null>(null);
   const [editTarget, setEditTarget] = useState<UserRecord | null>(null);
   const [restrictingId, setRestrictingId] = useState<string | null>(null);
+  const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [hasFetchedUsers, setHasFetchedUsers] = useState(false);
 
@@ -1604,6 +1621,29 @@ export default function AdminDashboard() {
     }
   };
 
+  // Approve / Reject / Pending status change
+  const handleStatusChange = async (user: UserRecord, newStatus: "pending" | "approved" | "rejected") => {
+    setUpdatingStatusId(user._id);
+    try {
+      const res = await fetch(`/api/admin/users/${user._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Failed to update user status.");
+      } else {
+        toast.success(data.message || `User status updated to ${newStatus}.`);
+        fetchUsers();
+      }
+    } catch {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setUpdatingStatusId(null);
+    }
+  };
+
   // Payment Status / Delete Handlers
   const handleUpdatePaymentStatus = async (paymentId: string, newStatus: "approved" | "rejected") => {
     setUpdatingPaymentId(paymentId);
@@ -1647,7 +1687,8 @@ export default function AdminDashboard() {
   );
 
   const totalUsers = users.length;
-  const totalRestricted = users.filter((u) => u.restricted).length;
+  const totalPending = users.filter((u) => u.status === "pending").length;
+  const totalRestricted = users.filter((u) => u.restricted || u.status === "rejected").length;
   const totalAdmins = users.filter((u) => u.role === "admin").length;
 
   if (status === "loading") {
@@ -1800,7 +1841,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-5 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
               {[
                 {
                   label: "Total Users",
@@ -1814,7 +1855,18 @@ export default function AdminDashboard() {
                   glow: "shadow-blue-500/20",
                 },
                 {
-                  label: "Restricted",
+                  label: "Pending Approval",
+                  value: totalPending,
+                  icon: (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ),
+                  color: "from-amber-500 to-orange-600",
+                  glow: "shadow-amber-500/20",
+                },
+                {
+                  label: "Restricted / Rejected",
                   value: totalRestricted,
                   icon: (
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1832,8 +1884,8 @@ export default function AdminDashboard() {
                       <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
                     </svg>
                   ),
-                  color: "from-amber-500 to-orange-600",
-                  glow: "shadow-amber-500/20",
+                  color: "from-emerald-500 to-teal-600",
+                  glow: "shadow-emerald-500/20",
                 },
               ].map((stat) => (
                 <div key={stat.label} className="bg-[#07092e] border border-white/5 rounded-2xl p-5 flex items-center gap-4">
@@ -1919,14 +1971,30 @@ export default function AdminDashboard() {
                               </span>
                             </td>
                             <td className="px-6 py-4">
-                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide ${
-                                user.restricted
-                                  ? "bg-red-500/15 text-red-400 border border-red-500/30"
-                                  : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              }`}>
-                                <span className={`w-1.5 h-1.5 rounded-full ${user.restricted ? "bg-red-400" : "bg-emerald-400"}`} />
-                                {user.restricted ? "RESTRICTED" : "ACTIVE"}
-                              </span>
+                              <div className="flex flex-col gap-1.5">
+                                {user.status === "approved" && (
+                                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide w-fit ${
+                                    user.restricted
+                                      ? "bg-red-500/15 text-red-400 border border-red-500/30"
+                                      : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                  }`}>
+                                    <span className={`w-1.5 h-1.5 rounded-full ${user.restricted ? "bg-red-400" : "bg-emerald-400"}`} />
+                                    {user.restricted ? "RESTRICTED" : "APPROVED"}
+                                  </span>
+                                )}
+                                {user.status === "pending" && (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide w-fit bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                                    PENDING APPROVAL
+                                  </span>
+                                )}
+                                {user.status === "rejected" && (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide w-fit bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                    REJECTED
+                                  </span>
+                                )}
+                              </div>
                             </td>
                             <td className="px-6 py-4">
                               <span className="text-zinc-500 text-xs">
@@ -1938,7 +2006,46 @@ export default function AdminDashboard() {
                               </span>
                             </td>
                             <td className="px-6 py-4">
-                              <div className="flex items-center justify-end gap-2">
+                              <div className="flex items-center justify-end gap-2 flex-wrap">
+                                {user.status === "pending" && (
+                                  <>
+                                    <button
+                                      onClick={() => handleStatusChange(user, "approved")}
+                                      disabled={isCurrentAdmin || updatingStatusId === user._id}
+                                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
+                                        isCurrentAdmin || updatingStatusId === user._id
+                                          ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
+                                          : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20"
+                                      }`}
+                                    >
+                                      {updatingStatusId === user._id ? "..." : "Approve"}
+                                    </button>
+                                    <button
+                                      onClick={() => handleStatusChange(user, "rejected")}
+                                      disabled={isCurrentAdmin || updatingStatusId === user._id}
+                                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
+                                        isCurrentAdmin || updatingStatusId === user._id
+                                          ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
+                                          : "bg-rose-500/15 text-rose-400 hover:bg-rose-500/25 border border-rose-500/20"
+                                      }`}
+                                    >
+                                      {updatingStatusId === user._id ? "..." : "Reject"}
+                                    </button>
+                                  </>
+                                )}
+                                {user.status !== "pending" && (
+                                  <button
+                                    onClick={() => handleStatusChange(user, "pending")}
+                                    disabled={isCurrentAdmin || updatingStatusId === user._id}
+                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
+                                      isCurrentAdmin || updatingStatusId === user._id
+                                        ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
+                                        : "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20"
+                                    }`}
+                                  >
+                                    {updatingStatusId === user._id ? "..." : "Set Pending"}
+                                  </button>
+                                )}
                                 <button
                                   onClick={() => setEditTarget(user)}
                                   className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"
@@ -1956,7 +2063,7 @@ export default function AdminDashboard() {
                                       : "bg-orange-500/15 text-orange-400 hover:bg-orange-500/25 border border-orange-500/20"
                                   }`}
                                 >
-                                  {user.restricted ? "Unrestrict" : "Restrict"}
+                                  {user.restricted ? "Unblock" : "Block"}
                                 </button>
                                 <button
                                   onClick={() => setDeleteTarget(user)}

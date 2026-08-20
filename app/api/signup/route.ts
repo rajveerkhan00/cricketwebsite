@@ -39,10 +39,12 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Create user in the database (admin database is targeted by MONGODB_URI)
+    // Self-registered users are auto-approved. Admin can change status later.
     const newUser = await User.create({
       name: name.trim(),
       email: normalizedEmail,
       password: hashedPassword,
+      status: "approved",
     });
 
     return NextResponse.json(

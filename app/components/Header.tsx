@@ -102,9 +102,15 @@ export default function Header() {
             <>
               <Link
                 href="/login"
-                className="border border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-sm tracking-wider py-2 px-6 rounded-full transition-all duration-200 active:scale-95 shadow-xs"
+                className="border border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold text-sm tracking-wider py-2 px-5 rounded-full transition-all duration-200 active:scale-95 shadow-xs"
               >
                 LOGIN
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-sm tracking-wider py-2 px-5 rounded-full transition-all duration-200 active:scale-95 shadow-md shadow-amber-500/20"
+              >
+                SIGNUP
               </Link>
             </>
           )}
@@ -187,6 +193,13 @@ export default function Header() {
                   className="w-full text-center py-2.5 rounded-full border border-slate-300 hover:border-slate-400 text-slate-800 font-bold text-sm tracking-wide bg-slate-50 hover:bg-slate-100 transition-colors"
                 >
                   LOGIN
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-sm tracking-wide shadow-md shadow-amber-500/20 transition-all"
+                >
+                  SIGNUP
                 </Link>
               </>
             )}
