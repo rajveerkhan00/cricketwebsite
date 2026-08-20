@@ -408,8 +408,8 @@ const GLOBAL_CSS = `
   }
   .slide-up {
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    zoom: 1.35 !important;
-    width: 73vw !important;
+    zoom: 1.48 !important;
+    width: 67vw !important;
   }
   .animate-slide-up {
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -1609,30 +1609,30 @@ export default function OverlayPage() {
       const bestVal = `${wicketsVal} - ${runsConcVal} (${Math.floor(ballsBowledVal / bpo)})`;
       const teamNameVal = currentBowlTeam;
 
-        const isCri = themeSlug === "crioverlay-green";
-        const isWcl = themeSlug === "wcl-fancode";
-        const isCwc19 = themeSlug === "cwc-19";
-        const isCt25 = themeSlug === "champions-trophy-2025";
-        const isFusion = themeSlug === "cricfusion";
-        const isSa20 = themeSlug === "sa20";
-        const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
-        const isEac = themeSlug === "t20-emerging-asia-cup";
-        const isAsia = themeSlug === "asia-cup";
-        const isCwc = themeSlug === "cwc-25-india" || themeSlug === "wt20-2024";
-        const isCwc23 = themeSlug === "cwc-23-india";
-        const isBblBlack = themeSlug === "bbl-black";
-        const isIpl = themeSlug === "ipl";
-        const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
-        const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
-        const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
-        const ballStroke = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
-        const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
-        const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
-        const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
-        const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
+      const isCri = themeSlug === "crioverlay-green";
+      const isWcl = themeSlug === "wcl-fancode";
+      const isCwc19 = themeSlug === "cwc-19";
+      const isCt25 = themeSlug === "champions-trophy-2025";
+      const isFusion = themeSlug === "cricfusion";
+      const isSa20 = themeSlug === "sa20";
+      const isGeo = themeSlug === "jiocinema" || themeSlug === "geo-cinema";
+      const isEac = themeSlug === "t20-emerging-asia-cup";
+      const isAsia = themeSlug === "asia-cup";
+      const isCwc = themeSlug === "cwc-25-india" || themeSlug === "wt20-2024";
+      const isCwc23 = themeSlug === "cwc-23-india";
+      const isBblBlack = themeSlug === "bbl-black";
+      const isIpl = themeSlug === "ipl";
+      const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
+      const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
+      const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
+      const ballStroke = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
+      const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
+      const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
+      const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
+      const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
 
       return (
         <div
@@ -7783,9 +7783,9 @@ export default function OverlayPage() {
     const bowlTeamShort = getShortLocal(bowlTeam);
 
     const isGreenTheme = currentThemeSlug === "crioverlay-green";
-    const ribbonHeight = isGreenTheme ? "80px" : "56px";
-    const marqueeFontSize = isGreenTheme ? "54px" : "42px";
-    const badgeSize = isGreenTheme ? "62px" : "44px";
+    const ribbonHeight = isGreenTheme ? "88px" : "62px";
+    const marqueeFontSize = isGreenTheme ? "56px" : "44px";
+    const badgeSize = isGreenTheme ? "64px" : "46px";
 
     return (
       <div style={{
@@ -9354,273 +9354,273 @@ export default function OverlayPage() {
                     top: "-24px",
                     left: "50%",
                     transform: "translateX(-50%)",
-                background: "linear-gradient(135deg, #1e3a8a 0%, #172554 100%)",
-                border: "1.5px solid #38bdf8",
-                borderRadius: "4px",
-                padding: "2px 14px",
-                color: "#ffffff",
-                fontSize: "10.5px",
-                fontWeight: "900",
-                letterSpacing: "0.8px",
-                zIndex: 10,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.4)"
-              }}>
-                TARGET: <span style={{ color: "#38bdf8" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
-              </div>
-            )}
-
-            {/* Symmetrical 3-Column Scoreboard Bar (Left Wing | DEAD CENTER LIVE HUB | Right Wing) */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr auto 1fr",
-              alignItems: "stretch",
-              height: "58px",
-              background: "#111827",
-              overflow: "hidden",
-              border: "1.5px solid rgba(255, 255, 255, 0.15)",
-              borderRadius: "6px",
-              boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
-              boxSizing: "border-box"
-            }}>
-
-              {/* LEFT WING: Batting Team + Score + Batsmen */}
-              <div style={{ display: "flex", alignItems: "stretch", minWidth: 0, height: "100%" }}>
-                {/* Batting Team Badge */}
-                <div style={{
-                  background: "#1f2937",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 14px 0 16px",
-                  minWidth: "130px",
-                  position: "relative",
-                  flexShrink: 0
-                }}>
-                  <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "5px", background: "#0ea5e9" }} />
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", textTransform: "uppercase" }}>{currentBatTeam}</span>
-                      <span style={{ color: "#94a3b8", fontWeight: "850", fontSize: "11px" }}>{batTeamShort}</span>
-                    </div>
-                    <span style={{ color: "#cbd5e1", fontSize: "9.5px", fontWeight: "700", fontStyle: "italic" }}>v {bowlTeamShort}</span>
-                  </div>
-                </div>
-
-                {/* Score Box & Overs */}
-                <div style={{
-                  background: "#111827",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 12px",
-                  borderLeft: "1px solid rgba(255,255,255,0.1)",
-                  borderRight: "1px solid rgba(255,255,255,0.1)",
-                  gap: "10px",
-                  flexShrink: 0
-                }}>
-                  <div style={{
-                    background: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
-                    padding: "5px 12px",
+                    background: "linear-gradient(135deg, #1e3a8a 0%, #172554 100%)",
+                    border: "1.5px solid #38bdf8",
                     borderRadius: "4px",
+                    padding: "2px 14px",
+                    color: "#ffffff",
+                    fontSize: "10.5px",
+                    fontWeight: "900",
+                    letterSpacing: "0.8px",
+                    zIndex: 10,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.4)"
+                  }}>
+                    TARGET: <span style={{ color: "#38bdf8" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
+                  </div>
+                )}
+
+                {/* Symmetrical 3-Column Scoreboard Bar (Left Wing | DEAD CENTER LIVE HUB | Right Wing) */}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
+                  alignItems: "stretch",
+                  height: "58px",
+                  background: "#111827",
+                  overflow: "hidden",
+                  border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                  borderRadius: "6px",
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.6)",
+                  boxSizing: "border-box"
+                }}>
+
+                  {/* LEFT WING: Batting Team + Score + Batsmen */}
+                  <div style={{ display: "flex", alignItems: "stretch", minWidth: 0, height: "100%" }}>
+                    {/* Batting Team Badge */}
+                    <div style={{
+                      background: "#1f2937",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "0 14px 0 16px",
+                      minWidth: "130px",
+                      position: "relative",
+                      flexShrink: 0
+                    }}>
+                      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "5px", background: "#0ea5e9" }} />
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
+                          <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", textTransform: "uppercase" }}>{currentBatTeam}</span>
+                          <span style={{ color: "#94a3b8", fontWeight: "850", fontSize: "11px" }}>{batTeamShort}</span>
+                        </div>
+                        <span style={{ color: "#cbd5e1", fontSize: "9.5px", fontWeight: "700", fontStyle: "italic" }}>v {bowlTeamShort}</span>
+                      </div>
+                    </div>
+
+                    {/* Score Box & Overs */}
+                    <div style={{
+                      background: "#111827",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "0 12px",
+                      borderLeft: "1px solid rgba(255,255,255,0.1)",
+                      borderRight: "1px solid rgba(255,255,255,0.1)",
+                      gap: "10px",
+                      flexShrink: 0
+                    }}>
+                      <div style={{
+                        background: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+                        padding: "5px 12px",
+                        borderRadius: "4px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minWidth: "75px",
+                        boxShadow: "0 2px 6px rgba(14,165,233,0.4)"
+                      }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "21px", lineHeight: 1, letterSpacing: "0.5px" }}>
+                          {scoringState.score}-{scoringState.wickets}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "13px", lineHeight: 1.1 }}>
+                          {fmtOv(scoringState.balls, match.ballsPerOver)}
+                          <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.7)", fontWeight: 700 }}>/{match.overs}</span>
+                        </span>
+                        {scoringState.target !== null && (
+                          <span style={{ color: "#38bdf8", fontSize: "8.5px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px" }}>
+                            TGT: {scoringState.target}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Batsmen Area */}
+                    <div style={{
+                      background: "#0284c7",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      padding: "0 14px",
+                      flex: 1,
+                      minWidth: "160px"
+                    }}>
+                      {/* Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: "2px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1, marginRight: "6px" }}>
+                          <span style={{ color: "#ffffff", fontSize: "11px" }}>🏏</span>
+                          <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.striker || "—"}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", color: "#ffffff", fontWeight: "950", fontSize: "13.5px", flexShrink: 0 }}>
+                          <span>{striker?.runs ?? 0}</span>
+                          <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "9.5px", fontWeight: "700" }}>({striker?.balls ?? 0})</span>
+                        </div>
+                      </div>
+                      {/* Non-Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "2px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", paddingLeft: "16px", minWidth: 0, flex: 1, marginRight: "6px" }}>
+                          <span style={{ color: "rgba(255,255,255,0.85)", fontWeight: "750", fontSize: "12px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.nonStriker || "—"}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", color: "rgba(255,255,255,0.85)", fontWeight: "800", fontSize: "12.5px", flexShrink: 0 }}>
+                          <span>{nonStriker?.runs ?? 0}</span>
+                          <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "9px", fontWeight: "600" }}>({nonStriker?.balls ?? 0})</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CENTER MODULE: DEAD CENTER LIVE STATUS & EVENT HUB */}
+                  <div style={{
+                    background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(180deg, #1e3a8a 0%, #172554 100%)",
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    minWidth: "75px",
-                    boxShadow: "0 2px 6px rgba(14,165,233,0.4)"
+                    padding: "0 18px",
+                    minWidth: "150px",
+                    borderLeft: "1.5px solid rgba(255,255,255,0.18)",
+                    borderRight: "1.5px solid rgba(255,255,255,0.18)",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 20px rgba(30,58,138,0.4)",
+                    flexShrink: 0,
+                    transition: "all 0.3s ease",
+                    zIndex: 2
                   }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "21px", lineHeight: 1, letterSpacing: "0.5px" }}>
-                      {scoringState.score}-{scoringState.wickets}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "13px", lineHeight: 1.1 }}>
-                      {fmtOv(scoringState.balls, match.ballsPerOver)}
-                      <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.7)", fontWeight: 700 }}>/{match.overs}</span>
-                    </span>
-                    {scoringState.target !== null && (
-                      <span style={{ color: "#38bdf8", fontSize: "8.5px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px" }}>
-                        TGT: {scoringState.target}
+                    {activeNotification ? (
+                      <span style={{
+                        color: getNotificationStyles(activeNotification).textColor,
+                        fontWeight: "950",
+                        fontSize: "12px",
+                        letterSpacing: "1px",
+                        textAlign: "center",
+                        textTransform: "uppercase",
+                        animation: "pulseGlow 1s ease-in-out infinite alternate"
+                      }}>
+                        {activeNotification}
                       </span>
+                    ) : scoringState.customInputText ? (
+                      <span style={{ color: "#38bdf8", fontWeight: "950", fontSize: "11px", letterSpacing: "0.8px", textTransform: "uppercase", textAlign: "center" }}>
+                        {scoringState.customInputText.toUpperCase()}
+                      </span>
+                    ) : need !== null ? (
+                      <>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "2px" }}>
+                          <span className="live-dot" style={{ width: "6.5px", height: "6.5px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+                          <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11px", letterSpacing: "1px" }}>
+                            NEED {need}
+                          </span>
+                        </div>
+                        <span style={{ color: "#93c5fd", fontSize: "9px", fontWeight: "850", letterSpacing: "0.5px" }}>
+                          FROM {bLeft ?? 0}b {rrr ? `(RRR ${rrr})` : ""}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "2px" }}>
+                          <span className="live-dot" style={{ width: "6.5px", height: "6.5px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+                          <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11.5px", letterSpacing: "1.5px" }}>
+                            LIVE
+                          </span>
+                        </div>
+                        <span style={{ color: "#38bdf8", fontSize: "9px", fontWeight: "900", letterSpacing: "0.6px" }}>
+                          CRR {calcRR(scoringState)}
+                        </span>
+                      </>
                     )}
                   </div>
-                </div>
 
-                {/* Batsmen Area */}
-                <div style={{
-                  background: "#0284c7",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  padding: "0 14px",
-                  flex: 1,
-                  minWidth: "160px"
-                }}>
-                  {/* Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: "2px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1, marginRight: "6px" }}>
-                      <span style={{ color: "#ffffff", fontSize: "11px" }}>🏏</span>
-                      <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {scoringState.striker || "—"}
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", color: "#ffffff", fontWeight: "950", fontSize: "13.5px", flexShrink: 0 }}>
-                      <span>{striker?.runs ?? 0}</span>
-                      <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "9.5px", fontWeight: "700" }}>({striker?.balls ?? 0})</span>
-                    </div>
-                  </div>
-                  {/* Non-Striker */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "2px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", paddingLeft: "16px", minWidth: 0, flex: 1, marginRight: "6px" }}>
-                      <span style={{ color: "rgba(255,255,255,0.85)", fontWeight: "750", fontSize: "12px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {scoringState.nonStriker || "—"}
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", color: "rgba(255,255,255,0.85)", fontWeight: "800", fontSize: "12.5px", flexShrink: 0 }}>
-                      <span>{nonStriker?.runs ?? 0}</span>
-                      <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "9px", fontWeight: "600" }}>({nonStriker?.balls ?? 0})</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  {/* RIGHT WING: Bowler Details & Outcomes + Bowling Team */}
+                  <div style={{ display: "flex", alignItems: "stretch", minWidth: 0, height: "100%", justifyContent: "flex-end" }}>
+                    {/* Bowler Details & outcomes */}
+                    <div style={{ background: "#1f2937", display: "flex", alignItems: "center", flex: 1, padding: "0 14px", minWidth: "180px" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "3px", flex: 1 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#ffffff", fontWeight: "900", fontSize: "12.5px" }}>
+                          <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.bowler || "—"}
+                          </span>
+                          <span style={{ flexShrink: 0, marginLeft: "6px" }}>
+                            {bowler?.wickets ?? 0}/{bowler?.runsConceded ?? 0}
+                            <span style={{ color: "#94a3b8", fontWeight: "700", fontSize: "9.5px", marginLeft: "4px" }}>
+                              ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                            </span>
+                          </span>
+                        </div>
+                        {/* Outcome list */}
+                        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+                          {(() => {
+                            const bpo = match?.ballsPerOver || 6;
+                            const thisOver = scoringState.thisOver || [];
+                            const extrasCount = thisOver.filter(isExtraBall).length;
+                            const totalCirclesCount = bpo + extrasCount;
+                            return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                              const val = thisOver[i];
+                              let cellBg = val ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)";
+                              let cellColor = "#ffffff";
+                              if (val === "4" || val === "4s" || val === "6" || val === "6s") cellBg = "#0284c7";
+                              else if (val === "W" || val?.startsWith("W+") || val === "Wk") cellBg = "#dc2626";
+                              else if (isExtraBall(val)) cellBg = "#7c3aed";
 
-              {/* CENTER MODULE: DEAD CENTER LIVE STATUS & EVENT HUB */}
-              <div style={{
-                background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(180deg, #1e3a8a 0%, #172554 100%)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px",
-                minWidth: "150px",
-                borderLeft: "1.5px solid rgba(255,255,255,0.18)",
-                borderRight: "1.5px solid rgba(255,255,255,0.18)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 20px rgba(30,58,138,0.4)",
-                flexShrink: 0,
-                transition: "all 0.3s ease",
-                zIndex: 2
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: getNotificationStyles(activeNotification).textColor,
-                    fontWeight: "950",
-                    fontSize: "12px",
-                    letterSpacing: "1px",
-                    textAlign: "center",
-                    textTransform: "uppercase",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate"
-                  }}>
-                    {activeNotification}
-                  </span>
-                ) : scoringState.customInputText ? (
-                  <span style={{ color: "#38bdf8", fontWeight: "950", fontSize: "11px", letterSpacing: "0.8px", textTransform: "uppercase", textAlign: "center" }}>
-                    {scoringState.customInputText.toUpperCase()}
-                  </span>
-                ) : need !== null ? (
-                  <>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "2px" }}>
-                      <span className="live-dot" style={{ width: "6.5px", height: "6.5px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11px", letterSpacing: "1px" }}>
-                        NEED {need}
-                      </span>
+                              return (
+                                <div key={i} style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "18px",
+                                  height: "18px",
+                                  background: cellBg,
+                                  border: val ? "none" : "1px solid rgba(255,255,255,0.1)",
+                                  borderRadius: "3px",
+                                  fontSize: val && val.length > 2 ? "7px" : "9.5px",
+                                  fontWeight: "950",
+                                  lineHeight: 1
+                                }}>
+                                  <span style={{ color: val ? cellColor : "transparent" }}>
+                                    {val === "." ? "" : renderOutcomeText(val, 18)}
+                                  </span>
+                                </div>
+                              );
+                            });
+                          })()}
+                        </div>
+                      </div>
                     </div>
-                    <span style={{ color: "#93c5fd", fontSize: "9px", fontWeight: "850", letterSpacing: "0.5px" }}>
-                      FROM {bLeft ?? 0}b {rrr ? `(RRR ${rrr})` : ""}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "2px" }}>
-                      <span className="live-dot" style={{ width: "6.5px", height: "6.5px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11.5px", letterSpacing: "1.5px" }}>
-                        LIVE
-                      </span>
-                    </div>
-                    <span style={{ color: "#38bdf8", fontSize: "9px", fontWeight: "900", letterSpacing: "0.6px" }}>
-                      CRR {calcRR(scoringState)}
-                    </span>
-                  </>
-                )}
-              </div>
 
-              {/* RIGHT WING: Bowler Details & Outcomes + Bowling Team */}
-              <div style={{ display: "flex", alignItems: "stretch", minWidth: 0, height: "100%", justifyContent: "flex-end" }}>
-                {/* Bowler Details & outcomes */}
-                <div style={{ background: "#1f2937", display: "flex", alignItems: "center", flex: 1, padding: "0 14px", minWidth: "180px" }}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "3px", flex: 1 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#ffffff", fontWeight: "900", fontSize: "12.5px" }}>
-                      <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {scoringState.bowler || "—"}
-                      </span>
-                      <span style={{ flexShrink: 0, marginLeft: "6px" }}>
-                        {bowler?.wickets ?? 0}/{bowler?.runsConceded ?? 0}
-                        <span style={{ color: "#94a3b8", fontWeight: "700", fontSize: "9.5px", marginLeft: "4px" }}>
-                          ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                    {/* Right Block: Bowling Team Name + Yellow Decoration */}
+                    <div style={{
+                      background: "#1f2937",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "0 16px 0 14px",
+                      minWidth: "130px",
+                      position: "relative",
+                      justifyContent: "flex-end",
+                      borderLeft: "1px solid rgba(255,255,255,0.1)",
+                      flexShrink: 0
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <div style={{ width: "22px", height: "22px", background: "#334155", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px", flexShrink: 0 }}>
+                          🏏
+                        </div>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", textTransform: "uppercase" }}>
+                          {currentBowlTeam}
                         </span>
-                      </span>
-                    </div>
-                    {/* Outcome list */}
-                    <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-                      {(() => {
-                        const bpo = match?.ballsPerOver || 6;
-                        const thisOver = scoringState.thisOver || [];
-                        const extrasCount = thisOver.filter(isExtraBall).length;
-                        const totalCirclesCount = bpo + extrasCount;
-                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                          const val = thisOver[i];
-                          let cellBg = val ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.04)";
-                          let cellColor = "#ffffff";
-                          if (val === "4" || val === "4s" || val === "6" || val === "6s") cellBg = "#0284c7";
-                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") cellBg = "#dc2626";
-                          else if (isExtraBall(val)) cellBg = "#7c3aed";
-
-                          return (
-                            <div key={i} style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "18px",
-                              height: "18px",
-                              background: cellBg,
-                              border: val ? "none" : "1px solid rgba(255,255,255,0.1)",
-                              borderRadius: "3px",
-                              fontSize: val && val.length > 2 ? "7px" : "9.5px",
-                              fontWeight: "950",
-                              lineHeight: 1
-                            }}>
-                              <span style={{ color: val ? cellColor : "transparent" }}>
-                                {val === "." ? "" : renderOutcomeText(val, 18)}
-                              </span>
-                            </div>
-                          );
-                        });
-                      })()}
+                      </div>
+                      <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "5px", background: "#facc15" }} />
                     </div>
                   </div>
-                </div>
 
-                {/* Right Block: Bowling Team Name + Yellow Decoration */}
-                <div style={{
-                  background: "#1f2937",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 16px 0 14px",
-                  minWidth: "130px",
-                  position: "relative",
-                  justifyContent: "flex-end",
-                  borderLeft: "1px solid rgba(255,255,255,0.1)",
-                  flexShrink: 0
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <div style={{ width: "22px", height: "22px", background: "#334155", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px", flexShrink: 0 }}>
-                      🏏
-                    </div>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", textTransform: "uppercase" }}>
-                      {currentBowlTeam}
-                    </span>
-                  </div>
-                  <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "5px", background: "#facc15" }} />
                 </div>
-              </div>
-
-            </div>
               </>
             )}
           </div>
@@ -9676,209 +9676,209 @@ export default function OverlayPage() {
               <>
                 {/* Target Display Box (Floating Above Center) */}
                 {scoringState.target !== null && (
-              <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#0a1128", border: "1.5px solid #d946ef", borderRadius: "6px", padding: "2px 16px", color: "#ffffff", fontSize: "11px", fontWeight: "900", letterSpacing: "0.5px", zIndex: 2 }}>
-                TARGET - {scoringState.target}
-              </div>
-            )}
-
-            <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
-
-              {/* Far Left Batting Team Pill (Cyan) */}
-              <div style={{
-                background: "#0ea5e9",
-                display: "flex",
-                alignItems: "center",
-                padding: "0 18px",
-                minWidth: "130px",
-                justifyContent: "center",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "15px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                  {currentBatTeam}
-                </span>
-              </div>
-
-              {/* Slanted Purple Chevron split */}
-              <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
-
-              {/* Batsmen Area (Dark Blue) */}
-              <div style={{
-                background: "#080721",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "0 22px",
-                flex: 1,
-                minWidth: "180px"
-              }}>
-                {/* Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <span style={{ color: "#facc15", fontSize: "12px" }}>🏏</span>
-                    <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px" }}>{scoringState.striker || "—"}</span>
+                  <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#0a1128", border: "1.5px solid #d946ef", borderRadius: "6px", padding: "2px 16px", color: "#ffffff", fontSize: "11px", fontWeight: "900", letterSpacing: "0.5px", zIndex: 2 }}>
+                    TARGET - {scoringState.target}
                   </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px", color: "#facc15", fontWeight: "900", fontSize: "14px" }}>
-                    <span>{striker?.runs ?? 0}</span>
-                    <span style={{ color: "#ffffff", fontSize: "10px", fontWeight: "600" }}>{striker?.balls ?? 0}</span>
-                  </div>
-                </div>
-                {/* Non-Striker */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingLeft: "16px" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "600", fontSize: "12px" }}>{scoringState.nonStriker || "—"}</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px", color: "#facc15", fontWeight: "700", fontSize: "13px" }}>
-                    <span>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "#ffffff", fontSize: "9px", fontWeight: "500" }}>{nonStriker?.balls ?? 0}</span>
-                  </div>
-                </div>
-              </div>
+                )}
 
-              {/* Slanted Purple Chevron split */}
-              <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
+                <div style={{ display: "flex", alignItems: "stretch", height: "54px", background: "transparent", overflow: "hidden", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
 
-              {/* Center White Block (Score & Overs) */}
-              <div style={{
-                background: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0 18px",
-                minWidth: "260px",
-                flexShrink: 0
-              }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", width: "100%", gap: "8px" }}>
-                  {/* Left: bowlTeamShort v batTeamShort */}
-                  <span style={{ color: "#080721", fontWeight: "900", fontSize: "13px", justifySelf: "start", textAlign: "left", whiteSpace: "nowrap" }}>
-                    {bowlTeamShort} <span style={{ fontWeight: "500", fontSize: "11px", color: "#64748b" }}>v</span> {batTeamShort}
-                  </span>
-
-                  {/* Hot Pink score box */}
-                  <div style={{ background: "#ec4899", borderRadius: "8px", padding: "4px 14px", display: "flex", alignItems: "center", justifyContent: "center", justifySelf: "center" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "20px", lineHeight: 1 }}>
-                      {scoringState.score}-{scoringState.wickets}
+                  {/* Far Left Batting Team Pill (Cyan) */}
+                  <div style={{
+                    background: "#0ea5e9",
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 18px",
+                    minWidth: "130px",
+                    justifyContent: "center",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "15px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {currentBatTeam}
                     </span>
                   </div>
 
-                  {/* Right: Overs */}
-                  <span style={{ color: "#080721", fontWeight: "900", fontSize: "13px", justifySelf: "end", textAlign: "right", whiteSpace: "nowrap" }}>
-                    {fmtOv(scoringState.balls, match.ballsPerOver)}({match.overs})
-                  </span>
-                </div>
+                  {/* Slanted Purple Chevron split */}
+                  <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
 
-                {/* Bottom line: CRR & RRR */}
-                <div style={{ display: "flex", justifyContent: "center", gap: "14px", marginTop: "2px", fontSize: "9px", fontWeight: "900", color: "#080721", width: "100%" }}>
-                  <span>CRR: {calcRR(scoringState)}</span>
-                  {rrr && <span>RRR: {rrr}</span>}
-                </div>
-              </div>
+                  {/* Batsmen Area (Dark Blue) */}
+                  <div style={{
+                    background: "#080721",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "0 22px",
+                    flex: 1,
+                    minWidth: "180px"
+                  }}>
+                    {/* Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span style={{ color: "#facc15", fontSize: "12px" }}>🏏</span>
+                        <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px" }}>{scoringState.striker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", color: "#facc15", fontWeight: "900", fontSize: "14px" }}>
+                        <span>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "#ffffff", fontSize: "10px", fontWeight: "600" }}>{striker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                    {/* Non-Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingLeft: "16px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "600", fontSize: "12px" }}>{scoringState.nonStriker || "—"}</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", color: "#facc15", fontWeight: "700", fontSize: "13px" }}>
+                        <span>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "#ffffff", fontSize: "9px", fontWeight: "500" }}>{nonStriker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                  </div>
 
-              {/* Slanted Purple Chevron split */}
-              <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
+                  {/* Slanted Purple Chevron split */}
+                  <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
 
-              {/* Bowler Details & outcomes (Dark Blue) */}
-              <div style={{
-                background: "#080721",
-                display: "flex",
-                alignItems: "center",
-                flex: 1,
-                paddingLeft: "16px",
-                paddingRight: "16px"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1 }}>
-                  {/* Bowler figures */}
-                  <div style={{ display: "flex", justifyContent: "space-between", color: "#ffffff", fontWeight: "800", fontSize: "13px" }}>
-                    <span style={{ textTransform: "uppercase" }}>{scoringState.bowler || "—"}</span>
-                    <span>
-                      {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
-                      <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "500", fontSize: "10px", marginLeft: "4px" }}>
-                        {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                  {/* Center White Block (Score & Overs) */}
+                  <div style={{
+                    background: "#ffffff",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "0 18px",
+                    minWidth: "260px",
+                    flexShrink: 0
+                  }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", width: "100%", gap: "8px" }}>
+                      {/* Left: bowlTeamShort v batTeamShort */}
+                      <span style={{ color: "#080721", fontWeight: "900", fontSize: "13px", justifySelf: "start", textAlign: "left", whiteSpace: "nowrap" }}>
+                        {bowlTeamShort} <span style={{ fontWeight: "500", fontSize: "11px", color: "#64748b" }}>v</span> {batTeamShort}
                       </span>
+
+                      {/* Hot Pink score box */}
+                      <div style={{ background: "#ec4899", borderRadius: "8px", padding: "4px 14px", display: "flex", alignItems: "center", justifyContent: "center", justifySelf: "center" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "20px", lineHeight: 1 }}>
+                          {scoringState.score}-{scoringState.wickets}
+                        </span>
+                      </div>
+
+                      {/* Right: Overs */}
+                      <span style={{ color: "#080721", fontWeight: "900", fontSize: "13px", justifySelf: "end", textAlign: "right", whiteSpace: "nowrap" }}>
+                        {fmtOv(scoringState.balls, match.ballsPerOver)}({match.overs})
+                      </span>
+                    </div>
+
+                    {/* Bottom line: CRR & RRR */}
+                    <div style={{ display: "flex", justifyContent: "center", gap: "14px", marginTop: "2px", fontSize: "9px", fontWeight: "900", color: "#080721", width: "100%" }}>
+                      <span>CRR: {calcRR(scoringState)}</span>
+                      {rrr && <span>RRR: {rrr}</span>}
+                    </div>
+                  </div>
+
+                  {/* Slanted Purple Chevron split */}
+                  <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
+
+                  {/* Bowler Details & outcomes (Dark Blue) */}
+                  <div style={{
+                    background: "#080721",
+                    display: "flex",
+                    alignItems: "center",
+                    flex: 1,
+                    paddingLeft: "16px",
+                    paddingRight: "16px"
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1 }}>
+                      {/* Bowler figures */}
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "#ffffff", fontWeight: "800", fontSize: "13px" }}>
+                        <span style={{ textTransform: "uppercase" }}>{scoringState.bowler || "—"}</span>
+                        <span>
+                          {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
+                          <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "500", fontSize: "10px", marginLeft: "4px" }}>
+                            {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                          </span>
+                        </span>
+                      </div>
+
+                      {/* Outcomes circular circles */}
+                      <div style={{ display: "flex", gap: "4px" }}>
+                        {(() => {
+                          const bpo = match?.ballsPerOver || 6;
+                          const thisOver = scoringState.thisOver || [];
+                          const extrasCount = thisOver.filter(isExtraBall).length;
+                          const totalCirclesCount = bpo + extrasCount;
+                          return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                            const val = thisOver[i];
+                            let cellBg = "#080721";
+                            let cellColor = "#ffffff";
+                            let cellBorder = "1px solid rgba(255, 255, 255, 0.4)";
+                            if (val) {
+                              if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
+                              else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
+                              else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
+                              else if (isExtraBall(val)) { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
+                              else { cellBg = "#1f2937"; cellColor = "#ffffff"; cellBorder = "none"; }
+                            } else {
+                              cellBg = "rgba(255, 255, 255, 0.05)";
+                              cellColor = "transparent";
+                              cellBorder = "1px solid rgba(255, 255, 255, 0.15)";
+                            }
+                            return (
+                              <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "5.5px" : (val && val.length > 1 ? "7px" : "9px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                                {renderOutcomeText(val, 16)}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slanted Purple Chevron split */}
+                  <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
+
+                  {/* Far Right Bowling Team Pill (Yellow) */}
+                  <div style={{
+                    background: "#eab308",
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "0 18px",
+                    minWidth: "130px",
+                    justifyContent: "center",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                      {currentBowlTeam}
+                    </span>
+                    {/* CricScorer overlay badge */}
+                    <div style={{ marginLeft: "10px", width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px", flexShrink: 0 }}>
+                      🏏
+                    </div>
+                  </div>
+
+                </div>
+                {activeNotification && (
+                  <div style={{
+                    background: getNotificationStyles(activeNotification).bg,
+                    border: "2px solid #d946ef",
+                    borderTop: "none",
+                    borderRadius: "0 0 10px 10px",
+                    padding: "4px 20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    transition: "all 0.3s ease"
+                  }}>
+                    <span style={{
+                      color: getNotificationStyles(activeNotification).textColor,
+                      fontSize: "11px",
+                      fontWeight: "900",
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      animation: "pulseGlow 1s ease-in-out infinite alternate"
+                    }}>
+                      {activeNotification}
                     </span>
                   </div>
-
-                  {/* Outcomes circular circles */}
-                  <div style={{ display: "flex", gap: "4px" }}>
-                    {(() => {
-                      const bpo = match?.ballsPerOver || 6;
-                      const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                        const val = thisOver[i];
-                        let cellBg = "#080721";
-                        let cellColor = "#ffffff";
-                        let cellBorder = "1px solid rgba(255, 255, 255, 0.4)";
-                        if (val) {
-                          if (val === "4" || val === "4s") { cellBg = "#ec4899"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else if (val === "6" || val === "6s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#ef4444"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else if (isExtraBall(val)) { cellBg = "#a78bfa"; cellColor = "#ffffff"; cellBorder = "none"; }
-                          else { cellBg = "#1f2937"; cellColor = "#ffffff"; cellBorder = "none"; }
-                        } else {
-                          cellBg = "rgba(255, 255, 255, 0.05)";
-                          cellColor = "transparent";
-                          cellBorder = "1px solid rgba(255, 255, 255, 0.15)";
-                        }
-                        return (
-                          <div key={i} style={{ width: "16px", height: "16px", background: cellBg, color: cellColor, border: cellBorder, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "5.5px" : (val && val.length > 1 ? "7px" : "9px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
-                            {renderOutcomeText(val, 16)}
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
-                </div>
-              </div>
-
-              {/* Slanted Purple Chevron split */}
-              <div style={{ width: "14px", background: "#d946ef", transform: "skewX(-15deg)", marginLeft: "-7px", marginRight: "-7px", zIndex: 2 }} />
-
-              {/* Far Right Bowling Team Pill (Yellow) */}
-              <div style={{
-                background: "#eab308",
-                display: "flex",
-                alignItems: "center",
-                padding: "0 18px",
-                minWidth: "130px",
-                justifyContent: "center",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                  {currentBowlTeam}
-                </span>
-                {/* CricScorer overlay badge */}
-                <div style={{ marginLeft: "10px", width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px", flexShrink: 0 }}>
-                  🏏
-                </div>
-              </div>
-
-            </div>
-            {activeNotification && (
-              <div style={{
-                background: getNotificationStyles(activeNotification).bg,
-                border: "2px solid #d946ef",
-                borderTop: "none",
-                borderRadius: "0 0 10px 10px",
-                padding: "4px 20px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                transition: "all 0.3s ease"
-              }}>
-                <span style={{
-                  color: getNotificationStyles(activeNotification).textColor,
-                  fontSize: "11px",
-                  fontWeight: "900",
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  animation: "pulseGlow 1s ease-in-out infinite alternate"
-                }}>
-                  {activeNotification}
-                </span>
-              </div>
-            )}
+                )}
               </>
             )}
           </div>
@@ -9936,355 +9936,355 @@ export default function OverlayPage() {
               <>
                 {/* ── MAIN HORIZONTAL SCOREBOARD DECK ── */}
                 <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              height: "48px",
-              background: "linear-gradient(180deg, #22095A 0%, #17043d 100%)",
-              borderRadius: "24px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
-              border: "1.5px solid rgba(236, 72, 153, 0.4)",
-              position: "relative",
-              overflow: "visible"
-            }}>
-
-              {/* ── LEFT WHITE BATTING TEAM PILL ── */}
-              <div style={{
-                background: "linear-gradient(180deg, #FDFDFE 0%, #f1f5f9 100%)",
-                borderRadius: "24px",
-                padding: "0 18px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "135px",
-                maxWidth: "180px",
-                borderRight: "3.5px solid #ec4899",
-                boxShadow: "4px 0 16px rgba(236, 72, 153, 0.75), inset 0 1px 0 rgba(255,255,255,1)",
-                flexShrink: 0,
-                zIndex: 2,
-                marginRight: "-4px"
-              }}>
-                <span style={{
-                  color: "#22095A",
-                  fontWeight: "950",
-                  fontSize: "12px",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  textAlign: "center"
-                }}>
-                  {currentBatTeam}
-                </span>
-              </div>
-
-              {/* ── BATSMEN SECTION (STRIKER & NON-STRIKER) ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                flex: 1.1,
-                padding: "2px 14px 2px 16px",
-                minWidth: "160px"
-              }}>
-                {/* Striker Row */}
-                <div style={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingBottom: "2px",
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.16)"
+                  alignItems: "stretch",
+                  height: "48px",
+                  background: "linear-gradient(180deg, #22095A 0%, #17043d 100%)",
+                  borderRadius: "24px",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
+                  border: "1.5px solid rgba(236, 72, 153, 0.4)",
+                  position: "relative",
+                  overflow: "visible"
                 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
+
+                  {/* ── LEFT WHITE BATTING TEAM PILL ── */}
+                  <div style={{
+                    background: "linear-gradient(180deg, #FDFDFE 0%, #f1f5f9 100%)",
+                    borderRadius: "24px",
+                    padding: "0 18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "135px",
+                    maxWidth: "180px",
+                    borderRight: "3.5px solid #ec4899",
+                    boxShadow: "4px 0 16px rgba(236, 72, 153, 0.75), inset 0 1px 0 rgba(255,255,255,1)",
+                    flexShrink: 0,
+                    zIndex: 2,
+                    marginRight: "-4px"
+                  }}>
                     <span style={{
-                      color: "#ffffff",
-                      fontWeight: "900",
-                      fontSize: "12.5px",
-                      letterSpacing: "0.3px",
+                      color: "#22095A",
+                      fontWeight: "950",
+                      fontSize: "12px",
+                      letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
-                      textOverflow: "ellipsis"
+                      textOverflow: "ellipsis",
+                      textAlign: "center"
                     }}>
-                      {scoringState.striker || "—"}
-                    </span>
-                    <span style={{ fontSize: "11px", display: "inline-flex", alignItems: "center", transform: "rotate(-10deg)" }}>🏏</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexShrink: 0, marginLeft: "6px" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
-                      {striker?.runs ?? 0}
-                    </span>
-                    <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
-                      {striker?.balls ?? 0}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Non-Striker Row */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingTop: "2px"
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, overflow: "hidden" }}>
-                    <span style={{
-                      color: "#ffffff",
-                      fontWeight: "900",
-                      fontSize: "12.5px",
-                      letterSpacing: "0.3px",
-                      textTransform: "uppercase",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis"
-                    }}>
-                      {scoringState.nonStriker || "—"}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexShrink: 0, marginLeft: "6px" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
-                      {nonStriker?.runs ?? 0}
-                    </span>
-                    <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
-                      {nonStriker?.balls ?? 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── CENTER WHITE SCORE CAPSULE PILL (EXACT MATCH TO SCREENSHOT) ── */}
-              <div style={{
-                background: "#ffffff",
-                borderRadius: "24px",
-                padding: "3px 14px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "175px",
-                border: "2.5px solid #ec4899",
-                boxShadow: "0 0 16px rgba(236, 72, 153, 0.7), inset 0 1px 1px rgba(255,255,255,1)",
-                position: "relative",
-                zIndex: 3,
-                flexShrink: 0
-              }}>
-                {/* Top Section: Team Abbreviations & Score Pill */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", width: "100%" }}>
-                  {/* Matchup: FX v HG */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
-                    <span style={{ color: "#22095A", fontWeight: "950", fontSize: "11.5px", letterSpacing: "0.5px" }}>
-                      {batTeamShort}
-                    </span>
-                    <span style={{ color: "#94a3b8", fontWeight: "800", fontSize: "9.5px", margin: "0 1px" }}>
-                      v
-                    </span>
-                    <span style={{ color: "#ec4899", fontWeight: "950", fontSize: "11.5px", letterSpacing: "0.5px" }}>
-                      {bowlTeamShort}
+                      {currentBatTeam}
                     </span>
                   </div>
 
-                  {/* Two-Tone Split Score Capsule */}
+                  {/* ── BATSMEN SECTION (STRIKER & NON-STRIKER) ── */}
                   <div style={{
                     display: "flex",
-                    alignItems: "stretch",
-                    borderRadius: "14px",
-                    overflow: "hidden",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.25)"
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    flex: 1.1,
+                    padding: "2px 14px 2px 16px",
+                    minWidth: "160px"
                   }}>
-                    {/* Dark Purple Score Part: 0-0 */}
+                    {/* Striker Row */}
                     <div style={{
-                      background: "#22095A",
-                      color: "#FDFDFE",
-                      padding: "2px 8px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "space-between",
+                      paddingBottom: "2px",
+                      borderBottom: "1px solid rgba(255, 255, 255, 0.16)"
                     }}>
-                      <span style={{ fontWeight: "950", fontSize: "13.5px", lineHeight: 1, letterSpacing: "-0.3px" }}>
-                        {scoringState.score}-{scoringState.wickets}
-                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{
+                          color: "#ffffff",
+                          fontWeight: "900",
+                          fontSize: "12.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis"
+                        }}>
+                          {scoringState.striker || "—"}
+                        </span>
+                        <span style={{ fontSize: "11px", display: "inline-flex", alignItems: "center", transform: "rotate(-10deg)" }}>🏏</span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexShrink: 0, marginLeft: "6px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
+                          {striker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
+                          {striker?.balls ?? 0}
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Hot Pink Overs Part: 0.0 (5) */}
+                    {/* Non-Striker Row */}
                     <div style={{
-                      background: "linear-gradient(135deg, #ec4899 0%, #db2777 100%)",
-                      color: "#FDFDFE",
-                      padding: "2px 7px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
-                      gap: "2px"
+                      justifyContent: "space-between",
+                      paddingTop: "2px"
                     }}>
-                      <span style={{ fontWeight: "950", fontSize: "12px", lineHeight: 1 }}>
-                        {fmtOv(scoringState.balls, match.ballsPerOver)}
+                      <div style={{ display: "flex", alignItems: "center", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{
+                          color: "#ffffff",
+                          fontWeight: "900",
+                          fontSize: "12.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis"
+                        }}>
+                          {scoringState.nonStriker || "—"}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px", flexShrink: 0, marginLeft: "6px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
+                          {nonStriker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
+                          {nonStriker?.balls ?? 0}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── CENTER WHITE SCORE CAPSULE PILL (EXACT MATCH TO SCREENSHOT) ── */}
+                  <div style={{
+                    background: "#ffffff",
+                    borderRadius: "24px",
+                    padding: "3px 14px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "175px",
+                    border: "2.5px solid #ec4899",
+                    boxShadow: "0 0 16px rgba(236, 72, 153, 0.7), inset 0 1px 1px rgba(255,255,255,1)",
+                    position: "relative",
+                    zIndex: 3,
+                    flexShrink: 0
+                  }}>
+                    {/* Top Section: Team Abbreviations & Score Pill */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", width: "100%" }}>
+                      {/* Matchup: FX v HG */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
+                        <span style={{ color: "#22095A", fontWeight: "950", fontSize: "11.5px", letterSpacing: "0.5px" }}>
+                          {batTeamShort}
+                        </span>
+                        <span style={{ color: "#94a3b8", fontWeight: "800", fontSize: "9.5px", margin: "0 1px" }}>
+                          v
+                        </span>
+                        <span style={{ color: "#ec4899", fontWeight: "950", fontSize: "11.5px", letterSpacing: "0.5px" }}>
+                          {bowlTeamShort}
+                        </span>
+                      </div>
+
+                      {/* Two-Tone Split Score Capsule */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "stretch",
+                        borderRadius: "14px",
+                        overflow: "hidden",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.25)"
+                      }}>
+                        {/* Dark Purple Score Part: 0-0 */}
+                        <div style={{
+                          background: "#22095A",
+                          color: "#FDFDFE",
+                          padding: "2px 8px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}>
+                          <span style={{ fontWeight: "950", fontSize: "13.5px", lineHeight: 1, letterSpacing: "-0.3px" }}>
+                            {scoringState.score}-{scoringState.wickets}
+                          </span>
+                        </div>
+
+                        {/* Hot Pink Overs Part: 0.0 (5) */}
+                        <div style={{
+                          background: "linear-gradient(135deg, #ec4899 0%, #db2777 100%)",
+                          color: "#FDFDFE",
+                          padding: "2px 7px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "2px"
+                        }}>
+                          <span style={{ fontWeight: "950", fontSize: "12px", lineHeight: 1 }}>
+                            {fmtOv(scoringState.balls, match.ballsPerOver)}
+                          </span>
+                          <span style={{ fontWeight: "850", fontSize: "9.5px", lineHeight: 1, opacity: 0.9 }}>
+                            ({match.overs})
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Row: EXTRAS: 0 */}
+                    <div style={{
+                      fontSize: "8px",
+                      fontWeight: "950",
+                      color: "#22095A",
+                      letterSpacing: "0.6px",
+                      textTransform: "uppercase",
+                      marginTop: "2px"
+                    }}>
+                      {scoringState.target !== null
+                        ? `TARGET: ${scoringState.target} • NEED ${need ?? 0} (${bLeft ?? 0}b)`
+                        : `EXTRAS: ${extras}`}
+                    </div>
+                  </div>
+
+                  {/* ── BOWLER SECTION (HAROON & FIGURES) ── */}
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    flex: 1.1,
+                    padding: "2px 16px 2px 14px",
+                    minWidth: "160px"
+                  }}>
+                    {/* Bowler Row */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingBottom: "2px",
+                      borderBottom: "1px solid rgba(255, 255, 255, 0.16)"
+                    }}>
+                      <span style={{
+                        color: "#ffffff",
+                        fontWeight: "900",
+                        fontSize: "12.5px",
+                        letterSpacing: "0.3px",
+                        textTransform: "uppercase",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}>
+                        {scoringState.bowler || "—"}
                       </span>
-                      <span style={{ fontWeight: "850", fontSize: "9.5px", lineHeight: 1, opacity: 0.9 }}>
-                        ({match.overs})
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0, marginLeft: "6px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
+                          {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* This Over Balls or Econ */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      paddingTop: "2px",
+                      height: "16px"
+                    }}>
+                      <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                        {(() => {
+                          const bpoLocal = match?.ballsPerOver || 6;
+                          const extrasCount = thisOver.filter(isExtraBall).length;
+                          const totalCirclesCount = Math.max(bpoLocal, bpoLocal + extrasCount);
+                          return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                            const val = thisOver[i];
+                            const isWicket = val === "W" || val?.startsWith("W+");
+                            const isFour = val === "4";
+                            const isSix = val === "6";
+                            return (
+                              <div key={i} style={{
+                                width: "14px",
+                                height: "14px",
+                                borderRadius: "50%",
+                                background: val
+                                  ? (isWicket ? "#ef4444" : isSix ? "#a855f7" : isFour ? "#ec4899" : "rgba(255,255,255,0.2)")
+                                  : "rgba(255,255,255,0.06)",
+                                color: "#ffffff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: val && val.length > 1 ? "6.5px" : "8px",
+                                fontWeight: "950",
+                                lineHeight: 1
+                              }}>
+                                {val === "." ? "" : renderOutcomeText(val, 14)}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                      <span style={{ color: "#cbd5e1", fontSize: "8.5px", fontWeight: "800" }}>
+                        CRR: {crr}
                       </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Bottom Row: EXTRAS: 0 */}
-                <div style={{
-                  fontSize: "8px",
-                  fontWeight: "950",
-                  color: "#22095A",
-                  letterSpacing: "0.6px",
-                  textTransform: "uppercase",
-                  marginTop: "2px"
-                }}>
-                  {scoringState.target !== null
-                    ? `TARGET: ${scoringState.target} • NEED ${need ?? 0} (${bLeft ?? 0}b)`
-                    : `EXTRAS: ${extras}`}
-                </div>
-              </div>
-
-              {/* ── BOWLER SECTION (HAROON & FIGURES) ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                flex: 1.1,
-                padding: "2px 16px 2px 14px",
-                minWidth: "160px"
-              }}>
-                {/* Bowler Row */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingBottom: "2px",
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.16)"
-                }}>
-                  <span style={{
-                    color: "#ffffff",
-                    fontWeight: "900",
-                    fontSize: "12.5px",
-                    letterSpacing: "0.3px",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis"
+                  {/* ── RIGHT WHITE BOWLING TEAM PILL ── */}
+                  <div style={{
+                    background: "linear-gradient(180deg, #FDFDFE 0%, #f1f5f9 100%)",
+                    borderRadius: "24px",
+                    padding: "0 18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: "135px",
+                    maxWidth: "180px",
+                    borderLeft: "3.5px solid #ec4899",
+                    boxShadow: "-4px 0 16px rgba(236, 72, 153, 0.75), inset 0 1px 0 rgba(255,255,255,1)",
+                    flexShrink: 0,
+                    zIndex: 2,
+                    marginLeft: "-4px"
                   }}>
-                    {scoringState.bowler || "—"}
-                  </span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0, marginLeft: "6px" }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "13.5px", lineHeight: 1 }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                    </span>
-                    <span style={{ color: "#cbd5e1", fontWeight: "700", fontSize: "10.5px", lineHeight: 1 }}>
-                      {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                    <span style={{
+                      color: "#22095A",
+                      fontWeight: "950",
+                      fontSize: "12px",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      textAlign: "center"
+                    }}>
+                      {currentBowlTeam}
                     </span>
                   </div>
+
                 </div>
 
-                {/* This Over Balls or Econ */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingTop: "2px",
-                  height: "16px"
-                }}>
-                  <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                    {(() => {
-                      const bpoLocal = match?.ballsPerOver || 6;
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = Math.max(bpoLocal, bpoLocal + extrasCount);
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                        const val = thisOver[i];
-                        const isWicket = val === "W" || val?.startsWith("W+");
-                        const isFour = val === "4";
-                        const isSix = val === "6";
-                        return (
-                          <div key={i} style={{
-                            width: "14px",
-                            height: "14px",
-                            borderRadius: "50%",
-                            background: val
-                              ? (isWicket ? "#ef4444" : isSix ? "#a855f7" : isFour ? "#ec4899" : "rgba(255,255,255,0.2)")
-                              : "rgba(255,255,255,0.06)",
-                            color: "#ffffff",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: val && val.length > 1 ? "6.5px" : "8px",
-                            fontWeight: "950",
-                            lineHeight: 1
-                          }}>
-                            {val === "." ? "" : renderOutcomeText(val, 14)}
-                          </div>
-                        );
-                      });
-                    })()}
+                {/* ── OPTIONAL NOTIFICATION POPUP ── */}
+                {activeNotification && (
+                  <div style={{
+                    background: getNotificationStyles(activeNotification).bg,
+                    border: "2px solid #ec4899",
+                    borderTop: "none",
+                    borderRadius: "0 0 14px 14px",
+                    padding: "3px 20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "-2px",
+                    boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45)",
+                    transition: "all 0.3s ease"
+                  }}>
+                    <span style={{
+                      color: getNotificationStyles(activeNotification).textColor,
+                      fontSize: "10px",
+                      fontWeight: "950",
+                      letterSpacing: "1.2px",
+                      textTransform: "uppercase",
+                      animation: "pulseGlow 1s ease-in-out infinite alternate"
+                    }}>
+                      {activeNotification}
+                    </span>
                   </div>
-                  <span style={{ color: "#cbd5e1", fontSize: "8.5px", fontWeight: "800" }}>
-                    CRR: {crr}
-                  </span>
-                </div>
-              </div>
-
-              {/* ── RIGHT WHITE BOWLING TEAM PILL ── */}
-              <div style={{
-                background: "linear-gradient(180deg, #FDFDFE 0%, #f1f5f9 100%)",
-                borderRadius: "24px",
-                padding: "0 18px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: "135px",
-                maxWidth: "180px",
-                borderLeft: "3.5px solid #ec4899",
-                boxShadow: "-4px 0 16px rgba(236, 72, 153, 0.75), inset 0 1px 0 rgba(255,255,255,1)",
-                flexShrink: 0,
-                zIndex: 2,
-                marginLeft: "-4px"
-              }}>
-                <span style={{
-                  color: "#22095A",
-                  fontWeight: "950",
-                  fontSize: "12px",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  textAlign: "center"
-                }}>
-                  {currentBowlTeam}
-                </span>
-              </div>
-
-            </div>
-
-            {/* ── OPTIONAL NOTIFICATION POPUP ── */}
-            {activeNotification && (
-              <div style={{
-                background: getNotificationStyles(activeNotification).bg,
-                border: "2px solid #ec4899",
-                borderTop: "none",
-                borderRadius: "0 0 14px 14px",
-                padding: "3px 20px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "-2px",
-                boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45)",
-                transition: "all 0.3s ease"
-              }}>
-                <span style={{
-                  color: getNotificationStyles(activeNotification).textColor,
-                  fontSize: "10px",
-                  fontWeight: "950",
-                  letterSpacing: "1.2px",
-                  textTransform: "uppercase",
-                  animation: "pulseGlow 1s ease-in-out infinite alternate"
-                }}>
-                  {activeNotification}
-                </span>
-              </div>
-            )}
+                )}
               </>
             )}
 
@@ -10359,295 +10359,295 @@ export default function OverlayPage() {
               <>
                 {/* Floating TARGET pill above scoreboard */}
                 {scoringState.target !== null && (
-              <div style={{
-                position: "absolute",
-                top: "-25px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "linear-gradient(135deg, #110b38 0%, #1a1053 100%)",
-                border: "1.5px solid #a78bfa",
-                borderRadius: "20px",
-                padding: "3px 18px",
-                color: "#ffffff",
-                fontSize: "11px",
-                fontWeight: "900",
-                letterSpacing: "1.2px",
-                zIndex: 10,
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                boxShadow: "0 4px 14px rgba(17,11,56,0.4), 0 0 10px rgba(167,139,250,0.3)"
-              }}>
-                <span>🎯 TARGET <strong style={{ color: "#ffffff", fontSize: "12px", marginLeft: "3px" }}>{scoringState.target}</strong></span>
-                {rrr !== null && (
-                  <>
-                    <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
-                    <span style={{ color: "#c4b5fd", fontSize: "10.5px", fontWeight: "800" }}>REQ RR: {rrr}</span>
-                  </>
-                )}
-              </div>
-            )}
-
-            {/* Main scoreboard row (Porcelain White Rounded Broadcast Capsule) */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr auto 1fr",
-              alignItems: "center",
-              height: "64px",
-              background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
-              borderRadius: "9999px",
-              padding: "0 22px",
-              border: "1.5px solid rgba(226, 232, 240, 0.95)",
-              boxShadow: "0 10px 30px -4px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 1)",
-              gap: "12px",
-              boxSizing: "border-box"
-            }}>
-
-              {/* LEFT COLUMN: Batsmen names + stats */}
-              <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start" }}>
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%", maxWidth: "290px", gap: "3px" }}>
-                  {/* Striker */}
-                  <div style={{ display: "flex", alignItems: "center", height: "23px", gap: "7px" }}>
-                    <div style={{
-                      width: "16px",
-                      height: "16px",
-                      borderRadius: "50%",
-                      background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontSize: "7.5px",
-                      fontWeight: "900",
-                      flexShrink: 0,
-                      boxShadow: "0 0 8px rgba(220, 38, 38, 0.55)"
-                    }}>
-                      ▶
-                    </div>
-                    <span style={{
-                      color: "#1e1b4b",
-                      fontWeight: "950",
-                      fontSize: "13.5px",
-                      letterSpacing: "0.3px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      flex: 1
-                    }}>
-                      {scoringState.striker || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
-                      <span style={{ color: "#1e1b4b", fontWeight: "950", fontSize: "15px", lineHeight: 1 }}>
-                        {striker?.runs ?? 0}
-                      </span>
-                      <span style={{ color: "rgba(30,27,75,0.6)", fontSize: "11px", fontWeight: "800" }}>
-                        ({striker?.balls ?? 0})
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Non-Striker */}
-                  <div style={{ display: "flex", alignItems: "center", height: "21px", gap: "7px" }}>
-                    <div style={{ width: "16px", flexShrink: 0 }} />
-                    <span style={{
-                      color: "rgba(30,27,75,0.72)",
-                      fontWeight: "750",
-                      fontSize: "13px",
-                      letterSpacing: "0.2px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      flex: 1
-                    }}>
-                      {scoringState.nonStriker || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
-                      <span style={{ color: "rgba(30,27,75,0.8)", fontWeight: "850", fontSize: "14px", lineHeight: 1 }}>
-                        {nonStriker?.runs ?? 0}
-                      </span>
-                      <span style={{ color: "rgba(30,27,75,0.45)", fontSize: "10px", fontWeight: "700" }}>
-                        ({nonStriker?.balls ?? 0})
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "36px", background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)", marginLeft: "14px", flexShrink: 0 }} />
-              </div>
-
-              {/* CENTER COLUMN: Team matchup + score + status (Indigo/Red Capsule) */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{
-                  background: "linear-gradient(135deg, #110b38 0%, #190f4a 100%)",
-                  height: "52px",
-                  borderRadius: "9999px",
-                  display: "flex",
-                  alignItems: "stretch",
-                  overflow: "hidden",
-                  width: "360px",
-                  boxShadow: "0 4px 16px rgba(17,11,56,0.35), inset 0 1px 1px rgba(255,255,255,0.15)",
-                  border: "1.5px solid rgba(255,255,255,0.12)",
-                  flexShrink: 0
-                }}>
-                  {/* Left section of the capsule */}
-                  <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
-                    {/* Top Red row */}
-                    <div style={{
-                      background: "linear-gradient(90deg, #dc2626 0%, #d92d20 50%, #b91c1c 100%)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "0 14px",
-                      height: "27px",
-                      boxShadow: "inset 0 -1px 0 rgba(0,0,0,0.15)"
-                    }}>
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11.5px", letterSpacing: "1px", textTransform: "uppercase", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
-                        {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9.5px", fontWeight: 800 }}>V</span> {batTeamShort}
-                      </span>
-                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "15px", letterSpacing: "0.5px", textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>
-                        {scoringState.score} - {scoringState.wickets}
-                      </span>
-                    </div>
-                    {/* Bottom Indigo row */}
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0 10px",
-                      height: "25px",
-                      background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
-                      transition: "all 0.3s ease"
-                    }}>
-                      <span style={{
-                        color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
-                        fontWeight: "900",
-                        fontSize: activeNotification ? "11px" : "10px",
-                        letterSpacing: "0.8px",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        width: "100%",
-                        animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-                      }}>
-                        {activeNotification || statusLine}
-                      </span>
-                    </div>
-                  </div>
-                  {/* Right section of the capsule (Overs Chamber) */}
                   <div style={{
-                    background: "#110b38",
+                    position: "absolute",
+                    top: "-25px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(135deg, #110b38 0%, #1a1053 100%)",
+                    border: "1.5px solid #a78bfa",
+                    borderRadius: "20px",
+                    padding: "3px 18px",
                     color: "#ffffff",
-                    width: "74px",
+                    fontSize: "11px",
+                    fontWeight: "900",
+                    letterSpacing: "1.2px",
+                    zIndex: 10,
+                    whiteSpace: "nowrap",
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
-                    borderLeft: "1.5px solid rgba(255,255,255,0.15)",
-                    flexShrink: 0,
-                    padding: "0 6px"
+                    gap: "10px",
+                    boxShadow: "0 4px 14px rgba(17,11,56,0.4), 0 0 10px rgba(167,139,250,0.3)"
                   }}>
-                    <span style={{ fontSize: "8px", fontWeight: "900", letterSpacing: "1px", color: "#a78bfa", textTransform: "uppercase", lineHeight: 1, marginBottom: "2px" }}>
-                      OVERS
-                    </span>
-                    <div style={{ fontSize: "13.5px", fontWeight: "950", lineHeight: 1, color: "#ffffff" }}>
-                      {fmtOv(scoringState.balls, match.ballsPerOver)}
-                      <span style={{ fontSize: "9.5px", opacity: 0.6, fontWeight: 700 }}>/{match.overs}</span>
-                    </div>
+                    <span>🎯 TARGET <strong style={{ color: "#ffffff", fontSize: "12px", marginLeft: "3px" }}>{scoringState.target}</strong></span>
+                    {rrr !== null && (
+                      <>
+                        <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
+                        <span style={{ color: "#c4b5fd", fontSize: "10.5px", fontWeight: "800" }}>REQ RR: {rrr}</span>
+                      </>
+                    )}
                   </div>
-                </div>
-              </div>
+                )}
 
-              {/* RIGHT COLUMN: Bowler + Balls + Logo */}
-              <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "36px", background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)", marginRight: "4px", flexShrink: 0 }} />
+                {/* Main scoreboard row (Porcelain White Rounded Broadcast Capsule) */}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
+                  alignItems: "center",
+                  height: "64px",
+                  background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
+                  borderRadius: "9999px",
+                  padding: "0 22px",
+                  border: "1.5px solid rgba(226, 232, 240, 0.95)",
+                  boxShadow: "0 10px 30px -4px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 1)",
+                  gap: "12px",
+                  boxSizing: "border-box"
+                }}>
 
-                {/* Bowler + Balls Box */}
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
-                  {/* Bowler name + stats */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "23px", gap: "6px" }}>
-                    <span style={{
-                      color: "#1e1b4b",
-                      fontWeight: "950",
-                      fontSize: "13.5px",
-                      letterSpacing: "0.3px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      flex: 1
-                    }}>
-                      {scoringState.bowler || "—"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
-                      <span style={{ color: "#1e1b4b", fontWeight: "950", fontSize: "14.5px" }}>
-                        {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
-                      </span>
-                      <span style={{ fontSize: "10px", fontWeight: "800", color: "rgba(30,27,75,0.6)" }}>
-                        ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Ball circles */}
-                  <div style={{ display: "flex", gap: "4px", alignItems: "center", height: "21px", justifyContent: "flex-start" }}>
-                    {Array.from({ length: totalBallSlots }).map((_, i) => {
-                      const val = thisOver[i];
-                      const bs = getBallStyle(val);
-                      return (
-                        <div key={i} style={{
-                          width: "20px",
-                          height: "20px",
-                          background: bs.bg,
-                          color: bs.color,
-                          border: bs.border || "none",
-                          boxShadow: bs.shadow || "none",
+                  {/* LEFT COLUMN: Batsmen names + stats */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start" }}>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%", maxWidth: "290px", gap: "3px" }}>
+                      {/* Striker */}
+                      <div style={{ display: "flex", alignItems: "center", height: "23px", gap: "7px" }}>
+                        <div style={{
+                          width: "16px",
+                          height: "16px",
                           borderRadius: "50%",
+                          background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6.5px" : (val && val.length > 1 ? "8px" : "10px")),
-                          letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
-                          fontWeight: "950",
-flexShrink: 0,
-                          whiteSpace: "nowrap",
-                          lineHeight: 1
+                          color: "#ffffff",
+                          fontSize: "7.5px",
+                          fontWeight: "900",
+                          flexShrink: 0,
+                          boxShadow: "0 0 8px rgba(220, 38, 38, 0.55)"
                         }}>
-                          {val === "." ? "" : renderOutcomeText(val, 20)}
+                          ▶
                         </div>
-                      );
-                    })}
+                        <span style={{
+                          color: "#1e1b4b",
+                          fontWeight: "950",
+                          fontSize: "13.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          flex: 1
+                        }}>
+                          {scoringState.striker || "—"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                          <span style={{ color: "#1e1b4b", fontWeight: "950", fontSize: "15px", lineHeight: 1 }}>
+                            {striker?.runs ?? 0}
+                          </span>
+                          <span style={{ color: "rgba(30,27,75,0.6)", fontSize: "11px", fontWeight: "800" }}>
+                            ({striker?.balls ?? 0})
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Non-Striker */}
+                      <div style={{ display: "flex", alignItems: "center", height: "21px", gap: "7px" }}>
+                        <div style={{ width: "16px", flexShrink: 0 }} />
+                        <span style={{
+                          color: "rgba(30,27,75,0.72)",
+                          fontWeight: "750",
+                          fontSize: "13px",
+                          letterSpacing: "0.2px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          flex: 1
+                        }}>
+                          {scoringState.nonStriker || "—"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                          <span style={{ color: "rgba(30,27,75,0.8)", fontWeight: "850", fontSize: "14px", lineHeight: 1 }}>
+                            {nonStriker?.runs ?? 0}
+                          </span>
+                          <span style={{ color: "rgba(30,27,75,0.45)", fontSize: "10px", fontWeight: "700" }}>
+                            ({nonStriker?.balls ?? 0})
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)", marginLeft: "14px", flexShrink: 0 }} />
                   </div>
-                </div>
 
-                {/* Watermark brand icon */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  background: "linear-gradient(135deg, #15803d 0%, #166534 100%)",
-                  padding: "4px 10px",
-                  borderRadius: "9999px",
-                  color: "#ffffff",
-                  fontSize: "10px",
-                  fontWeight: "950",
-                  letterSpacing: "0.6px",
-                  gap: "4px",
-                  flexShrink: 0,
-                  height: "26px",
-                  boxShadow: "0 2px 8px rgba(21,128,61,0.3)"
-                }}>
-                  <span>🏏</span>
-                  <span style={{ fontSize: "9px" }}>CricScorer</span>
-                </div>
-              </div>
+                  {/* CENTER COLUMN: Team matchup + score + status (Indigo/Red Capsule) */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{
+                      background: "linear-gradient(135deg, #110b38 0%, #190f4a 100%)",
+                      height: "52px",
+                      borderRadius: "9999px",
+                      display: "flex",
+                      alignItems: "stretch",
+                      overflow: "hidden",
+                      width: "360px",
+                      boxShadow: "0 4px 16px rgba(17,11,56,0.35), inset 0 1px 1px rgba(255,255,255,0.15)",
+                      border: "1.5px solid rgba(255,255,255,0.12)",
+                      flexShrink: 0
+                    }}>
+                      {/* Left section of the capsule */}
+                      <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
+                        {/* Top Red row */}
+                        <div style={{
+                          background: "linear-gradient(90deg, #dc2626 0%, #d92d20 50%, #b91c1c 100%)",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "0 14px",
+                          height: "27px",
+                          boxShadow: "inset 0 -1px 0 rgba(0,0,0,0.15)"
+                        }}>
+                          <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "11.5px", letterSpacing: "1px", textTransform: "uppercase", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
+                            {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9.5px", fontWeight: 800 }}>V</span> {batTeamShort}
+                          </span>
+                          <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "15px", letterSpacing: "0.5px", textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>
+                            {scoringState.score} - {scoringState.wickets}
+                          </span>
+                        </div>
+                        {/* Bottom Indigo row */}
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "0 10px",
+                          height: "25px",
+                          background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                          transition: "all 0.3s ease"
+                        }}>
+                          <span style={{
+                            color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                            fontWeight: "900",
+                            fontSize: activeNotification ? "11px" : "10px",
+                            letterSpacing: "0.8px",
+                            textTransform: "uppercase",
+                            textAlign: "center",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            width: "100%",
+                            animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                          }}>
+                            {activeNotification || statusLine}
+                          </span>
+                        </div>
+                      </div>
+                      {/* Right section of the capsule (Overs Chamber) */}
+                      <div style={{
+                        background: "#110b38",
+                        color: "#ffffff",
+                        width: "74px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderLeft: "1.5px solid rgba(255,255,255,0.15)",
+                        flexShrink: 0,
+                        padding: "0 6px"
+                      }}>
+                        <span style={{ fontSize: "8px", fontWeight: "900", letterSpacing: "1px", color: "#a78bfa", textTransform: "uppercase", lineHeight: 1, marginBottom: "2px" }}>
+                          OVERS
+                        </span>
+                        <div style={{ fontSize: "13.5px", fontWeight: "950", lineHeight: 1, color: "#ffffff" }}>
+                          {fmtOv(scoringState.balls, match.ballsPerOver)}
+                          <span style={{ fontSize: "9.5px", opacity: 0.6, fontWeight: 700 }}>/{match.overs}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            </div>
+                  {/* RIGHT COLUMN: Bowler + Balls + Logo */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)", marginRight: "4px", flexShrink: 0 }} />
+
+                    {/* Bowler + Balls Box */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
+                      {/* Bowler name + stats */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "23px", gap: "6px" }}>
+                        <span style={{
+                          color: "#1e1b4b",
+                          fontWeight: "950",
+                          fontSize: "13.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          flex: 1
+                        }}>
+                          {scoringState.bowler || "—"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                          <span style={{ color: "#1e1b4b", fontWeight: "950", fontSize: "14.5px" }}>
+                            {bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}
+                          </span>
+                          <span style={{ fontSize: "10px", fontWeight: "800", color: "rgba(30,27,75,0.6)" }}>
+                            ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Ball circles */}
+                      <div style={{ display: "flex", gap: "4px", alignItems: "center", height: "21px", justifyContent: "flex-start" }}>
+                        {Array.from({ length: totalBallSlots }).map((_, i) => {
+                          const val = thisOver[i];
+                          const bs = getBallStyle(val);
+                          return (
+                            <div key={i} style={{
+                              width: "20px",
+                              height: "20px",
+                              background: bs.bg,
+                              color: bs.color,
+                              border: bs.border || "none",
+                              boxShadow: bs.shadow || "none",
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6.5px" : (val && val.length > 1 ? "8px" : "10px")),
+                              letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
+                              fontWeight: "950",
+                              flexShrink: 0,
+                              whiteSpace: "nowrap",
+                              lineHeight: 1
+                            }}>
+                              {val === "." ? "" : renderOutcomeText(val, 20)}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Watermark brand icon */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      background: "linear-gradient(135deg, #15803d 0%, #166534 100%)",
+                      padding: "4px 10px",
+                      borderRadius: "9999px",
+                      color: "#ffffff",
+                      fontSize: "10px",
+                      fontWeight: "950",
+                      letterSpacing: "0.6px",
+                      gap: "4px",
+                      flexShrink: 0,
+                      height: "26px",
+                      boxShadow: "0 2px 8px rgba(21,128,61,0.3)"
+                    }}>
+                      <span>🏏</span>
+                      <span style={{ fontSize: "9px" }}>CricScorer</span>
+                    </div>
+                  </div>
+
+                </div>
               </>
             )}
           </div>
@@ -10725,335 +10725,335 @@ flexShrink: 0,
               <>
                 {/* Floating TARGET Capsule (Only in 2nd Innings) */}
                 {scoringState.target !== null && (
-              <div style={{
-                position: "absolute",
-                top: "-26px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "linear-gradient(90deg, #0e337e 0%, #16469d 50%, #0e337e 100%)",
-                border: "1.5px solid #facc15",
-                borderRadius: "14px",
-                padding: "2px 16px",
-                color: "#ffffff",
-                fontSize: "10.5px",
-                fontWeight: "900",
-                letterSpacing: "1px",
-                zIndex: 10,
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
-              }}>
-                <span>🎯 TARGET <strong style={{ color: "#facc15", fontSize: "11.5px", marginLeft: "2px" }}>{scoringState.target}</strong></span>
-                {need !== null && bLeft !== null && (
-                  <>
-                    <span style={{ color: "rgba(255,255,255,0.35)" }}>|</span>
-                    <span>NEED <strong style={{ color: "#facc15" }}>{need}</strong> IN <strong style={{ color: "#ffffff" }}>{bLeft}</strong> B</span>
-                  </>
-                )}
-                {rrr !== null && (
-                  <>
-                    <span style={{ color: "rgba(255,255,255,0.35)" }}>|</span>
-                    <span style={{ color: "#93c5fd" }}>REQ RR: {rrr}</span>
-                  </>
-                )}
-              </div>
-            )}
-
-            {/* ── MAIN HORIZONTAL SCOREBOARD BAR (Exact Screenshot Layout) ── */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              height: "48px",
-              background: "#0a193d",
-              borderRadius: "0px",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              overflow: "hidden",
-              boxSizing: "border-box"
-            }}>
-
-              {/* ── 1. BATTING TEAM BLOCK (Solid Deep Blue) ── */}
-              <div style={{
-                background: "#0c2560",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px",
-                minWidth: "120px",
-                borderRight: "1px solid rgba(255,255,255,0.15)",
-                flexShrink: 0
-              }}>
-                <span style={{
-                  color: "#ffffff",
-                  fontWeight: 950,
-                  fontSize: "12px",
-                  letterSpacing: "0.6px",
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  textAlign: "center"
-                }}>
-                  {currentBatTeam || "TEAM A"}
-                </span>
-              </div>
-
-              {/* ── 2. TEAM SCORE & OVERS (Patterned Royal Blue) ── */}
-              <div style={{
-                background: diamondBgBlue,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 16px",
-                minWidth: "115px",
-                borderRight: "1px solid rgba(255,255,255,0.15)",
-                flexShrink: 0,
-                lineHeight: 1
-              }}>
-                <div style={{
-                  color: "#facc15",
-                  fontWeight: 950,
-                  fontSize: "20px",
-                  letterSpacing: "-0.5px",
-                  textShadow: "0 1px 4px rgba(0,0,0,0.5)"
-                }}>
-                  {scoringState.score}-{scoringState.wickets}
-                </div>
-                <div style={{
-                  color: "#ffffff",
-                  fontWeight: 800,
-                  fontSize: "8.5px",
-                  letterSpacing: "0.5px",
-                  marginTop: "3px",
-                  textTransform: "uppercase"
-                }}>
-                  OVERS {fmtOv(scoringState.balls, bpo)}
-                </div>
-              </div>
-
-              {/* ── 3. BATSMEN SECTION (Patterned Royal Blue) ── */}
-              <div style={{
-                background: diamondBgBlue,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "2px 14px",
-                flex: 1.2,
-                minWidth: 0,
-                gap: "3px",
-                borderRight: "1px solid rgba(255,255,255,0.15)"
-              }}>
-                {/* Non-Striker / Batsman 1 */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
                   <div style={{
+                    position: "absolute",
+                    top: "-26px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(90deg, #0e337e 0%, #16469d 50%, #0e337e 100%)",
+                    border: "1.5px solid #facc15",
+                    borderRadius: "14px",
+                    padding: "2px 16px",
                     color: "#ffffff",
-                    fontWeight: 900,
-                    fontSize: "11.5px",
-                    letterSpacing: "0.3px",
-                    textTransform: "uppercase",
+                    fontSize: "10.5px",
+                    fontWeight: "900",
+                    letterSpacing: "1px",
+                    zIndex: 10,
                     whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    minWidth: 0
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
                   }}>
-                    {scoringState.nonStriker || "Non-Striker"}
+                    <span>🎯 TARGET <strong style={{ color: "#facc15", fontSize: "11.5px", marginLeft: "2px" }}>{scoringState.target}</strong></span>
+                    {need !== null && bLeft !== null && (
+                      <>
+                        <span style={{ color: "rgba(255,255,255,0.35)" }}>|</span>
+                        <span>NEED <strong style={{ color: "#facc15" }}>{need}</strong> IN <strong style={{ color: "#ffffff" }}>{bLeft}</strong> B</span>
+                      </>
+                    )}
+                    {rrr !== null && (
+                      <>
+                        <span style={{ color: "rgba(255,255,255,0.35)" }}>|</span>
+                        <span style={{ color: "#93c5fd" }}>REQ RR: {rrr}</span>
+                      </>
+                    )}
                   </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0 }}>
-                    <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 800, fontSize: "9px" }}>{nonStriker?.balls ?? 0}</span>
-                  </div>
-                </div>
+                )}
 
-                {/* Striker / Batsman 2 with Orange Arrow Indicator */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "3px", minWidth: 0, overflow: "hidden" }}>
-                    <span style={{ color: "#f59e0b", fontSize: "9px", fontWeight: 950, flexShrink: 0, lineHeight: 1 }}>▶</span>
+                {/* ── MAIN HORIZONTAL SCOREBOARD BAR (Exact Screenshot Layout) ── */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "stretch",
+                  height: "48px",
+                  background: "#0a193d",
+                  borderRadius: "0px",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  overflow: "hidden",
+                  boxSizing: "border-box"
+                }}>
+
+                  {/* ── 1. BATTING TEAM BLOCK (Solid Deep Blue) ── */}
+                  <div style={{
+                    background: "#0c2560",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 18px",
+                    minWidth: "120px",
+                    borderRight: "1px solid rgba(255,255,255,0.15)",
+                    flexShrink: 0
+                  }}>
                     <span style={{
                       color: "#ffffff",
-                      fontWeight: 900,
-                      fontSize: "11.5px",
-                      letterSpacing: "0.3px",
+                      fontWeight: 950,
+                      fontSize: "12px",
+                      letterSpacing: "0.6px",
                       textTransform: "uppercase",
                       whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis"
+                      textAlign: "center"
                     }}>
-                      {scoringState.striker || "Striker"}
+                      {currentBatTeam || "TEAM A"}
                     </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0 }}>
-                    <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>{striker?.runs ?? 0}</span>
-                    <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 800, fontSize: "9px" }}>{striker?.balls ?? 0}</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* ── 4. CENTER INFO SECTION (Silver-White Block) ── */}
-              <div style={{
-                background: diamondBgWhite,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px",
-                minWidth: "155px",
-                borderRight: "1px solid rgba(0,0,0,0.1)",
-                flexShrink: 0
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: "#dc2626",
-                    fontWeight: 950,
-                    fontSize: "13px",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate"
-                  }}>
-                    {activeNotification}
-                  </span>
-                ) : scoringState.customInputText ? (
-                  <span style={{ color: "#0c2560", fontWeight: 950, fontSize: "12px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                    {scoringState.customInputText}
-                  </span>
-                ) : (
-                  <span style={{
-                    color: "#0c2560",
-                    fontWeight: 950,
-                    fontSize: "14.5px",
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase"
-                  }}>
-                    CRR: {crr}
-                  </span>
-                )}
-              </div>
-
-              {/* ── 5. BOWLER & OVER BALLS (Patterned Crimson Red) ── */}
-              <div style={{
-                background: diamondBgRed,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "2px 14px",
-                flex: 1.3,
-                minWidth: 0,
-                gap: "3px",
-                borderRight: "1px solid rgba(255,255,255,0.15)"
-              }}>
-                {/* Bowler Name & Figures */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
+                  {/* ── 2. TEAM SCORE & OVERS (Patterned Royal Blue) ── */}
                   <div style={{
-                    color: "#ffffff",
-                    fontWeight: 900,
-                    fontSize: "11.5px",
-                    letterSpacing: "0.3px",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    minWidth: 0
+                    background: diamondBgBlue,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 16px",
+                    minWidth: "115px",
+                    borderRight: "1px solid rgba(255,255,255,0.15)",
+                    flexShrink: 0,
+                    lineHeight: 1
                   }}>
-                    {scoringState.bowler || "Bowler"}
+                    <div style={{
+                      color: "#facc15",
+                      fontWeight: 950,
+                      fontSize: "20px",
+                      letterSpacing: "-0.5px",
+                      textShadow: "0 1px 4px rgba(0,0,0,0.5)"
+                    }}>
+                      {scoringState.score}-{scoringState.wickets}
+                    </div>
+                    <div style={{
+                      color: "#ffffff",
+                      fontWeight: 800,
+                      fontSize: "8.5px",
+                      letterSpacing: "0.5px",
+                      marginTop: "3px",
+                      textTransform: "uppercase"
+                    }}>
+                      OVERS {fmtOv(scoringState.balls, bpo)}
+                    </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
-                    <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                    </span>
-                    <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "9.5px", fontWeight: 700 }}>
-                      ({fmtOv(bowler?.ballsBowled ?? 0, bpo)})
-                    </span>
-                  </div>
-                </div>
 
-                {/* Over Ball Outcome Badges */}
-                <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
-                  {Array.from({ length: totalBallSlots }).map((_, i) => {
-                    const ball = thisOver[i];
-                    let bg = "rgba(255,255,255,0.08)";
-                    let color = "#ffffff";
-                    let border = "1px solid rgba(255,255,255,0.2)";
-                    let shadow = "none";
-
-                    if (ball) {
-                      if (ball === "W" || ball.startsWith("W+")) {
-                        bg = "#ef4444";
-                        color = "#ffffff";
-                        border = "none";
-                        shadow = "0 1px 4px rgba(0,0,0,0.3)";
-                      } else if (ball === "6") {
-                        bg = "#3b82f6";
-                        color = "#ffffff";
-                        border = "none";
-                        shadow = "0 1px 4px rgba(0,0,0,0.3)";
-                      } else if (ball === "4") {
-                        bg = "#f59e0b";
-                        color = "#000000";
-                        border = "none";
-                        shadow = "0 1px 4px rgba(0,0,0,0.3)";
-                      } else if (isExtraBall(ball)) {
-                        bg = "#a855f7";
-                        color = "#ffffff";
-                        border = "none";
-                        shadow = "0 1px 4px rgba(0,0,0,0.3)";
-                      } else {
-                        bg = "#ffffff";
-                        color = "#0f172a";
-                        border = "none";
-                        shadow = "0 1px 4px rgba(0,0,0,0.25)";
-                      }
-                    }
-
-                    return (
-                      <div
-                        key={i}
-                        style={{
-                          width: "16px",
-                          height: "16px",
-                          borderRadius: "50%",
-                          background: bg,
-                          border,
-                          color,
-                          boxShadow: shadow,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
-                          fontWeight: 950,
-                          lineHeight: 1,
-                          flexShrink: 0
-                        }}
-                      >
-                        {ball && ball.includes("+") ? renderOutcomeText(ball, 16) : (ball || "")}
+                  {/* ── 3. BATSMEN SECTION (Patterned Royal Blue) ── */}
+                  <div style={{
+                    background: diamondBgBlue,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "2px 14px",
+                    flex: 1.2,
+                    minWidth: 0,
+                    gap: "3px",
+                    borderRight: "1px solid rgba(255,255,255,0.15)"
+                  }}>
+                    {/* Non-Striker / Batsman 1 */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
+                      <div style={{
+                        color: "#ffffff",
+                        fontWeight: 900,
+                        fontSize: "11.5px",
+                        letterSpacing: "0.3px",
+                        textTransform: "uppercase",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        minWidth: 0
+                      }}>
+                        {scoringState.nonStriker || "Non-Striker"}
                       </div>
-                    );
-                  })}
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 800, fontSize: "9px" }}>{nonStriker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+
+                    {/* Striker / Batsman 2 with Orange Arrow Indicator */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "3px", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{ color: "#f59e0b", fontSize: "9px", fontWeight: 950, flexShrink: 0, lineHeight: 1 }}>▶</span>
+                        <span style={{
+                          color: "#ffffff",
+                          fontWeight: 900,
+                          fontSize: "11.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis"
+                        }}>
+                          {scoringState.striker || "Striker"}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "5px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 800, fontSize: "9px" }}>{striker?.balls ?? 0}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── 4. CENTER INFO SECTION (Silver-White Block) ── */}
+                  <div style={{
+                    background: diamondBgWhite,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 18px",
+                    minWidth: "155px",
+                    borderRight: "1px solid rgba(0,0,0,0.1)",
+                    flexShrink: 0
+                  }}>
+                    {activeNotification ? (
+                      <span style={{
+                        color: "#dc2626",
+                        fontWeight: 950,
+                        fontSize: "13px",
+                        letterSpacing: "1px",
+                        textTransform: "uppercase",
+                        animation: "pulseGlow 1s ease-in-out infinite alternate"
+                      }}>
+                        {activeNotification}
+                      </span>
+                    ) : scoringState.customInputText ? (
+                      <span style={{ color: "#0c2560", fontWeight: 950, fontSize: "12px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                        {scoringState.customInputText}
+                      </span>
+                    ) : (
+                      <span style={{
+                        color: "#0c2560",
+                        fontWeight: 950,
+                        fontSize: "14.5px",
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase"
+                      }}>
+                        CRR: {crr}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* ── 5. BOWLER & OVER BALLS (Patterned Crimson Red) ── */}
+                  <div style={{
+                    background: diamondBgRed,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "2px 14px",
+                    flex: 1.3,
+                    minWidth: 0,
+                    gap: "3px",
+                    borderRight: "1px solid rgba(255,255,255,0.15)"
+                  }}>
+                    {/* Bowler Name & Figures */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
+                      <div style={{
+                        color: "#ffffff",
+                        fontWeight: 900,
+                        fontSize: "11.5px",
+                        letterSpacing: "0.3px",
+                        textTransform: "uppercase",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        minWidth: 0
+                      }}>
+                        {scoringState.bowler || "Bowler"}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "12.5px" }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "9.5px", fontWeight: 700 }}>
+                          ({fmtOv(bowler?.ballsBowled ?? 0, bpo)})
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Over Ball Outcome Badges */}
+                    <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
+                      {Array.from({ length: totalBallSlots }).map((_, i) => {
+                        const ball = thisOver[i];
+                        let bg = "rgba(255,255,255,0.08)";
+                        let color = "#ffffff";
+                        let border = "1px solid rgba(255,255,255,0.2)";
+                        let shadow = "none";
+
+                        if (ball) {
+                          if (ball === "W" || ball.startsWith("W+")) {
+                            bg = "#ef4444";
+                            color = "#ffffff";
+                            border = "none";
+                            shadow = "0 1px 4px rgba(0,0,0,0.3)";
+                          } else if (ball === "6") {
+                            bg = "#3b82f6";
+                            color = "#ffffff";
+                            border = "none";
+                            shadow = "0 1px 4px rgba(0,0,0,0.3)";
+                          } else if (ball === "4") {
+                            bg = "#f59e0b";
+                            color = "#000000";
+                            border = "none";
+                            shadow = "0 1px 4px rgba(0,0,0,0.3)";
+                          } else if (isExtraBall(ball)) {
+                            bg = "#a855f7";
+                            color = "#ffffff";
+                            border = "none";
+                            shadow = "0 1px 4px rgba(0,0,0,0.3)";
+                          } else {
+                            bg = "#ffffff";
+                            color = "#0f172a";
+                            border = "none";
+                            shadow = "0 1px 4px rgba(0,0,0,0.25)";
+                          }
+                        }
+
+                        return (
+                          <div
+                            key={i}
+                            style={{
+                              width: "16px",
+                              height: "16px",
+                              borderRadius: "50%",
+                              background: bg,
+                              border,
+                              color,
+                              boxShadow: shadow,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
+                              fontWeight: 950,
+                              lineHeight: 1,
+                              flexShrink: 0
+                            }}
+                          >
+                            {ball && ball.includes("+") ? renderOutcomeText(ball, 16) : (ball || "")}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* ── 6. BOWLING TEAM BLOCK (Solid Crimson Red) ── */}
+                  <div style={{
+                    background: "#781010",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 18px",
+                    minWidth: "120px",
+                    flexShrink: 0
+                  }}>
+                    <span style={{
+                      color: "#ffffff",
+                      fontWeight: 950,
+                      fontSize: "12px",
+                      letterSpacing: "0.6px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                      textAlign: "center"
+                    }}>
+                      {currentBowlTeam || "TEAM B"}
+                    </span>
+                  </div>
+
                 </div>
-              </div>
-
-              {/* ── 6. BOWLING TEAM BLOCK (Solid Crimson Red) ── */}
-              <div style={{
-                background: "#781010",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px",
-                minWidth: "120px",
-                flexShrink: 0
-              }}>
-                <span style={{
-                  color: "#ffffff",
-                  fontWeight: 950,
-                  fontSize: "12px",
-                  letterSpacing: "0.6px",
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap",
-                  textAlign: "center"
-                }}>
-                  {currentBowlTeam || "TEAM B"}
-                </span>
-              </div>
-
-            </div>
               </>
             )}
 
@@ -11119,189 +11119,189 @@ flexShrink: 0,
               <>
                 {/* Target pill */}
                 {scoringState.target !== null && (
-              <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#facc15", color: "#000", borderRadius: "4px", padding: "2px 14px", fontSize: "10px", fontWeight: "900", letterSpacing: "1px", zIndex: 5, whiteSpace: "nowrap" }}>
-                TARGET: {scoringState.target}
-              </div>
-            )}
-
-            {/* ── Top status ticker ── */}
-            <div style={{
-              background: "linear-gradient(90deg, #111 0%, #1a1a00 50%, #111 100%)",
-              borderTop: "2px solid #facc15",
-              borderLeft: "2px solid #facc15",
-              borderRight: "2px solid #facc15",
-              borderRadius: "8px 8px 0 0",
-              padding: "3px 14px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-              <span style={{ color: "#facc15", fontSize: "9px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
-                {statusLine}
-              </span>
-            </div>
-
-            {/* ── Main scoreboard row ── */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              height: "46px",
-              background: "#0e0e0e",
-              border: "2px solid #facc15",
-              borderTop: "none",
-              borderRadius: "0 0 8px 8px",
-              overflow: "hidden",
-            }}>
-
-              {/* ── LEFT: Batting team plate ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #facc15 0%, #eab308 60%, #ca8a04 100%)",
-                color: "#000",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 16px",
-                minWidth: "90px",
-                clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-              }}>
-                <span style={{ fontWeight: 950, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.5px", lineHeight: 1.1 }}>{batTeamShort}</span>
-                <span style={{ fontSize: "7px", fontWeight: 800, letterSpacing: "0.8px", opacity: 0.7, marginTop: "1px" }}>BAT</span>
-              </div>
-
-              {/* ── BATSMEN section ── */}
-              <div style={{ display: "flex", flex: 1, padding: "0 10px", alignItems: "center", gap: "10px", marginLeft: "-5px", minWidth: 0 }}>
-                {/* Striker */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
-                  <span style={{ color: "#facc15", fontWeight: 900, fontSize: "10.5px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>▶ {scoringState.striker || "—"}</span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-                    <span style={{ color: "#fff", fontWeight: 950, fontSize: "15px" }}>{striker?.runs ?? 0}</span>
-                    <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "9px", fontWeight: 700 }}>({striker?.balls ?? 0})</span>
+                  <div style={{ position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)", background: "#facc15", color: "#000", borderRadius: "4px", padding: "2px 14px", fontSize: "10px", fontWeight: "900", letterSpacing: "1px", zIndex: 5, whiteSpace: "nowrap" }}>
+                    TARGET: {scoringState.target}
                   </div>
-                </div>
-
-                {/* Divider */}
-                <div style={{ width: "1px", height: "26px", background: "rgba(250,204,21,0.25)", flexShrink: 0 }} />
-
-                {/* Non-Striker */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
-                  <span style={{ color: "rgba(255,255,255,0.65)", fontWeight: 700, fontSize: "10px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.nonStriker || "—"}</span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-                    <span style={{ color: "rgba(255,255,255,0.85)", fontWeight: 800, fontSize: "13px" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "8.5px", fontWeight: 600 }}>({nonStriker?.balls ?? 0})</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── CENTER: Score nucleus ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0 16px",
-                minWidth: "155px",
-                flexShrink: 0,
-                background: activeNotification
-                  ? getNotificationStyles(activeNotification).bg
-                  : "linear-gradient(180deg, #1a1a00 0%, #0e0e00 100%)",
-                borderLeft: "2px solid #facc15",
-                borderRight: "2px solid #facc15",
-                transition: "all 0.3s ease",
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: getNotificationStyles(activeNotification).textColor,
-                    fontSize: "11px", fontWeight: 950, letterSpacing: "1.5px",
-                    textTransform: "uppercase", textAlign: "center",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate",
-                    lineHeight: 1.25, padding: "0 4px"
-                  }}>
-                    {activeNotification}
-                  </span>
-                ) : (
-                  <>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
-                      <span style={{ color: "#facc15", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px", textShadow: "0 0 10px rgba(250,204,21,0.4)" }}>{scoringState.score}</span>
-                      <span style={{ color: "#eab308", fontWeight: 900, fontSize: "16px", margin: "0 1px" }}>-</span>
-                      <span style={{ color: "#fff", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px" }}>{scoringState.wickets}</span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
-                      <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 800 }}>OV:</span>
-                      <span style={{ color: "#facc15", fontSize: "9.5px", fontWeight: 950 }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
-                      <span style={{ color: "#475569", fontSize: "8px" }}>/{match.overs}</span>
-                    </div>
-                  </>
                 )}
-              </div>
 
-              {/* ── BOWLER & OVER BALLS ── */}
-              <div style={{ display: "flex", flex: 1.1, padding: "0 10px", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
-                {/* Bowler */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
-                  <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "7.5px", fontWeight: 800, letterSpacing: "0.8px" }}>BOWLER</span>
-                  <span style={{ color: "#fff", fontWeight: 800, fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.bowler || "—"}</span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-                    <span style={{ color: "#facc15", fontWeight: 950, fontSize: "12px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
-                    <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 700 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                {/* ── Top status ticker ── */}
+                <div style={{
+                  background: "linear-gradient(90deg, #111 0%, #1a1a00 50%, #111 100%)",
+                  borderTop: "2px solid #facc15",
+                  borderLeft: "2px solid #facc15",
+                  borderRight: "2px solid #facc15",
+                  borderRadius: "8px 8px 0 0",
+                  padding: "3px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                  <span style={{ color: "#facc15", fontSize: "9px", fontWeight: 900, letterSpacing: "1px", textTransform: "uppercase" }}>
+                    {statusLine}
+                  </span>
+                </div>
+
+                {/* ── Main scoreboard row ── */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "stretch",
+                  height: "46px",
+                  background: "#0e0e0e",
+                  border: "2px solid #facc15",
+                  borderTop: "none",
+                  borderRadius: "0 0 8px 8px",
+                  overflow: "hidden",
+                }}>
+
+                  {/* ── LEFT: Batting team plate ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #facc15 0%, #eab308 60%, #ca8a04 100%)",
+                    color: "#000",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 16px",
+                    minWidth: "90px",
+                    clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0,
+                  }}>
+                    <span style={{ fontWeight: 950, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.5px", lineHeight: 1.1 }}>{batTeamShort}</span>
+                    <span style={{ fontSize: "7px", fontWeight: 800, letterSpacing: "0.8px", opacity: 0.7, marginTop: "1px" }}>BAT</span>
                   </div>
-                </div>
 
-                {/* Over balls */}
-                <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
-                  {(() => {
-                    const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCount = bpo + extrasCount;
-                    return Array.from({ length: totalCount }).map((_, i) => {
-                      const ball = thisOver[i];
-                      let bg = "transparent";
-                      let color = "rgba(255,255,255,0.3)";
-                      let border = "1px dashed rgba(250,204,21,0.25)";
-                      let shadow = "none";
-                      if (ball) {
-                        if (ball === "W" || ball?.startsWith("W+")) { bg = "linear-gradient(135deg,#ef4444,#dc2626)"; color = "#fff"; border = "1.5px solid #fca5a5"; shadow = "0 0 6px rgba(239,68,68,0.5)"; }
-                        else if (ball === "6") { bg = "linear-gradient(135deg,#facc15,#eab308)"; color = "#000"; border = "1.5px solid #fef08a"; shadow = "0 0 6px rgba(250,204,21,0.5)"; }
-                        else if (ball === "4") { bg = "linear-gradient(135deg,#fde047,#facc15)"; color = "#000"; border = "1.5px solid #fef9c3"; shadow = "0 0 6px rgba(250,204,21,0.4)"; }
-                        else if (isExtraBall(ball)) { bg = "rgba(250,204,21,0.2)"; color = "#facc15"; border = "1px solid rgba(250,204,21,0.4)"; }
-                        else { bg = "rgba(255,255,255,0.1)"; color = "#fff"; border = "1px solid rgba(250,204,21,0.3)"; }
-                      }
-                      return (
-                        <div key={i} style={{
-                          width: "17px", height: "17px", borderRadius: "4px",
-                          background: bg, border, color, boxShadow: shadow,
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
-                          fontWeight: 950, lineHeight: 1, flexShrink: 0
-                        }}>
-                          {ball && ball.includes("+") ? renderOutcomeText(ball, 17) : (ball || "")}
+                  {/* ── BATSMEN section ── */}
+                  <div style={{ display: "flex", flex: 1, padding: "0 10px", alignItems: "center", gap: "10px", marginLeft: "-5px", minWidth: 0 }}>
+                    {/* Striker */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
+                      <span style={{ color: "#facc15", fontWeight: 900, fontSize: "10.5px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>▶ {scoringState.striker || "—"}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                        <span style={{ color: "#fff", fontWeight: 950, fontSize: "15px" }}>{striker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "9px", fontWeight: 700 }}>({striker?.balls ?? 0})</span>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ width: "1px", height: "26px", background: "rgba(250,204,21,0.25)", flexShrink: 0 }} />
+
+                    {/* Non-Striker */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
+                      <span style={{ color: "rgba(255,255,255,0.65)", fontWeight: 700, fontSize: "10px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.nonStriker || "—"}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                        <span style={{ color: "rgba(255,255,255,0.85)", fontWeight: 800, fontSize: "13px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "8.5px", fontWeight: 600 }}>({nonStriker?.balls ?? 0})</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── CENTER: Score nucleus ── */}
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "0 16px",
+                    minWidth: "155px",
+                    flexShrink: 0,
+                    background: activeNotification
+                      ? getNotificationStyles(activeNotification).bg
+                      : "linear-gradient(180deg, #1a1a00 0%, #0e0e00 100%)",
+                    borderLeft: "2px solid #facc15",
+                    borderRight: "2px solid #facc15",
+                    transition: "all 0.3s ease",
+                  }}>
+                    {activeNotification ? (
+                      <span style={{
+                        color: getNotificationStyles(activeNotification).textColor,
+                        fontSize: "11px", fontWeight: 950, letterSpacing: "1.5px",
+                        textTransform: "uppercase", textAlign: "center",
+                        animation: "pulseGlow 1s ease-in-out infinite alternate",
+                        lineHeight: 1.25, padding: "0 4px"
+                      }}>
+                        {activeNotification}
+                      </span>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
+                          <span style={{ color: "#facc15", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px", textShadow: "0 0 10px rgba(250,204,21,0.4)" }}>{scoringState.score}</span>
+                          <span style={{ color: "#eab308", fontWeight: 900, fontSize: "16px", margin: "0 1px" }}>-</span>
+                          <span style={{ color: "#fff", fontWeight: 950, fontSize: "22px", letterSpacing: "-0.5px" }}>{scoringState.wickets}</span>
                         </div>
-                      );
-                    });
-                  })()}
+                        <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
+                          <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 800 }}>OV:</span>
+                          <span style={{ color: "#facc15", fontSize: "9.5px", fontWeight: 950 }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
+                          <span style={{ color: "#475569", fontSize: "8px" }}>/{match.overs}</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* ── BOWLER & OVER BALLS ── */}
+                  <div style={{ display: "flex", flex: 1.1, padding: "0 10px", alignItems: "center", justifyContent: "space-between", gap: "8px", minWidth: 0 }}>
+                    {/* Bowler */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}>
+                      <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "7.5px", fontWeight: 800, letterSpacing: "0.8px" }}>BOWLER</span>
+                      <span style={{ color: "#fff", fontWeight: 800, fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.bowler || "—"}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                        <span style={{ color: "#facc15", fontWeight: 950, fontSize: "12px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                        <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 700 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                      </div>
+                    </div>
+
+                    {/* Over balls */}
+                    <div style={{ display: "flex", gap: "3px", alignItems: "center", flexShrink: 0 }}>
+                      {(() => {
+                        const bpo = match?.ballsPerOver || 6;
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCount = bpo + extrasCount;
+                        return Array.from({ length: totalCount }).map((_, i) => {
+                          const ball = thisOver[i];
+                          let bg = "transparent";
+                          let color = "rgba(255,255,255,0.3)";
+                          let border = "1px dashed rgba(250,204,21,0.25)";
+                          let shadow = "none";
+                          if (ball) {
+                            if (ball === "W" || ball?.startsWith("W+")) { bg = "linear-gradient(135deg,#ef4444,#dc2626)"; color = "#fff"; border = "1.5px solid #fca5a5"; shadow = "0 0 6px rgba(239,68,68,0.5)"; }
+                            else if (ball === "6") { bg = "linear-gradient(135deg,#facc15,#eab308)"; color = "#000"; border = "1.5px solid #fef08a"; shadow = "0 0 6px rgba(250,204,21,0.5)"; }
+                            else if (ball === "4") { bg = "linear-gradient(135deg,#fde047,#facc15)"; color = "#000"; border = "1.5px solid #fef9c3"; shadow = "0 0 6px rgba(250,204,21,0.4)"; }
+                            else if (isExtraBall(ball)) { bg = "rgba(250,204,21,0.2)"; color = "#facc15"; border = "1px solid rgba(250,204,21,0.4)"; }
+                            else { bg = "rgba(255,255,255,0.1)"; color = "#fff"; border = "1px solid rgba(250,204,21,0.3)"; }
+                          }
+                          return (
+                            <div key={i} style={{
+                              width: "17px", height: "17px", borderRadius: "4px",
+                              background: bg, border, color, boxShadow: shadow,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
+                              fontWeight: 950, lineHeight: 1, flexShrink: 0
+                            }}>
+                              {ball && ball.includes("+") ? renderOutcomeText(ball, 17) : (ball || "")}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* ── RIGHT: Bowling team plate ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #1a1400 0%, #0e0e0e 100%)",
+                    color: "#facc15",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 14px",
+                    minWidth: "90px",
+                    clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0,
+                    borderLeft: "1px solid rgba(250,204,21,0.3)",
+                  }}>
+                    <span style={{ fontWeight: 950, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.5px", lineHeight: 1.1 }}>{bowlTeamShort}</span>
+                    <span style={{ fontSize: "7px", fontWeight: 800, letterSpacing: "0.8px", color: "rgba(250,204,21,0.6)", marginTop: "1px" }}>BOWL</span>
+                  </div>
+
                 </div>
-              </div>
-
-              {/* ── RIGHT: Bowling team plate ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #1a1400 0%, #0e0e0e 100%)",
-                color: "#facc15",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 14px",
-                minWidth: "90px",
-                clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-                borderLeft: "1px solid rgba(250,204,21,0.3)",
-              }}>
-                <span style={{ fontWeight: 950, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.5px", lineHeight: 1.1 }}>{bowlTeamShort}</span>
-                <span style={{ fontSize: "7px", fontWeight: 800, letterSpacing: "0.8px", color: "rgba(250,204,21,0.6)", marginTop: "1px" }}>BOWL</span>
-              </div>
-
-            </div>
               </>
             )}
           </div>
@@ -11395,484 +11395,484 @@ flexShrink: 0,
             {renderScoreboardMarqueeRibbon("jiocinema", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <>
                 {/* ── TOP MATCH SITUATION RIBBON / HEADER BAR ── */}
-            <div style={{
-              background: "linear-gradient(90deg, #111827 0%, #1e1b4b 25%, #4c0519 50%, #1e1b4b 75%, #111827 100%)",
-              borderTop: "2px solid #e11d48",
-              borderLeft: "2px solid #be123c",
-              borderRight: "2px solid #be123c",
-              borderBottom: "1px solid rgba(225, 29, 72, 0.35)",
-              borderRadius: "10px 10px 0 0",
-              padding: "4px 14px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
-              gap: "10px"
-            }}>
-              {/* Left Badge: JioCinema Live Indicator */}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
                 <div style={{
-                  background: "linear-gradient(135deg, #ff0055 0%, #e11d48 50%, #be123c 100%)",
-                  color: "#ffffff",
-                  fontWeight: 950,
-                  fontSize: "9px",
-                  letterSpacing: "1px",
-                  padding: "2px 8px",
-                  borderRadius: "4px",
+                  background: "linear-gradient(90deg, #111827 0%, #1e1b4b 25%, #4c0519 50%, #1e1b4b 75%, #111827 100%)",
+                  borderTop: "2px solid #e11d48",
+                  borderLeft: "2px solid #be123c",
+                  borderRight: "2px solid #be123c",
+                  borderBottom: "1px solid rgba(225, 29, 72, 0.35)",
+                  borderRadius: "10px 10px 0 0",
+                  padding: "4px 14px",
                   display: "flex",
                   alignItems: "center",
-                  gap: "4px",
-                  boxShadow: "0 2px 8px rgba(225, 29, 72, 0.5)"
+                  justifyContent: "space-between",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
+                  gap: "10px"
                 }}>
-                  <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#ffffff", display: "inline-block" }} />
-                  <span>JIO LIVE</span>
-                </div>
-                <div style={{
-                  background: "rgba(15, 23, 42, 0.8)",
-                  border: "1px solid rgba(225, 29, 72, 0.4)",
-                  padding: "1px 7px",
-                  borderRadius: "3px",
-                  fontSize: "8.5px",
-                  fontWeight: 800,
-                  color: "#fda4af",
-                  letterSpacing: "0.5px"
-                }}>
-                  INN {scoringState.inningsNo}
-                </div>
-              </div>
-
-              {/* Center Match Situation Dynamic Ticker */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                flex: 1,
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                fontSize: "9.5px",
-                fontWeight: 800,
-                letterSpacing: "0.5px"
-              }}>
-                {scoringState.customInputText ? (
-                  <span style={{ color: "#fda4af", textTransform: "uppercase" }}>{scoringState.customInputText}</span>
-                ) : need !== null && bLeft !== null ? (
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ color: "#fda4af" }}>TARGET: <strong style={{ color: "#ffffff", fontSize: "12.5px" }}>{scoringState.target}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#ffffff" }}>NEED <strong style={{ color: "#fb7185", fontSize: "13px" }}>{need}</strong> RUNS FROM <strong style={{ color: "#fda4af" }}>{bLeft}</strong> BALLS</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#fda4af" }}>RRR: <strong>{rrr}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#cbd5e1" }}>CRR: <strong>{crr}</strong></span>
+                  {/* Left Badge: JioCinema Live Indicator */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                    <div style={{
+                      background: "linear-gradient(135deg, #ff0055 0%, #e11d48 50%, #be123c 100%)",
+                      color: "#ffffff",
+                      fontWeight: 950,
+                      fontSize: "9px",
+                      letterSpacing: "1px",
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      boxShadow: "0 2px 8px rgba(225, 29, 72, 0.5)"
+                    }}>
+                      <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#ffffff", display: "inline-block" }} />
+                      <span>JIO LIVE</span>
+                    </div>
+                    <div style={{
+                      background: "rgba(15, 23, 42, 0.8)",
+                      border: "1px solid rgba(225, 29, 72, 0.4)",
+                      padding: "1px 7px",
+                      borderRadius: "3px",
+                      fontSize: "8.5px",
+                      fontWeight: 800,
+                      color: "#fda4af",
+                      letterSpacing: "0.5px"
+                    }}>
+                      INN {scoringState.inningsNo}
+                    </div>
                   </div>
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <span style={{ color: "#ffffff" }}>{currentBatTeam.toUpperCase()} INNINGS</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#fda4af" }}>CRR: <strong style={{ color: "#ffffff" }}>{crr}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#cbd5e1" }}>PROJECTED: <strong style={{ color: "#fb7185" }}>{projScore}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#94a3b8" }}>MAX OVERS: {match.overs}</span>
-                  </div>
-                )}
-              </div>
 
-              {/* Right Badge: Match Info */}
-              <div style={{
-                fontSize: "8.5px",
-                fontWeight: 900,
-                color: "#cbd5e1",
-                letterSpacing: "0.8px",
-                textTransform: "uppercase",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#fb7185" }}>{match.matchType || "T20"}</span>
-                <span>#{match.matchNo || 1}</span>
-              </div>
-            </div>
-
-            {/* ── MAIN SCOREBOARD DECK ── */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              minHeight: "46px",
-              background: "linear-gradient(180deg, #0b0f19 0%, #0f172a 50%, #090d16 100%)",
-              border: "2px solid #be123c",
-              borderTop: "none",
-              borderRadius: "0 0 10px 10px",
-              overflow: "hidden",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)"
-            }}>
-
-              {/* ── BATTING TEAM PLATE (Left End) ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #ff0055 0%, #e11d48 40%, #be123c 75%, #881337 100%)",
-                color: "#ffffff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 18px 0 14px",
-                minWidth: "105px",
-                clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-                position: "relative",
-                boxShadow: "inset 0 0 12px rgba(0,0,0,0.3)"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "8px" }}>
-                  <span style={{
-                    fontSize: "14px",
-                    fontWeight: 950,
-                    letterSpacing: "0.5px",
-                    lineHeight: 1.1,
-                    textTransform: "uppercase",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.6)"
-                  }}>
-                    {batTeamShort}
-                  </span>
+                  {/* Center Match Situation Dynamic Ticker */}
                   <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2px",
-                    background: "#0f172a",
-                    color: "#fb7185",
-                    padding: "1px 4px",
-                    borderRadius: "2px",
-                    fontSize: "7px",
-                    fontWeight: 900,
-                    marginTop: "2px",
-                    letterSpacing: "0.5px",
-                    border: "1px solid rgba(225, 29, 72, 0.4)"
-                  }}>
-                    <span className="bat-swing" style={{ fontSize: "7px" }}>🏏</span>
-                    <span>BAT</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── BATSMEN SECTION ── */}
-              <div style={{
-                display: "flex",
-                flex: 1,
-                alignItems: "center",
-                padding: "0 10px",
-                gap: "12px",
-                marginLeft: "-6px",
-                minWidth: 0
-              }}>
-                {/* Striker Card */}
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
-                  <div style={{
-                    width: "18px",
-                    height: "18px",
-                    borderRadius: "50%",
-                    background: "rgba(225,29,72,0.2)",
-                    border: "1.5px solid #e11d48",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "9px",
-                    flexShrink: 0,
-                    boxShadow: "0 0 8px rgba(225,29,72,0.4)"
+                    gap: "10px",
+                    flex: 1,
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    fontSize: "9.5px",
+                    fontWeight: 800,
+                    letterSpacing: "0.5px"
                   }}>
-                    <span className="bat-swing">🏏</span>
+                    {scoringState.customInputText ? (
+                      <span style={{ color: "#fda4af", textTransform: "uppercase" }}>{scoringState.customInputText}</span>
+                    ) : need !== null && bLeft !== null ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span style={{ color: "#fda4af" }}>TARGET: <strong style={{ color: "#ffffff", fontSize: "12.5px" }}>{scoringState.target}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#ffffff" }}>NEED <strong style={{ color: "#fb7185", fontSize: "13px" }}>{need}</strong> RUNS FROM <strong style={{ color: "#fda4af" }}>{bLeft}</strong> BALLS</span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#fda4af" }}>RRR: <strong>{rrr}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#cbd5e1" }}>CRR: <strong>{crr}</strong></span>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <span style={{ color: "#ffffff" }}>{currentBatTeam.toUpperCase()} INNINGS</span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#fda4af" }}>CRR: <strong style={{ color: "#ffffff" }}>{crr}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#cbd5e1" }}>PROJECTED: <strong style={{ color: "#fb7185" }}>{projScore}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#94a3b8" }}>MAX OVERS: {match.overs}</span>
+                      </div>
+                    )}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px", overflow: "hidden" }}>
+
+                  {/* Right Badge: Match Info */}
+                  <div style={{
+                    fontSize: "8.5px",
+                    fontWeight: 900,
+                    color: "#cbd5e1",
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#fb7185" }}>{match.matchType || "T20"}</span>
+                    <span>#{match.matchNo || 1}</span>
+                  </div>
+                </div>
+
+                {/* ── MAIN SCOREBOARD DECK ── */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "stretch",
+                  minHeight: "46px",
+                  background: "linear-gradient(180deg, #0b0f19 0%, #0f172a 50%, #090d16 100%)",
+                  border: "2px solid #be123c",
+                  borderTop: "none",
+                  borderRadius: "0 0 10px 10px",
+                  overflow: "hidden",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)"
+                }}>
+
+                  {/* ── BATTING TEAM PLATE (Left End) ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #ff0055 0%, #e11d48 40%, #be123c 75%, #881337 100%)",
+                    color: "#ffffff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 18px 0 14px",
+                    minWidth: "105px",
+                    clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0,
+                    position: "relative",
+                    boxShadow: "inset 0 0 12px rgba(0,0,0,0.3)"
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "8px" }}>
                       <span style={{
-                        color: "#fda4af",
+                        fontSize: "14px",
+                        fontWeight: 950,
+                        letterSpacing: "0.5px",
+                        lineHeight: 1.1,
+                        textTransform: "uppercase",
+                        textShadow: "0 1px 3px rgba(0,0,0,0.6)"
+                      }}>
+                        {batTeamShort}
+                      </span>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                        background: "#0f172a",
+                        color: "#fb7185",
+                        padding: "1px 4px",
+                        borderRadius: "2px",
+                        fontSize: "7px",
                         fontWeight: 900,
-                        fontSize: "10.5px",
-                        letterSpacing: "0.3px",
+                        marginTop: "2px",
+                        letterSpacing: "0.5px",
+                        border: "1px solid rgba(225, 29, 72, 0.4)"
+                      }}>
+                        <span className="bat-swing" style={{ fontSize: "7px" }}>🏏</span>
+                        <span>BAT</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── BATSMEN SECTION ── */}
+                  <div style={{
+                    display: "flex",
+                    flex: 1,
+                    alignItems: "center",
+                    padding: "0 10px",
+                    gap: "12px",
+                    marginLeft: "-6px",
+                    minWidth: 0
+                  }}>
+                    {/* Striker Card */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
+                      <div style={{
+                        width: "18px",
+                        height: "18px",
+                        borderRadius: "50%",
+                        background: "rgba(225,29,72,0.2)",
+                        border: "1.5px solid #e11d48",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "9px",
+                        flexShrink: 0,
+                        boxShadow: "0 0 8px rgba(225,29,72,0.4)"
+                      }}>
+                        <span className="bat-swing">🏏</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "4px", overflow: "hidden" }}>
+                          <span style={{
+                            color: "#fda4af",
+                            fontWeight: 900,
+                            fontSize: "10.5px",
+                            letterSpacing: "0.3px",
+                            textTransform: "uppercase",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden"
+                          }}>
+                            {scoringState.striker || "Striker"}*
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                          <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "14px" }}>{striker?.runs ?? 0}</span>
+                          <span style={{ color: "#94a3b8", fontSize: "9px", fontWeight: 800 }}>({striker?.balls ?? 0})</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "8px", fontWeight: 700, marginLeft: "3px" }}>
+                            4s:{striker?.fours ?? 0} 6s:{striker?.sixes ?? 0}
+                          </span>
+                          <span style={{ color: "#fda4af", fontSize: "7.5px", fontWeight: 800, marginLeft: "2px" }}>
+                            SR:{strikerSR}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "26px", background: "linear-gradient(180deg, transparent, rgba(225,29,72,0.4), transparent)", flexShrink: 0 }} />
+
+                    {/* Non-Striker Card */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                      <span style={{
+                        color: "#cbd5e1",
+                        fontWeight: 700,
+                        fontSize: "10px",
+                        letterSpacing: "0.2px",
                         textTransform: "uppercase",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden"
                       }}>
-                        {scoringState.striker || "Striker"}*
+                        {scoringState.nonStriker || "Non-Striker"}
                       </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "14px" }}>{striker?.runs ?? 0}</span>
-                      <span style={{ color: "#94a3b8", fontSize: "9px", fontWeight: 800 }}>({striker?.balls ?? 0})</span>
-                      <span style={{ color: "#cbd5e1", fontSize: "8px", fontWeight: 700, marginLeft: "3px" }}>
-                        4s:{striker?.fours ?? 0} 6s:{striker?.sixes ?? 0}
-                      </span>
-                      <span style={{ color: "#fda4af", fontSize: "7.5px", fontWeight: 800, marginLeft: "2px" }}>
-                        SR:{strikerSR}
-                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                        <span style={{ color: "#e2e8f0", fontWeight: 800, fontSize: "12px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "#64748b", fontSize: "8.5px", fontWeight: 700 }}>({nonStriker?.balls ?? 0})</span>
+                        <span style={{ color: "#94a3b8", fontSize: "8px", fontWeight: 600, marginLeft: "3px" }}>
+                          4s:{nonStriker?.fours ?? 0} 6s:{nonStriker?.sixes ?? 0}
+                        </span>
+                        <span style={{ color: "#64748b", fontSize: "7.5px", fontWeight: 700, marginLeft: "2px" }}>
+                          SR:{nonStrikerSR}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "26px", background: "linear-gradient(180deg, transparent, rgba(225,29,72,0.4), transparent)", flexShrink: 0 }} />
-
-                {/* Non-Striker Card */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                  <span style={{
-                    color: "#cbd5e1",
-                    fontWeight: 700,
-                    fontSize: "10px",
-                    letterSpacing: "0.2px",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden"
+                  {/* ── CENTER PILL SCORE NUCLEUS (JioCinema Signature 3D White Capsule) ── */}
+                  <div style={{
+                    background: activeNotification
+                      ? getNotificationStyles(activeNotification).bg
+                      : "linear-gradient(180deg, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "0 18px",
+                    minWidth: "175px",
+                    flexShrink: 0,
+                    borderLeft: "2.5px solid #be123c",
+                    borderRight: "2.5px solid #be123c",
+                    boxShadow: activeNotification
+                      ? "0 0 20px rgba(225,29,72,0.6)"
+                      : "0 0 15px rgba(225,29,72,0.2), inset 0 1px 0 rgba(255,255,255,1)",
+                    position: "relative",
+                    transition: "all 0.3s ease"
                   }}>
-                    {scoringState.nonStriker || "Non-Striker"}
-                  </span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                    <span style={{ color: "#e2e8f0", fontWeight: 800, fontSize: "12px" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "#64748b", fontSize: "8.5px", fontWeight: 700 }}>({nonStriker?.balls ?? 0})</span>
-                    <span style={{ color: "#94a3b8", fontSize: "8px", fontWeight: 600, marginLeft: "3px" }}>
-                      4s:{nonStriker?.fours ?? 0} 6s:{nonStriker?.sixes ?? 0}
-                    </span>
-                    <span style={{ color: "#64748b", fontSize: "7.5px", fontWeight: 700, marginLeft: "2px" }}>
-                      SR:{nonStrikerSR}
-                    </span>
+                    {activeNotification ? (
+                      <span style={{
+                        color: getNotificationStyles(activeNotification).textColor,
+                        fontSize: "11.5px",
+                        fontWeight: 950,
+                        letterSpacing: "1.5px",
+                        textTransform: "uppercase",
+                        textAlign: "center",
+                        animation: "pulseGlow 1s ease-in-out infinite alternate",
+                        lineHeight: 1.25,
+                        padding: "0 4px"
+                      }}>
+                        {activeNotification}
+                      </span>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
+                          <span style={{
+                            color: "#be123c",
+                            fontWeight: 950,
+                            fontSize: "20px",
+                            letterSpacing: "-0.5px",
+                            textShadow: "0 1px 1px rgba(0,0,0,0.1)"
+                          }}>
+                            {scoringState.score}
+                          </span>
+                          <span style={{
+                            color: "#e11d48",
+                            fontWeight: 950,
+                            fontSize: "16px",
+                            margin: "0 1px"
+                          }}>
+                            -
+                          </span>
+                          <span style={{
+                            color: "#be123c",
+                            fontWeight: 950,
+                            fontSize: "20px",
+                            letterSpacing: "-0.5px"
+                          }}>
+                            {scoringState.wickets}
+                          </span>
+                        </div>
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          marginTop: "1px"
+                        }}>
+                          <span style={{
+                            color: "#0f172a",
+                            fontSize: "9.5px",
+                            fontWeight: 900,
+                            letterSpacing: "0.5px"
+                          }}>
+                            OV: <strong style={{ color: "#be123c" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</strong>/{match.overs}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
-                </div>
-              </div>
 
-              {/* ── CENTER PILL SCORE NUCLEUS (JioCinema Signature 3D White Capsule) ── */}
-              <div style={{
-                background: activeNotification
-                  ? getNotificationStyles(activeNotification).bg
-                  : "linear-gradient(180deg, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0 18px",
-                minWidth: "175px",
-                flexShrink: 0,
-                borderLeft: "2.5px solid #be123c",
-                borderRight: "2.5px solid #be123c",
-                boxShadow: activeNotification
-                  ? "0 0 20px rgba(225,29,72,0.6)"
-                  : "0 0 15px rgba(225,29,72,0.2), inset 0 1px 0 rgba(255,255,255,1)",
-                position: "relative",
-                transition: "all 0.3s ease"
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: getNotificationStyles(activeNotification).textColor,
-                    fontSize: "11.5px",
-                    fontWeight: 950,
-                    letterSpacing: "1.5px",
-                    textTransform: "uppercase",
-                    textAlign: "center",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate",
-                    lineHeight: 1.25,
-                    padding: "0 4px"
+                  {/* ── BOWLER SECTION ── */}
+                  <div style={{
+                    display: "flex",
+                    flex: 1,
+                    alignItems: "center",
+                    padding: "0 10px",
+                    gap: "10px",
+                    minWidth: 0,
+                    justifyContent: "space-between"
                   }}>
-                    {activeNotification}
-                  </span>
-                ) : (
-                  <>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
-                      <span style={{
-                        color: "#be123c",
-                        fontWeight: 950,
-                        fontSize: "20px",
-                        letterSpacing: "-0.5px",
-                        textShadow: "0 1px 1px rgba(0,0,0,0.1)"
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
+                      <div style={{
+                        width: "18px",
+                        height: "18px",
+                        borderRadius: "50%",
+                        background: "rgba(225,29,72,0.15)",
+                        border: "1.5px solid #be123c",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "9px",
+                        flexShrink: 0,
+                        boxShadow: "0 0 6px rgba(225,29,72,0.3)"
                       }}>
-                        {scoringState.score}
-                      </span>
-                      <span style={{
-                        color: "#e11d48",
-                        fontWeight: 950,
-                        fontSize: "16px",
-                        margin: "0 1px"
-                      }}>
-                        -
-                      </span>
-                      <span style={{
-                        color: "#be123c",
-                        fontWeight: 950,
-                        fontSize: "20px",
-                        letterSpacing: "-0.5px"
-                      }}>
-                        {scoringState.wickets}
-                      </span>
+                        <span className="ball-spin">⚾</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                        <span style={{
+                          color: "#fda4af",
+                          fontWeight: 900,
+                          fontSize: "10.5px",
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          overflow: "hidden"
+                        }}>
+                          {scoringState.bowler || "Bowler"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                          <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "12.5px" }}>
+                            {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                          </span>
+                          <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 700 }}>
+                            ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                          </span>
+                          <span style={{ color: "#fda4af", fontSize: "7.5px", fontWeight: 800, marginLeft: "2px" }}>
+                            ECON:{bowlerEcon}
+                          </span>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* ── THIS OVER BALLS STRIP ── */}
                     <div style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "4px",
-                      marginTop: "1px"
+                      gap: "3px",
+                      background: "rgba(15, 23, 42, 0.7)",
+                      padding: "3px 6px",
+                      borderRadius: "5px",
+                      border: "1px solid rgba(225, 29, 72, 0.3)",
+                      flexShrink: 0
                     }}>
-                      <span style={{
-                        color: "#0f172a",
-                        fontSize: "9.5px",
-                        fontWeight: 900,
-                        letterSpacing: "0.5px"
-                      }}>
-                        OV: <strong style={{ color: "#be123c" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</strong>/{match.overs}
-                      </span>
+                      {(() => {
+                        const bpo = match?.ballsPerOver || 6;
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCirclesCount = Math.max(bpo, bpo + extrasCount);
+                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                          const ball = thisOver[i];
+                          const isW = ball === "W" || ball?.startsWith("W+");
+                          const isBoundary = ball === "4" || ball === "6";
+                          return (
+                            <div
+                              key={i}
+                              style={{
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "3px",
+                                background: isW
+                                  ? "linear-gradient(135deg, #ff0055 0%, #be123c 100%)"
+                                  : isBoundary
+                                    ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                                    : ball
+                                      ? "rgba(255,255,255,0.15)"
+                                      : "rgba(255,255,255,0.03)",
+                                border: isW
+                                  ? "1px solid #ff0055"
+                                  : isBoundary
+                                    ? "1px solid #34d399"
+                                    : ball
+                                      ? "1px solid rgba(255,255,255,0.25)"
+                                      : "1px dashed rgba(255,255,255,0.15)",
+                                color: "#ffffff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "8.5px",
+                                fontWeight: 950,
+                                lineHeight: 1,
+                                boxShadow: isW ? "0 0 6px rgba(225,29,72,0.6)" : isBoundary ? "0 0 6px rgba(16,185,129,0.5)" : "none"
+                              }}
+                            >
+                              {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
-                  </>
-                )}
-              </div>
+                  </div>
 
-              {/* ── BOWLER SECTION ── */}
-              <div style={{
-                display: "flex",
-                flex: 1,
-                alignItems: "center",
-                padding: "0 10px",
-                gap: "10px",
-                minWidth: 0,
-                justifyContent: "space-between"
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
+                  {/* ── BOWLING TEAM MINI-PLATE (Right End) ── */}
                   <div style={{
-                    width: "18px",
-                    height: "18px",
-                    borderRadius: "50%",
-                    background: "rgba(225,29,72,0.15)",
-                    border: "1.5px solid #be123c",
+                    background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4c0519 100%)",
+                    color: "#ffffff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "9px",
+                    padding: "0 14px 0 16px",
+                    minWidth: "85px",
+                    clipPath: "polygon(12% 0, 100% 0, 100% 100%, 0 100%)",
                     flexShrink: 0,
-                    boxShadow: "0 0 6px rgba(225,29,72,0.3)"
+                    borderLeft: "1px solid rgba(225, 29, 72, 0.4)",
+                    position: "relative"
                   }}>
-                    <span className="ball-spin">⚾</span>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                    <span style={{
-                      color: "#fda4af",
-                      fontWeight: 900,
-                      fontSize: "10.5px",
-                      letterSpacing: "0.3px",
-                      textTransform: "uppercase",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                      overflow: "hidden"
-                    }}>
-                      {scoringState.bowler || "Bowler"}
-                    </span>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "12.5px" }}>
-                        {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", marginLeft: "4px" }}>
+                      <span style={{
+                        fontSize: "12.5px",
+                        fontWeight: 950,
+                        letterSpacing: "0.5px",
+                        lineHeight: 1.1,
+                        textTransform: "uppercase"
+                      }}>
+                        {bowlTeamShort}
                       </span>
-                      <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 700 }}>
-                        ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
-                      </span>
-                      <span style={{ color: "#fda4af", fontSize: "7.5px", fontWeight: 800, marginLeft: "2px" }}>
-                        ECON:{bowlerEcon}
-                      </span>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                        color: "#cbd5e1",
+                        fontSize: "7px",
+                        fontWeight: 900,
+                        marginTop: "1px",
+                        letterSpacing: "0.5px"
+                      }}>
+                        <span>⚾</span>
+                        <span>BOWL</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* ── THIS OVER BALLS STRIP ── */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "3px",
-                  background: "rgba(15, 23, 42, 0.7)",
-                  padding: "3px 6px",
-                  borderRadius: "5px",
-                  border: "1px solid rgba(225, 29, 72, 0.3)",
-                  flexShrink: 0
-                }}>
-                  {(() => {
-                    const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCirclesCount = Math.max(bpo, bpo + extrasCount);
-                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                      const ball = thisOver[i];
-                      const isW = ball === "W" || ball?.startsWith("W+");
-                      const isBoundary = ball === "4" || ball === "6";
-                      return (
-                        <div
-                          key={i}
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                            borderRadius: "3px",
-                            background: isW
-                              ? "linear-gradient(135deg, #ff0055 0%, #be123c 100%)"
-                              : isBoundary
-                                ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
-                                : ball
-                                  ? "rgba(255,255,255,0.15)"
-                                  : "rgba(255,255,255,0.03)",
-                            border: isW
-                              ? "1px solid #ff0055"
-                              : isBoundary
-                                ? "1px solid #34d399"
-                                : ball
-                                  ? "1px solid rgba(255,255,255,0.25)"
-                                  : "1px dashed rgba(255,255,255,0.15)",
-                            color: "#ffffff",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: "8.5px",
-                            fontWeight: 950,
-                            lineHeight: 1,
-                            boxShadow: isW ? "0 0 6px rgba(225,29,72,0.6)" : isBoundary ? "0 0 6px rgba(16,185,129,0.5)" : "none"
-                          }}
-                        >
-                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "")}
-                        </div>
-                      );
-                    });
-                  })()}
                 </div>
-              </div>
-
-              {/* ── BOWLING TEAM MINI-PLATE (Right End) ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4c0519 100%)",
-                color: "#ffffff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 14px 0 16px",
-                minWidth: "85px",
-                clipPath: "polygon(12% 0, 100% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-                borderLeft: "1px solid rgba(225, 29, 72, 0.4)",
-                position: "relative"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", marginLeft: "4px" }}>
-                  <span style={{
-                    fontSize: "12.5px",
-                    fontWeight: 950,
-                    letterSpacing: "0.5px",
-                    lineHeight: 1.1,
-                    textTransform: "uppercase"
-                  }}>
-                    {bowlTeamShort}
-                  </span>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2px",
-                    color: "#cbd5e1",
-                    fontSize: "7px",
-                    fontWeight: 900,
-                    marginTop: "1px",
-                    letterSpacing: "0.5px"
-                  }}>
-                    <span>⚾</span>
-                    <span>BOWL</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
               </>
             )}
 
@@ -11960,455 +11960,455 @@ flexShrink: 0,
             {renderScoreboardMarqueeRibbon("ipl", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <>
                 {/* Top Match Situation Ribbon / Header Bar */}
-            <div style={{
-              background: "linear-gradient(90deg, #090e29 0%, #0f1c4d 25%, #182b68 50%, #0f1c4d 75%, #090e29 100%)",
-              borderTop: "2px solid #fbbf24",
-              borderLeft: "2px solid #f59e0b",
-              borderRight: "2px solid #f59e0b",
-              borderBottom: "1px solid rgba(251, 191, 36, 0.3)",
-              borderRadius: "10px 10px 0 0",
-              padding: "3px 12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
-              gap: "10px"
-            }}>
-              {/* Left Badge: TATA IPL Live Indicator */}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
                 <div style={{
-                  background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)",
-                  color: "#050714",
-                  fontWeight: 950,
-                  fontSize: "9px",
-                  letterSpacing: "0.8px",
-                  padding: "1px 6px",
-                  borderRadius: "3px",
+                  background: "linear-gradient(90deg, #090e29 0%, #0f1c4d 25%, #182b68 50%, #0f1c4d 75%, #090e29 100%)",
+                  borderTop: "2px solid #fbbf24",
+                  borderLeft: "2px solid #f59e0b",
+                  borderRight: "2px solid #f59e0b",
+                  borderBottom: "1px solid rgba(251, 191, 36, 0.3)",
+                  borderRadius: "10px 10px 0 0",
+                  padding: "3px 12px",
                   display: "flex",
                   alignItems: "center",
-                  gap: "3px",
-                  boxShadow: "0 2px 4px rgba(245,158,11,0.4)"
+                  justifyContent: "space-between",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
+                  gap: "10px"
                 }}>
-                  <span>⚡</span>
-                  <span>LIVE MATCH</span>
-                </div>
-                <div style={{
-                  background: "rgba(15, 23, 42, 0.75)",
-                  border: "1px solid rgba(251, 191, 36, 0.35)",
-                  padding: "1px 6px",
-                  borderRadius: "3px",
-                  fontSize: "8.5px",
-                  fontWeight: 800,
-                  color: "#fde68a",
-                  letterSpacing: "0.5px"
-                }}>
-                  INN {scoringState.inningsNo}
-                </div>
-              </div>
-
-              {/* Center Match Situation Dynamic Ticker */}
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                flex: 1,
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                fontSize: "9.5px",
-                fontWeight: 800,
-                letterSpacing: "0.5px"
-              }}>
-                {scoringState.customInputText ? (
-                  <span style={{ color: "#fbbf24", textTransform: "uppercase" }}>{scoringState.customInputText}</span>
-                ) : need !== null && bLeft !== null ? (
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ color: "#fbbf24" }}>TARGET: <strong style={{ color: "#ffffff", fontSize: "12.5px" }}>{scoringState.target}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#ffffff" }}>NEED <strong style={{ color: "#fbbf24", fontSize: "13px" }}>{need}</strong> RUNS FROM <strong style={{ color: "#fde68a" }}>{bLeft}</strong> BALLS</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#fde68a" }}>RRR: <strong>{rrr}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
-                    <span style={{ color: "#94a3b8" }}>CRR: <strong>{crr}</strong></span>
+                  {/* Left Badge: TATA IPL Live Indicator */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                    <div style={{
+                      background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)",
+                      color: "#050714",
+                      fontWeight: 950,
+                      fontSize: "9px",
+                      letterSpacing: "0.8px",
+                      padding: "1px 6px",
+                      borderRadius: "3px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "3px",
+                      boxShadow: "0 2px 4px rgba(245,158,11,0.4)"
+                    }}>
+                      <span>⚡</span>
+                      <span>LIVE MATCH</span>
+                    </div>
+                    <div style={{
+                      background: "rgba(15, 23, 42, 0.75)",
+                      border: "1px solid rgba(251, 191, 36, 0.35)",
+                      padding: "1px 6px",
+                      borderRadius: "3px",
+                      fontSize: "8.5px",
+                      fontWeight: 800,
+                      color: "#fde68a",
+                      letterSpacing: "0.5px"
+                    }}>
+                      INN {scoringState.inningsNo}
+                    </div>
                   </div>
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <span style={{ color: "#ffffff" }}>1st INNINGS ACTION</span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#fde68a" }}>CRR: <strong style={{ color: "#ffffff" }}>{crr}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#94a3b8" }}>PROJECTED: <strong style={{ color: "#fbbf24" }}>{projScore}</strong></span>
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
-                    <span style={{ color: "#e0e7ff" }}>MAX OVERS: {match.overs}</span>
-                  </div>
-                )}
-              </div>
 
-              {/* Right Badge: Match Info */}
-              <div style={{
-                fontSize: "8.5px",
-                fontWeight: 900,
-                color: "#94a3b8",
-                letterSpacing: "0.8px",
-                textTransform: "uppercase",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                flexShrink: 0
-              }}>
-                <span style={{ color: "#fbbf24" }}>{match.matchType || "T20"}</span>
-                <span>#{match.matchNo || 1}</span>
-              </div>
-            </div>
-
-            {/* Main Scoreboard Deck */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              minHeight: "44px",
-              background: "linear-gradient(180deg, #070c24 0%, #0d1538 50%, #06091b 100%)",
-              border: "2px solid #f59e0b",
-              borderTop: "none",
-              borderRadius: "0 0 10px 10px",
-              overflow: "hidden",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)"
-            }}>
-
-              {/* ── BATTING TEAM PLATE (Left End) ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #fef08a 0%, #fbbf24 35%, #f59e0b 70%, #b45309 100%)",
-                color: "#050814",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 16px 0 12px",
-                minWidth: "100px",
-                clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-                position: "relative",
-                boxShadow: "inset 0 0 10px rgba(0,0,0,0.25)"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "8px" }}>
-                  <span style={{
-                    fontSize: "14px",
-                    fontWeight: 950,
-                    letterSpacing: "0.5px",
-                    lineHeight: 1.1,
-                    textTransform: "uppercase",
-                    textShadow: "0 1px 2px rgba(255,255,255,0.4)"
-                  }}>
-                    {batTeamShort}
-                  </span>
+                  {/* Center Match Situation Dynamic Ticker */}
                   <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "2px",
-                    background: "#050714",
-                    color: "#fbbf24",
-                    padding: "1px 3px",
-                    borderRadius: "2px",
-                    fontSize: "7px",
-                    fontWeight: 900,
-                    marginTop: "1px",
-                    letterSpacing: "0.5px"
-                  }}>
-                    <span className="bat-swing" style={{ fontSize: "7px" }}>🏏</span>
-                    <span>BAT</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── BATSMEN SECTION ── */}
-              <div style={{
-                display: "flex",
-                flex: 1,
-                alignItems: "center",
-                padding: "0 10px",
-                gap: "10px",
-                marginLeft: "-6px",
-                minWidth: 0
-              }}>
-                {/* Striker Card */}
-                <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
-                  <div style={{
-                    width: "16px",
-                    height: "16px",
-                    borderRadius: "50%",
-                    background: "rgba(251,191,36,0.15)",
-                    border: "1.5px solid #fbbf24",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "8px",
-                    flexShrink: 0,
-                    boxShadow: "0 0 6px rgba(251,191,36,0.3)"
+                    gap: "10px",
+                    flex: 1,
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    fontSize: "9.5px",
+                    fontWeight: 800,
+                    letterSpacing: "0.5px"
                   }}>
-                    <span className="bat-swing">🏏</span>
+                    {scoringState.customInputText ? (
+                      <span style={{ color: "#fbbf24", textTransform: "uppercase" }}>{scoringState.customInputText}</span>
+                    ) : need !== null && bLeft !== null ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span style={{ color: "#fbbf24" }}>TARGET: <strong style={{ color: "#ffffff", fontSize: "12.5px" }}>{scoringState.target}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#ffffff" }}>NEED <strong style={{ color: "#fbbf24", fontSize: "13px" }}>{need}</strong> RUNS FROM <strong style={{ color: "#fde68a" }}>{bLeft}</strong> BALLS</span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#fde68a" }}>RRR: <strong>{rrr}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+                        <span style={{ color: "#94a3b8" }}>CRR: <strong>{crr}</strong></span>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <span style={{ color: "#ffffff" }}>1st INNINGS ACTION</span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#fde68a" }}>CRR: <strong style={{ color: "#ffffff" }}>{crr}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#94a3b8" }}>PROJECTED: <strong style={{ color: "#fbbf24" }}>{projScore}</strong></span>
+                        <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+                        <span style={{ color: "#e0e7ff" }}>MAX OVERS: {match.overs}</span>
+                      </div>
+                    )}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px", overflow: "hidden" }}>
+
+                  {/* Right Badge: Match Info */}
+                  <div style={{
+                    fontSize: "8.5px",
+                    fontWeight: 900,
+                    color: "#94a3b8",
+                    letterSpacing: "0.8px",
+                    textTransform: "uppercase",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    flexShrink: 0
+                  }}>
+                    <span style={{ color: "#fbbf24" }}>{match.matchType || "T20"}</span>
+                    <span>#{match.matchNo || 1}</span>
+                  </div>
+                </div>
+
+                {/* Main Scoreboard Deck */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "stretch",
+                  minHeight: "44px",
+                  background: "linear-gradient(180deg, #070c24 0%, #0d1538 50%, #06091b 100%)",
+                  border: "2px solid #f59e0b",
+                  borderTop: "none",
+                  borderRadius: "0 0 10px 10px",
+                  overflow: "hidden",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)"
+                }}>
+
+                  {/* ── BATTING TEAM PLATE (Left End) ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #fef08a 0%, #fbbf24 35%, #f59e0b 70%, #b45309 100%)",
+                    color: "#050814",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 16px 0 12px",
+                    minWidth: "100px",
+                    clipPath: "polygon(0 0, 88% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0,
+                    position: "relative",
+                    boxShadow: "inset 0 0 10px rgba(0,0,0,0.25)"
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "8px" }}>
                       <span style={{
+                        fontSize: "14px",
+                        fontWeight: 950,
+                        letterSpacing: "0.5px",
+                        lineHeight: 1.1,
+                        textTransform: "uppercase",
+                        textShadow: "0 1px 2px rgba(255,255,255,0.4)"
+                      }}>
+                        {batTeamShort}
+                      </span>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                        background: "#050714",
                         color: "#fbbf24",
+                        padding: "1px 3px",
+                        borderRadius: "2px",
+                        fontSize: "7px",
                         fontWeight: 900,
-                        fontSize: "10.5px",
-                        letterSpacing: "0.3px",
+                        marginTop: "1px",
+                        letterSpacing: "0.5px"
+                      }}>
+                        <span className="bat-swing" style={{ fontSize: "7px" }}>🏏</span>
+                        <span>BAT</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── BATSMEN SECTION ── */}
+                  <div style={{
+                    display: "flex",
+                    flex: 1,
+                    alignItems: "center",
+                    padding: "0 10px",
+                    gap: "10px",
+                    marginLeft: "-6px",
+                    minWidth: 0
+                  }}>
+                    {/* Striker Card */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }}>
+                      <div style={{
+                        width: "16px",
+                        height: "16px",
+                        borderRadius: "50%",
+                        background: "rgba(251,191,36,0.15)",
+                        border: "1.5px solid #fbbf24",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "8px",
+                        flexShrink: 0,
+                        boxShadow: "0 0 6px rgba(251,191,36,0.3)"
+                      }}>
+                        <span className="bat-swing">🏏</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "4px", overflow: "hidden" }}>
+                          <span style={{
+                            color: "#fbbf24",
+                            fontWeight: 900,
+                            fontSize: "10.5px",
+                            letterSpacing: "0.3px",
+                            textTransform: "uppercase",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden"
+                          }}>
+                            {scoringState.striker || "Striker"}*
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                          <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "14px" }}>{striker?.runs ?? 0}</span>
+                          <span style={{ color: "#94a3b8", fontSize: "9px", fontWeight: 800 }}>({striker?.balls ?? 0})</span>
+                          <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 700, marginLeft: "3px" }}>
+                            4s:{striker?.fours ?? 0} 6s:{striker?.sixes ?? 0}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "26px", background: "linear-gradient(180deg, transparent, rgba(251,191,36,0.3), transparent)", flexShrink: 0 }} />
+
+                    {/* Non-Striker Card */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                      <span style={{
+                        color: "#cbd5e1",
+                        fontWeight: 700,
+                        fontSize: "10px",
+                        letterSpacing: "0.2px",
                         textTransform: "uppercase",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden"
                       }}>
-                        {scoringState.striker || "Striker"}*
+                        {scoringState.nonStriker || "Non-Striker"}
                       </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "14px" }}>{striker?.runs ?? 0}</span>
-                      <span style={{ color: "#94a3b8", fontSize: "9px", fontWeight: 800 }}>({striker?.balls ?? 0})</span>
-                      <span style={{ color: "#64748b", fontSize: "8px", fontWeight: 700, marginLeft: "3px" }}>
-                        4s:{striker?.fours ?? 0} 6s:{striker?.sixes ?? 0}
-                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                        <span style={{ color: "#e2e8f0", fontWeight: 800, fontSize: "12px" }}>{nonStriker?.runs ?? 0}</span>
+                        <span style={{ color: "#64748b", fontSize: "8.5px", fontWeight: 700 }}>({nonStriker?.balls ?? 0})</span>
+                        <span style={{ color: "#475569", fontSize: "8px", fontWeight: 600, marginLeft: "3px" }}>
+                          4s:{nonStriker?.fours ?? 0} 6s:{nonStriker?.sixes ?? 0}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Vertical Divider */}
-                <div style={{ width: "1px", height: "26px", background: "linear-gradient(180deg, transparent, rgba(251,191,36,0.3), transparent)", flexShrink: 0 }} />
-
-                {/* Non-Striker Card */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                  <span style={{
-                    color: "#cbd5e1",
-                    fontWeight: 700,
-                    fontSize: "10px",
-                    letterSpacing: "0.2px",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden"
-                  }}>
-                    {scoringState.nonStriker || "Non-Striker"}
-                  </span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                    <span style={{ color: "#e2e8f0", fontWeight: 800, fontSize: "12px" }}>{nonStriker?.runs ?? 0}</span>
-                    <span style={{ color: "#64748b", fontSize: "8.5px", fontWeight: 700 }}>({nonStriker?.balls ?? 0})</span>
-                    <span style={{ color: "#475569", fontSize: "8px", fontWeight: 600, marginLeft: "3px" }}>
-                      4s:{nonStriker?.fours ?? 0} 6s:{nonStriker?.sixes ?? 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── CENTER SCORE NUCLEUS ── */}
-              <div style={{
-                background: activeNotification
-                  ? getNotificationStyles(activeNotification).bg
-                  : "linear-gradient(180deg, #1e3a8a 0%, #172554 45%, #0f172a 100%)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0 16px",
-                minWidth: "170px",
-                flexShrink: 0,
-                borderLeft: "2px solid #f59e0b",
-                borderRight: "2px solid #f59e0b",
-                boxShadow: activeNotification
-                  ? "0 0 18px rgba(245,158,11,0.5)"
-                  : "inset 0 0 12px rgba(251,191,36,0.12)",
-                position: "relative",
-                transition: "all 0.3s ease"
-              }}>
-                {activeNotification ? (
-                  <span style={{
-                    color: getNotificationStyles(activeNotification).textColor,
-                    fontSize: "11px",
-                    fontWeight: 950,
-                    letterSpacing: "1.5px",
-                    textTransform: "uppercase",
-                    textAlign: "center",
-                    animation: "pulseGlow 1s ease-in-out infinite alternate",
-                    lineHeight: 1.25,
-                    padding: "0 4px"
-                  }}>
-                    {activeNotification}
-                  </span>
-                ) : (
-                  <>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
-                      <span style={{
-                        color: "#fef08a",
-                        fontWeight: 950,
-                        fontSize: "22px",
-                        letterSpacing: "-0.5px",
-                        textShadow: "0 2px 8px rgba(245,158,11,0.4)"
-                      }}>
-                        {scoringState.score}
-                      </span>
-                      <span style={{ color: "#fbbf24", fontWeight: 900, fontSize: "18px", margin: "0 1px" }}>-</span>
-                      <span style={{
-                        color: "#ffffff",
-                        fontWeight: 950,
-                        fontSize: "22px",
-                        letterSpacing: "-0.5px"
-                      }}>
-                        {scoringState.wickets}
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "4px", marginTop: "1px" }}>
-                      <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 800 }}>OVERS:</span>
-                      <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: 950 }}>{fmtOv(scoringState.balls, bpo)}</span>
-                      <span style={{ color: "#64748b", fontSize: "8.5px" }}>/{match.overs}</span>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* ── BOWLER & THIS OVER DETAILS ── */}
-              <div style={{
-                display: "flex",
-                flex: 1.1,
-                padding: "0 10px",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "10px",
-                minWidth: 0
-              }}>
-                {/* Bowler Details */}
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                    <span style={{ color: "#fbbf24", fontSize: "7px", fontWeight: 900, letterSpacing: "0.8px" }}>BOWLER</span>
-                    <span style={{ color: "#64748b", fontSize: "7.5px" }}>•</span>
-                    <span style={{ color: "#94a3b8", fontSize: "7.5px", fontWeight: 700 }}>Econ: {bowlerEcon}</span>
-                  </div>
+                  {/* ── CENTER SCORE NUCLEUS ── */}
                   <div style={{
-                    color: "#ffffff",
-                    fontWeight: 900,
-                    fontSize: "11px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.2px",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden"
+                    background: activeNotification
+                      ? getNotificationStyles(activeNotification).bg
+                      : "linear-gradient(180deg, #1e3a8a 0%, #172554 45%, #0f172a 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "0 16px",
+                    minWidth: "170px",
+                    flexShrink: 0,
+                    borderLeft: "2px solid #f59e0b",
+                    borderRight: "2px solid #f59e0b",
+                    boxShadow: activeNotification
+                      ? "0 0 18px rgba(245,158,11,0.5)"
+                      : "inset 0 0 12px rgba(251,191,36,0.12)",
+                    position: "relative",
+                    transition: "all 0.3s ease"
                   }}>
-                    {scoringState.bowler || "Bowler"}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                    <span style={{ color: "#fbbf24", fontWeight: 950, fontSize: "12px" }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                    </span>
-                    <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 700 }}>
-                      ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Over Ball Badges */}
-                <div style={{ display: "flex", gap: "2.5px", alignItems: "center", flexShrink: 0 }}>
-                  {(() => {
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCirclesCount = bpo + extrasCount;
-                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                      const ball = thisOver[i];
-                      let bg = "rgba(255,255,255,0.05)";
-                      let color = "#64748b";
-                      let border = "1px solid rgba(251,191,36,0.25)";
-                      let shadow = "none";
-
-                      if (ball) {
-                        if (ball === "W" || ball.startsWith("W+")) {
-                          bg = "linear-gradient(135deg, #ef4444, #dc2626)";
-                          color = "#ffffff";
-                          border = "1.5px solid #fca5a5";
-                          shadow = "0 0 8px rgba(239,68,68,0.5)";
-                        } else if (ball === "6") {
-                          bg = "linear-gradient(135deg, #f59e0b, #d97706)";
-                          color = "#000000";
-                          border = "1.5px solid #fef08a";
-                          shadow = "0 0 8px rgba(245,158,11,0.5)";
-                        } else if (ball === "4") {
-                          bg = "linear-gradient(135deg, #fbbf24, #f59e0b)";
-                          color = "#000000";
-                          border = "1.5px solid #fef08a";
-                          shadow = "0 0 8px rgba(251,191,36,0.5)";
-                        } else if (isExtraBall(ball)) {
-                          bg = "linear-gradient(135deg, #06b6d4, #0891b2)";
-                          color = "#ffffff";
-                          border = "1.5px solid #67e8f9";
-                          shadow = "0 0 6px rgba(6,182,212,0.4)";
-                        } else {
-                          bg = "linear-gradient(135deg, #1d4ed8, #1e3a8a)";
-                          color = "#ffffff";
-                          border = "1.5px solid rgba(251,191,36,0.4)";
-                        }
-                      }
-
-                      return (
-                        <div
-                          key={i}
-                          style={{
-                            width: "17px",
-                            height: "17px",
-                            borderRadius: "4px",
-                            background: bg,
-                            border,
-                            color,
-                            boxShadow: shadow,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
+                    {activeNotification ? (
+                      <span style={{
+                        color: getNotificationStyles(activeNotification).textColor,
+                        fontSize: "11px",
+                        fontWeight: 950,
+                        letterSpacing: "1.5px",
+                        textTransform: "uppercase",
+                        textAlign: "center",
+                        animation: "pulseGlow 1s ease-in-out infinite alternate",
+                        lineHeight: 1.25,
+                        padding: "0 4px"
+                      }}>
+                        {activeNotification}
+                      </span>
+                    ) : (
+                      <>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1 }}>
+                          <span style={{
+                            color: "#fef08a",
                             fontWeight: 950,
-                            lineHeight: 1,
-                            flexShrink: 0
-                          }}
-                        >
-                          {ball && ball.includes("+") ? renderOutcomeText(ball, 22) : (ball || "")}
+                            fontSize: "22px",
+                            letterSpacing: "-0.5px",
+                            textShadow: "0 2px 8px rgba(245,158,11,0.4)"
+                          }}>
+                            {scoringState.score}
+                          </span>
+                          <span style={{ color: "#fbbf24", fontWeight: 900, fontSize: "18px", margin: "0 1px" }}>-</span>
+                          <span style={{
+                            color: "#ffffff",
+                            fontWeight: 950,
+                            fontSize: "22px",
+                            letterSpacing: "-0.5px"
+                          }}>
+                            {scoringState.wickets}
+                          </span>
                         </div>
-                      );
-                    });
-                  })()}
-                </div>
-              </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "4px", marginTop: "1px" }}>
+                          <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 800 }}>OVERS:</span>
+                          <span style={{ color: "#fbbf24", fontSize: "10px", fontWeight: 950 }}>{fmtOv(scoringState.balls, bpo)}</span>
+                          <span style={{ color: "#64748b", fontSize: "8.5px" }}>/{match.overs}</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
 
-              {/* ── BOWLING TEAM PLATE (Right End) ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #1e3a8a 0%, #172554 50%, #0a1128 100%)",
-                color: "#fbbf24",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 12px 0 18px",
-                minWidth: "90px",
-                clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
-                flexShrink: 0,
-                borderLeft: "1px solid rgba(251,191,36,0.3)"
-              }}>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <span style={{
-                    fontSize: "14px",
-                    fontWeight: 950,
-                    letterSpacing: "0.5px",
-                    lineHeight: 1.1,
-                    textTransform: "uppercase"
-                  }}>
-                    {bowlTeamShort}
-                  </span>
+                  {/* ── BOWLER & THIS OVER DETAILS ── */}
                   <div style={{
                     display: "flex",
+                    flex: 1.1,
+                    padding: "0 10px",
                     alignItems: "center",
-                    gap: "2px",
-                    color: "#94a3b8",
-                    fontSize: "7px",
-                    fontWeight: 900,
-                    marginTop: "1px",
-                    letterSpacing: "0.5px"
+                    justifyContent: "space-between",
+                    gap: "10px",
+                    minWidth: 0
                   }}>
-                    <span>⚾</span>
-                    <span>BOWL</span>
-                  </div>
-                </div>
-              </div>
+                    {/* Bowler Details */}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1, minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <span style={{ color: "#fbbf24", fontSize: "7px", fontWeight: 900, letterSpacing: "0.8px" }}>BOWLER</span>
+                        <span style={{ color: "#64748b", fontSize: "7.5px" }}>•</span>
+                        <span style={{ color: "#94a3b8", fontSize: "7.5px", fontWeight: 700 }}>Econ: {bowlerEcon}</span>
+                      </div>
+                      <div style={{
+                        color: "#ffffff",
+                        fontWeight: 900,
+                        fontSize: "11px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.2px",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden"
+                      }}>
+                        {scoringState.bowler || "Bowler"}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                        <span style={{ color: "#fbbf24", fontWeight: 950, fontSize: "12px" }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{ color: "#94a3b8", fontSize: "8.5px", fontWeight: 700 }}>
+                          ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
+                        </span>
+                      </div>
+                    </div>
 
-            </div>
+                    {/* Over Ball Badges */}
+                    <div style={{ display: "flex", gap: "2.5px", alignItems: "center", flexShrink: 0 }}>
+                      {(() => {
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCirclesCount = bpo + extrasCount;
+                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                          const ball = thisOver[i];
+                          let bg = "rgba(255,255,255,0.05)";
+                          let color = "#64748b";
+                          let border = "1px solid rgba(251,191,36,0.25)";
+                          let shadow = "none";
+
+                          if (ball) {
+                            if (ball === "W" || ball.startsWith("W+")) {
+                              bg = "linear-gradient(135deg, #ef4444, #dc2626)";
+                              color = "#ffffff";
+                              border = "1.5px solid #fca5a5";
+                              shadow = "0 0 8px rgba(239,68,68,0.5)";
+                            } else if (ball === "6") {
+                              bg = "linear-gradient(135deg, #f59e0b, #d97706)";
+                              color = "#000000";
+                              border = "1.5px solid #fef08a";
+                              shadow = "0 0 8px rgba(245,158,11,0.5)";
+                            } else if (ball === "4") {
+                              bg = "linear-gradient(135deg, #fbbf24, #f59e0b)";
+                              color = "#000000";
+                              border = "1.5px solid #fef08a";
+                              shadow = "0 0 8px rgba(251,191,36,0.5)";
+                            } else if (isExtraBall(ball)) {
+                              bg = "linear-gradient(135deg, #06b6d4, #0891b2)";
+                              color = "#ffffff";
+                              border = "1.5px solid #67e8f9";
+                              shadow = "0 0 6px rgba(6,182,212,0.4)";
+                            } else {
+                              bg = "linear-gradient(135deg, #1d4ed8, #1e3a8a)";
+                              color = "#ffffff";
+                              border = "1.5px solid rgba(251,191,36,0.4)";
+                            }
+                          }
+
+                          return (
+                            <div
+                              key={i}
+                              style={{
+                                width: "17px",
+                                height: "17px",
+                                borderRadius: "4px",
+                                background: bg,
+                                border,
+                                color,
+                                boxShadow: shadow,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: ball && ball.includes("+") ? undefined : (ball && ball.length > 2 ? "6px" : "8.5px"),
+                                fontWeight: 950,
+                                lineHeight: 1,
+                                flexShrink: 0
+                              }}
+                            >
+                              {ball && ball.includes("+") ? renderOutcomeText(ball, 22) : (ball || "")}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* ── BOWLING TEAM PLATE (Right End) ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #1e3a8a 0%, #172554 50%, #0a1128 100%)",
+                    color: "#fbbf24",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 12px 0 18px",
+                    minWidth: "90px",
+                    clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
+                    flexShrink: 0,
+                    borderLeft: "1px solid rgba(251,191,36,0.3)"
+                  }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      <span style={{
+                        fontSize: "14px",
+                        fontWeight: 950,
+                        letterSpacing: "0.5px",
+                        lineHeight: 1.1,
+                        textTransform: "uppercase"
+                      }}>
+                        {bowlTeamShort}
+                      </span>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                        color: "#94a3b8",
+                        fontSize: "7px",
+                        fontWeight: 900,
+                        marginTop: "1px",
+                        letterSpacing: "0.5px"
+                      }}>
+                        <span>⚾</span>
+                        <span>BOWL</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </>
             )}
 
@@ -12496,347 +12496,347 @@ flexShrink: 0,
             {renderScoreboardMarqueeRibbon("wt20-2024", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <>
                 {/* ── SEAMLESS FLOATING INNINGS / TARGET / CRR EQUATION PILL ── */}
-            <div style={{
-              position: "absolute",
-              top: "-15px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 10
-            }}>
-              {scoringState.target !== null ? (
                 <div style={{
-                  background: "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #0284c7 100%)",
-                  borderRadius: "12px",
-                  padding: "2px 14px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "7px",
-                  boxShadow: "0 4px 14px rgba(3,115,175,0.45)",
-                  color: "#FFFFFF",
-                  border: "1px solid #0373AF",
-                  whiteSpace: "nowrap"
+                  position: "absolute",
+                  top: "-15px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  zIndex: 10
                 }}>
-                  <span style={{ fontSize: "9px", fontWeight: "950", letterSpacing: "0.8px", textTransform: "uppercase" }}>
-                    TARGET: <strong style={{ fontSize: "10.5px", color: "#FFFFFF" }}>{scoringState.target}</strong>
-                  </span>
-                  {need !== null && bLeft !== null && (
-                    <>
-                      <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#FFFFFF" }} />
-                      <span style={{ fontSize: "9px", fontWeight: "900" }}>NEED {need} ({bLeft}b)</span>
-                      {rrr && (
-                        <span style={{ background: "rgba(0,0,0,0.4)", borderRadius: "6px", padding: "1px 5px", fontSize: "8px", fontWeight: "950" }}>
-                          RRR: {rrr}
-                        </span>
+                  {scoringState.target !== null ? (
+                    <div style={{
+                      background: "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #0284c7 100%)",
+                      borderRadius: "12px",
+                      padding: "2px 14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "7px",
+                      boxShadow: "0 4px 14px rgba(3,115,175,0.45)",
+                      color: "#FFFFFF",
+                      border: "1px solid #0373AF",
+                      whiteSpace: "nowrap"
+                    }}>
+                      <span style={{ fontSize: "9px", fontWeight: "950", letterSpacing: "0.8px", textTransform: "uppercase" }}>
+                        TARGET: <strong style={{ fontSize: "10.5px", color: "#FFFFFF" }}>{scoringState.target}</strong>
+                      </span>
+                      {need !== null && bLeft !== null && (
+                        <>
+                          <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#FFFFFF" }} />
+                          <span style={{ fontSize: "9px", fontWeight: "900" }}>NEED {need} ({bLeft}b)</span>
+                          {rrr && (
+                            <span style={{ background: "rgba(0,0,0,0.4)", borderRadius: "6px", padding: "1px 5px", fontSize: "8px", fontWeight: "950" }}>
+                              RRR: {rrr}
+                            </span>
+                          )}
+                        </>
                       )}
-                    </>
+                    </div>
+                  ) : (
+                    <div style={{
+                      background: "linear-gradient(90deg, #0373AF 0%, #0284c7 100%)",
+                      borderRadius: "12px",
+                      padding: "2px 14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      boxShadow: "0 3px 12px rgba(3,115,175,0.4)",
+                      color: "#FFFFFF",
+                      whiteSpace: "nowrap"
+                    }}>
+                      <span style={{ fontSize: "9px", fontWeight: "950", letterSpacing: "0.8px" }}>1st INNINGS</span>
+                      <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "rgba(255,255,255,0.7)" }} />
+                      <span style={{ fontSize: "9px", fontWeight: "900", letterSpacing: "0.5px" }}>CRR: {crr}</span>
+                    </div>
                   )}
                 </div>
-              ) : (
+
+                {/* ── MAIN HIGH-VOLTAGE SCOREBOARD FRAME ── */}
                 <div style={{
-                  background: "linear-gradient(90deg, #0373AF 0%, #0284c7 100%)",
-                  borderRadius: "12px",
-                  padding: "2px 14px",
                   display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  boxShadow: "0 3px 12px rgba(3,115,175,0.4)",
-                  color: "#FFFFFF",
-                  whiteSpace: "nowrap"
+                  alignItems: "stretch",
+                  height: "46px",
+                  background: "linear-gradient(135deg, rgba(20, 18, 42, 0.98) 0%, rgba(12, 10, 28, 0.98) 50%, rgba(20, 18, 42, 0.98) 100%)",
+                  backdropFilter: "blur(14px)",
+                  border: "1.5px solid #0373AF",
+                  borderRadius: "14px 14px 0 0",
+                  boxShadow: "0 0 20px rgba(3, 115, 175, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
+                  overflow: "hidden",
+                  position: "relative"
                 }}>
-                  <span style={{ fontSize: "9px", fontWeight: "950", letterSpacing: "0.8px" }}>1st INNINGS</span>
-                  <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "rgba(255,255,255,0.7)" }} />
-                  <span style={{ fontSize: "9px", fontWeight: "900", letterSpacing: "0.5px" }}>CRR: {crr}</span>
-                </div>
-              )}
-            </div>
+                  {/* Top Accent Energy Laser */}
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "2px",
+                    background: "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)",
+                    boxShadow: "0 0 8px #0373AF"
+                  }} />
 
-            {/* ── MAIN HIGH-VOLTAGE SCOREBOARD FRAME ── */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              height: "46px",
-              background: "linear-gradient(135deg, rgba(20, 18, 42, 0.98) 0%, rgba(12, 10, 28, 0.98) 50%, rgba(20, 18, 42, 0.98) 100%)",
-              backdropFilter: "blur(14px)",
-              border: "1.5px solid #0373AF",
-              borderRadius: "14px 14px 0 0",
-              boxShadow: "0 0 20px rgba(3, 115, 175, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
-              overflow: "hidden",
-              position: "relative"
-            }}>
-              {/* Top Accent Energy Laser */}
-              <div style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: "2px",
-                background: "linear-gradient(90deg, #0373AF 0%, #0284c7 50%, #0373AF 100%)",
-                boxShadow: "0 0 8px #0373AF"
-              }} />
-
-              {/* ── LEFT BATTING TEAM SHIELD ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #0373AF 0%, #025380 100%)",
-                padding: "0 14px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                minWidth: "105px",
-                clipPath: "polygon(0 0, 86% 0, 100% 100%, 0 100%)",
-                position: "relative",
-                boxShadow: "inset 0 0 10px rgba(0,0,0,0.3)",
-                flexShrink: 0
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#FFFFFF", boxShadow: "0 0 6px #FFFFFF" }} />
-                  <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "12px", letterSpacing: "0.8px", textTransform: "uppercase", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
-                    {batTeamShort}
-                  </span>
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "7px", fontWeight: "900", letterSpacing: "0.6px", textTransform: "uppercase" }}>
-                  BATTING
-                </span>
-              </div>
-
-              {/* ── BATSMEN DETAILS SECTION ── */}
-              <div style={{
-                display: "flex",
-                flex: 1.1,
-                padding: "0 8px",
-                alignItems: "center",
-                gap: "6px",
-                minWidth: "160px"
-              }}>
-                {/* Striker Active Card */}
-                <div style={{
-                  background: "rgba(3, 115, 175, 0.18)",
-                  border: "1px solid #0373AF",
-                  borderRadius: "10px",
-                  padding: "3px 8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flex: 1.1,
-                  minWidth: 0,
-                  boxShadow: "0 0 8px rgba(3, 115, 175, 0.15)"
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "4px", minWidth: 0, overflow: "hidden" }}>
-                    <span style={{ color: "#0373AF", fontSize: "9px" }}>⚡</span>
-                    <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {scoringState.striker || "—"}
+                  {/* ── LEFT BATTING TEAM SHIELD ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #0373AF 0%, #025380 100%)",
+                    padding: "0 14px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minWidth: "105px",
+                    clipPath: "polygon(0 0, 86% 0, 100% 100%, 0 100%)",
+                    position: "relative",
+                    boxShadow: "inset 0 0 10px rgba(0,0,0,0.3)",
+                    flexShrink: 0
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#FFFFFF", boxShadow: "0 0 6px #FFFFFF" }} />
+                      <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "12px", letterSpacing: "0.8px", textTransform: "uppercase", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
+                        {batTeamShort}
+                      </span>
+                    </div>
+                    <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "7px", fontWeight: "900", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+                      BATTING
                     </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "2.5px", marginLeft: "4px", flexShrink: 0 }}>
-                    <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "13px" }}>
-                      {striker?.runs ?? 0}
-                    </span>
-                    <span style={{ color: "#FFFFFF", fontSize: "8.5px", fontWeight: "800", background: "rgba(3,115,175,0.4)", padding: "1px 3px", borderRadius: "3px" }}>
-                      {striker?.balls ?? 0}b
+
+                  {/* ── BATSMEN DETAILS SECTION ── */}
+                  <div style={{
+                    display: "flex",
+                    flex: 1.1,
+                    padding: "0 8px",
+                    alignItems: "center",
+                    gap: "6px",
+                    minWidth: "160px"
+                  }}>
+                    {/* Striker Active Card */}
+                    <div style={{
+                      background: "rgba(3, 115, 175, 0.18)",
+                      border: "1px solid #0373AF",
+                      borderRadius: "10px",
+                      padding: "3px 8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flex: 1.1,
+                      minWidth: 0,
+                      boxShadow: "0 0 8px rgba(3, 115, 175, 0.15)"
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{ color: "#0373AF", fontSize: "9px" }}>⚡</span>
+                        <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          {scoringState.striker || "—"}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2.5px", marginLeft: "4px", flexShrink: 0 }}>
+                        <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "13px" }}>
+                          {striker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "#FFFFFF", fontSize: "8.5px", fontWeight: "800", background: "rgba(3,115,175,0.4)", padding: "1px 3px", borderRadius: "3px" }}>
+                          {striker?.balls ?? 0}b
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Non-Striker Card */}
+                    <div style={{
+                      background: "rgba(255, 255, 255, 0.04)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
+                      borderRadius: "10px",
+                      padding: "3px 8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flex: 0.9,
+                      minWidth: 0
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "3px", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "9px" }}>🏃</span>
+                        <span style={{ color: "#cbd5e1", fontWeight: "800", fontSize: "10.5px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          {scoringState.nonStriker || "—"}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2.5px", marginLeft: "4px", flexShrink: 0 }}>
+                        <span style={{ color: "#FFFFFF", fontWeight: "850", fontSize: "11.5px" }}>
+                          {nonStriker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "8px" }}>
+                          ({nonStriker?.balls ?? 0})
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── CENTER BROADCAST SCORE & OVERS FORTRESS ── */}
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "3px 14px 2px",
+                    minWidth: "125px",
+                    background: "linear-gradient(135deg, rgba(3, 115, 175, 0.25) 0%, rgba(20, 18, 42, 0.6) 100%)",
+                    borderLeft: "1px solid #0373AF",
+                    borderRight: "1px solid #0373AF",
+                    position: "relative",
+                    flexShrink: 0,
+                    boxShadow: "inset 0 0 12px rgba(0,0,0,0.5)"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1, marginTop: "2px" }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "19px", lineHeight: 1, letterSpacing: "-0.5px", textShadow: "0 0 8px rgba(255,255,255,0.3)" }}>
+                        {scoringState.score}
+                      </span>
+                      <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "14px", margin: "0 1px", lineHeight: 1 }}>/</span>
+                      <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "17px", lineHeight: 1, textShadow: "0 0 8px rgba(3,115,175,0.5)" }}>
+                        {scoringState.wickets}
+                      </span>
+                    </div>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      background: "rgba(0, 0, 0, 0.6)",
+                      borderRadius: "8px",
+                      padding: "1px 7px",
+                      marginTop: "2px",
+                      border: "1px solid rgba(3,115,175,0.3)"
+                    }}>
+                      <span style={{ color: "#0373AF", fontSize: "7.5px", fontWeight: "950", letterSpacing: "0.5px" }}>OVER</span>
+                      <span style={{ color: "#FFFFFF", fontSize: "9.5px", fontWeight: "900" }}>
+                        {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* ── BOWLER & LIVE OVER BALLS HUD ── */}
+                  <div style={{
+                    display: "flex",
+                    flex: 1.1,
+                    padding: "0 8px",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "6px",
+                    minWidth: "170px"
+                  }}>
+                    {/* Bowler Details Card */}
+                    <div style={{
+                      background: "rgba(3, 115, 175, 0.15)",
+                      border: "1px solid #0373AF",
+                      borderRadius: "10px",
+                      padding: "3px 8px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      minWidth: "95px",
+                      boxShadow: "0 0 8px rgba(3, 115, 175, 0.1)"
+                    }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {scoringState.bowler || "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
+                        <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "11.5px" }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{ color: "#cbd5e1", fontSize: "8.5px", fontWeight: "700" }}>
+                          ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Over Balls Dynamic HUD */}
+                    <div style={{ display: "flex", gap: "3.5px", alignItems: "center" }}>
+                      {(() => {
+                        const bpo = match?.ballsPerOver || 6;
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCirclesCount = bpo + extrasCount;
+                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                          const ball = thisOver[i];
+                          const isWicket = ball === "W" || ball?.startsWith("W+");
+                          const isFour = ball === "4";
+                          const isSix = ball === "6";
+                          return (
+                            <div key={i} style={{
+                              width: "18px",
+                              height: "18px",
+                              borderRadius: "50%",
+                              background: ball
+                                ? isWicket
+                                  ? "linear-gradient(135deg, #ef4444 0%, #991b1b 100%)"
+                                  : isSix
+                                    ? "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)"
+                                    : isFour
+                                      ? "linear-gradient(135deg, #0373AF 0%, #025380 100%)"
+                                      : "rgba(3,115,175,0.35)"
+                                : "rgba(255,255,255,0.04)",
+                              border: ball
+                                ? (isWicket ? "1.5px solid #ef4444" : isSix ? "1.5px solid #0284c7" : isFour ? "1.5px solid #0373AF" : "1px solid rgba(3,115,175,0.55)")
+                                : "1px dashed rgba(3,115,175,0.25)",
+                              color: "#FFFFFF",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "8.5px",
+                              fontWeight: "950",
+                              boxShadow: ball ? (isWicket ? "0 0 8px rgba(239,68,68,0.7)" : isSix ? "0 0 6px rgba(2,132,199,0.6)" : isFour ? "0 0 6px rgba(3,115,175,0.6)" : "0 0 4px rgba(3,115,175,0.25)") : "none"
+                            }}>
+                              {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "•")}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* ── RIGHT BOWLING TEAM SHIELD ── */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #14122A 0%, #0373AF 100%)",
+                    borderLeft: "1px solid #0373AF",
+                    padding: "0 14px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minWidth: "105px",
+                    clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
+                    position: "relative",
+                    flexShrink: 0
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "12px", letterSpacing: "0.8px", textTransform: "uppercase", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
+                        {bowlTeamShort}
+                      </span>
+                      <span style={{ fontSize: "10px", opacity: 0.9 }}>🏆</span>
+                    </div>
+                    <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "7px", fontWeight: "900", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+                      BOWLING
                     </span>
                   </div>
                 </div>
 
-                {/* Non-Striker Card */}
+                {/* ── LOWER DYNAMIC STATUS & NOTIFICATION MARQUEE ── */}
                 <div style={{
-                  background: "rgba(255, 255, 255, 0.04)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  padding: "3px 8px",
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
+                  padding: "2.5px 18px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flex: 0.9,
-                  minWidth: 0
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "3px", minWidth: 0, overflow: "hidden" }}>
-                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "9px" }}>🏃</span>
-                    <span style={{ color: "#cbd5e1", fontWeight: "800", fontSize: "10.5px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {scoringState.nonStriker || "—"}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "2.5px", marginLeft: "4px", flexShrink: 0 }}>
-                    <span style={{ color: "#FFFFFF", fontWeight: "850", fontSize: "11.5px" }}>
-                      {nonStriker?.runs ?? 0}
-                    </span>
-                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "8px" }}>
-                      ({nonStriker?.balls ?? 0})
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── CENTER BROADCAST SCORE & OVERS FORTRESS ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "3px 14px 2px",
-                minWidth: "125px",
-                background: "linear-gradient(135deg, rgba(3, 115, 175, 0.25) 0%, rgba(20, 18, 42, 0.6) 100%)",
-                borderLeft: "1px solid #0373AF",
-                borderRight: "1px solid #0373AF",
-                position: "relative",
-                flexShrink: 0,
-                boxShadow: "inset 0 0 12px rgba(0,0,0,0.5)"
-              }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "2px", lineHeight: 1, marginTop: "2px" }}>
-                  <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "19px", lineHeight: 1, letterSpacing: "-0.5px", textShadow: "0 0 8px rgba(255,255,255,0.3)" }}>
-                    {scoringState.score}
-                  </span>
-                  <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "14px", margin: "0 1px", lineHeight: 1 }}>/</span>
-                  <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "17px", lineHeight: 1, textShadow: "0 0 8px rgba(3,115,175,0.5)" }}>
-                    {scoringState.wickets}
-                  </span>
-                </div>
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  background: "rgba(0, 0, 0, 0.6)",
-                  borderRadius: "8px",
-                  padding: "1px 7px",
-                  marginTop: "2px",
-                  border: "1px solid rgba(3,115,175,0.3)"
-                }}>
-                  <span style={{ color: "#0373AF", fontSize: "7.5px", fontWeight: "950", letterSpacing: "0.5px" }}>OVER</span>
-                  <span style={{ color: "#FFFFFF", fontSize: "9.5px", fontWeight: "900" }}>
-                    {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs}
-                  </span>
-                </div>
-              </div>
-
-              {/* ── BOWLER & LIVE OVER BALLS HUD ── */}
-              <div style={{
-                display: "flex",
-                flex: 1.1,
-                padding: "0 8px",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "6px",
-                minWidth: "170px"
-              }}>
-                {/* Bowler Details Card */}
-                <div style={{
-                  background: "rgba(3, 115, 175, 0.15)",
-                  border: "1px solid #0373AF",
-                  borderRadius: "10px",
-                  padding: "3px 8px",
-                  display: "flex",
-                  flexDirection: "column",
                   justifyContent: "center",
-                  minWidth: "95px",
-                  boxShadow: "0 0 8px rgba(3, 115, 175, 0.1)"
+                  alignItems: "center",
+                  borderRadius: "0 0 14px 14px",
+                  border: "1.5px solid #0373AF",
+                  borderTop: "none",
+                  boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(3,115,175,0.25)",
+                  transition: "all 0.3s ease"
                 }}>
-                  <span style={{ color: "#FFFFFF", fontWeight: "900", fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    {scoringState.bowler || "—"}
+                  <span style={{
+                    color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
+                    fontSize: "9px",
+                    fontWeight: "950",
+                    letterSpacing: "1.2px",
+                    textTransform: "uppercase",
+                    textShadow: "0 1px 3px rgba(0,0,0,0.5)",
+                    animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
+                  }}>
+                    {activeNotification || statusLine}
                   </span>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "3px" }}>
-                    <span style={{ color: "#0373AF", fontWeight: "950", fontSize: "11.5px" }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                    </span>
-                    <span style={{ color: "#cbd5e1", fontSize: "8.5px", fontWeight: "700" }}>
-                      ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
-                    </span>
-                  </div>
                 </div>
-
-                {/* Over Balls Dynamic HUD */}
-                <div style={{ display: "flex", gap: "3.5px", alignItems: "center" }}>
-                  {(() => {
-                    const bpo = match?.ballsPerOver || 6;
-                    const extrasCount = thisOver.filter(isExtraBall).length;
-                    const totalCirclesCount = bpo + extrasCount;
-                    return Array.from({ length: totalCirclesCount }).map((_, i) => {
-                      const ball = thisOver[i];
-                      const isWicket = ball === "W" || ball?.startsWith("W+");
-                      const isFour = ball === "4";
-                      const isSix = ball === "6";
-                      return (
-                        <div key={i} style={{
-                          width: "18px",
-                          height: "18px",
-                          borderRadius: "50%",
-                          background: ball
-                            ? isWicket
-                              ? "linear-gradient(135deg, #ef4444 0%, #991b1b 100%)"
-                              : isSix
-                                ? "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)"
-                                : isFour
-                                  ? "linear-gradient(135deg, #0373AF 0%, #025380 100%)"
-                                  : "rgba(3,115,175,0.35)"
-                            : "rgba(255,255,255,0.04)",
-                          border: ball
-                            ? (isWicket ? "1.5px solid #ef4444" : isSix ? "1.5px solid #0284c7" : isFour ? "1.5px solid #0373AF" : "1px solid rgba(3,115,175,0.55)")
-                            : "1px dashed rgba(3,115,175,0.25)",
-                          color: "#FFFFFF",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "8.5px",
-                          fontWeight: "950",
-                          boxShadow: ball ? (isWicket ? "0 0 8px rgba(239,68,68,0.7)" : isSix ? "0 0 6px rgba(2,132,199,0.6)" : isFour ? "0 0 6px rgba(3,115,175,0.6)" : "0 0 4px rgba(3,115,175,0.25)") : "none"
-                        }}>
-                          {ball && ball.includes("+") ? renderOutcomeText(ball, 18) : (ball || "•")}
-                        </div>
-                      );
-                    });
-                  })()}
-                </div>
-              </div>
-
-              {/* ── RIGHT BOWLING TEAM SHIELD ── */}
-              <div style={{
-                background: "linear-gradient(135deg, #14122A 0%, #0373AF 100%)",
-                borderLeft: "1px solid #0373AF",
-                padding: "0 14px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                minWidth: "105px",
-                clipPath: "polygon(14% 0, 100% 0, 100% 100%, 0 100%)",
-                position: "relative",
-                flexShrink: 0
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  <span style={{ color: "#FFFFFF", fontWeight: "950", fontSize: "12px", letterSpacing: "0.8px", textTransform: "uppercase", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
-                    {bowlTeamShort}
-                  </span>
-                  <span style={{ fontSize: "10px", opacity: 0.9 }}>🏆</span>
-                </div>
-                <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "7px", fontWeight: "900", letterSpacing: "0.6px", textTransform: "uppercase" }}>
-                  BOWLING
-                </span>
-              </div>
-            </div>
-
-            {/* ── LOWER DYNAMIC STATUS & NOTIFICATION MARQUEE ── */}
-            <div style={{
-              background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
-              padding: "2.5px 18px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: "0 0 14px 14px",
-              border: "1.5px solid #0373AF",
-              borderTop: "none",
-              boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(3,115,175,0.25)",
-              transition: "all 0.3s ease"
-            }}>
-              <span style={{
-                color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
-                fontSize: "9px",
-                fontWeight: "950",
-                letterSpacing: "1.2px",
-                textTransform: "uppercase",
-                textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-              }}>
-                {activeNotification || statusLine}
-              </span>
-            </div>
               </>
             )}
 
@@ -12920,607 +12920,607 @@ flexShrink: 0,
             {renderScoreboardMarqueeRibbon("bbl-starsports", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <>
                 {/* ── TOP MAIN SCOREBOARD ROW (Exact 44px Height) ── */}
-            <div style={{
-              display: "flex",
-              alignItems: "stretch",
-              height: "44px",
-              background: "#ffffff",
-              borderRadius: "4px 4px 0 0",
-              overflow: "hidden"
-            }}>
-
-              {/* 1. LEFT: Batting Team Name */}
-              <div style={{
-                background: "#ffffff",
-                display: "flex",
-                alignItems: "center",
-                padding: "0 18px",
-                flexShrink: 0,
-                minWidth: "140px"
-              }}>
-                <span style={{
-                  color: "#000000",
-                  fontWeight: 900,
-                  fontSize: "15px",
-                  letterSpacing: "0.4px",
-                  textTransform: "uppercase",
-                  whiteSpace: "nowrap"
-                }}>
-                  {currentBatTeam}
-                </span>
-              </div>
-
-              {/* 2. CENTER-LEFT: Navy Score Capsule with Yellow Horns and Cyan Bottom Banner */}
-              <div style={{
-                background: "linear-gradient(180deg, #001248 0%, #001f70 100%)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "3px 14px 0",
-                minWidth: "170px",
-                flexShrink: 0,
-                position: "relative",
-                borderLeft: "2px solid #000c36",
-                borderRight: "2px solid #000c36"
-              }}>
-                {/* Left Cyan Corner Accent */}
-                <div style={{ position: "absolute", left: "-1px", bottom: "13px", width: "4px", height: "14px", background: "#00a0e9", clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
-
-                {/* Score and Overs Row with Gold Curved Horns */}
                 <div style={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "6px",
-                  marginTop: "1px",
-                  width: "100%"
+                  alignItems: "stretch",
+                  height: "44px",
+                  background: "#ffffff",
+                  borderRadius: "4px 4px 0 0",
+                  overflow: "hidden"
                 }}>
-                  {/* Left Yellow Horn */}
-                  <svg width="6" height="22" viewBox="0 0 6 22" fill="none">
-                    <path d="M5 2 C1 7 1 15 5 20" stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" />
-                  </svg>
 
-                  {/* Main Score */}
-                  <span style={{
-                    color: "#ffffff",
-                    fontSize: "20px",
-                    fontWeight: 950,
-                    letterSpacing: "-0.5px",
-                    lineHeight: 1
-                  }}>
-                    {scoringState.score} - {scoringState.wickets}
-                  </span>
-
-                  {/* Overs */}
-                  <span style={{
-                    color: "#ffffff",
-                    fontSize: "13px",
-                    fontWeight: 900,
-                    opacity: 0.95,
-                    marginLeft: "2px",
-                    lineHeight: 1
-                  }}>
-                    {oversText}
-                  </span>
-
-                  {/* Right Yellow Horn */}
-                  <svg width="6" height="22" viewBox="0 0 6 22" fill="none">
-                    <path d="M1 2 C5 7 5 15 1 20" stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" />
-                  </svg>
-                </div>
-
-                {/* Right Cyan Corner Accent */}
-                <div style={{ position: "absolute", right: "-1px", bottom: "13px", width: "4px", height: "14px", background: "#00a0e9", clipPath: "polygon(0 0, 100% 100%, 0 100%)" }} />
-
-                {/* Bottom Cyan Banner */}
-                <div style={{
-                  background: "#00a0e9",
-                  width: "calc(100% + 28px)",
-                  margin: "0 -14px",
-                  height: "13px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}>
-                  <span style={{
-                    color: "#001248",
-                    fontSize: "8px",
-                    fontWeight: 950,
-                    letterSpacing: "0.8px",
-                    textTransform: "uppercase",
-                    lineHeight: 1
-                  }}>
-                    {stageTitle}
-                  </span>
-                </div>
-              </div>
-
-              {/* 3. MIDDLE: 2-Row Batsmen Details on Pure White Background */}
-              <div style={{
-                background: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "2px 18px",
-                flex: 1,
-                minWidth: "175px",
-                gap: "1px"
-              }}>
-                {/* Row 1: Non-Striker */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}>
+                  {/* 1. LEFT: Batting Team Name */}
                   <div style={{
+                    background: "#ffffff",
                     display: "flex",
                     alignItems: "center",
-                    gap: "6px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                  }}>
-                    <span style={{
-                      color: "#000000",
-                      fontWeight: 900,
-                      fontSize: "13px",
-                      letterSpacing: "0.2px"
-                    }}>
-                      {scoringState.nonStriker || "Player W"}
-                    </span>
-                  </div>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
+                    padding: "0 18px",
                     flexShrink: 0,
-                    marginLeft: "10px"
+                    minWidth: "140px"
                   }}>
-                    <span style={{
-                      color: "#000000",
-                      fontWeight: 950,
-                      fontSize: "14px",
-                      minWidth: "18px",
-                      textAlign: "right",
-                      lineHeight: 1
-                    }}>
-                      {nonStriker?.runs ?? 0}
-                    </span>
                     <span style={{
                       color: "#000000",
                       fontWeight: 900,
-                      fontSize: "12.5px",
-                      minWidth: "16px",
-                      textAlign: "right",
-                      lineHeight: 1
-                    }}>
-                      {nonStriker?.balls ?? 0}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Row 2: Striker with Black Dot Indicator */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                  }}>
-                    <span style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      background: "#000000",
-                      display: "inline-block",
-                      flexShrink: 0
-                    }} />
-                    <span style={{
-                      color: "#000000",
-                      fontWeight: 950,
-                      fontSize: "13px",
-                      letterSpacing: "0.2px"
-                    }}>
-                      {scoringState.striker || "Player Z"}
-                    </span>
-                  </div>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    flexShrink: 0,
-                    marginLeft: "10px"
-                  }}>
-                    <span style={{
-                      color: "#000000",
-                      fontWeight: 950,
-                      fontSize: "14px",
-                      minWidth: "18px",
-                      textAlign: "right",
-                      lineHeight: 1
-                    }}>
-                      {striker?.runs ?? 0}
-                    </span>
-                    <span style={{
-                      color: "#000000",
-                      fontWeight: 900,
-                      fontSize: "12.5px",
-                      minWidth: "16px",
-                      textAlign: "right",
-                      lineHeight: 1
-                    }}>
-                      {striker?.balls ?? 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 4. YELLOW STAT BLOCK (REQ RUNS / BALLS or CRR / BOWLER) Flanked by Cyan Waves */}
-              <div style={{
-                background: "#ffc72c",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 20px",
-                position: "relative",
-                flexShrink: 0,
-                minWidth: "165px"
-              }}>
-                {/* Left Cyan Wave Swoosh */}
-                <svg style={{ position: "absolute", left: "-1px", top: 0, bottom: 0, height: "100%", width: "12px" }} viewBox="0 0 12 44" fill="none" preserveAspectRatio="none">
-                  <path d="M0 0 C7 11 7 33 0 44 L4 44 C11 33 11 11 4 0 Z" fill="#00a0e9" />
-                </svg>
-
-                {scoringState.target !== null ? (
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "26px",
-                    zIndex: 2
-                  }}>
-                    {/* Req Runs */}
-                    <div style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      lineHeight: 1
-                    }}>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "8px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        marginBottom: "2px"
-                      }}>
-                        REQ. RUNS
-                      </span>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "20px",
-                        fontWeight: 950,
-                        lineHeight: 1
-                      }}>
-                        {need}
-                      </span>
-                    </div>
-
-                    {/* Balls Left */}
-                    <div style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      lineHeight: 1
-                    }}>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "8px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        marginBottom: "2px"
-                      }}>
-                        BALLS
-                      </span>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "20px",
-                        fontWeight: 950,
-                        lineHeight: 1
-                      }}>
-                        {bLeft}
-                      </span>
-                    </div>
-                  </div>
-                ) : (
-                  /* 1st Innings: CRR and Overs */
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "26px",
-                    zIndex: 2
-                  }}>
-                    <div style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      lineHeight: 1
-                    }}>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "8px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        marginBottom: "2px"
-                      }}>
-                        CRR
-                      </span>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "20px",
-                        fontWeight: 950,
-                        lineHeight: 1
-                      }}>
-                        {crr}
-                      </span>
-                    </div>
-
-                    <div style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      lineHeight: 1
-                    }}>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "8px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        marginBottom: "2px"
-                      }}>
-                        OVERS
-                      </span>
-                      <span style={{
-                        color: "#000000",
-                        fontSize: "20px",
-                        fontWeight: 950,
-                        lineHeight: 1
-                      }}>
-                        {match.overs}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Right Cyan Wave Swoosh */}
-                <svg style={{ position: "absolute", right: "-1px", top: 0, bottom: 0, height: "100%", width: "12px" }} viewBox="0 0 12 44" fill="none" preserveAspectRatio="none">
-                  <path d="M12 0 C5 11 5 33 12 44 L8 44 C1 33 1 11 8 0 Z" fill="#00a0e9" />
-                </svg>
-              </div>
-
-              {/* 5. RIGHT: 2-Row Active Bowler Details & Bowling Team Badge on Pure White Background */}
-              <div style={{
-                background: "#ffffff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "2px 14px 2px 16px",
-                flex: 1,
-                minWidth: "175px",
-                position: "relative"
-              }}>
-                <div style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  gap: "1px",
-                  minWidth: 0,
-                  flex: 1
-                }}>
-                  {/* Row 1: Bowler Name + Spell Figures */}
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "8px"
-                  }}>
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      fontSize: "15px",
+                      letterSpacing: "0.4px",
+                      textTransform: "uppercase",
                       whiteSpace: "nowrap"
                     }}>
+                      {currentBatTeam}
+                    </span>
+                  </div>
+
+                  {/* 2. CENTER-LEFT: Navy Score Capsule with Yellow Horns and Cyan Bottom Banner */}
+                  <div style={{
+                    background: "linear-gradient(180deg, #001248 0%, #001f70 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "3px 14px 0",
+                    minWidth: "170px",
+                    flexShrink: 0,
+                    position: "relative",
+                    borderLeft: "2px solid #000c36",
+                    borderRight: "2px solid #000c36"
+                  }}>
+                    {/* Left Cyan Corner Accent */}
+                    <div style={{ position: "absolute", left: "-1px", bottom: "13px", width: "4px", height: "14px", background: "#00a0e9", clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
+
+                    {/* Score and Overs Row with Gold Curved Horns */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      marginTop: "1px",
+                      width: "100%"
+                    }}>
+                      {/* Left Yellow Horn */}
+                      <svg width="6" height="22" viewBox="0 0 6 22" fill="none">
+                        <path d="M5 2 C1 7 1 15 5 20" stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" />
+                      </svg>
+
+                      {/* Main Score */}
                       <span style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        background: "#dc2626",
-                        display: "inline-block",
-                        flexShrink: 0
-                      }} />
-                      <span style={{
-                        color: "#000000",
+                        color: "#ffffff",
+                        fontSize: "20px",
                         fontWeight: 950,
+                        letterSpacing: "-0.5px",
+                        lineHeight: 1
+                      }}>
+                        {scoringState.score} - {scoringState.wickets}
+                      </span>
+
+                      {/* Overs */}
+                      <span style={{
+                        color: "#ffffff",
                         fontSize: "13px",
-                        letterSpacing: "0.2px",
+                        fontWeight: 900,
+                        opacity: 0.95,
+                        marginLeft: "2px",
+                        lineHeight: 1
+                      }}>
+                        {oversText}
+                      </span>
+
+                      {/* Right Yellow Horn */}
+                      <svg width="6" height="22" viewBox="0 0 6 22" fill="none">
+                        <path d="M1 2 C5 7 5 15 1 20" stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" />
+                      </svg>
+                    </div>
+
+                    {/* Right Cyan Corner Accent */}
+                    <div style={{ position: "absolute", right: "-1px", bottom: "13px", width: "4px", height: "14px", background: "#00a0e9", clipPath: "polygon(0 0, 100% 100%, 0 100%)" }} />
+
+                    {/* Bottom Cyan Banner */}
+                    <div style={{
+                      background: "#00a0e9",
+                      width: "calc(100% + 28px)",
+                      margin: "0 -14px",
+                      height: "13px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}>
+                      <span style={{
+                        color: "#001248",
+                        fontSize: "8px",
+                        fontWeight: 950,
+                        letterSpacing: "0.8px",
+                        textTransform: "uppercase",
+                        lineHeight: 1
+                      }}>
+                        {stageTitle}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 3. MIDDLE: 2-Row Batsmen Details on Pure White Background */}
+                  <div style={{
+                    background: "#ffffff",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    padding: "2px 18px",
+                    flex: 1,
+                    minWidth: "175px",
+                    gap: "1px"
+                  }}>
+                    {/* Row 1: Non-Striker */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap"
                       }}>
-                        {scoringState.bowler || "Bowler"}
-                      </span>
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 900,
+                          fontSize: "13px",
+                          letterSpacing: "0.2px"
+                        }}>
+                          {scoringState.nonStriker || "Player W"}
+                        </span>
+                      </div>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        flexShrink: 0,
+                        marginLeft: "10px"
+                      }}>
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 950,
+                          fontSize: "14px",
+                          minWidth: "18px",
+                          textAlign: "right",
+                          lineHeight: 1
+                        }}>
+                          {nonStriker?.runs ?? 0}
+                        </span>
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 900,
+                          fontSize: "12.5px",
+                          minWidth: "16px",
+                          textAlign: "right",
+                          lineHeight: 1
+                        }}>
+                          {nonStriker?.balls ?? 0}
+                        </span>
+                      </div>
                     </div>
 
+                    {/* Row 2: Striker with Black Dot Indicator */}
                     <div style={{
                       display: "flex",
-                      alignItems: "baseline",
-                      gap: "3px",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        <span style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          background: "#000000",
+                          display: "inline-block",
+                          flexShrink: 0
+                        }} />
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 950,
+                          fontSize: "13px",
+                          letterSpacing: "0.2px"
+                        }}>
+                          {scoringState.striker || "Player Z"}
+                        </span>
+                      </div>
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        flexShrink: 0,
+                        marginLeft: "10px"
+                      }}>
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 950,
+                          fontSize: "14px",
+                          minWidth: "18px",
+                          textAlign: "right",
+                          lineHeight: 1
+                        }}>
+                          {striker?.runs ?? 0}
+                        </span>
+                        <span style={{
+                          color: "#000000",
+                          fontWeight: 900,
+                          fontSize: "12.5px",
+                          minWidth: "16px",
+                          textAlign: "right",
+                          lineHeight: 1
+                        }}>
+                          {striker?.balls ?? 0}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 4. YELLOW STAT BLOCK (REQ RUNS / BALLS or CRR / BOWLER) Flanked by Cyan Waves */}
+                  <div style={{
+                    background: "#ffc72c",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0 20px",
+                    position: "relative",
+                    flexShrink: 0,
+                    minWidth: "165px"
+                  }}>
+                    {/* Left Cyan Wave Swoosh */}
+                    <svg style={{ position: "absolute", left: "-1px", top: 0, bottom: 0, height: "100%", width: "12px" }} viewBox="0 0 12 44" fill="none" preserveAspectRatio="none">
+                      <path d="M0 0 C7 11 7 33 0 44 L4 44 C11 33 11 11 4 0 Z" fill="#00a0e9" />
+                    </svg>
+
+                    {scoringState.target !== null ? (
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "26px",
+                        zIndex: 2
+                      }}>
+                        {/* Req Runs */}
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          lineHeight: 1
+                        }}>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "8px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            marginBottom: "2px"
+                          }}>
+                            REQ. RUNS
+                          </span>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "20px",
+                            fontWeight: 950,
+                            lineHeight: 1
+                          }}>
+                            {need}
+                          </span>
+                        </div>
+
+                        {/* Balls Left */}
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          lineHeight: 1
+                        }}>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "8px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            marginBottom: "2px"
+                          }}>
+                            BALLS
+                          </span>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "20px",
+                            fontWeight: 950,
+                            lineHeight: 1
+                          }}>
+                            {bLeft}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      /* 1st Innings: CRR and Overs */
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "26px",
+                        zIndex: 2
+                      }}>
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          lineHeight: 1
+                        }}>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "8px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            marginBottom: "2px"
+                          }}>
+                            CRR
+                          </span>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "20px",
+                            fontWeight: 950,
+                            lineHeight: 1
+                          }}>
+                            {crr}
+                          </span>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          lineHeight: 1
+                        }}>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "8px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            marginBottom: "2px"
+                          }}>
+                            OVERS
+                          </span>
+                          <span style={{
+                            color: "#000000",
+                            fontSize: "20px",
+                            fontWeight: 950,
+                            lineHeight: 1
+                          }}>
+                            {match.overs}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Right Cyan Wave Swoosh */}
+                    <svg style={{ position: "absolute", right: "-1px", top: 0, bottom: 0, height: "100%", width: "12px" }} viewBox="0 0 12 44" fill="none" preserveAspectRatio="none">
+                      <path d="M12 0 C5 11 5 33 12 44 L8 44 C1 33 1 11 8 0 Z" fill="#00a0e9" />
+                    </svg>
+                  </div>
+
+                  {/* 5. RIGHT: 2-Row Active Bowler Details & Bowling Team Badge on Pure White Background */}
+                  <div style={{
+                    background: "#ffffff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "2px 14px 2px 16px",
+                    flex: 1,
+                    minWidth: "175px",
+                    position: "relative"
+                  }}>
+                    <div style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      gap: "1px",
+                      minWidth: 0,
+                      flex: 1
+                    }}>
+                      {/* Row 1: Bowler Name + Spell Figures */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "8px"
+                      }}>
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          <span style={{
+                            width: "6px",
+                            height: "6px",
+                            borderRadius: "50%",
+                            background: "#dc2626",
+                            display: "inline-block",
+                            flexShrink: 0
+                          }} />
+                          <span style={{
+                            color: "#000000",
+                            fontWeight: 950,
+                            fontSize: "13px",
+                            letterSpacing: "0.2px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap"
+                          }}>
+                            {scoringState.bowler || "Bowler"}
+                          </span>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          alignItems: "baseline",
+                          gap: "3px",
+                          flexShrink: 0
+                        }}>
+                          <span style={{
+                            color: "#000000",
+                            fontWeight: 950,
+                            fontSize: "14px",
+                            lineHeight: 1
+                          }}>
+                            {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                          </span>
+                          <span style={{
+                            color: "#000000",
+                            fontWeight: 900,
+                            fontSize: "11px",
+                            lineHeight: 1
+                          }}>
+                            ({fmtOv(bowler?.ballsBowled ?? 0, bpo)})
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Row 2: Team Name + Economy */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between"
+                      }}>
+                        <span style={{
+                          color: "#475569",
+                          fontSize: "10.5px",
+                          fontWeight: 900,
+                          letterSpacing: "0.3px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {currentBowlTeam}
+                        </span>
+                        <span style={{
+                          color: "#00a0e9",
+                          fontSize: "10px",
+                          fontWeight: 950,
+                          letterSpacing: "0.3px"
+                        }}>
+                          ECO: {(bowler?.ballsBowled ?? 0) > 0 ? (((bowler?.runsConceded ?? 0) / (bowler?.ballsBowled ?? 1)) * bpo).toFixed(2) : "0.00"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Watermark / Logo on Right */}
+                    <div style={{
+                      background: "rgba(0, 18, 72, 0.08)",
+                      border: "1px solid rgba(0, 18, 72, 0.15)",
+                      borderRadius: "3px",
+                      padding: "2px 5px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: "8px",
+                      lineHeight: 1,
                       flexShrink: 0
                     }}>
-                      <span style={{
-                        color: "#000000",
-                        fontWeight: 950,
-                        fontSize: "14px",
-                        lineHeight: 1
-                      }}>
-                        {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                      </span>
-                      <span style={{
-                        color: "#000000",
-                        fontWeight: 900,
-                        fontSize: "11px",
-                        lineHeight: 1
-                      }}>
-                        ({fmtOv(bowler?.ballsBowled ?? 0, bpo)})
+                      <span style={{ fontSize: "9px" }}>🏏</span>
+                      <span style={{ fontSize: "6px", fontWeight: 950, color: "#001248", letterSpacing: "0.2px" }}>
+                        BBL
                       </span>
                     </div>
                   </div>
 
-                  {/* Row 2: Team Name + Economy */}
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between"
-                  }}>
-                    <span style={{
-                      color: "#475569",
-                      fontSize: "10.5px",
-                      fontWeight: 900,
-                      letterSpacing: "0.3px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap"
-                    }}>
-                      {currentBowlTeam}
-                    </span>
-                    <span style={{
-                      color: "#00a0e9",
-                      fontSize: "10px",
-                      fontWeight: 950,
-                      letterSpacing: "0.3px"
-                    }}>
-                      ECO: {(bowler?.ballsBowled ?? 0) > 0 ? (((bowler?.runsConceded ?? 0) / (bowler?.ballsBowled ?? 1)) * bpo).toFixed(2) : "0.00"}
-                    </span>
-                  </div>
                 </div>
 
-                {/* Watermark / Logo on Right */}
+                {/* ── BOTTOM BLUE STRIP WITH FLAME / GRASS SILHOUETTES & STATS (Exact 18px Height) ── */}
                 <div style={{
-                  background: "rgba(0, 18, 72, 0.08)",
-                  border: "1px solid rgba(0, 18, 72, 0.15)",
-                  borderRadius: "3px",
-                  padding: "2px 5px",
+                  background: activeNotification
+                    ? getNotificationStyles(activeNotification).bg
+                    : "linear-gradient(90deg, #001248 0%, #00227a 50%, #001248 100%)",
+                  height: "18px",
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginLeft: "8px",
-                  lineHeight: 1,
-                  flexShrink: 0
+                  position: "relative",
+                  overflow: "hidden",
+                  borderTop: "1.5px solid #00a0e9",
+                  borderRadius: "0 0 4px 4px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.6)"
                 }}>
-                  <span style={{ fontSize: "9px" }}>🏏</span>
-                  <span style={{ fontSize: "6px", fontWeight: 950, color: "#001248", letterSpacing: "0.2px" }}>
-                    BBL
-                  </span>
-                </div>
-              </div>
+                  {/* Left Cyan Grass / Flame Graphic Watermark */}
+                  <div style={{
+                    position: "absolute",
+                    left: "2px",
+                    bottom: 0,
+                    display: "flex",
+                    opacity: 0.9
+                  }}>
+                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                    </svg>
+                  </div>
 
-            </div>
-
-            {/* ── BOTTOM BLUE STRIP WITH FLAME / GRASS SILHOUETTES & STATS (Exact 18px Height) ── */}
-            <div style={{
-              background: activeNotification
-                ? getNotificationStyles(activeNotification).bg
-                : "linear-gradient(90deg, #001248 0%, #00227a 50%, #001248 100%)",
-              height: "18px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              overflow: "hidden",
-              borderTop: "1.5px solid #00a0e9",
-              borderRadius: "0 0 4px 4px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.6)"
-            }}>
-              {/* Left Cyan Grass / Flame Graphic Watermark */}
-              <div style={{
-                position: "absolute",
-                left: "2px",
-                bottom: 0,
-                display: "flex",
-                opacity: 0.9
-              }}>
-                <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                  <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                </svg>
-              </div>
-
-              {/* Center Content: Bowler Spell & Fours / Sixes or Notification */}
-              {activeNotification ? (
-                <span style={{
-                  color: getNotificationStyles(activeNotification).textColor,
-                  fontSize: "10px",
-                  fontWeight: 950,
-                  letterSpacing: "1.2px",
-                  textTransform: "uppercase",
-                  animation: "pulseGlow 1s ease-in-out infinite alternate"
-                }}>
-                  {activeNotification}
-                </span>
-              ) : (
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "14px",
-                  color: "#ffffff",
-                  fontSize: "11px",
-                  fontWeight: 900,
-                  letterSpacing: "0.5px"
-                }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                    <span style={{ color: "#ffc72c" }}>●</span>
-                    <span style={{ color: "#bae6fd", textTransform: "uppercase" }}>BOWLER:</span>
-                    <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
-                    <span style={{ color: "#facc15", fontWeight: 950, marginLeft: "2px" }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                  {/* Center Content: Bowler Spell & Fours / Sixes or Notification */}
+                  {activeNotification ? (
+                    <span style={{
+                      color: getNotificationStyles(activeNotification).textColor,
+                      fontSize: "10px",
+                      fontWeight: 950,
+                      letterSpacing: "1.2px",
+                      textTransform: "uppercase",
+                      animation: "pulseGlow 1s ease-in-out infinite alternate"
+                    }}>
+                      {activeNotification}
                     </span>
-                    <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>
-                      ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
-                    </span>
-                  </span>
-                  <span style={{ opacity: 0.5 }}>|</span>
-                  <span>
-                    Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>&nbsp;&nbsp;&nbsp;Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
-                  </span>
-                </div>
-              )}
+                  ) : (
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "14px",
+                      color: "#ffffff",
+                      fontSize: "11px",
+                      fontWeight: 900,
+                      letterSpacing: "0.5px"
+                    }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <span style={{ color: "#ffc72c" }}>●</span>
+                        <span style={{ color: "#bae6fd", textTransform: "uppercase" }}>BOWLER:</span>
+                        <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
+                        <span style={{ color: "#facc15", fontWeight: 950, marginLeft: "2px" }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>
+                          ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
+                        </span>
+                      </span>
+                      <span style={{ opacity: 0.5 }}>|</span>
+                      <span>
+                        Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>&nbsp;&nbsp;&nbsp;Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
+                      </span>
+                    </div>
+                  )}
 
-              {/* Right Cyan Grass / Flame Graphic Watermark */}
-              <div style={{
-                position: "absolute",
-                right: "2px",
-                bottom: 0,
-                display: "flex",
-                opacity: 0.9,
-                transform: "scaleX(-1)"
-              }}>
-                <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                  <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                </svg>
-              </div>
-            </div>
+                  {/* Right Cyan Grass / Flame Graphic Watermark */}
+                  <div style={{
+                    position: "absolute",
+                    right: "2px",
+                    bottom: 0,
+                    display: "flex",
+                    opacity: 0.9,
+                    transform: "scaleX(-1)"
+                  }}>
+                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                    </svg>
+                  </div>
+                </div>
               </>
             )}
 
@@ -13640,184 +13640,221 @@ flexShrink: 0,
           }}>
             {renderScoreboardMarqueeRibbon("ipl-2025", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <div style={{
-              display: "flex",
-              alignItems: "center",
-              height: "48px",
-              background: "linear-gradient(90deg, #01061c 0%, #030d30 20%, #041038 50%, #030d30 80%, #01061c 100%)",
-              borderRadius: "11px",
-              padding: "0",
-              boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08), 0 6px 24px rgba(0,0,0,0.8)",
-              position: "relative"
-            }}>
-
-              {/* ── FAR LEFT: Batting Team Gold Floral Tab ── */}
-              <div style={{
-                width: "52px",
-                height: "100%",
-                background: "linear-gradient(135deg, #eab308 0%, #ca8a04 45%, #1e1b4b 95%)",
-                borderRadius: "11px 0 0 11px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                overflow: "hidden",
-                flexShrink: 0
+                height: "48px",
+                background: "linear-gradient(90deg, #01061c 0%, #030d30 20%, #041038 50%, #030d30 80%, #01061c 100%)",
+                borderRadius: "11px",
+                padding: "0",
+                boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08), 0 6px 24px rgba(0,0,0,0.8)",
+                position: "relative"
               }}>
-                {/* Flower watermark outline */}
-                <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
-                  <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
-                  <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
-                  <circle cx="50" cy="50" r="6" fill="currentColor" />
-                </svg>
-                <span style={{
-                  color: "#ffffff",
-                  fontWeight: 950,
-                  fontSize: "12.5px",
-                  letterSpacing: "0.5px",
+
+                {/* ── FAR LEFT: Batting Team Gold Floral Tab ── */}
+                <div style={{
+                  width: "52px",
+                  height: "100%",
+                  background: "linear-gradient(135deg, #eab308 0%, #ca8a04 45%, #1e1b4b 95%)",
+                  borderRadius: "11px 0 0 11px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   position: "relative",
-                  zIndex: 2,
-                  textShadow: "0 1px 3px rgba(0,0,0,0.6)"
+                  overflow: "hidden",
+                  flexShrink: 0
                 }}>
-                  {batTeamShort}
-                </span>
-              </div>
-
-              {/* ── LEFT-CENTER: Two-Tier Score + Batsmen Unit ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "2px 6px 2px 5px",
-                gap: "2px",
-                flexShrink: 0
-              }}>
-
-                {/* ── TOP TIER: Vivid Neon Lime Green Pill OR Animated Event Banner (SIX/FOUR/WICKET etc.) ── */}
-                {activeNotification ? (
-                  <div style={{
-                    background: isWicketNotification
-                      ? "linear-gradient(180deg, #2d060a 0%, #4a0d14 55%, #2d060a 100%)"
-                      : "linear-gradient(180deg, #05200a 0%, #0d3812 55%, #05200a 100%)",
-                    borderRadius: "7px",
-                    height: "21px",
-                    padding: "0 10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: "290px",
-                    boxShadow: isWicketNotification
-                      ? "0 0 12px rgba(239, 68, 68, 0.45), inset 0 0 8px rgba(239, 68, 68, 0.25)"
-                      : "0 0 12px rgba(163, 230, 53, 0.45), inset 0 0 8px rgba(163, 230, 53, 0.25)",
-                    border: isWicketNotification ? "1.2px solid #f87171" : "1.2px solid #a3e635",
+                  {/* Flower watermark outline */}
+                  <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
+                    <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                    <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+                    <circle cx="50" cy="50" r="6" fill="currentColor" />
+                  </svg>
+                  <span style={{
+                    color: "#ffffff",
+                    fontWeight: 950,
+                    fontSize: "12.5px",
+                    letterSpacing: "0.5px",
                     position: "relative",
-                    overflow: "hidden"
+                    zIndex: 2,
+                    textShadow: "0 1px 3px rgba(0,0,0,0.6)"
                   }}>
-                    {/* Watermark repeated text in background */}
+                    {batTeamShort}
+                  </span>
+                </div>
+
+                {/* ── LEFT-CENTER: Two-Tier Score + Batsmen Unit ── */}
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  padding: "2px 6px 2px 5px",
+                  gap: "2px",
+                  flexShrink: 0
+                }}>
+
+                  {/* ── TOP TIER: Vivid Neon Lime Green Pill OR Animated Event Banner (SIX/FOUR/WICKET etc.) ── */}
+                  {activeNotification ? (
                     <div style={{
-                      position: "absolute",
-                      inset: 0,
+                      background: isWicketNotification
+                        ? "linear-gradient(180deg, #2d060a 0%, #4a0d14 55%, #2d060a 100%)"
+                        : "linear-gradient(180deg, #05200a 0%, #0d3812 55%, #05200a 100%)",
+                      borderRadius: "7px",
+                      height: "21px",
+                      padding: "0 10px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "space-around",
-                      color: isWicketNotification ? "rgba(248, 113, 113, 0.18)" : "rgba(163, 230, 53, 0.18)",
-                      fontSize: "14px",
-                      fontWeight: 950,
-                      letterSpacing: "4px",
-                      textTransform: "uppercase",
-                      pointerEvents: "none",
-                      userSelect: "none"
-                    }}>
-                      <span>{activeNotification}</span>
-                      <span>{activeNotification}</span>
-                      <span>{activeNotification}</span>
-                    </div>
-
-                    {/* Center animated glowing event text */}
-                    <span style={{
-                      color: isWicketNotification ? "#fca5a5" : "#bef264",
-                      fontSize: "13px",
-                      fontWeight: 950,
-                      letterSpacing: "3px",
-                      textTransform: "uppercase",
+                      justifyContent: "center",
+                      minWidth: "290px",
+                      boxShadow: isWicketNotification
+                        ? "0 0 12px rgba(239, 68, 68, 0.45), inset 0 0 8px rgba(239, 68, 68, 0.25)"
+                        : "0 0 12px rgba(163, 230, 53, 0.45), inset 0 0 8px rgba(163, 230, 53, 0.25)",
+                      border: isWicketNotification ? "1.2px solid #f87171" : "1.2px solid #a3e635",
                       position: "relative",
-                      zIndex: 2,
-                      textShadow: isWicketNotification
-                        ? "0 0 8px rgba(239, 68, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.5)"
-                        : "0 0 8px rgba(163, 230, 53, 0.8), 0 0 16px rgba(163, 230, 53, 0.5)",
-                      animation: "iplZoomInOut 1s ease-in-out infinite alternate"
+                      overflow: "hidden"
                     }}>
-                      {activeNotification}
-                    </span>
-                  </div>
-                ) : (
-                  <div style={{
-                    background: "linear-gradient(180deg, #b4f210 0%, #99e300 55%, #82c800 100%)",
-                    borderRadius: "7px",
-                    height: "21px",
-                    padding: "0 10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    minWidth: "290px",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6)",
-                    border: "1px solid #c4ff20"
-                  }}>
-                    {/* Team Matchup (BCH v RCC) */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                      <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
-                        {bowlTeamShort}
-                      </span>
-                      <span style={{ color: "#001e30", fontWeight: 800, fontSize: "8px", opacity: 0.85 }}>
-                        v
-                      </span>
-                      <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
-                        {batTeamShort}
+                      {/* Watermark repeated text in background */}
+                      <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        color: isWicketNotification ? "rgba(248, 113, 113, 0.18)" : "rgba(163, 230, 53, 0.18)",
+                        fontSize: "14px",
+                        fontWeight: 950,
+                        letterSpacing: "4px",
+                        textTransform: "uppercase",
+                        pointerEvents: "none",
+                        userSelect: "none"
+                      }}>
+                        <span>{activeNotification}</span>
+                        <span>{activeNotification}</span>
+                        <span>{activeNotification}</span>
+                      </div>
+
+                      {/* Center animated glowing event text */}
+                      <span style={{
+                        color: isWicketNotification ? "#fca5a5" : "#bef264",
+                        fontSize: "13px",
+                        fontWeight: 950,
+                        letterSpacing: "3px",
+                        textTransform: "uppercase",
+                        position: "relative",
+                        zIndex: 2,
+                        textShadow: isWicketNotification
+                          ? "0 0 8px rgba(239, 68, 68, 0.8), 0 0 16px rgba(239, 68, 68, 0.5)"
+                          : "0 0 8px rgba(163, 230, 53, 0.8), 0 0 16px rgba(163, 230, 53, 0.5)",
+                        animation: "iplZoomInOut 1s ease-in-out infinite alternate"
+                      }}>
+                        {activeNotification}
                       </span>
                     </div>
-
-                    {/* Main Score (0-0) */}
+                  ) : (
                     <div style={{
-                      color: "#001a2e",
-                      fontWeight: 950,
-                      fontSize: "17px",
-                      letterSpacing: "-0.5px",
-                      lineHeight: 1,
-                      padding: "0 8px"
+                      background: "linear-gradient(180deg, #b4f210 0%, #99e300 55%, #82c800 100%)",
+                      borderRadius: "7px",
+                      height: "21px",
+                      padding: "0 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      minWidth: "290px",
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6)",
+                      border: "1px solid #c4ff20"
                     }}>
-                      {scoringState.score}-{scoringState.wickets}
+                      {/* Team Matchup (BCH v RCC) */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                        <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
+                          {bowlTeamShort}
+                        </span>
+                        <span style={{ color: "#001e30", fontWeight: 800, fontSize: "8px", opacity: 0.85 }}>
+                          v
+                        </span>
+                        <span style={{ color: "#001e30", fontWeight: 950, fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.2px" }}>
+                          {batTeamShort}
+                        </span>
+                      </div>
+
+                      {/* Main Score (0-0) */}
+                      <div style={{
+                        color: "#001a2e",
+                        fontWeight: 950,
+                        fontSize: "17px",
+                        letterSpacing: "-0.5px",
+                        lineHeight: 1,
+                        padding: "0 8px"
+                      }}>
+                        {scoringState.score}-{scoringState.wickets}
+                      </div>
+
+                      {/* Overs (0.0(20)) */}
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
+                        <span style={{ color: "#001a2e", fontWeight: 950, fontSize: "12px", letterSpacing: "-0.2px" }}>
+                          {fmtOv(scoringState.balls, bpo)}
+                        </span>
+                        <span style={{ color: "#001a2e", fontWeight: 900, fontSize: "9.5px", opacity: 0.9 }}>
+                          ({match.overs})
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ── BOTTOM TIER: Two Golden Batsmen Capsules Side-by-Side ── */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+
+                    {/* Striker Capsule */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
+                      border: "1.2px solid #a3e635",
+                      borderRadius: "7px",
+                      padding: "1px 7px 1px 5px",
+                      height: "17px",
+                      flex: 1,
+                      minWidth: "142px",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px", minWidth: 0, overflow: "hidden" }}>
+                        <span style={{ color: "#facc15", fontSize: "9px", lineHeight: 1, flexShrink: 0 }}>🏏</span>
+                        <span style={{
+                          color: "#ffffff",
+                          fontWeight: 950,
+                          fontSize: "9.5px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.2px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis"
+                        }}>
+                          {(scoringState.striker || "STRIKER").split(" ").pop()}
+                        </span>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
+                          {striker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
+                          {striker?.balls ?? 0}
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Overs (0.0(20)) */}
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "2px" }}>
-                      <span style={{ color: "#001a2e", fontWeight: 950, fontSize: "12px", letterSpacing: "-0.2px" }}>
-                        {fmtOv(scoringState.balls, bpo)}
-                      </span>
-                      <span style={{ color: "#001a2e", fontWeight: 900, fontSize: "9.5px", opacity: 0.9 }}>
-                        ({match.overs})
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* ── BOTTOM TIER: Two Golden Batsmen Capsules Side-by-Side ── */}
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-
-                  {/* Striker Capsule */}
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
-                    border: "1.2px solid #a3e635",
-                    borderRadius: "7px",
-                    padding: "1px 7px 1px 5px",
-                    height: "17px",
-                    flex: 1,
-                    minWidth: "142px",
-                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "4px", minWidth: 0, overflow: "hidden" }}>
-                      <span style={{ color: "#facc15", fontSize: "9px", lineHeight: 1, flexShrink: 0 }}>🏏</span>
+                    {/* Non-Striker Capsule */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
+                      border: "1.2px solid #a3e635",
+                      borderRadius: "7px",
+                      padding: "1px 7px 1px 6px",
+                      height: "17px",
+                      flex: 1,
+                      minWidth: "142px",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                    }}>
                       <span style={{
                         color: "#ffffff",
                         fontWeight: 950,
@@ -13828,254 +13865,217 @@ flexShrink: 0,
                         overflow: "hidden",
                         textOverflow: "ellipsis"
                       }}>
-                        {(scoringState.striker || "STRIKER").split(" ").pop()}
+                        {(scoringState.nonStriker || "NON-STRIKER").split(" ").pop()}
                       </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
+                          {nonStriker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
+                          {nonStriker?.balls ?? 0}
+                        </span>
+                      </div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
-                        {striker?.runs ?? 0}
-                      </span>
-                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
-                        {striker?.balls ?? 0}
-                      </span>
-                    </div>
+
                   </div>
 
-                  {/* Non-Striker Capsule */}
+                </div>
+
+                {/* ── CENTER: TOSS Block ── */}
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 10px",
+                  minWidth: "80px",
+                  flexShrink: 0,
+                  borderRight: "1px solid rgba(56, 189, 248, 0.25)",
+                  height: "36px"
+                }}>
+                  <span style={{
+                    color: "#facc15",
+                    fontWeight: 950,
+                    fontSize: "7.5px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    lineHeight: 1
+                  }}>
+                    TOSS
+                  </span>
+                  <span style={{
+                    color: "#a3e635",
+                    fontWeight: 950,
+                    fontSize: "9.5px",
+                    marginTop: "2px",
+                    textAlign: "center",
+                    lineHeight: 1.1,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2px"
+                  }}>
+                    {tossWinnerShort} ({tossDecision})
+                  </span>
+                </div>
+
+                {/* ── RIGHT: Bowler Pill (Top) + THIS OVER Boxes (Bottom) ── */}
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  flex: 1,
+                  padding: "2px 8px 2px 10px",
+                  gap: "2px",
+                  minWidth: 0
+                }}>
+
+                  {/* Top Bowler Capsule */}
                   <div style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    background: "linear-gradient(180deg, rgba(25,28,5,0.9) 0%, rgba(65,62,10,0.75) 50%, rgba(20,22,5,0.9) 100%)",
+                    background: "linear-gradient(180deg, rgba(8,24,14,0.92) 0%, rgba(20,52,28,0.85) 50%, rgba(8,24,14,0.92) 100%)",
                     border: "1.2px solid #a3e635",
                     borderRadius: "7px",
-                    padding: "1px 7px 1px 6px",
-                    height: "17px",
-                    flex: 1,
-                    minWidth: "142px",
+                    height: "20px",
+                    padding: "0 8px 0 6px",
                     boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
                   }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
+                      <span style={{
+                        width: "5px",
+                        height: "5px",
+                        borderRadius: "50%",
+                        background: "#ffffff",
+                        display: "inline-block",
+                        flexShrink: 0
+                      }} />
+                      <span style={{
+                        color: "#ffffff",
+                        fontWeight: 950,
+                        fontSize: "9.5px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.2px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}>
+                        {(scoringState.bowler || "BOWLER").toUpperCase()}
+                      </span>
+                    </div>
+
+                    <div style={{
+                      color: "#ffffff",
+                      fontWeight: 950,
+                      fontSize: "10.5px",
+                      letterSpacing: "0.3px",
+                      flexShrink: 0,
+                      marginLeft: "6px"
+                    }}>
+                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}&nbsp;&nbsp;{fmtOv(bowler?.ballsBowled ?? 0, bpo)}
+                    </div>
+                  </div>
+
+                  {/* Bottom THIS OVER + 6 Outline Boxes */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                     <span style={{
                       color: "#ffffff",
                       fontWeight: 950,
-                      fontSize: "9.5px",
+                      fontSize: "8px",
+                      letterSpacing: "0.6px",
                       textTransform: "uppercase",
-                      letterSpacing: "0.2px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis"
+                      flexShrink: 0
                     }}>
-                      {(scoringState.nonStriker || "NON-STRIKER").split(" ").pop()}
+                      THIS OVER
                     </span>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0, marginLeft: "4px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "10.5px", lineHeight: 1 }}>
-                        {nonStriker?.runs ?? 0}
-                      </span>
-                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9.5px", opacity: 0.95, lineHeight: 1 }}>
-                        {nonStriker?.balls ?? 0}
-                      </span>
+
+                    <div style={{ display: "flex", gap: "2.5px", alignItems: "center" }}>
+                      {(() => {
+                        const extrasCount = thisOver.filter(isExtraBall).length;
+                        const totalCount = bpo + extrasCount;
+                        return Array.from({ length: totalCount }).map((_, i) => {
+                          const val = thisOver[i];
+                          let bg = "transparent";
+                          let color = "#ffffff";
+                          let border = "1.2px solid #38bdf8";
+
+                          if (val) {
+                            if (val === "4" || val === "4s") {
+                              bg = "#3b82f6"; color = "#ffffff"; border = "1.2px solid #60a5fa";
+                            } else if (val === "6" || val === "6s") {
+                              bg = "#a3e635"; color = "#000000"; border = "1.2px solid #bef264";
+                            } else if (val === "W" || val?.startsWith("W+") || val === "Wk") {
+                              bg = "#ef4444"; color = "#ffffff"; border = "1.2px solid #f87171";
+                            } else if (isExtraBall(val)) {
+                              bg = "#a855f7"; color = "#ffffff"; border = "1.2px solid #c084fc";
+                            } else {
+                              bg = "rgba(56, 189, 248, 0.25)"; color = "#ffffff"; border = "1.2px solid #38bdf8";
+                            }
+                          }
+
+                          return (
+                            <div
+                              key={i}
+                              style={{
+                                width: "12px",
+                                height: "12px",
+                                borderRadius: "2.5px",
+                                background: bg,
+                                color,
+                                border,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: val && val.includes("+") ? undefined : (val && val.length > 2 ? "5px" : "7px"),
+                                fontWeight: 950,
+                                lineHeight: 1,
+                                flexShrink: 0,
+                                whiteSpace: "nowrap"
+                              }}
+                            >
+                              {val && (val.includes("+") ? renderOutcomeText(val, 12) : val)}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
 
                 </div>
 
-              </div>
-
-              {/* ── CENTER: TOSS Block ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 10px",
-                minWidth: "80px",
-                flexShrink: 0,
-                borderRight: "1px solid rgba(56, 189, 248, 0.25)",
-                height: "36px"
-              }}>
-                <span style={{
-                  color: "#facc15",
-                  fontWeight: 950,
-                  fontSize: "7.5px",
-                  letterSpacing: "1px",
-                  textTransform: "uppercase",
-                  lineHeight: 1
-                }}>
-                  TOSS
-                </span>
-                <span style={{
-                  color: "#a3e635",
-                  fontWeight: 950,
-                  fontSize: "9.5px",
-                  marginTop: "2px",
-                  textAlign: "center",
-                  lineHeight: 1.1,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.2px"
-                }}>
-                  {tossWinnerShort} ({tossDecision})
-                </span>
-              </div>
-
-              {/* ── RIGHT: Bowler Pill (Top) + THIS OVER Boxes (Bottom) ── */}
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                flex: 1,
-                padding: "2px 8px 2px 10px",
-                gap: "2px",
-                minWidth: 0
-              }}>
-
-                {/* Top Bowler Capsule */}
+                {/* ── FAR RIGHT: Bowling Team Lime-Green Floral Tab ── */}
                 <div style={{
+                  width: "52px",
+                  height: "100%",
+                  background: "linear-gradient(135deg, #1e1b4b 0%, #4d7c0f 40%, #84cc16 100%)",
+                  borderRadius: "0 11px 11px 0",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  background: "linear-gradient(180deg, rgba(8,24,14,0.92) 0%, rgba(20,52,28,0.85) 50%, rgba(8,24,14,0.92) 100%)",
-                  border: "1.2px solid #a3e635",
-                  borderRadius: "7px",
-                  height: "20px",
-                  padding: "0 8px 0 6px",
-                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
+                  justifyContent: "center",
+                  position: "relative",
+                  overflow: "hidden",
+                  flexShrink: 0
                 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
-                    <span style={{
-                      width: "5px",
-                      height: "5px",
-                      borderRadius: "50%",
-                      background: "#ffffff",
-                      display: "inline-block",
-                      flexShrink: 0
-                    }} />
-                    <span style={{
-                      color: "#ffffff",
-                      fontWeight: 950,
-                      fontSize: "9.5px",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.2px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis"
-                    }}>
-                      {(scoringState.bowler || "BOWLER").toUpperCase()}
-                    </span>
-                  </div>
-
-                  <div style={{
-                    color: "#ffffff",
-                    fontWeight: 950,
-                    fontSize: "10.5px",
-                    letterSpacing: "0.3px",
-                    flexShrink: 0,
-                    marginLeft: "6px"
-                  }}>
-                    {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}&nbsp;&nbsp;{fmtOv(bowler?.ballsBowled ?? 0, bpo)}
-                  </div>
-                </div>
-
-                {/* Bottom THIS OVER + 6 Outline Boxes */}
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  {/* Flower watermark outline */}
+                  <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
+                    <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
+                    <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
+                    <circle cx="50" cy="50" r="6" fill="currentColor" />
+                  </svg>
                   <span style={{
                     color: "#ffffff",
                     fontWeight: 950,
-                    fontSize: "8px",
-                    letterSpacing: "0.6px",
-                    textTransform: "uppercase",
-                    flexShrink: 0
+                    fontSize: "12.5px",
+                    letterSpacing: "0.5px",
+                    position: "relative",
+                    zIndex: 2,
+                    textShadow: "0 1px 3px rgba(0,0,0,0.6)"
                   }}>
-                    THIS OVER
+                    {bowlTeamShort}
                   </span>
-
-                  <div style={{ display: "flex", gap: "2.5px", alignItems: "center" }}>
-                    {(() => {
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCount = bpo + extrasCount;
-                      return Array.from({ length: totalCount }).map((_, i) => {
-                        const val = thisOver[i];
-                        let bg = "transparent";
-                        let color = "#ffffff";
-                        let border = "1.2px solid #38bdf8";
-
-                        if (val) {
-                          if (val === "4" || val === "4s") {
-                            bg = "#3b82f6"; color = "#ffffff"; border = "1.2px solid #60a5fa";
-                          } else if (val === "6" || val === "6s") {
-                            bg = "#a3e635"; color = "#000000"; border = "1.2px solid #bef264";
-                          } else if (val === "W" || val?.startsWith("W+") || val === "Wk") {
-                            bg = "#ef4444"; color = "#ffffff"; border = "1.2px solid #f87171";
-                          } else if (isExtraBall(val)) {
-                            bg = "#a855f7"; color = "#ffffff"; border = "1.2px solid #c084fc";
-                          } else {
-                            bg = "rgba(56, 189, 248, 0.25)"; color = "#ffffff"; border = "1.2px solid #38bdf8";
-                          }
-                        }
-
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              borderRadius: "2.5px",
-                              background: bg,
-                              color,
-                              border,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontSize: val && val.includes("+") ? undefined : (val && val.length > 2 ? "5px" : "7px"),
-                              fontWeight: 950,
-                              lineHeight: 1,
-                              flexShrink: 0,
-                              whiteSpace: "nowrap"
-                            }}
-                          >
-                            {val && (val.includes("+") ? renderOutcomeText(val, 12) : val)}
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
                 </div>
 
               </div>
-
-              {/* ── FAR RIGHT: Bowling Team Lime-Green Floral Tab ── */}
-              <div style={{
-                width: "52px",
-                height: "100%",
-                background: "linear-gradient(135deg, #1e1b4b 0%, #4d7c0f 40%, #84cc16 100%)",
-                borderRadius: "0 11px 11px 0",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                overflow: "hidden",
-                flexShrink: 0
-              }}>
-                {/* Flower watermark outline */}
-                <svg style={{ position: "absolute", width: "32px", height: "32px", opacity: 0.35, color: "#ffffff" }} viewBox="0 0 100 100">
-                  <path d="M50 5 C55 25 75 45 95 50 C75 55 55 75 50 95 C45 75 25 55 5 50 C25 45 45 25 50 5 Z" fill="none" stroke="currentColor" strokeWidth="4" />
-                  <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="3" />
-                  <circle cx="50" cy="50" r="6" fill="currentColor" />
-                </svg>
-                <span style={{
-                  color: "#ffffff",
-                  fontWeight: 950,
-                  fontSize: "12.5px",
-                  letterSpacing: "0.5px",
-                  position: "relative",
-                  zIndex: 2,
-                  textShadow: "0 1px 3px rgba(0,0,0,0.6)"
-                }}>
-                  {bowlTeamShort}
-                </span>
-              </div>
-
-            </div>
-          )}
+            )}
           </div>
         ) : (
           <div className="scale-in" style={{ position: "relative", zIndex: 1, background: "#030d30", border: "2px solid #a3e635", borderRadius: 14, padding: "32px 48px", textAlign: "center", color: "#fff" }}>
@@ -14105,118 +14105,118 @@ flexShrink: 0,
           {renderScoreboardMarqueeRibbon("default", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
             <>
               {/* Brand bar */}
-          <div style={{ background: "linear-gradient(90deg,rgba(5,7,26,0.98),rgba(10,14,46,0.95))", borderTop: `3px solid ${theme.borderColor}`, borderLeft: `3px solid ${theme.borderColor}60`, borderRight: `3px solid ${theme.borderColor}60`, borderRadius: "18px 18px 0 0", padding: "9px 22px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", boxShadow: "0 0 8px #ef4444", display: "inline-block" }} />
-              <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 13, letterSpacing: 2 }}>{match.team1Name.toUpperCase()} <span style={{ color: "rgba(255,255,255,0.3)", margin: "0 6px" }}>vs</span> {match.team2Name.toUpperCase()}</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ color: theme.textSecondary, fontWeight: 700, fontSize: 10, letterSpacing: 1.5 }}>{theme.name.toUpperCase()}</span>
-              <span style={{ color: `${theme.borderColor}50` }}>•</span>
-              <span style={{ color: theme.accentText, fontWeight: 800, fontSize: 10 }}>INN {scoringState.inningsNo}</span>
-            </div>
-          </div>
-
-          {/* Main score panel with team logos */}
-          <div style={{ backgroundImage: `linear-gradient(rgba(6,8,28,0.95),rgba(8,12,40,0.97)),url(${theme.bgUrl})`, backgroundSize: "cover", backgroundPosition: "center", backdropFilter: "blur(16px)", border: `2px solid ${theme.borderColor}45`, borderTop: "none", overflow: "hidden", boxShadow: `0 12px 40px rgba(0,0,0,0.6)` }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", padding: "16px 22px", gap: 16 }}>
-              {/* Left: Team 1 logo + batsmen or bowler info */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={54} />
-                <div style={{ flex: 1 }}>
-                  {team1IsBatting ? <>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                      <div style={{ position: "relative", width: 8, height: 8, flexShrink: 0 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80", display: "block" }} /><span className="striker-dot-ring" style={{ width: 12, height: 12 }} /></div>
-                      <span style={{ color: "#fff", fontWeight: 900, fontSize: 13 }}>{scoringState.striker || "—"}</span>
-                      <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 12, marginLeft: 3 }}>{striker?.runs ?? 0}<span style={{ color: theme.textSecondary, fontSize: 9 }}>({striker?.balls ?? 0})</span></span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, paddingLeft: 14 }}>
-                      <span style={{ color: theme.textSecondary, fontSize: 11 }}>{scoringState.nonStriker || "—"}</span>
-                      <span style={{ color: theme.textSecondary, fontSize: 10, marginLeft: 3 }}>{nonStriker?.runs ?? 0}<span style={{ fontSize: 8 }}>({nonStriker?.balls ?? 0})</span></span>
-                    </div>
-                  </> : <>
-                    <div style={{ color: "#fff", fontWeight: 900, fontSize: 13, marginBottom: 2 }}>{scoringState.bowler || "—"}</div>
-                    <div style={{ color: theme.accentText, fontSize: 11, fontWeight: 800 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0} <span style={{ color: theme.textSecondary, fontSize: 9 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span></div>
-                  </>}
+              <div style={{ background: "linear-gradient(90deg,rgba(5,7,26,0.98),rgba(10,14,46,0.95))", borderTop: `3px solid ${theme.borderColor}`, borderLeft: `3px solid ${theme.borderColor}60`, borderRight: `3px solid ${theme.borderColor}60`, borderRadius: "18px 18px 0 0", padding: "9px 22px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span className="live-dot" style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", boxShadow: "0 0 8px #ef4444", display: "inline-block" }} />
+                  <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 13, letterSpacing: 2 }}>{match.team1Name.toUpperCase()} <span style={{ color: "rgba(255,255,255,0.3)", margin: "0 6px" }}>vs</span> {match.team2Name.toUpperCase()}</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ color: theme.textSecondary, fontWeight: 700, fontSize: 10, letterSpacing: 1.5 }}>{theme.name.toUpperCase()}</span>
+                  <span style={{ color: `${theme.borderColor}50` }}>•</span>
+                  <span style={{ color: theme.accentText, fontWeight: 800, fontSize: 10 }}>INN {scoringState.inningsNo}</span>
                 </div>
               </div>
 
-              {/* Center: Big score */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 24px", borderLeft: `1px solid ${theme.borderColor}25`, borderRight: `1px solid ${theme.borderColor}25` }}>
-                <div style={{ fontSize: 50, fontWeight: 950, color: theme.scoreText, lineHeight: 1, letterSpacing: -1, textShadow: `0 0 24px ${theme.accent}50` }}>{scoringState.score}-{scoringState.wickets}</div>
-                <div style={{ color: theme.textSecondary, fontSize: 10, fontWeight: 800, marginTop: 3, letterSpacing: 1 }}>{fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OVR · RR:{calcRR(scoringState)}</div>
-                {scoringState.target !== null && <div style={{ marginTop: 5, background: `${theme.accent}22`, border: `1px solid ${theme.accent}50`, borderRadius: 6, padding: "2px 10px", color: theme.accent, fontSize: 9, fontWeight: 900, letterSpacing: 1.5 }}>TGT:{scoringState.target} | NEED:{Math.max(0, scoringState.target - scoringState.score)}</div>}
-              </div>
-
-              {/* Right: Team 2 logo + info */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "flex-end" }}>
-                <div style={{ flex: 1, textAlign: "right" }}>
-                  {!team1IsBatting ? <>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 6, marginBottom: 4 }}>
-                      <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 12 }}>{striker?.runs ?? 0}<span style={{ color: theme.textSecondary, fontSize: 9 }}>({striker?.balls ?? 0})</span></span>
-                      <span style={{ color: "#fff", fontWeight: 900, fontSize: 13 }}>{scoringState.striker || "—"}</span>
-                      <div style={{ position: "relative", width: 8, height: 8, flexShrink: 0 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80", display: "block" }} /><span className="striker-dot-ring" style={{ width: 12, height: 12 }} /></div>
+              {/* Main score panel with team logos */}
+              <div style={{ backgroundImage: `linear-gradient(rgba(6,8,28,0.95),rgba(8,12,40,0.97)),url(${theme.bgUrl})`, backgroundSize: "cover", backgroundPosition: "center", backdropFilter: "blur(16px)", border: `2px solid ${theme.borderColor}45`, borderTop: "none", overflow: "hidden", boxShadow: `0 12px 40px rgba(0,0,0,0.6)` }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", padding: "16px 22px", gap: 16 }}>
+                  {/* Left: Team 1 logo + batsmen or bowler info */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <TeamLogo name={match.team1Name} isBatting={team1IsBatting} isBowling={!team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={54} />
+                    <div style={{ flex: 1 }}>
+                      {team1IsBatting ? <>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                          <div style={{ position: "relative", width: 8, height: 8, flexShrink: 0 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80", display: "block" }} /><span className="striker-dot-ring" style={{ width: 12, height: 12 }} /></div>
+                          <span style={{ color: "#fff", fontWeight: 900, fontSize: 13 }}>{scoringState.striker || "—"}</span>
+                          <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 12, marginLeft: 3 }}>{striker?.runs ?? 0}<span style={{ color: theme.textSecondary, fontSize: 9 }}>({striker?.balls ?? 0})</span></span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, paddingLeft: 14 }}>
+                          <span style={{ color: theme.textSecondary, fontSize: 11 }}>{scoringState.nonStriker || "—"}</span>
+                          <span style={{ color: theme.textSecondary, fontSize: 10, marginLeft: 3 }}>{nonStriker?.runs ?? 0}<span style={{ fontSize: 8 }}>({nonStriker?.balls ?? 0})</span></span>
+                        </div>
+                      </> : <>
+                        <div style={{ color: "#fff", fontWeight: 900, fontSize: 13, marginBottom: 2 }}>{scoringState.bowler || "—"}</div>
+                        <div style={{ color: theme.accentText, fontSize: 11, fontWeight: 800 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0} <span style={{ color: theme.textSecondary, fontSize: 9 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span></div>
+                      </>}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 6, paddingRight: 14 }}>
-                      <span style={{ color: theme.textSecondary, fontSize: 10 }}>{nonStriker?.runs ?? 0}<span style={{ fontSize: 8 }}>({nonStriker?.balls ?? 0})</span></span>
-                      <span style={{ color: theme.textSecondary, fontSize: 11 }}>{scoringState.nonStriker || "—"}</span>
-                    </div>
-                  </> : <>
-                    <div style={{ color: "#fff", fontWeight: 900, fontSize: 13, marginBottom: 2 }}>{scoringState.bowler || "—"}</div>
-                    <div style={{ color: theme.accentText, fontSize: 11, fontWeight: 800 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0} <span style={{ color: theme.textSecondary, fontSize: 9 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span></div>
-                  </>}
-                </div>
-                <TeamLogo name={match.team2Name} isBatting={!team1IsBatting} isBowling={team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={54} />
-              </div>
-            </div>
-
-            {/* This over strip */}
-            <div style={{
-              padding: "8px 22px",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              borderTop: `1px solid ${theme.borderColor}20`,
-              background: activeNotification ? getNotificationStyles(activeNotification).bg : "rgba(0,0,0,0.3)",
-              transition: "all 0.3s ease"
-            }}>
-              {activeNotification ? (
-                <div style={{ width: "100%", textAlign: "center", color: getNotificationStyles(activeNotification).textColor, fontWeight: 950, fontSize: 13, letterSpacing: 2, animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
-                  {activeNotification}
-                </div>
-              ) : (
-                <>
-                  <span style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 1.5, flexShrink: 0 }}>THIS OVER</span>
-                  <div style={{ display: "flex", gap: 5 }}>
-                    {(() => {
-                      const bpo = match?.ballsPerOver || 6;
-                      const thisOver = scoringState.thisOver || [];
-                      const extrasCount = thisOver.filter(isExtraBall).length;
-                      const totalCirclesCount = bpo + extrasCount;
-                      return Array.from({ length: totalCirclesCount }).map((_, i) => (
-                        <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
-                      ));
-                    })()}
                   </div>
-                  <div style={{ marginLeft: "auto", display: "flex", gap: 16 }}>
-                    <div style={{ fontSize: 10, fontWeight: 800, color: theme.textSecondary }}>CRR: <span style={{ color: theme.accent }}>{calcRR(scoringState)}</span></div>
-                    {scoringState.target !== null && <div style={{ fontSize: 10, fontWeight: 800, color: theme.textSecondary }}>RRR: <span style={{ color: "#4ade80" }}>{(((scoringState.target - scoringState.score) / Math.max(1, match.overs * match.ballsPerOver - scoringState.balls)) * match.ballsPerOver).toFixed(2)}</span></div>}
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
 
-          {/* Target ticker */}
-          {scoringState.target !== null && <div style={{ background: `linear-gradient(90deg,${theme.accent}12,transparent,${theme.accent}12)`, border: `2px solid ${theme.borderColor}25`, borderTop: `1px solid ${theme.borderColor}15`, borderRadius: "0 0 18px 18px", padding: "8px 22px", display: "flex", gap: 20, alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
-            {[{ l: "CRR", v: calcRR(scoringState), c: theme.accent }, { l: "NEED", v: `${Math.max(0, scoringState.target - scoringState.score)} RUNS`, c: "#f87171" }, { l: "FROM", v: `${Math.max(0, match.overs * match.ballsPerOver - scoringState.balls)} BALLS`, c: theme.accentText }, { l: "RRR", v: (((scoringState.target - scoringState.score) / Math.max(1, match.overs * match.ballsPerOver - scoringState.balls)) * match.ballsPerOver).toFixed(2), c: "#4ade80" }].map((it, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ color: theme.textSecondary, fontWeight: 800, fontSize: 10, letterSpacing: 1 }}>{it.l}:</span>
-                <span style={{ color: it.c, fontWeight: 900, fontSize: 11 }}>{it.v}</span>
-                {i < 3 && <span style={{ color: `${theme.borderColor}35`, marginLeft: 8 }}>|</span>}
+                  {/* Center: Big score */}
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 24px", borderLeft: `1px solid ${theme.borderColor}25`, borderRight: `1px solid ${theme.borderColor}25` }}>
+                    <div style={{ fontSize: 50, fontWeight: 950, color: theme.scoreText, lineHeight: 1, letterSpacing: -1, textShadow: `0 0 24px ${theme.accent}50` }}>{scoringState.score}-{scoringState.wickets}</div>
+                    <div style={{ color: theme.textSecondary, fontSize: 10, fontWeight: 800, marginTop: 3, letterSpacing: 1 }}>{fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OVR · RR:{calcRR(scoringState)}</div>
+                    {scoringState.target !== null && <div style={{ marginTop: 5, background: `${theme.accent}22`, border: `1px solid ${theme.accent}50`, borderRadius: 6, padding: "2px 10px", color: theme.accent, fontSize: 9, fontWeight: 900, letterSpacing: 1.5 }}>TGT:{scoringState.target} | NEED:{Math.max(0, scoringState.target - scoringState.score)}</div>}
+                  </div>
+
+                  {/* Right: Team 2 logo + info */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, justifyContent: "flex-end" }}>
+                    <div style={{ flex: 1, textAlign: "right" }}>
+                      {!team1IsBatting ? <>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 6, marginBottom: 4 }}>
+                          <span style={{ color: theme.accentText, fontWeight: 900, fontSize: 12 }}>{striker?.runs ?? 0}<span style={{ color: theme.textSecondary, fontSize: 9 }}>({striker?.balls ?? 0})</span></span>
+                          <span style={{ color: "#fff", fontWeight: 900, fontSize: 13 }}>{scoringState.striker || "—"}</span>
+                          <div style={{ position: "relative", width: 8, height: 8, flexShrink: 0 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80", display: "block" }} /><span className="striker-dot-ring" style={{ width: 12, height: 12 }} /></div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 6, paddingRight: 14 }}>
+                          <span style={{ color: theme.textSecondary, fontSize: 10 }}>{nonStriker?.runs ?? 0}<span style={{ fontSize: 8 }}>({nonStriker?.balls ?? 0})</span></span>
+                          <span style={{ color: theme.textSecondary, fontSize: 11 }}>{scoringState.nonStriker || "—"}</span>
+                        </div>
+                      </> : <>
+                        <div style={{ color: "#fff", fontWeight: 900, fontSize: 13, marginBottom: 2 }}>{scoringState.bowler || "—"}</div>
+                        <div style={{ color: theme.accentText, fontSize: 11, fontWeight: 800 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0} <span style={{ color: theme.textSecondary, fontSize: 9 }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span></div>
+                      </>}
+                    </div>
+                    <TeamLogo name={match.team2Name} isBatting={!team1IsBatting} isBowling={team1IsBatting} accentColor={theme.accent} borderColor={theme.borderColor} size={54} />
+                  </div>
+                </div>
+
+                {/* This over strip */}
+                <div style={{
+                  padding: "8px 22px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  borderTop: `1px solid ${theme.borderColor}20`,
+                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "rgba(0,0,0,0.3)",
+                  transition: "all 0.3s ease"
+                }}>
+                  {activeNotification ? (
+                    <div style={{ width: "100%", textAlign: "center", color: getNotificationStyles(activeNotification).textColor, fontWeight: 950, fontSize: 13, letterSpacing: 2, animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
+                      {activeNotification}
+                    </div>
+                  ) : (
+                    <>
+                      <span style={{ fontSize: 9, color: theme.textSecondary, fontWeight: 800, letterSpacing: 1.5, flexShrink: 0 }}>THIS OVER</span>
+                      <div style={{ display: "flex", gap: 5 }}>
+                        {(() => {
+                          const bpo = match?.ballsPerOver || 6;
+                          const thisOver = scoringState.thisOver || [];
+                          const extrasCount = thisOver.filter(isExtraBall).length;
+                          const totalCirclesCount = bpo + extrasCount;
+                          return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                            <BallCircle key={i} val={scoringState.thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={26} />
+                          ));
+                        })()}
+                      </div>
+                      <div style={{ marginLeft: "auto", display: "flex", gap: 16 }}>
+                        <div style={{ fontSize: 10, fontWeight: 800, color: theme.textSecondary }}>CRR: <span style={{ color: theme.accent }}>{calcRR(scoringState)}</span></div>
+                        {scoringState.target !== null && <div style={{ fontSize: 10, fontWeight: 800, color: theme.textSecondary }}>RRR: <span style={{ color: "#4ade80" }}>{(((scoringState.target - scoringState.score) / Math.max(1, match.overs * match.ballsPerOver - scoringState.balls)) * match.ballsPerOver).toFixed(2)}</span></div>}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
-            ))}
-          </div>}
+
+              {/* Target ticker */}
+              {scoringState.target !== null && <div style={{ background: `linear-gradient(90deg,${theme.accent}12,transparent,${theme.accent}12)`, border: `2px solid ${theme.borderColor}25`, borderTop: `1px solid ${theme.borderColor}15`, borderRadius: "0 0 18px 18px", padding: "8px 22px", display: "flex", gap: 20, alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
+                {[{ l: "CRR", v: calcRR(scoringState), c: theme.accent }, { l: "NEED", v: `${Math.max(0, scoringState.target - scoringState.score)} RUNS`, c: "#f87171" }, { l: "FROM", v: `${Math.max(0, match.overs * match.ballsPerOver - scoringState.balls)} BALLS`, c: theme.accentText }, { l: "RRR", v: (((scoringState.target - scoringState.score) / Math.max(1, match.overs * match.ballsPerOver - scoringState.balls)) * match.ballsPerOver).toFixed(2), c: "#4ade80" }].map((it, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ color: theme.textSecondary, fontWeight: 800, fontSize: 10, letterSpacing: 1 }}>{it.l}:</span>
+                    <span style={{ color: it.c, fontWeight: 900, fontSize: 11 }}>{it.v}</span>
+                    {i < 3 && <span style={{ color: `${theme.borderColor}35`, marginLeft: 8 }}>|</span>}
+                  </div>
+                ))}
+              </div>}
             </>
           )}
         </div>
