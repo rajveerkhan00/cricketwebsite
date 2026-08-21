@@ -9296,10 +9296,14 @@ export default function OverlayPage() {
                         </div>
                       )}
 
-                      {/* Teams / Score / Overs — always visible on top (zIndex: 5) */}
-                      <span className="g-teams" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{teamsHeader}</span>
-                      <span className="g-runs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentScore}</span>
-                      <span className="g-overs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentOvers}</span>
+                      {/* Teams / Score / Overs — hidden during animation */}
+                      {!animWord && (
+                        <>
+                          <span className="g-teams" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{teamsHeader}</span>
+                          <span className="g-runs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentScore}</span>
+                          <span className="g-overs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentOvers}</span>
+                        </>
+                      )}
                     </div>
                   );
                 })()}
@@ -9586,40 +9590,46 @@ export default function OverlayPage() {
                         </div>
                       )}
 
-                      {/* Bowler figures strip */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
-                        <span style={{ color: "#E58808", fontWeight: 950, fontSize: "8px", letterSpacing: "0.8px" }}>BOWLER:</span>
-                        <span style={{ color: "#FDFDFE", fontWeight: 900, fontSize: "10.5px" }}>{scoringState.bowler || "—"}</span>
-                        <span style={{ color: "#E58808", fontWeight: 950, fontSize: "11px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
-                        <span style={{ color: "#cbd5e1", fontWeight: 600, fontSize: "8.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
-                      </div>
+                      {/* Bowler figures strip - hidden during animation */}
+                      {!animWord && (
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                          <span style={{ color: "#E58808", fontWeight: 950, fontSize: "8px", letterSpacing: "0.8px" }}>BOWLER:</span>
+                          <span style={{ color: "#FDFDFE", fontWeight: 900, fontSize: "10.5px" }}>{scoringState.bowler || "—"}</span>
+                          <span style={{ color: "#E58808", fontWeight: 950, fontSize: "11px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                          <span style={{ color: "#cbd5e1", fontWeight: 600, fontSize: "8.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})</span>
+                        </div>
+                      )}
 
-                      {/* This Over strip */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
-                        <span style={{ fontSize: "8px", color: "#E58808", fontWeight: "900", letterSpacing: "0.8px" }}>THIS OVER:</span>
-                        {(() => {
-                          const bpo = match?.ballsPerOver || 6;
-                          const thisOver = scoringState.thisOver || [];
-                          const extrasCount = thisOver.filter(isExtraBall).length;
-                          const totalCirclesCount = bpo + extrasCount;
-                          return Array.from({ length: totalCirclesCount }).map((_, i) => (
-                            <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={15} />
-                          ));
-                        })()}
-                      </div>
+                      {/* This Over strip - hidden during animation */}
+                      {!animWord && (
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                          <span style={{ fontSize: "8px", color: "#E58808", fontWeight: "900", letterSpacing: "0.8px" }}>THIS OVER:</span>
+                          {(() => {
+                            const bpo = match?.ballsPerOver || 6;
+                            const thisOver = scoringState.thisOver || [];
+                            const extrasCount = thisOver.filter(isExtraBall).length;
+                            const totalCirclesCount = bpo + extrasCount;
+                            return Array.from({ length: totalCirclesCount }).map((_, i) => (
+                              <BallCircle key={i} val={thisOver[i]} ballColors={theme.ballColors} borderColor={theme.borderColor} size={15} />
+                            ));
+                          })()}
+                        </div>
+                      )}
 
-                      {/* Required RR or Boundaries stats */}
-                      <div style={{ position: "relative", zIndex: 5, flexShrink: 0 }}>
-                        {rrr ? (
-                          <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
-                            REQ RR: {rrr}
-                          </div>
-                        ) : (
-                          <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
-                            4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
-                          </div>
-                        )}
-                      </div>
+                      {/* Required RR or Boundaries stats - hidden during animation */}
+                      {!animWord && (
+                        <div style={{ position: "relative", zIndex: 5, flexShrink: 0 }}>
+                          {rrr ? (
+                            <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
+                              REQ RR: {rrr}
+                            </div>
+                          ) : (
+                            <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
+                              4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   );
                 })()}
@@ -10920,19 +10930,21 @@ export default function OverlayPage() {
                         </div>
                       )}
 
-                      {/* Status text (always on top, zIndex 5) */}
-                      <span style={{
-                        color: "#FFFFFF",
-                        fontSize: "9.5px",
-                        fontWeight: "900",
-                        letterSpacing: "1px",
-                        textTransform: "uppercase",
-                        position: "relative",
-                        zIndex: 5,
-                        whiteSpace: "nowrap"
-                      }}>
-                        {statusLine}
-                      </span>
+                      {/* Status text - hidden during animation */}
+                      {!animWord && (
+                        <span style={{
+                          color: "#FFFFFF",
+                          fontSize: "9.5px",
+                          fontWeight: "900",
+                          letterSpacing: "1px",
+                          textTransform: "uppercase",
+                          position: "relative",
+                          zIndex: 5,
+                          whiteSpace: "nowrap"
+                        }}>
+                          {statusLine}
+                        </span>
+                      )}
                     </div>
                   );
                 })()}
@@ -15133,20 +15145,22 @@ export default function OverlayPage() {
                         </div>
                       )}
 
-                      {/* Status text (always on top, zIndex 5) */}
-                      <span style={{
-                        color: "#FFFFFF",
-                        fontSize: "9px",
-                        fontWeight: "950",
-                        letterSpacing: "1.2px",
-                        textTransform: "uppercase",
-                        textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                        position: "relative",
-                        zIndex: 5,
-                        whiteSpace: "nowrap"
-                      }}>
-                        {statusLine}
-                      </span>
+                      {/* Status text - hidden during animation */}
+                      {!animWord && (
+                        <span style={{
+                          color: "#FFFFFF",
+                          fontSize: "9px",
+                          fontWeight: "950",
+                          letterSpacing: "1.2px",
+                          textTransform: "uppercase",
+                          textShadow: "0 1px 3px rgba(0,0,0,0.5)",
+                          position: "relative",
+                          zIndex: 5,
+                          whiteSpace: "nowrap"
+                        }}>
+                          {statusLine}
+                        </span>
+                      )}
                     </div>
                   );
                 })()}
@@ -15888,83 +15902,88 @@ export default function OverlayPage() {
                         </div>
                       )}
 
-                      {/* Left Cyan Grass / Flame Graphic Watermark */}
-                      <div style={{
-                        position: "absolute",
-                        left: "2px",
-                        bottom: 0,
-                        display: "flex",
-                        opacity: 0.9,
-                        zIndex: 3
-                      }}>
-                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                        </svg>
-                      </div>
+                      {/* All content hidden during animation */}
+                      {!animWord && (
+                        <>
+                          {/* Left Cyan Grass / Flame Graphic Watermark */}
+                          <div style={{
+                            position: "absolute",
+                            left: "2px",
+                            bottom: 0,
+                            display: "flex",
+                            opacity: 0.9,
+                            zIndex: 3
+                          }}>
+                            <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                              <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                            </svg>
+                          </div>
 
-                      {/* Left: Bowler Details (always on top, zIndex 5) */}
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        color: "#ffffff",
-                        fontSize: "11px",
-                        fontWeight: 900,
-                        letterSpacing: "0.5px",
-                        position: "relative",
-                        zIndex: 5,
-                        flexShrink: 0
-                      }}>
-                        <span style={{ color: "#ffc72c" }}>●</span>
-                        <span style={{ color: "#bae6fd", textTransform: "uppercase" }}>BOWLER:</span>
-                        <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
-                        <span style={{ color: "#facc15", fontWeight: 950, marginLeft: "2px" }}>
-                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                        </span>
-                        <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>
-                          ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
-                        </span>
-                      </div>
+                          {/* Left: Bowler Details */}
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            color: "#ffffff",
+                            fontSize: "11px",
+                            fontWeight: 900,
+                            letterSpacing: "0.5px",
+                            position: "relative",
+                            zIndex: 5,
+                            flexShrink: 0
+                          }}>
+                            <span style={{ color: "#ffc72c" }}>●</span>
+                            <span style={{ color: "#bae6fd", textTransform: "uppercase" }}>BOWLER:</span>
+                            <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
+                            <span style={{ color: "#facc15", fontWeight: 950, marginLeft: "2px" }}>
+                              {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                            </span>
+                            <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>
+                              ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
+                            </span>
+                          </div>
 
-                      {/* Separator */}
-                      <span style={{ opacity: 0.5, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
+                          {/* Separator */}
+                          <span style={{ opacity: 0.5, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
 
-                      {/* Right: Fours / Sixes Stats (always on top, zIndex 5) */}
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        color: "#ffffff",
-                        fontSize: "11px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        position: "relative",
-                        zIndex: 5,
-                        flexShrink: 0
-                      }}>
-                        <span>
-                          Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>
-                        </span>
-                        <span style={{ opacity: 0.45 }}>•</span>
-                        <span>
-                          Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
-                        </span>
-                      </div>
+                          {/* Right: Fours / Sixes Stats */}
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            color: "#ffffff",
+                            fontSize: "11px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            position: "relative",
+                            zIndex: 5,
+                            flexShrink: 0
+                          }}>
+                            <span>
+                              Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>
+                            </span>
+                            <span style={{ opacity: 0.45 }}>•</span>
+                            <span>
+                              Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
+                            </span>
+                          </div>
 
-                      {/* Right Cyan Grass / Flame Graphic Watermark */}
-                      <div style={{
-                        position: "absolute",
-                        right: "2px",
-                        bottom: 0,
-                        display: "flex",
-                        opacity: 0.9,
-                        transform: "scaleX(-1)",
-                        zIndex: 3
-                      }}>
-                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                        </svg>
-                      </div>
+                          {/* Right Cyan Grass / Flame Graphic Watermark */}
+                          <div style={{
+                            position: "absolute",
+                            right: "2px",
+                            bottom: 0,
+                            display: "flex",
+                            opacity: 0.9,
+                            transform: "scaleX(-1)",
+                            zIndex: 3
+                          }}>
+                            <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                              <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                            </svg>
+                          </div>
+                        </>
+                      )}
                     </div>
                   );
                 })()}
@@ -16237,48 +16256,53 @@ export default function OverlayPage() {
                     </div>
                   )}
 
-                  {/* Left cyan chevron watermark */}
-                  <div style={{ position: "absolute", left: 2, bottom: 0, opacity: 0.9, zIndex: 3 }}>
-                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
-                    </svg>
-                  </div>
+                  {/* All content hidden during animation */}
+                  {!ssWord && (
+                    <>
+                      {/* Left cyan chevron watermark */}
+                      <div style={{ position: "absolute", left: 2, bottom: 0, opacity: 0.9, zIndex: 3 }}>
+                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
+                        </svg>
+                      </div>
 
-                  {/* Left: Fours/Sixes */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
-                    <span style={{ color: "#facc15" }}>●</span>
-                    <span style={{ color: "#bae6fd" }}>BOWLING:</span>
-                    <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
-                    <span style={{ color: "#facc15", fontWeight: 950, marginLeft: 2 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
-                    <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)</span>
-                  </div>
+                      {/* Left: Bowling info */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                        <span style={{ color: "#facc15" }}>●</span>
+                        <span style={{ color: "#bae6fd" }}>BOWLING:</span>
+                        <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
+                        <span style={{ color: "#facc15", fontWeight: 950, marginLeft: 2 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                        <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)</span>
+                      </div>
 
-                  <span style={{ opacity: 0.4, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
+                      <span style={{ opacity: 0.4, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
 
-                  {/* Right: Target info or fours/sixes */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
-                    {target !== null ? (
-                      <>
-                        <span style={{ color: "#bae6fd" }}>NEED:</span>
-                        <strong style={{ color: "#f87171" }}>{need} runs</strong>
-                        <span style={{ opacity: 0.4 }}>from</span>
-                        <strong style={{ color: "#facc15" }}>{bLeft} balls</strong>
-                      </>
-                    ) : (
-                      <>
-                        <span>Fours <strong style={{ color: "#facc15" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.fours || 0), 0)}</strong></span>
-                        <span style={{ opacity: 0.4 }}>•</span>
-                        <span>Sixes <strong style={{ color: "#34d399" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.sixes || 0), 0)}</strong></span>
-                      </>
-                    )}
-                  </div>
+                      {/* Right: Target info or fours/sixes */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                        {target !== null ? (
+                          <>
+                            <span style={{ color: "#bae6fd" }}>NEED:</span>
+                            <strong style={{ color: "#f87171" }}>{need} runs</strong>
+                            <span style={{ opacity: 0.4 }}>from</span>
+                            <strong style={{ color: "#facc15" }}>{bLeft} balls</strong>
+                          </>
+                        ) : (
+                          <>
+                            <span>Fours <strong style={{ color: "#facc15" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.fours || 0), 0)}</strong></span>
+                            <span style={{ opacity: 0.4 }}>•</span>
+                            <span>Sixes <strong style={{ color: "#34d399" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.sixes || 0), 0)}</strong></span>
+                          </>
+                        )}
+                      </div>
 
-                  {/* Right cyan chevron watermark */}
-                  <div style={{ position: "absolute", right: 2, bottom: 0, opacity: 0.9, transform: "scaleX(-1)", zIndex: 3 }}>
-                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
-                    </svg>
-                  </div>
+                      {/* Right cyan chevron watermark */}
+                      <div style={{ position: "absolute", right: 2, bottom: 0, opacity: 0.9, transform: "scaleX(-1)", zIndex: 3 }}>
+                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
+                        </svg>
+                      </div>
+                    </>
+                  )}
                 </div>
               </>
             )}
