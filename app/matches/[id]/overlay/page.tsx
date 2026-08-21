@@ -8336,7 +8336,7 @@ export default function OverlayPage() {
       return null;
     }
 
-    if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports" || currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024") {
+    if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports" || currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024" || currentThemeSlug === "bbl-black" || currentThemeSlug === "wcl-fancode" || currentThemeSlug === "crioverlay-green") {
       if (isMatchNotStarted) return renderScoreboardPreMatchRibbon(currentThemeSlug, currentMatch);
       return null;
     }
@@ -8820,18 +8820,132 @@ export default function OverlayPage() {
                     TARGET: {scoringState.target} {need !== null && bLeft !== null && `| NEED ${need} OFF ${bLeft} BALLS`}
                   </div>
                 )}
-                {/* Top green bar */}
-                <div className={`g-top-bar${topBarMode ? " " + topBarMode : ""}`}>
-                  {animTextContent ? (
-                    <div className="g-anim" style={{ display: "block" }}>{animTextContent}</div>
-                  ) : (
-                    <>
-                      <span className="g-teams">{teamsHeader}</span>
-                      <span className="g-runs">{currentScore}</span>
-                      <span className="g-overs">{currentOvers}</span>
-                    </>
-                  )}
-                </div>
+                {/* Top green bar — LTR marquee animation behind teams/score/overs */}
+                {(() => {
+                  const animRaw = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+                  let animWord = "";
+                  let marqueeTextColor = "#000000";
+                  let marqueeTextStroke = "1px #76ff03";
+                  let marqueeTextShadow = "0 0 10px rgba(255,255,255,0.6)";
+                  let modeClass = "";
+                  if (animRaw) {
+                    if (animRaw === "FOUR" || animRaw === "4" || animRaw === "4S" || animRaw === "FOUR!") {
+                      animWord = "FOUR";
+                      modeClass = "";
+                      marqueeTextColor = "#000000";
+                      marqueeTextStroke = "1.2px #ca8a04";
+                      marqueeTextShadow = "0 0 14px rgba(202,138,4,0.95), 0 0 20px rgba(234,179,8,0.6)";
+                    } else if (animRaw === "SIX" || animRaw === "6" || animRaw === "6S" || animRaw === "SIX!") {
+                      animWord = "SIX";
+                      modeClass = "";
+                      marqueeTextColor = "#000000";
+                      marqueeTextStroke = "1.2px #7c3aed";
+                      marqueeTextShadow = "0 0 14px rgba(124,58,237,0.95), 0 0 24px rgba(168,85,247,0.6)";
+                    } else if (animRaw === "WICKET" || animRaw === "W" || animRaw === "WICKET!" || animRaw === "OUT") {
+                      animWord = animRaw === "OUT" ? "OUT" : "WICKET";
+                      modeClass = "mode-out";
+                      marqueeTextColor = "#ffffff";
+                      marqueeTextStroke = "1.2px #7f1d1d";
+                      marqueeTextShadow = "0 0 14px rgba(239,68,68,0.95), 0 0 24px rgba(220,38,38,0.6)";
+                    } else if (animRaw === "NOT OUT" || animRaw === "NOT_OUT" || animRaw === "NOTOUT") {
+                      animWord = "NOT OUT";
+                      modeClass = "mode-freehit";
+                      marqueeTextColor = "#b2ff59";
+                      marqueeTextStroke = "1.2px #064e3b";
+                      marqueeTextShadow = "0 0 14px rgba(16,185,129,0.95), 0 0 24px rgba(52,211,153,0.6)";
+                    } else if (animRaw === "FREE HIT" || animRaw === "FREE_HIT" || animRaw === "FREEHIT") {
+                      animWord = "FREE HIT";
+                      modeClass = "mode-freehit";
+                      marqueeTextColor = "#b2ff59";
+                      marqueeTextStroke = "1.2px #047857";
+                      marqueeTextShadow = "0 0 14px rgba(52,211,153,0.95), 0 0 24px rgba(110,231,183,0.6)";
+                    } else if (animRaw === "HAT-TRICK BALL" || animRaw === "HAT-TRICK" || animRaw === "HATTRICK") {
+                      animWord = "HAT-TRICK";
+                      modeClass = "";
+                      marqueeTextColor = "#ffffff";
+                      marqueeTextStroke = "1.2px #6b21a8";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.95), 0 0 24px rgba(192,132,252,0.6)";
+                    } else if (animRaw === "REVIEW" || animRaw === "PENDING" || animRaw === "DRS") {
+                      animWord = "DRS REVIEW";
+                      modeClass = "mode-pending";
+                      marqueeTextColor = "#ffffff";
+                      marqueeTextStroke = "1.2px #92400e";
+                      marqueeTextShadow = "0 0 14px rgba(245,158,11,0.95), 0 0 24px rgba(251,191,36,0.6)";
+                    } else if (animRaw === "NO BALL" || animRaw === "NO-BALL" || animRaw === "NOBALL" || animRaw === "Nb") {
+                      animWord = "NO BALL";
+                      modeClass = "";
+                      marqueeTextColor = "#ffffff";
+                      marqueeTextStroke = "1.2px #4c1d95";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.95), 0 0 24px rgba(196,181,253,0.6)";
+                    } else {
+                      animWord = animRaw;
+                    }
+                  }
+                  const marqueeRepeated = animWord ? Array(20).fill(animWord).join("       ") : "";
+
+                  return (
+                    <div className={`g-top-bar${modeClass ? " " + modeClass : ""}`} style={{ position: "relative", overflow: "hidden" }}>
+                      <style>{`
+                        @keyframes criGreenMarqueeLTR {
+                          0%   { transform: translateX(-50%); }
+                          100% { transform: translateX(0%); }
+                        }
+                      `}</style>
+
+                      {/* LTR Scrolling Marquee Layer (zIndex: 1, behind score info) */}
+                      {animWord && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                          overflow: "hidden"
+                        }}>
+                          <div style={{
+                            width: "200%",
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            animation: "criGreenMarqueeLTR 6s linear infinite"
+                          }}>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "22px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "22px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Teams / Score / Overs — always visible on top (zIndex: 5) */}
+                      <span className="g-teams" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{teamsHeader}</span>
+                      <span className="g-runs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentScore}</span>
+                      <span className="g-overs" style={{ position: "relative", zIndex: 5, whiteSpace: "nowrap" }}>{currentOvers}</span>
+                    </div>
+                  );
+                })()}
 
                 {/* Batsmen strip */}
                 <div className="g-bat-bar">
@@ -9419,135 +9533,234 @@ export default function OverlayPage() {
                 </div>
               </div>
             ) : (
-              /* ─── NORMAL SCOREBOARD MODE: Exact Pristine CWC 19 Layout ─── */
-              <div style={{ display: "flex", alignItems: "stretch", height: "56px", background: "transparent", overflow: "hidden", borderRadius: "8px", border: "1.5px solid rgba(255, 255, 255, 0.15)" }}>
+              /* ─── NORMAL SCOREBOARD MODE: Perfectly aligned 3-segment layout ─── */
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                height: "56px",
+                background: "transparent",
+                overflow: "hidden",
+                borderRadius: "10px",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.45)",
+                boxSizing: "border-box"
+              }}>
 
-                {/* LEFT HALF: Sky Blue Background */}
-                <div style={{ background: "#02b3e4", display: "flex", alignItems: "center", padding: "0 18px", flex: "1 1 0%", minWidth: 0, width: 0, overflow: "hidden" }}>
-
-                  {/* Batting Team Logo/Crest in Ring */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.05)", padding: "4px", textAlign: "center" }}>
-                      <span style={{ color: "#000000", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
-                        {currentBatTeam.split(" ").slice(0, 2).join("\n")}
+                {/* LEFT SEGMENT: Sky Blue — batting side badge + score/overs + batsmen */}
+                <div style={{
+                  background: "linear-gradient(90deg, #02b3e4 0%, #08b6e6 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "0 14px",
+                  flex: "1 1 38%",
+                  minWidth: 0,
+                  height: "100%",
+                  boxSizing: "border-box",
+                  gap: "12px"
+                }}>
+                  {/* Team badge + short name */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+                    <div style={{
+                      width: "40px", height: "40px", borderRadius: "50%",
+                      border: "3px solid rgba(255,255,255,0.5)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: "rgba(0,0,0,0.08)", textAlign: "center", flexShrink: 0
+                    }}>
+                      <span style={{
+                        color: "#000000", fontWeight: 950, fontSize: "10px",
+                        lineHeight: "1.1", textTransform: "uppercase"
+                      }}>
+                        {batTeamShort}
                       </span>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ color: "#000000", fontWeight: 900, fontSize: "16px", lineHeight: 1 }}>{batTeamShort}</span>
-                      <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: 700, fontSize: "11px", marginTop: "2px" }}>v {bowlTeamShort}</span>
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+                      <span style={{ color: "#000000", fontWeight: 950, fontSize: "15px", lineHeight: 1 }}>
+                        {batTeamShort}
+                      </span>
+                      <span style={{
+                        color: "rgba(0,0,0,0.7)", fontWeight: 800, fontSize: "10px",
+                        marginTop: "3px"
+                      }}>BATTING</span>
                     </div>
                   </div>
 
-                  {/* Score / Overs Area */}
-                  <div style={{ display: "flex", flexDirection: "column", marginLeft: "32px", minWidth: "120px" }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-                      <span style={{ color: "#1e1b4b", fontSize: "30px", fontWeight: "950", lineHeight: 1 }}>{scoringState.score}-{scoringState.wickets}</span>
-                      <span style={{ color: "#1e1b4b", fontSize: "14px", fontWeight: "800" }}>{fmtOv(scoringState.balls, match.ballsPerOver)}</span>
-                    </div>
-                    {scoringState.target !== null && (
-                      <span style={{ color: "#000000", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px" }}>
-                        TARGET - {scoringState.target}
-                      </span>
-                    )}
+                  {/* Score + Overs (large, vertically centered) */}
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px", flexShrink: 0, paddingRight: "14px", borderRight: "1.5px solid rgba(0,0,0,0.15)" }}>
+                    <span style={{
+                      color: "#1e1b4b", fontSize: "28px", fontWeight: 950,
+                      lineHeight: 1, letterSpacing: "-0.5px"
+                    }}>
+                      {scoringState.score}-{scoringState.wickets}
+                    </span>
+                    <span style={{
+                      color: "#1e1b4b", fontSize: "14px", fontWeight: 800,
+                      paddingTop: "3px"
+                    }}>
+                      {fmtOv(scoringState.balls, match.ballsPerOver)}
+                    </span>
                   </div>
 
-                  {/* Separator Line */}
-                  <div style={{ width: "1.5px", height: "36px", background: "rgba(0,0,0,0.15)", margin: "0 24px" }} />
-
-                  {/* Batsmen Area */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1 }}>
-                    {/* Striker */}
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ color: "#000000", fontWeight: "800", fontSize: "13px" }}>
-                        &gt; {scoringState.striker || "—"}
+                  {/* Striker & Non-Striker */}
+                  <div style={{
+                    display: "flex", flexDirection: "column", gap: "2px",
+                    minWidth: 0, flex: 1, justifyContent: "center", paddingLeft: "14px"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px" }}>
+                      <span style={{
+                        color: "#000000", fontWeight: 800, fontSize: "12px",
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                      }}>
+                        ▶ {scoringState.striker || "—"}
                       </span>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                        <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px" }}>{striker?.runs ?? 0}</span>
-                        <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: "700", fontSize: "11px" }}>{striker?.balls ?? 0}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                        <span style={{ color: "#000000", fontWeight: 900, fontSize: "14px", lineHeight: 1 }}>
+                          {striker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "rgba(0,0,0,0.6)", fontWeight: 700, fontSize: "10px" }}>
+                          {striker?.balls ?? 0}
+                        </span>
                       </div>
                     </div>
-                    {/* Non-Striker */}
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "700", fontSize: "13px", paddingLeft: "10px" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px" }}>
+                      <span style={{
+                        color: "rgba(0,0,0,0.7)", fontWeight: 700, fontSize: "11px",
+                        paddingLeft: "12px",
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                      }}>
                         {scoringState.nonStriker || "—"}
                       </span>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                        <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: "800", fontSize: "14px" }}>{nonStriker?.runs ?? 0}</span>
-                        <span style={{ color: "rgba(0,0,0,0.5)", fontWeight: "600", fontSize: "10px" }}>{nonStriker?.balls ?? 0}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", flexShrink: 0 }}>
+                        <span style={{ color: "rgba(0,0,0,0.7)", fontWeight: 800, fontSize: "13px", lineHeight: 1 }}>
+                          {nonStriker?.runs ?? 0}
+                        </span>
+                        <span style={{ color: "rgba(0,0,0,0.5)", fontWeight: 600, fontSize: "9px" }}>
+                          {nonStriker?.balls ?? 0}
+                        </span>
                       </div>
                     </div>
                   </div>
-
                 </div>
 
-                {/* CENTER TRANSITION: Gradient Background with Status */}
+                {/* CENTER SEGMENT: Black gradient — BOTH TEAM NAMES + status line, perfectly centered */}
                 <div style={{
-                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #02b3e4 0%, #000000 35%, #000000 65%, #dc2626 100%)",
+                  background: "linear-gradient(90deg, #02b3e4 0%, #000000 22%, #000000 78%, #dc2626 100%)",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: "0 24px",
-                  minWidth: "180px",
+                  padding: "0 18px",
+                  width: "220px",
                   flexShrink: 0,
-                  transition: "all 0.3s ease"
+                  height: "100%",
+                  boxSizing: "border-box",
+                  transition: "all 0.3s ease",
+                  position: "relative",
+                  overflow: "hidden"
                 }}>
-                  {activeNotification ? (
+                  {/* Top — BOTH TEAM NAMES perfectly centered */}
+                  <div style={{
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    gap: "8px", whiteSpace: "nowrap"
+                  }}>
                     <span style={{
-                      color: getNotificationStyles(activeNotification).textColor,
-                      fontSize: "11px",
-                      fontWeight: "900",
-                      letterSpacing: "0.5px",
-                      textAlign: "center",
-                      textTransform: "uppercase",
-                      animation: "pulseGlow 1s ease-in-out infinite alternate"
-                    }}>{activeNotification}</span>
-                  ) : (
-                    <>
-                      <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine1}</span>
-                      <span style={{ color: "#facc15", fontSize: "11px", fontWeight: "900", marginTop: "2px", letterSpacing: "0.5px", textAlign: "center" }}>{statusLine2}</span>
-                    </>
-                  )}
+                      color: "#ffffff", fontSize: "12px", fontWeight: 950,
+                      letterSpacing: "0.5px"
+                    }}>
+                      {batTeamShort}
+                    </span>
+                    <span style={{
+                      color: "#94a3b8", fontSize: "10px", fontWeight: 900,
+                      letterSpacing: "1.5px"
+                    }}>
+                      vs
+                    </span>
+                    <span style={{
+                      color: "#ffffff", fontSize: "12px", fontWeight: 950,
+                      letterSpacing: "0.5px"
+                    }}>
+                      {bowlTeamShort}
+                    </span>
+                  </div>
+                  {/* Bottom — status line (target/custom/in-progress) */}
+                  <span style={{
+                    color: "#facc15", fontSize: "10.5px", fontWeight: 900,
+                    marginTop: "4px", letterSpacing: "0.5px", textAlign: "center",
+                    whiteSpace: "nowrap"
+                  }}>
+                    {scoringState.target !== null
+                      ? `TARGET — ${scoringState.target}${need !== null ? `  •  NEED ${need}` : ""}`
+                      : (scoringState.customInputText || "MATCH IN PROGRESS")}
+                  </span>
                 </div>
 
-                {/* RIGHT HALF: Red Background */}
-                <div style={{ background: "#dc2626", display: "flex", alignItems: "center", padding: "0 18px", flex: 1, minWidth: "450px", justifyContent: "space-between" }}>
-
-                  {/* Bowler Details & This Over */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1, paddingRight: "16px" }}>
-                    {/* Bowler Stats */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ color: "#ffffff", fontWeight: "800", fontSize: "13px", textTransform: "uppercase" }}>
+                {/* RIGHT SEGMENT: Red — bowler + this-over pills + bowling side badge */}
+                <div style={{
+                  background: "linear-gradient(90deg, #e11d48 0%, #dc2626 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "0 14px",
+                  flex: "1 1 38%",
+                  minWidth: 0,
+                  height: "100%",
+                  boxSizing: "border-box",
+                  gap: "12px",
+                  justifyContent: "space-between"
+                }}>
+                  {/* Bowler + This-Over pills (left part of right segment) */}
+                  <div style={{
+                    display: "flex", flexDirection: "column", gap: "3px",
+                    minWidth: 0, flex: 1, justifyContent: "center"
+                  }}>
+                    {/* Bowler stats row */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{
+                        color: "#ffffff", fontWeight: 800, fontSize: "12px",
+                        textTransform: "uppercase",
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                      }}>
                         {scoringState.bowler || "—"}
                       </span>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginLeft: "auto" }}>
-                        <span style={{ color: "#ffffff", fontWeight: "900", fontSize: "16px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
-                        <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: "700", fontSize: "11px" }}>{fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver).split(".")[1] || 0}</span>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginLeft: "auto", flexShrink: 0 }}>
+                        <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "15px", lineHeight: 1 }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                        </span>
+                        <span style={{
+                          color: "rgba(255,255,255,0.8)", fontWeight: 800, fontSize: "11px"
+                        }}>
+                          {fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)}
+                        </span>
                       </div>
                     </div>
-
-                    {/* This Over outcomes (Square boxes) */}
-                    <div style={{ display: "flex", gap: "4px" }}>
+                    {/* This Over squares */}
+                    <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
                       {(() => {
                         const bpo = match?.ballsPerOver || 6;
                         const thisOver = scoringState.thisOver || [];
                         const extrasCount = thisOver.filter(isExtraBall).length;
-                        const totalCirclesCount = bpo + extrasCount;
-                        return Array.from({ length: totalCirclesCount }).map((_, i) => {
+                        const totalSlots = bpo + extrasCount;
+                        return Array.from({ length: totalSlots }).map((_, i) => {
                           const val = thisOver[i];
                           let cellBg = "rgba(255, 255, 255, 0.08)";
                           let cellColor = "#ffffff";
-                          let borderStyle = "1px solid rgba(255,255,255,0.15)";
+                          let borderStyle = "1px solid rgba(255,255,255,0.25)";
                           if (val) {
                             borderStyle = "none";
                             if (val === "4" || val === "4s") { cellBg = "#06b6d4"; cellColor = "#000000"; }
                             else if (val === "6" || val === "6s") { cellBg = "#facc15"; cellColor = "#000000"; }
-                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                            else if (isExtraBall(val)) { cellBg = "#a855f7"; cellColor = "#ffffff"; }
-                            else { cellBg = "rgba(0, 0, 0, 0.35)"; cellColor = "#ffffff"; }
+                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#fecaca"; cellColor = "#7f1d1d"; }
+                            else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
+                            else { cellBg = "rgba(0, 0, 0, 0.4)"; cellColor = "#ffffff"; }
                           }
                           return (
-                            <div key={i} style={{ width: "20px", height: "20px", background: cellBg, color: cellColor, border: borderStyle, borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "7px" : (val && val.length > 1 ? "9px" : "11px")), letterSpacing: val && val.length > 2 ? "-0.5px" : "normal", fontWeight: "900", lineHeight: 1, whiteSpace: "nowrap" }}>
+                            <div key={i} style={{
+                              width: "20px", height: "20px", background: cellBg, color: cellColor,
+                              border: borderStyle, borderRadius: "4px",
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              fontSize: val && val.includes("+")
+                                ? undefined
+                                : (val && val.length > 3 ? "7px" : (val && val.length > 1 ? "9px" : "11px")),
+                              letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
+                              fontWeight: 950, lineHeight: 1, whiteSpace: "nowrap", flexShrink: 0
+                            }}>
                               {renderOutcomeText(val, 20)}
                             </div>
                           );
@@ -9556,22 +9769,41 @@ export default function OverlayPage() {
                     </div>
                   </div>
 
-                  {/* Bowling Team Logo/Crest wrapper on the right */}
+                  {/* Bowling team badge (right side of right segment) */}
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "15px", lineHeight: 1 }}>{bowlTeamShort}</span>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", lineHeight: 1.1 }}>
+                      <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "15px", lineHeight: 1 }}>
+                        {bowlTeamShort}
+                      </span>
+                      <span style={{
+                        color: "rgba(255,255,255,0.7)", fontWeight: 800, fontSize: "10px",
+                        marginTop: "3px"
+                      }}>BOWLING</span>
                     </div>
-                    <div style={{ width: "48px", height: "48px", borderRadius: "50%", border: "3.5px solid rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.15)", padding: "4px", textAlign: "center" }}>
-                      <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "9px", lineHeight: "1.1", textTransform: "uppercase" }}>
-                        {currentBowlTeam.split(" ").slice(0, 2).join("\n")}
+                    <div style={{
+                      width: "40px", height: "40px", borderRadius: "50%",
+                      border: "3px solid rgba(255,255,255,0.4)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: "rgba(0,0,0,0.18)", textAlign: "center", flexShrink: 0
+                    }}>
+                      <span style={{
+                        color: "#ffffff", fontWeight: 950, fontSize: "10px",
+                        lineHeight: "1.1", textTransform: "uppercase"
+                      }}>
+                        {bowlTeamShort}
                       </span>
                     </div>
-                    {/* Logo overlay badge */}
-                    <div style={{ width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px" }}>
+                    {/* Overlay theme badge */}
+                    <div style={{
+                      width: "24px", height: "24px", background: "#475569",
+                      borderRadius: "5px",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      color: "#fbbf24", fontSize: "11px",
+                      border: "1px solid rgba(255,255,255,0.25)", flexShrink: 0
+                    }}>
                       🏏
                     </div>
                   </div>
-
                 </div>
 
               </div>
