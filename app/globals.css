@@ -32,6 +32,42 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ——— Global fixes for scoring / control panel buttons ——— */
+/* Disable the mobile WebKit red tap-highlight overlay on all interactive elements */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
+
+/* Prevent any default browser focus ring or red accent from appearing on buttons
+   after a click/tap. Uses :where() so specificity is 0 — Tailwind utilities always win. */
+:where(button) {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Neutralise Windows Chromium's system-red accent flip on white buttons */
+  color-scheme: light only;
+  accent-color: #000000;
+}
+
+:where(button:focus),
+:where(button:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Prevent the user-agent stylesheet from inverting colors / flipping to red
+   on :active press state. Uses :where() (0-specificity) so individual Tailwind
+   classes like active:bg-amber-100, active:scale-90, active:border-black etc.
+   always take precedence. */
+:where(button:active),
+:where(button:focus:active),
+:where(button:focus-visible:active) {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Premium React Toastify styling overrides */
 :root {
   --toastify-font-family: var(--font-outfit), sans-serif;

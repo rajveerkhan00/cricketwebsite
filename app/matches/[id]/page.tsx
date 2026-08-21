@@ -157,6 +157,8 @@ export default function MatchScoringPage() {
   const [isLegByes, setIsLegByes] = useState(false);
   const [isWicketCheck, setIsWicketCheck] = useState(false);
 
+  const [activeScoringButton, setActiveScoringButton] = useState<string | null>(null);
+
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
     if (type === "success") {
       toast.success(message);
@@ -2272,64 +2274,124 @@ export default function MatchScoringPage() {
                   }`}>
                   {/* Row 1: 0 1 2 3 */}
                   <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
-                    {[0, 1, 2, 3].map((run) => (
-                      <button
-                        key={run}
-                        onClick={() => handleScoringButton(run)}
-                        className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                      >
-                        {run}
-                      </button>
-                    ))}
+                    {[0, 1, 2, 3].map((run) => {
+                      const btnKey = `btn-${run}`;
+                      const isActive = activeScoringButton === btnKey;
+                      return (
+                        <button
+                          key={run}
+                          type="button"
+                          onClick={() => {
+                            setActiveScoringButton(btnKey);
+                            handleScoringButton(run);
+                          }}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-slate-900 ${isActive
+                            ? "bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-600 text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.45)]"
+                            : "bg-slate-50 hover:bg-gradient-to-br hover:from-amber-100 hover:to-yellow-50 hover:border-amber-600 hover:text-amber-800 hover:shadow-[0_0_18px_rgba(245,158,11,0.45)] text-slate-900"
+                            } font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg shadow-slate-400/20 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-[0.85] active:bg-slate-900 active:text-white active:border-slate-700 active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] active:shadow-none cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-amber-300/60 focus:ring-offset-2 focus:ring-offset-slate-50 focus-visible:ring-4 focus-visible:ring-amber-300/60`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
+                        >
+                          {run}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Row 2: 4 5 6 ... */}
                   <div className="grid grid-cols-4 gap-2 md:gap-3 justify-items-center">
-                    {[4, 5, 6].map((run) => (
-                      <button
-                        key={run}
-                        onClick={() => handleScoringButton(run)}
-                        className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                      >
-                        {run}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => {
-                        setCustomRunsInput("");
-                        setShowCustomRunsModal(true);
-                      }}
-                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      •••
-                    </button>
+                    {[4, 5, 6].map((run) => {
+                      const btnKey = `btn-${run}`;
+                      const isActive = activeScoringButton === btnKey;
+                      return (
+                        <button
+                          key={run}
+                          type="button"
+                          onClick={() => {
+                            setActiveScoringButton(btnKey);
+                            handleScoringButton(run);
+                          }}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-slate-900 ${isActive
+                            ? "bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-600 text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.45)]"
+                            : "bg-slate-50 hover:bg-gradient-to-br hover:from-amber-100 hover:to-yellow-50 hover:border-amber-600 hover:text-amber-800 hover:shadow-[0_0_18px_rgba(245,158,11,0.45)] text-slate-900"
+                            } font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg shadow-slate-400/20 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-[0.85] active:bg-slate-900 active:text-white active:border-slate-700 active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] active:shadow-none cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-amber-300/60 focus:ring-offset-2 focus:ring-offset-slate-50 focus-visible:ring-4 focus-visible:ring-amber-300/60`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
+                        >
+                          {run}
+                        </button>
+                      );
+                    })}
+                    {(() => {
+                      const btnKey = "btn-custom";
+                      const isActive = activeScoringButton === btnKey;
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveScoringButton(btnKey);
+                            setCustomRunsInput("");
+                            setShowCustomRunsModal(true);
+                          }}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-slate-900 ${isActive
+                            ? "bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-600 text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.45)]"
+                            : "bg-slate-50 hover:bg-gradient-to-br hover:from-amber-100 hover:to-yellow-50 hover:border-amber-600 hover:text-amber-800 hover:shadow-[0_0_18px_rgba(245,158,11,0.45)] text-slate-900"
+                            } font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg shadow-slate-400/20 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-[0.85] active:bg-slate-900 active:text-white active:border-slate-700 active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] active:shadow-none cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-amber-300/60 focus:ring-offset-2 focus:ring-offset-slate-50 focus-visible:ring-4 focus-visible:ring-amber-300/60`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
+                        >
+                          •••
+                        </button>
+                      );
+                    })()}
                   </div>
 
                   {/* Row 3: 1D | ? */}
                   <div className="flex justify-center gap-6 md:gap-8">
-                    <button
-                      onClick={() => {
-                        recordBall("runs", 1);
-                        resetScoringCheckboxes();
-                      }}
-                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      1D
-                    </button>
-                    <button
-                      onClick={() => {
-                        alert(
-                          "Scoring Help:\n\n" +
-                          "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
-                          "• Tap '1D' to record 1 run Declared.\n" +
-                          "• Tap '•••' to record custom runs.\n" +
-                          "• Tap '?' to check help details."
-                        );
-                      }}
-                      className="w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-black bg-white/20 hover:bg-white/40 text-black font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg transition-all active:scale-90 cursor-pointer"
-                    >
-                      ?
-                    </button>
+                    {(() => {
+                      const btnKey = "btn-1d";
+                      const isActive = activeScoringButton === btnKey;
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveScoringButton(btnKey);
+                            recordBall("runs", 1);
+                            resetScoringCheckboxes();
+                          }}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-slate-900 ${isActive
+                            ? "bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-600 text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.45)]"
+                            : "bg-slate-50 hover:bg-gradient-to-br hover:from-amber-100 hover:to-yellow-50 hover:border-amber-600 hover:text-amber-800 hover:shadow-[0_0_18px_rgba(245,158,11,0.45)] text-slate-900"
+                            } font-extrabold text-xl md:text-2xl flex items-center justify-center shadow-lg shadow-slate-400/20 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-[0.85] active:bg-slate-900 active:text-white active:border-slate-700 active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] active:shadow-none cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-amber-300/60 focus:ring-offset-2 focus:ring-offset-slate-50 focus-visible:ring-4 focus-visible:ring-amber-300/60`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
+                        >
+                          1D
+                        </button>
+                      );
+                    })()}
+                    {(() => {
+                      const btnKey = "btn-help";
+                      const isActive = activeScoringButton === btnKey;
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveScoringButton(btnKey);
+                            alert(
+                              "Scoring Help:\n\n" +
+                              "• Check any of the extras (Wide, No Ball, Byes, Leg Byes, Wicket) first, then tap a number (0-6) to record.\n" +
+                              "• Tap '1D' to record 1 run Declared.\n" +
+                              "• Tap '•••' to record custom runs.\n" +
+                              "• Tap '?' to check help details."
+                            );
+                          }}
+                          className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] border-slate-900 ${isActive
+                            ? "bg-gradient-to-br from-amber-100 to-yellow-50 border-amber-600 text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.45)]"
+                            : "bg-slate-50 hover:bg-gradient-to-br hover:from-amber-100 hover:to-yellow-50 hover:border-amber-600 hover:text-amber-800 hover:shadow-[0_0_18px_rgba(245,158,11,0.45)] text-slate-900"
+                            } font-extrabold text-2xl md:text-3xl flex items-center justify-center shadow-lg shadow-slate-400/20 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-[0.85] active:bg-slate-900 active:text-white active:border-slate-700 active:shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] active:shadow-none cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-amber-300/60 focus:ring-offset-2 focus:ring-offset-slate-50 focus-visible:ring-4 focus-visible:ring-amber-300/60`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
+                        >
+                          ?
+                        </button>
+                      );
+                    })()}
                   </div>
                 </div>
 
