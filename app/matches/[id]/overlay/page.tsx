@@ -8336,6 +8336,11 @@ export default function OverlayPage() {
       return null;
     }
 
+    if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports" || currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024") {
+      if (isMatchNotStarted) return renderScoreboardPreMatchRibbon(currentThemeSlug, currentMatch);
+      return null;
+    }
+
     let marqueeWord = anim;
     if (anim === "FOUR" || anim === "4" || anim === "4S" || anim === "FOUR!") marqueeWord = "FOUR";
     else if (anim === "SIX" || anim === "6" || anim === "6S" || anim === "SIX!") marqueeWord = "SIX";
@@ -9018,26 +9023,100 @@ export default function OverlayPage() {
 
                 </div>
 
-                {/* Bottom blue strip */}
-                <div style={{
-                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #142248 0%, #1c3066 50%, #142248 100%)",
-                  border: "1.5px solid rgba(229, 136, 8, 0.35)",
-                  borderTop: "none",
-                  borderRadius: "0 0 6px 6px",
-                  padding: "3px 16px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  transition: "all 0.3s ease"
-                }}>
-                  {activeNotification ? (
-                    <div style={{ width: "100%", textAlign: "center", color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FDFDFE", fontWeight: "950", fontSize: "11px", letterSpacing: "1.5px", animation: "pulseGlow 1s ease-in-out infinite alternate" }}>
-                      {activeNotification}
-                    </div>
-                  ) : (
-                    <>
+                {/* Bottom blue strip with embedded LTR marquee animation */}
+                {(() => {
+                  const animRaw = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+                  let animWord = "";
+                  let marqueeTextColor = "#FDFDFE";
+                  let marqueeTextStroke = "1px #142248";
+                  let marqueeTextShadow = "0 0 8px rgba(253,253,254,0.6)";
+                  let barBg = "linear-gradient(90deg, #142248 0%, #1c3066 50%, #142248 100%)";
+                  if (animRaw) {
+                    if (animRaw === "FOUR" || animRaw === "4" || animRaw === "4S" || animRaw === "FOUR!") { animWord = "FOUR"; barBg = "linear-gradient(90deg, #7c2d12 0%, #142248 20%, #1c3066 50%, #142248 80%, #7c2d12 100%)"; marqueeTextColor = "#fde68a"; marqueeTextStroke = "1.2px #b45309"; marqueeTextShadow = "0 0 12px rgba(229,136,8,0.9), 0 0 20px rgba(250,204,21,0.5)"; }
+                    else if (animRaw === "SIX" || animRaw === "6" || animRaw === "6S" || animRaw === "SIX!") { animWord = "SIX"; barBg = "linear-gradient(90deg, #78350f 0%, #142248 20%, #1c3066 50%, #142248 80%, #78350f 100%)"; marqueeTextColor = "#fbbf24"; marqueeTextStroke = "1.2px #92400e"; marqueeTextShadow = "0 0 14px rgba(251,191,36,0.9), 0 0 24px rgba(245,158,11,0.6)"; }
+                    else if (animRaw === "WICKET" || animRaw === "W" || animRaw === "WICKET!" || animRaw === "OUT") { animWord = animRaw === "OUT" ? "OUT" : "WICKET"; barBg = "linear-gradient(90deg, #7f1d1d 0%, #142248 20%, #1c3066 50%, #142248 80%, #7f1d1d 100%)"; marqueeTextColor = "#fecaca"; marqueeTextStroke = "1.2px #991b1b"; marqueeTextShadow = "0 0 14px rgba(239,68,68,0.9), 0 0 24px rgba(220,38,38,0.6)"; }
+                    else if (animRaw === "NOT OUT" || animRaw === "NOT_OUT" || animRaw === "NOTOUT") { animWord = "NOT OUT"; barBg = "linear-gradient(90deg, #064e3b 0%, #142248 20%, #1c3066 50%, #142248 80%, #064e3b 100%)"; marqueeTextColor = "#a7f3d0"; marqueeTextStroke = "1.2px #065f46"; marqueeTextShadow = "0 0 14px rgba(16,185,129,0.9), 0 0 24px rgba(52,211,153,0.5)"; }
+                    else if (animRaw === "FREE HIT" || animRaw === "FREE_HIT" || animRaw === "FREEHIT") { animWord = "FREE HIT"; barBg = "linear-gradient(90deg, #064e3b 0%, #142248 20%, #1c3066 50%, #142248 80%, #064e3b 100%)"; marqueeTextColor = "#6ee7b7"; marqueeTextStroke = "1.2px #047857"; marqueeTextShadow = "0 0 14px rgba(52,211,153,0.9), 0 0 24px rgba(110,231,183,0.5)"; }
+                    else if (animRaw === "HAT-TRICK BALL" || animRaw === "HAT-TRICK" || animRaw === "HATTRICK") { animWord = "HAT-TRICK"; barBg = "linear-gradient(90deg, #581c87 0%, #142248 20%, #1c3066 50%, #142248 80%, #581c87 100%)"; marqueeTextColor = "#e9d5ff"; marqueeTextStroke = "1.2px #6b21a8"; marqueeTextShadow = "0 0 14px rgba(168,85,247,0.9), 0 0 24px rgba(216,180,254,0.5)"; }
+                    else if (animRaw === "REVIEW" || animRaw === "PENDING" || animRaw === "DRS") { animWord = "DRS REVIEW"; barBg = "linear-gradient(90deg, #78350f 0%, #142248 20%, #1c3066 50%, #142248 80%, #78350f 100%)"; marqueeTextColor = "#fde68a"; marqueeTextStroke = "1.2px #92400e"; marqueeTextShadow = "0 0 14px rgba(245,158,11,0.9), 0 0 24px rgba(251,191,36,0.5)"; }
+                    else if (animRaw === "POWERPLAY" || animRaw === "PP") { animWord = "POWERPLAY"; }
+                    else if (animRaw === "INNINGS BREAK") { animWord = "INNINGS BREAK"; }
+                    else { animWord = animRaw; }
+                  }
+                  const marqueeRepeated = animWord ? Array(16).fill(animWord).join("       ") : "";
+
+                  return (
+                    <div style={{
+                      background: barBg,
+                      border: "1.5px solid rgba(229, 136, 8, 0.35)",
+                      borderTop: "none",
+                      borderRadius: "0 0 6px 6px",
+                      padding: "3px 16px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      transition: "all 0.3s ease",
+                      position: "relative",
+                      overflow: "hidden",
+                      minHeight: "24px",
+                    }}>
+                      {/* Inline @keyframes ensure LTR marquee runs in all environments */}
+                      <style>{`
+                        @keyframes asiaCupMarqueeLTR {
+                          0% { transform: translateX(-50%); }
+                          100% { transform: translateX(0%); }
+                        }
+                      `}</style>
+
+                      {/* LTR Scrolling Marquee Layer */}
+                      {animWord && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                          overflow: "hidden",
+                        }}>
+                          <div style={{
+                            width: "200%",
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            animation: "asiaCupMarqueeLTR 5.5s linear infinite",
+                          }}>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "15px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.92,
+                            }}>{marqueeRepeated}</span>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "15px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.92,
+                            }}>{marqueeRepeated}</span>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Bowler figures strip */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
                         <span style={{ color: "#E58808", fontWeight: 950, fontSize: "8px", letterSpacing: "0.8px" }}>BOWLER:</span>
                         <span style={{ color: "#FDFDFE", fontWeight: 900, fontSize: "10.5px" }}>{scoringState.bowler || "—"}</span>
                         <span style={{ color: "#E58808", fontWeight: 950, fontSize: "11px" }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
@@ -9045,7 +9124,7 @@ export default function OverlayPage() {
                       </div>
 
                       {/* This Over strip */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", position: "relative", zIndex: 5, flexShrink: 0 }}>
                         <span style={{ fontSize: "8px", color: "#E58808", fontWeight: "900", letterSpacing: "0.8px" }}>THIS OVER:</span>
                         {(() => {
                           const bpo = match?.ballsPerOver || 6;
@@ -9059,18 +9138,20 @@ export default function OverlayPage() {
                       </div>
 
                       {/* Required RR or Boundaries stats */}
-                      {rrr ? (
-                        <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
-                          REQ RR: {rrr}
-                        </div>
-                      ) : (
-                        <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
-                          4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
+                      <div style={{ position: "relative", zIndex: 5, flexShrink: 0 }}>
+                        {rrr ? (
+                          <div style={{ fontSize: "9.5px", fontWeight: "900", color: "#E58808", letterSpacing: "0.8px" }}>
+                            REQ RR: {rrr}
+                          </div>
+                        ) : (
+                          <div style={{ fontSize: "9px", fontWeight: "800", color: "#FDFDFE", letterSpacing: "0.5px" }}>
+                            4s: <span style={{ color: "#E58808" }}>{totalFours}</span> &nbsp;|&nbsp; 6s: <span style={{ color: "#E58808" }}>{totalSixes}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
@@ -10024,28 +10105,159 @@ export default function OverlayPage() {
 
                 </div>
 
-                {/* Bottom summary status line bar */}
-                <div style={{
-                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
-                  padding: "3px 16px",
-                  display: "flex",
-                  justifyContent: "center",
-                  borderRadius: "0 0 7px 7px",
-                  border: "1.5px solid #0373AF",
-                  borderTop: "none",
-                  transition: "all 0.3s ease"
-                }}>
-                  <span style={{
-                    color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
-                    fontSize: "9.5px",
-                    fontWeight: "900",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                    animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-                  }}>
-                    {activeNotification || statusLine}
-                  </span>
-                </div>
+                {/* Bottom summary status line bar with embedded LTR marquee */}
+                {(() => {
+                  const animRaw = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+                  let animWord = "";
+                  let marqueeTextColor = "#ffffff";
+                  let marqueeTextStroke = "1px #14122A";
+                  let marqueeTextShadow = "0 0 8px rgba(255,255,255,0.55)";
+                  let barBg = "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)";
+                  if (animRaw) {
+                    if (animRaw === "FOUR" || animRaw === "4" || animRaw === "4S" || animRaw === "FOUR!") {
+                      animWord = "FOUR";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #78350f 100%)";
+                      marqueeTextColor = "#fde047";
+                      marqueeTextStroke = "1.2px #854d0e";
+                      marqueeTextShadow = "0 0 12px rgba(250,204,21,0.9), 0 0 20px rgba(234,179,8,0.55)";
+                    } else if (animRaw === "SIX" || animRaw === "6" || animRaw === "6S" || animRaw === "SIX!") {
+                      animWord = "SIX";
+                      barBg = "linear-gradient(90deg, #7c2d12 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #7c2d12 100%)";
+                      marqueeTextColor = "#fdba74";
+                      marqueeTextStroke = "1.2px #9a3412";
+                      marqueeTextShadow = "0 0 14px rgba(249,115,22,0.95), 0 0 24px rgba(234,88,12,0.6)";
+                    } else if (animRaw === "WICKET" || animRaw === "W" || animRaw === "WICKET!" || animRaw === "OUT") {
+                      animWord = animRaw === "OUT" ? "OUT" : "WICKET";
+                      barBg = "linear-gradient(90deg, #7f1d1d 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #7f1d1d 100%)";
+                      marqueeTextColor = "#fecaca";
+                      marqueeTextStroke = "1.2px #991b1b";
+                      marqueeTextShadow = "0 0 14px rgba(239,68,68,0.95), 0 0 24px rgba(220,38,38,0.6)";
+                    } else if (animRaw === "NOT OUT" || animRaw === "NOT_OUT" || animRaw === "NOTOUT") {
+                      animWord = "NOT OUT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #064e3b 100%)";
+                      marqueeTextColor = "#a7f3d0";
+                      marqueeTextStroke = "1.2px #065f46";
+                      marqueeTextShadow = "0 0 14px rgba(16,185,129,0.9), 0 0 24px rgba(52,211,153,0.55)";
+                    } else if (animRaw === "FREE HIT" || animRaw === "FREE_HIT" || animRaw === "FREEHIT") {
+                      animWord = "FREE HIT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #064e3b 100%)";
+                      marqueeTextColor = "#6ee7b7";
+                      marqueeTextStroke = "1.2px #047857";
+                      marqueeTextShadow = "0 0 14px rgba(52,211,153,0.9), 0 0 24px rgba(110,231,183,0.55)";
+                    } else if (animRaw === "HAT-TRICK BALL" || animRaw === "HAT-TRICK" || animRaw === "HATTRICK") {
+                      animWord = "HAT-TRICK";
+                      barBg = "linear-gradient(90deg, #581c87 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #581c87 100%)";
+                      marqueeTextColor = "#e9d5ff";
+                      marqueeTextStroke = "1.2px #6b21a8";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.95), 0 0 24px rgba(192,132,252,0.55)";
+                    } else if (animRaw === "REVIEW" || animRaw === "PENDING" || animRaw === "DRS") {
+                      animWord = "DRS REVIEW";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #78350f 100%)";
+                      marqueeTextColor = "#fde68a";
+                      marqueeTextStroke = "1.2px #92400e";
+                      marqueeTextShadow = "0 0 14px rgba(245,158,11,0.9), 0 0 24px rgba(251,191,36,0.55)";
+                    } else if (animRaw === "NO BALL" || animRaw === "NO-BALL" || animRaw === "NOBALL" || animRaw === "Nb") {
+                      animWord = "NO BALL";
+                      barBg = "linear-gradient(90deg, #4c1d95 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #4c1d95 100%)";
+                      marqueeTextColor = "#ddd6fe";
+                      marqueeTextStroke = "1.2px #5b21b6";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.9), 0 0 24px rgba(196,181,253,0.5)";
+                    } else if (animRaw === "POWERPLAY" || animRaw === "PP") {
+                      animWord = "POWERPLAY";
+                    } else if (animRaw === "INNINGS BREAK") {
+                      animWord = "INNINGS BREAK";
+                    } else {
+                      animWord = animRaw;
+                    }
+                  }
+                  const marqueeRepeated = animWord ? Array(22).fill(animWord).join("       ") : "";
+
+                  return (
+                    <div style={{
+                      background: barBg,
+                      padding: "3px 16px",
+                      display: "flex",
+                      justifyContent: "center",
+                      borderRadius: "0 0 7px 7px",
+                      border: "1.5px solid #0373AF",
+                      borderTop: "none",
+                      transition: "all 0.3s ease",
+                      position: "relative",
+                      overflow: "hidden",
+                      height: "22px",
+                      alignItems: "center",
+                      boxSizing: "border-box"
+                    }}>
+                      <style>{`
+                        @keyframes cwc25IndiaMarqueeLTR {
+                          0%   { transform: translateX(-50%); }
+                          100% { transform: translateX(0%); }
+                        }
+                      `}</style>
+
+                      {/* LTR Scrolling Marquee Layer (behind status text) */}
+                      {animWord && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                          overflow: "hidden"
+                        }}>
+                          <div style={{
+                            width: "200%",
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            animation: "cwc25IndiaMarqueeLTR 6s linear infinite"
+                          }}>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "12.5px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "12.5px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Status text (always on top, zIndex 5) */}
+                      <span style={{
+                        color: "#FFFFFF",
+                        fontSize: "9.5px",
+                        fontWeight: "900",
+                        letterSpacing: "1px",
+                        textTransform: "uppercase",
+                        position: "relative",
+                        zIndex: 5,
+                        whiteSpace: "nowrap"
+                      }}>
+                        {statusLine}
+                      </span>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
@@ -13566,31 +13778,161 @@ export default function OverlayPage() {
                   </div>
                 </div>
 
-                {/* ── LOWER DYNAMIC STATUS & NOTIFICATION MARQUEE ── */}
-                <div style={{
-                  background: activeNotification ? getNotificationStyles(activeNotification).bg : "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)",
-                  padding: "2.5px 18px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "0 0 14px 14px",
-                  border: "1.5px solid #0373AF",
-                  borderTop: "none",
-                  boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(3,115,175,0.25)",
-                  transition: "all 0.3s ease"
-                }}>
-                  <span style={{
-                    color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#FFFFFF",
-                    fontSize: "9px",
-                    fontWeight: "950",
-                    letterSpacing: "1.2px",
-                    textTransform: "uppercase",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.5)",
-                    animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-                  }}>
-                    {activeNotification || statusLine}
-                  </span>
-                </div>
+                {/* ── LOWER DYNAMIC STATUS & EMBEDDED LTR MARQUEE ── */}
+                {(() => {
+                  const animRaw = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+                  let animWord = "";
+                  let marqueeTextColor = "#ffffff";
+                  let marqueeTextStroke = "1px #14122A";
+                  let marqueeTextShadow = "0 0 8px rgba(255,255,255,0.55)";
+                  let barBg = "linear-gradient(90deg, #14122A 0%, #0373AF 50%, #14122A 100%)";
+                  if (animRaw) {
+                    if (animRaw === "FOUR" || animRaw === "4" || animRaw === "4S" || animRaw === "FOUR!") {
+                      animWord = "FOUR";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #78350f 100%)";
+                      marqueeTextColor = "#fde047";
+                      marqueeTextStroke = "1.2px #854d0e";
+                      marqueeTextShadow = "0 0 12px rgba(250,204,21,0.9), 0 0 20px rgba(234,179,8,0.55)";
+                    } else if (animRaw === "SIX" || animRaw === "6" || animRaw === "6S" || animRaw === "SIX!") {
+                      animWord = "SIX";
+                      barBg = "linear-gradient(90deg, #7c2d12 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #7c2d12 100%)";
+                      marqueeTextColor = "#fdba74";
+                      marqueeTextStroke = "1.2px #9a3412";
+                      marqueeTextShadow = "0 0 14px rgba(249,115,22,0.95), 0 0 24px rgba(234,88,12,0.6)";
+                    } else if (animRaw === "WICKET" || animRaw === "W" || animRaw === "WICKET!" || animRaw === "OUT") {
+                      animWord = animRaw === "OUT" ? "OUT" : "WICKET";
+                      barBg = "linear-gradient(90deg, #7f1d1d 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #7f1d1d 100%)";
+                      marqueeTextColor = "#fecaca";
+                      marqueeTextStroke = "1.2px #991b1b";
+                      marqueeTextShadow = "0 0 14px rgba(239,68,68,0.95), 0 0 24px rgba(220,38,38,0.6)";
+                    } else if (animRaw === "NOT OUT" || animRaw === "NOT_OUT" || animRaw === "NOTOUT") {
+                      animWord = "NOT OUT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #064e3b 100%)";
+                      marqueeTextColor = "#a7f3d0";
+                      marqueeTextStroke = "1.2px #065f46";
+                      marqueeTextShadow = "0 0 14px rgba(16,185,129,0.9), 0 0 24px rgba(52,211,153,0.55)";
+                    } else if (animRaw === "FREE HIT" || animRaw === "FREE_HIT" || animRaw === "FREEHIT") {
+                      animWord = "FREE HIT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #064e3b 100%)";
+                      marqueeTextColor = "#6ee7b7";
+                      marqueeTextStroke = "1.2px #047857";
+                      marqueeTextShadow = "0 0 14px rgba(52,211,153,0.9), 0 0 24px rgba(110,231,183,0.55)";
+                    } else if (animRaw === "HAT-TRICK BALL" || animRaw === "HAT-TRICK" || animRaw === "HATTRICK") {
+                      animWord = "HAT-TRICK";
+                      barBg = "linear-gradient(90deg, #581c87 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #581c87 100%)";
+                      marqueeTextColor = "#e9d5ff";
+                      marqueeTextStroke = "1.2px #6b21a8";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.95), 0 0 24px rgba(192,132,252,0.55)";
+                    } else if (animRaw === "REVIEW" || animRaw === "PENDING" || animRaw === "DRS") {
+                      animWord = "DRS REVIEW";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #78350f 100%)";
+                      marqueeTextColor = "#fde68a";
+                      marqueeTextStroke = "1.2px #92400e";
+                      marqueeTextShadow = "0 0 14px rgba(245,158,11,0.9), 0 0 24px rgba(251,191,36,0.55)";
+                    } else if (animRaw === "NO BALL" || animRaw === "NO-BALL" || animRaw === "NOBALL" || animRaw === "Nb") {
+                      animWord = "NO BALL";
+                      barBg = "linear-gradient(90deg, #4c1d95 0%, #0373AF 35%, #025380 50%, #0373AF 65%, #4c1d95 100%)";
+                      marqueeTextColor = "#ddd6fe";
+                      marqueeTextStroke = "1.2px #5b21b6";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.9), 0 0 24px rgba(196,181,253,0.5)";
+                    } else if (animRaw === "POWERPLAY" || animRaw === "PP") {
+                      animWord = "POWERPLAY";
+                    } else if (animRaw === "INNINGS BREAK") {
+                      animWord = "INNINGS BREAK";
+                    } else {
+                      animWord = animRaw;
+                    }
+                  }
+                  const marqueeRepeated = animWord ? Array(22).fill(animWord).join("       ") : "";
+
+                  return (
+                    <div style={{
+                      background: barBg,
+                      padding: "2.5px 18px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "0 0 14px 14px",
+                      border: "1.5px solid #0373AF",
+                      borderTop: "none",
+                      boxShadow: "0 6px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(3,115,175,0.25)",
+                      transition: "all 0.3s ease",
+                      position: "relative",
+                      overflow: "hidden",
+                      height: "20px",
+                      boxSizing: "border-box"
+                    }}>
+                      <style>{`
+                        @keyframes wt20MarqueeLTR {
+                          0%   { transform: translateX(-50%); }
+                          100% { transform: translateX(0%); }
+                        }
+                      `}</style>
+
+                      {/* LTR Scrolling Marquee Layer (behind status text, zIndex 1) */}
+                      {animWord && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                          overflow: "hidden"
+                        }}>
+                          <div style={{
+                            width: "200%",
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            animation: "wt20MarqueeLTR 6s linear infinite"
+                          }}>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "12px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "12px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Status text (always on top, zIndex 5) */}
+                      <span style={{
+                        color: "#FFFFFF",
+                        fontSize: "9px",
+                        fontWeight: "950",
+                        letterSpacing: "1.2px",
+                        textTransform: "uppercase",
+                        textShadow: "0 1px 3px rgba(0,0,0,0.5)",
+                        position: "relative",
+                        zIndex: 5,
+                        whiteSpace: "nowrap"
+                      }}>
+                        {statusLine}
+                      </span>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
@@ -14193,57 +14535,169 @@ export default function OverlayPage() {
 
                 </div>
 
-                {/* ── BOTTOM BLUE STRIP WITH FLAME / GRASS SILHOUETTES & STATS (Exact 18px Height) ── */}
-                <div style={{
-                  background: activeNotification
-                    ? getNotificationStyles(activeNotification).bg
-                    : "linear-gradient(90deg, #001248 0%, #00227a 50%, #001248 100%)",
-                  height: "18px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                  overflow: "hidden",
-                  borderTop: "1.5px solid #00a0e9",
-                  borderRadius: "0 0 4px 4px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.6)"
-                }}>
-                  {/* Left Cyan Grass / Flame Graphic Watermark */}
-                  <div style={{
-                    position: "absolute",
-                    left: "2px",
-                    bottom: 0,
-                    display: "flex",
-                    opacity: 0.9
-                  }}>
-                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                    </svg>
-                  </div>
+                {/* ── BOTTOM BLUE STRIP WITH EMBEDDED LTR MARQUEE + BOWLER/STATS ── */}
+                {(() => {
+                  const animRaw = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "REVIEW" : null) || "").trim().toUpperCase();
+                  let animWord = "";
+                  let marqueeTextColor = "#ffffff";
+                  let marqueeTextStroke = "1px #001248";
+                  let marqueeTextShadow = "0 0 8px rgba(255,255,255,0.55)";
+                  let barBg = "linear-gradient(90deg, #001248 0%, #00227a 50%, #001248 100%)";
+                  if (animRaw) {
+                    if (animRaw === "FOUR" || animRaw === "4" || animRaw === "4S" || animRaw === "FOUR!") {
+                      animWord = "FOUR";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #001248 20%, #00227a 50%, #001248 80%, #78350f 100%)";
+                      marqueeTextColor = "#fde047";
+                      marqueeTextStroke = "1.2px #854d0e";
+                      marqueeTextShadow = "0 0 12px rgba(250,204,21,0.9), 0 0 20px rgba(234,179,8,0.55)";
+                    } else if (animRaw === "SIX" || animRaw === "6" || animRaw === "6S" || animRaw === "SIX!") {
+                      animWord = "SIX";
+                      barBg = "linear-gradient(90deg, #7c2d12 0%, #001248 20%, #00227a 50%, #001248 80%, #7c2d12 100%)";
+                      marqueeTextColor = "#fdba74";
+                      marqueeTextStroke = "1.2px #9a3412";
+                      marqueeTextShadow = "0 0 14px rgba(249,115,22,0.95), 0 0 24px rgba(234,88,12,0.6)";
+                    } else if (animRaw === "WICKET" || animRaw === "W" || animRaw === "WICKET!" || animRaw === "OUT") {
+                      animWord = animRaw === "OUT" ? "OUT" : "WICKET";
+                      barBg = "linear-gradient(90deg, #7f1d1d 0%, #001248 20%, #00227a 50%, #001248 80%, #7f1d1d 100%)";
+                      marqueeTextColor = "#fecaca";
+                      marqueeTextStroke = "1.2px #991b1b";
+                      marqueeTextShadow = "0 0 14px rgba(239,68,68,0.95), 0 0 24px rgba(220,38,38,0.6)";
+                    } else if (animRaw === "NOT OUT" || animRaw === "NOT_OUT" || animRaw === "NOTOUT") {
+                      animWord = "NOT OUT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #001248 20%, #00227a 50%, #001248 80%, #064e3b 100%)";
+                      marqueeTextColor = "#a7f3d0";
+                      marqueeTextStroke = "1.2px #065f46";
+                      marqueeTextShadow = "0 0 14px rgba(16,185,129,0.9), 0 0 24px rgba(52,211,153,0.55)";
+                    } else if (animRaw === "FREE HIT" || animRaw === "FREE_HIT" || animRaw === "FREEHIT") {
+                      animWord = "FREE HIT";
+                      barBg = "linear-gradient(90deg, #064e3b 0%, #001248 20%, #00227a 50%, #001248 80%, #064e3b 100%)";
+                      marqueeTextColor = "#6ee7b7";
+                      marqueeTextStroke = "1.2px #047857";
+                      marqueeTextShadow = "0 0 14px rgba(52,211,153,0.9), 0 0 24px rgba(110,231,183,0.55)";
+                    } else if (animRaw === "HAT-TRICK BALL" || animRaw === "HAT-TRICK" || animRaw === "HATTRICK") {
+                      animWord = "HAT-TRICK";
+                      barBg = "linear-gradient(90deg, #581c87 0%, #001248 20%, #00227a 50%, #001248 80%, #581c87 100%)";
+                      marqueeTextColor = "#e9d5ff";
+                      marqueeTextStroke = "1.2px #6b21a8";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.95), 0 0 24px rgba(192,132,252,0.55)";
+                    } else if (animRaw === "REVIEW" || animRaw === "PENDING" || animRaw === "DRS") {
+                      animWord = "DRS REVIEW";
+                      barBg = "linear-gradient(90deg, #78350f 0%, #001248 20%, #00227a 50%, #001248 80%, #78350f 100%)";
+                      marqueeTextColor = "#fde68a";
+                      marqueeTextStroke = "1.2px #92400e";
+                      marqueeTextShadow = "0 0 14px rgba(245,158,11,0.9), 0 0 24px rgba(251,191,36,0.55)";
+                    } else if (animRaw === "NO BALL" || animRaw === "NO-BALL" || animRaw === "NOBALL" || animRaw === "Nb") {
+                      animWord = "NO BALL";
+                      barBg = "linear-gradient(90deg, #4c1d95 0%, #001248 20%, #00227a 50%, #001248 80%, #4c1d95 100%)";
+                      marqueeTextColor = "#ddd6fe";
+                      marqueeTextStroke = "1.2px #5b21b6";
+                      marqueeTextShadow = "0 0 14px rgba(168,85,247,0.9), 0 0 24px rgba(196,181,253,0.5)";
+                    } else if (animRaw === "POWERPLAY" || animRaw === "PP") {
+                      animWord = "POWERPLAY";
+                    } else if (animRaw === "INNINGS BREAK") {
+                      animWord = "INNINGS BREAK";
+                    } else {
+                      animWord = animRaw;
+                    }
+                  }
+                  const marqueeRepeated = animWord ? Array(18).fill(animWord).join("       ") : "";
 
-                  {/* Center Content: Bowler Spell & Fours / Sixes or Notification */}
-                  {activeNotification ? (
-                    <span style={{
-                      color: getNotificationStyles(activeNotification).textColor,
-                      fontSize: "10px",
-                      fontWeight: 950,
-                      letterSpacing: "1.2px",
-                      textTransform: "uppercase",
-                      animation: "pulseGlow 1s ease-in-out infinite alternate"
-                    }}>
-                      {activeNotification}
-                    </span>
-                  ) : (
+                  return (
                     <div style={{
+                      background: barBg,
+                      height: "18px",
                       display: "flex",
                       alignItems: "center",
-                      gap: "14px",
-                      color: "#ffffff",
-                      fontSize: "11px",
-                      fontWeight: 900,
-                      letterSpacing: "0.5px"
+                      justifyContent: "space-between",
+                      position: "relative",
+                      overflow: "hidden",
+                      borderTop: "1.5px solid #00a0e9",
+                      borderRadius: "0 0 4px 4px",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.6)",
+                      padding: "0 46px"
                     }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                      {/* Inline @keyframes for perfect LTR marquee loop */}
+                      <style>{`
+                        @keyframes bblStarMarqueeLTR {
+                          0%   { transform: translateX(-50%); }
+                          100% { transform: translateX(0%); }
+                        }
+                      `}</style>
+
+                      {/* LTR Scrolling Marquee Layer (behind stats, zIndex 1) */}
+                      {animWord && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                          overflow: "hidden"
+                        }}>
+                          <div style={{
+                            width: "200%",
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            animation: "bblStarMarqueeLTR 6s linear infinite"
+                          }}>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "13px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                            <span style={{
+                              display: "inline-block",
+                              paddingRight: "60px",
+                              fontWeight: "950",
+                              fontSize: "13px",
+                              letterSpacing: "4px",
+                              color: marqueeTextColor,
+                              WebkitTextStroke: marqueeTextStroke,
+                              textShadow: marqueeTextShadow,
+                              textTransform: "uppercase",
+                              opacity: 0.94
+                            }}>{marqueeRepeated}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Left Cyan Grass / Flame Graphic Watermark */}
+                      <div style={{
+                        position: "absolute",
+                        left: "2px",
+                        bottom: 0,
+                        display: "flex",
+                        opacity: 0.9,
+                        zIndex: 3
+                      }}>
+                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                        </svg>
+                      </div>
+
+                      {/* Left: Bowler Details (always on top, zIndex 5) */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        color: "#ffffff",
+                        fontSize: "11px",
+                        fontWeight: 900,
+                        letterSpacing: "0.5px",
+                        position: "relative",
+                        zIndex: 5,
+                        flexShrink: 0
+                      }}>
                         <span style={{ color: "#ffc72c" }}>●</span>
                         <span style={{ color: "#bae6fd", textTransform: "uppercase" }}>BOWLER:</span>
                         <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
@@ -14253,28 +14707,50 @@ export default function OverlayPage() {
                         <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>
                           ({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)
                         </span>
-                      </span>
-                      <span style={{ opacity: 0.5 }}>|</span>
-                      <span>
-                        Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>&nbsp;&nbsp;&nbsp;Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
-                      </span>
-                    </div>
-                  )}
+                      </div>
 
-                  {/* Right Cyan Grass / Flame Graphic Watermark */}
-                  <div style={{
-                    position: "absolute",
-                    right: "2px",
-                    bottom: 0,
-                    display: "flex",
-                    opacity: 0.9,
-                    transform: "scaleX(-1)"
-                  }}>
-                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
-                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
-                    </svg>
-                  </div>
-                </div>
+                      {/* Separator */}
+                      <span style={{ opacity: 0.5, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
+
+                      {/* Right: Fours / Sixes Stats (always on top, zIndex 5) */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                        color: "#ffffff",
+                        fontSize: "11px",
+                        fontWeight: 900,
+                        letterSpacing: "0.4px",
+                        position: "relative",
+                        zIndex: 5,
+                        flexShrink: 0
+                      }}>
+                        <span>
+                          Fours <strong style={{ color: "#ffffff" }}>{totalFours}</strong>
+                        </span>
+                        <span style={{ opacity: 0.45 }}>•</span>
+                        <span>
+                          Sixes <strong style={{ color: "#ffffff" }}>{totalSixes}</strong>
+                        </span>
+                      </div>
+
+                      {/* Right Cyan Grass / Flame Graphic Watermark */}
+                      <div style={{
+                        position: "absolute",
+                        right: "2px",
+                        bottom: 0,
+                        display: "flex",
+                        opacity: 0.9,
+                        transform: "scaleX(-1)",
+                        zIndex: 3
+                      }}>
+                        <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                          <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#00a0e9" />
+                        </svg>
+                      </div>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
@@ -14351,6 +14827,10 @@ export default function OverlayPage() {
             0% { transform: scale(0.88); opacity: 0.88; }
             50% { transform: scale(1.14); opacity: 1; }
             100% { transform: scale(0.92); opacity: 0.92; }
+          }
+          @keyframes iplBowlerMarqueeLTR {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
           }
         `}</style>
         <GroundBG bgUrl={theme.bgUrl} />
@@ -14682,52 +15162,160 @@ export default function OverlayPage() {
                   minWidth: 0
                 }}>
 
-                  {/* Top Bowler Capsule */}
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "linear-gradient(180deg, rgba(8,24,14,0.92) 0%, rgba(20,52,28,0.85) 50%, rgba(8,24,14,0.92) 100%)",
-                    border: "1.2px solid #a3e635",
-                    borderRadius: "7px",
-                    height: "20px",
-                    padding: "0 8px 0 6px",
-                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden" }}>
-                      <span style={{
-                        width: "5px",
-                        height: "5px",
-                        borderRadius: "50%",
-                        background: "#ffffff",
-                        display: "inline-block",
-                        flexShrink: 0
-                      }} />
-                      <span style={{
-                        color: "#ffffff",
-                        fontWeight: 950,
-                        fontSize: "9.5px",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis"
-                      }}>
-                        {(scoringState.bowler || "BOWLER").toUpperCase()}
-                      </span>
-                    </div>
+                  {/* Top Bowler Capsule (with embedded LTR marquee for active events) */}
+                  {(() => {
+                    const anim = scoringState.animation?.toUpperCase?.() || "";
+                    const dec = (scoringState.decision || "").toUpperCase();
+                    let animWord: string | null = null;
+                    let mqColor = "#bef264";
+                    let mqStroke = "#4d7c0f";
+                    let mqGlow = "rgba(163,230,53,0.8)";
+                    let pillBg: string | null = null;
+                    let pillBorder: string | null = null;
+                    let pillShadow: string | null = null;
 
-                    <div style={{
-                      color: "#ffffff",
-                      fontWeight: 950,
-                      fontSize: "10.5px",
-                      letterSpacing: "0.3px",
-                      flexShrink: 0,
-                      marginLeft: "6px"
-                    }}>
-                      {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}&nbsp;&nbsp;{fmtOv(bowler?.ballsBowled ?? 0, bpo)}
-                    </div>
-                  </div>
+                    if (anim === "FOUR" || anim === "4" || anim === "4S") {
+                      animWord = "FOUR"; mqColor = "#fde047"; mqStroke = "#a16207"; mqGlow = "rgba(250,204,21,0.85)";
+                      pillBg = "linear-gradient(180deg, rgba(60,48,8,0.94) 0%, rgba(120,94,18,0.9) 50%, rgba(60,48,8,0.94) 100%)";
+                      pillBorder = "1.2px solid #facc15";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 12px rgba(250,204,21,0.28)";
+                    } else if (anim === "SIX" || anim === "6" || anim === "6S") {
+                      animWord = "SIX"; mqColor = "#bef264"; mqStroke = "#4d7c0f"; mqGlow = "rgba(163,230,53,0.9)";
+                      pillBg = "linear-gradient(180deg, rgba(20,52,18,0.94) 0%, rgba(52,120,34,0.9) 50%, rgba(20,52,18,0.94) 100%)";
+                      pillBorder = "1.2px solid #bef264";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 14px rgba(163,230,53,0.38)";
+                    } else if (anim === "WICKET" || dec === "OUT" || anim === "OUT") {
+                      animWord = (dec === "OUT") ? "OUT" : (animWord = anim || "WICKET");
+                      mqColor = "#fecaca"; mqStroke = "#991b1b"; mqGlow = "rgba(239,68,68,0.85)";
+                      pillBg = "linear-gradient(180deg, rgba(60,10,15,0.94) 0%, rgba(120,22,28,0.9) 50%, rgba(60,10,15,0.94) 100%)";
+                      pillBorder = "1.2px solid #f87171";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 14px rgba(239,68,68,0.38)";
+                    } else if (dec === "NOT OUT") {
+                      animWord = "NOT OUT"; mqColor = "#a7f3d0"; mqStroke = "#065f46"; mqGlow = "rgba(16,185,129,0.8)";
+                      pillBg = "linear-gradient(180deg, rgba(6,40,28,0.94) 0%, rgba(8,94,70,0.9) 50%, rgba(6,40,28,0.94) 100%)";
+                      pillBorder = "1.2px solid #6ee7b7";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 12px rgba(16,185,129,0.32)";
+                    } else if (anim === "FREE HIT") {
+                      animWord = "FREE HIT"; mqColor = "#6ee7b7"; mqStroke = "#047857"; mqGlow = "rgba(16,185,129,0.85)";
+                      pillBg = "linear-gradient(180deg, rgba(6,40,28,0.94) 0%, rgba(8,94,70,0.9) 50%, rgba(6,40,28,0.94) 100%)";
+                      pillBorder = "1.2px solid #34d399";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 12px rgba(16,185,129,0.32)";
+                    } else if (anim === "HAT-TRICK BALL" || anim === "HAT-TRICK") {
+                      animWord = "HAT-TRICK"; mqColor = "#e9d5ff"; mqStroke = "#6b21a8"; mqGlow = "rgba(168,85,247,0.85)";
+                      pillBg = "linear-gradient(180deg, rgba(38,14,58,0.94) 0%, rgba(88,28,135,0.9) 50%, rgba(38,14,58,0.94) 100%)";
+                      pillBorder = "1.2px solid #c084fc";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 14px rgba(168,85,247,0.36)";
+                    } else if (dec === "PENDING" || anim === "REVIEW" || anim === "DRS") {
+                      animWord = dec === "PENDING" ? "DRS REVIEW" : (anim || "REVIEW");
+                      mqColor = "#fde68a"; mqStroke = "#92400e"; mqGlow = "rgba(245,158,11,0.85)";
+                      pillBg = "linear-gradient(180deg, rgba(56,34,8,0.94) 0%, rgba(120,72,16,0.9) 50%, rgba(56,34,8,0.94) 100%)";
+                      pillBorder = "1.2px solid #fbbf24";
+                      pillShadow = "inset 0 1px 0 rgba(255,255,255,0.15), 0 0 12px rgba(245,158,11,0.32)";
+                    } else if (anim && anim !== "NORMAL" && anim !== "TOUR BOUNDARIES") {
+                      animWord = anim.replace(/!/g, "").trim();
+                    }
+
+                    return (
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        background: pillBg || "linear-gradient(180deg, rgba(8,24,14,0.92) 0%, rgba(20,52,28,0.85) 50%, rgba(8,24,14,0.92) 100%)",
+                        border: pillBorder || "1.2px solid #a3e635",
+                        borderRadius: "7px",
+                        height: "20px",
+                        padding: "0 8px 0 6px",
+                        boxShadow: pillShadow || "inset 0 1px 0 rgba(255,255,255,0.15)",
+                        position: "relative",
+                        overflow: "hidden"
+                      }}>
+                        {animWord && (
+                          <>
+                            <div aria-hidden style={{
+                              position: "absolute",
+                              inset: 0,
+                              display: "flex",
+                              alignItems: "center",
+                              width: "200%",
+                              zIndex: 1,
+                              animation: "iplBowlerMarqueeLTR 5.2s linear infinite"
+                            }}>
+                              {[0, 1].map(seg => (
+                                <div key={seg} style={{
+                                  width: "50%",
+                                  flexShrink: 0,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "22px",
+                                  paddingLeft: "18px",
+                                  overflow: "hidden",
+                                  whiteSpace: "nowrap"
+                                }}>
+                                  {Array.from({ length: 10 }).map((_, i) => (
+                                    <span key={i} style={{
+                                      color: mqColor,
+                                      fontWeight: 950,
+                                      fontSize: "12px",
+                                      letterSpacing: "3px",
+                                      textTransform: "uppercase",
+                                      WebkitTextStroke: `0.5px ${mqStroke}`,
+                                      textShadow: `0 0 6px ${mqGlow}, 0 0 12px ${mqGlow}`,
+                                      opacity: 0.92,
+                                      flexShrink: 0
+                                    }}>
+                                      {animWord}
+                                    </span>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>
+                            <div aria-hidden style={{
+                              position: "absolute",
+                              inset: 0,
+                              background: "linear-gradient(90deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 8%, rgba(0,0,0,0.55) 42%, rgba(0,0,0,0.55) 58%, rgba(0,0,0,0.0) 92%, rgba(0,0,0,0.0) 100%)",
+                              zIndex: 2,
+                              pointerEvents: "none"
+                            }} />
+                          </>
+                        )}
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, overflow: "hidden", position: "relative", zIndex: 5 }}>
+                          <span style={{
+                            width: "5px",
+                            height: "5px",
+                            borderRadius: "50%",
+                            background: "#ffffff",
+                            display: "inline-block",
+                            flexShrink: 0
+                          }} />
+                          <span style={{
+                            color: "#ffffff",
+                            fontWeight: 950,
+                            fontSize: "9.5px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.2px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis"
+                          }}>
+                            {(scoringState.bowler || "BOWLER").toUpperCase()}
+                          </span>
+                        </div>
+
+                        <div style={{
+                          color: "#ffffff",
+                          fontWeight: 950,
+                          fontSize: "10.5px",
+                          letterSpacing: "0.3px",
+                          flexShrink: 0,
+                          marginLeft: "6px",
+                          position: "relative",
+                          zIndex: 5
+                        }}>
+                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}&nbsp;&nbsp;{fmtOv(bowler?.ballsBowled ?? 0, bpo)}
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {/* Bottom THIS OVER + 6 Outline Boxes */}
                   <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
