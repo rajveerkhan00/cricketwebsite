@@ -58,6 +58,7 @@ const THEME_MAP: Record<string, { name: string; primaryBg: string; secondaryBg: 
   "bbl-starsports": { name: "BBL Star Sports", primaryBg: "rgba(0,18,72,0.98)", secondaryBg: "rgba(0,31,112,0.92)", accent: "#00a0e9", accentText: "#00a0e9", textPrimary: "#ffffff", textSecondary: "#bae6fd", scoreBg: "rgba(0,160,233,0.15)", scoreText: "#ffffff", borderColor: "#00a0e9", headerBg: "rgba(0,10,38,0.99)", ballColors: { runs: "#0284c7", four: "#facc15", six: "#f97316", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1531415080290-bc98545ab3ef?q=80&w=1920&auto=format&fit=crop" },
   "ipl-2025": { name: "IPL 2025", primaryBg: "rgba(11,11,11,0.98)", secondaryBg: "rgba(18,18,18,0.92)", accent: "#c8e63c", accentText: "#c8e63c", textPrimary: "#ffffff", textSecondary: "#d4d4d8", scoreBg: "linear-gradient(135deg, rgba(200,230,60,0.18), rgba(0, 0, 0, 0.5))", scoreText: "#c8e63c", borderColor: "#c8e63c", headerBg: "rgba(8,8,8,0.99)", ballColors: { runs: "rgba(255,255,255,0.2)", four: "#3b82f6", six: "#c8e63c", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1920&auto=format&fit=crop" },
   "crioverlay-green": { name: "CriOverlay Green", primaryBg: "rgba(9,17,32,0.98)", secondaryBg: "rgba(15,28,52,0.95)", accent: "#74FB05", accentText: "#FFFFFF", textPrimary: "#ffffff", textSecondary: "#bbf7d0", scoreBg: "rgba(116,251,5,0.18)", scoreText: "#74FB05", borderColor: "#74FB05", headerBg: "rgba(9,17,32,0.99)", ballColors: { runs: "#091120", four: "#74FB05", six: "#86efac", wicket: "#ef4444", extra: "#c084fc" }, bgUrl: "" },
+  "starsports-t20": { name: "Star Sports T20", primaryBg: "rgba(24,30,48,0.98)", secondaryBg: "rgba(15,20,35,0.95)", accent: "#facc15", accentText: "#000000", textPrimary: "#ffffff", textSecondary: "#e2e8f0", scoreBg: "rgba(2,132,199,0.22)", scoreText: "#ffffff", borderColor: "#0284c7", headerBg: "rgba(15,20,35,0.99)", ballColors: { runs: "#1e2a42", four: "#facc15", six: "#0284c7", wicket: "#ef4444", extra: "#a855f7" }, bgUrl: "https://images.unsplash.com/photo-1540747737956-3787293ac287?q=80&w=1920&auto=format&fit=crop" },
 };
 const DEFAULT_THEME = THEME_MAP["ipl"];
 const THEME_FONTS: Record<string, string> = {
@@ -69,6 +70,7 @@ const THEME_FONTS: Record<string, string> = {
   "jiocinema": "'Rubik', sans-serif", "ipl": "'Outfit', sans-serif",
   "wt20-2024": "'Outfit', Arial, sans-serif", "bbl-starsports": "'Outfit', Arial, sans-serif",
   "ipl-2025": "'Outfit', sans-serif", "crioverlay-green": "'Outfit', sans-serif",
+  "starsports-t20": "'Outfit', Arial, sans-serif",
 };
 
 const PANEL_THEMES: Record<string, {
@@ -1191,7 +1193,7 @@ export default function OverlayPage() {
       // Use real stats if available; fall back to zeros for a player who hasn't batted yet
       const stats = batterPanelStats ?? { runs: 0, avg: "—", sr: "—", hs: "—", fours: 0, sixes: 0, wickets: 0, economy: "—", best: "—", matches: 0 };
 
-      if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
+      if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl" || themeSlug === "ipl-2025" || themeSlug === "starsports-t20") {
         const matchesCount = stats.matches > 0 ? stats.matches : 1;
         const runsVal = stats.runs ?? 0;
         const foursVal = stats.fours ?? 0;
@@ -1213,17 +1215,20 @@ export default function OverlayPage() {
         const isCwc23 = themeSlug === "cwc-23-india";
         const isBblBlack = themeSlug === "bbl-black";
         const isIpl = themeSlug === "ipl";
-        const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#00a0e9";
-        const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(0, 160, 233, 0.4)";
-        const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#001248";
-        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
-        const batFill = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#ffffff";
-        const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
-        const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
-        const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #00a0e9";
-        const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-        const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
-        const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
+        const isIpl25 = themeSlug === "ipl-2025";
+        const isStarT20 = themeSlug === "starsports-t20";
+
+        const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isIpl25 ? "#0c1322" : isStarT20 ? "#18212f" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#00a0e9";
+        const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isIpl25 ? "1.5px solid #c8e63c" : isStarT20 ? "1.5px solid #0284c7" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(0, 160, 233, 0.4)";
+        const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#facc15" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#001248";
+        const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isIpl25 || isStarT20 || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
+        const batFill = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#0284c7" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#ffffff";
+        const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#0284c7" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
+        const ribbonTextColor = isCri ? "#091120" : isIpl25 ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc || isStarT20) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
+        const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isIpl25 ? "2px solid #c8e63c" : isStarT20 ? "2px solid #0284c7" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #00a0e9";
+        const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#facc15" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+        const valBoxBg = "#FFFFFF";
+        const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isIpl25 ? "#091120" : isStarT20 ? "#18212f" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
 
         return (
           <div
@@ -1581,7 +1586,7 @@ export default function OverlayPage() {
     // Use real stats if available; fall back to zeros/defaults for a bowler with no stats yet
     const stats = bowlerPanelStats ?? { wickets: 0, economy: "—", bowlAvg: "—", bowlSr: "—", best: "—", runsConceded: 0, matches: 0 };
 
-    if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl") {
+    if (themeSlug === "crioverlay-green" || themeSlug === "wcl-fancode" || themeSlug === "cwc-19" || themeSlug === "champions-trophy-2025" || themeSlug === "cricfusion" || themeSlug === "sa20" || themeSlug === "jiocinema" || themeSlug === "geo-cinema" || themeSlug === "bbl-starsports" || themeSlug === "asia-cup" || themeSlug === "t20-emerging-asia-cup" || themeSlug === "cwc-25-india" || themeSlug === "wt20-2024" || themeSlug === "cwc-23-india" || themeSlug === "bbl-black" || themeSlug === "ipl" || themeSlug === "ipl-2025" || themeSlug === "starsports-t20") {
       const liveBowler = scoringState.bowlers?.find(b => b.name?.trim().toLowerCase() === bowlerPanelPlayer?.trim().toLowerCase());
       const bpo = match.ballsPerOver || 6;
       const matchesCount = stats.matches > 0 ? stats.matches : 1;
@@ -1606,17 +1611,20 @@ export default function OverlayPage() {
       const isCwc23 = themeSlug === "cwc-23-india";
       const isBblBlack = themeSlug === "bbl-black";
       const isIpl = themeSlug === "ipl";
-      const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
-      const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
-      const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-      const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
-      const ballStroke = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-      const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
-      const ribbonTextColor = isCri ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
-      const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
-      const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
-      const valBoxBg = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#ffffff";
-      const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
+      const isIpl25 = themeSlug === "ipl-2025";
+      const isStarT20 = themeSlug === "starsports-t20";
+
+      const panelBg = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isIpl25 ? "#0c1322" : isStarT20 ? "#18212f" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#ffc72c";
+      const panelBorder = isCri ? "1.5px solid #74FB05" : isWcl ? "1.5px solid #0284C7" : isCwc19 ? "1.5px solid #02B3E4" : isCt25 ? "1.5px solid #03A360" : isFusion ? "1.5px solid #CC271F" : isSa20 ? "1.5px solid #EBB509" : isGeo ? "1.5px solid #FDFEFE" : isEac ? "1.5px solid #781010" : isIpl ? "1.5px solid #F3A714" : isIpl25 ? "1.5px solid #c8e63c" : isStarT20 ? "1.5px solid #0284c7" : isBblBlack ? "1.5px solid #ec4899" : isCwc23 ? "1.5px solid #D946EF" : isCwc ? "1.5px solid #0373AF" : isAsia ? "1.5px solid #E58808" : "1px solid rgba(255, 199, 44, 0.4)";
+      const headerTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#facc15" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const nameTextColor = (isAsia || isCwc || isCwc23 || isBblBlack || isIpl || isIpl25 || isStarT20 || isEac || isGeo || isSa20 || isFusion || isCt25 || isCwc19 || isWcl || isCri) ? "#FFFFFF" : "#000000";
+      const ballStroke = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#0284c7" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const ribbonBg = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#DC2626" : isCt25 ? "#03A360" : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#781010" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#0284c7" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#e60000";
+      const ribbonTextColor = isCri ? "#091120" : isIpl25 ? "#091120" : (isWcl || isCwc19 || isCt25 || isFusion || isEac || isBblBlack || isCwc23 || isCwc || isStarT20) ? "#FFFFFF" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isIpl ? "#0A112E" : isAsia ? "#142248" : "#ffffff";
+      const rowBorder = isCri ? "2px solid #74FB05" : isWcl ? "2px solid #0284C7" : isCwc19 ? "2px solid #02B3E4" : isCt25 ? "2px solid #03A360" : isFusion ? "2px solid #CC271F" : isSa20 ? "2px solid #EBB509" : isGeo ? "2px solid #FDFEFE" : isEac ? "2px solid #781010" : isIpl ? "2px solid #F3A714" : isIpl25 ? "2px solid #c8e63c" : isStarT20 ? "2px solid #0284c7" : isBblBlack ? "2px solid #ec4899" : isCwc23 ? "2px solid #D946EF" : isCwc ? "2px solid #0373AF" : isAsia ? "2px solid #E58808" : "2px solid #ffc72c";
+      const labelTextColor = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360" : isFusion ? "#FFFFFF" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#FFFFFF" : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#facc15" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF" : isCwc ? "#0373AF" : isAsia ? "#E58808" : "#000000";
+      const valBoxBg = "#FFFFFF";
+      const valTextColor = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A" : isFusion ? "#CC271F" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560" : isIpl ? "#0A112E" : isIpl25 ? "#091120" : isStarT20 ? "#18212f" : isBblBlack ? "#22095A" : isCwc23 ? "#080721" : isCwc ? "#14122A" : isAsia ? "#142248" : "#000000";
 
       return (
         <div
@@ -1988,19 +1996,20 @@ export default function OverlayPage() {
     const isIpl = themeSlug === "ipl";
     const isIpl25 = themeSlug === "ipl-2025";
     const isBbl = themeSlug === "bbl-starsports";
+    const isStarT20 = themeSlug === "starsports-t20";
 
     const accent = isCri ? "#74FB05" : isWcl ? "#0284C7" : isCwc19 ? "#02B3E4" : isCt25 ? "#03A360"
-      : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#ff4444"
-        : isIpl ? "#F3A714" : isIpl25 ? "#a3e635" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF"
+      : isFusion ? "#CC271F" : isSa20 ? "#EBB509" : isGeo ? "#FDFEFE" : isEac ? "#facc15"
+        : isIpl ? "#F3A714" : isIpl25 ? "#c8e63c" : isStarT20 ? "#0284c7" : isBblBlack ? "#ec4899" : isCwc23 ? "#D946EF"
           : isCwc ? "#0373AF" : isAsia ? "#E58808" : isBbl ? "#00cfff" : "#74FB05";
 
     const bgPanel = isCri ? "#091120" : isWcl ? "#1F2937" : isCwc19 ? "#07152B" : isCt25 ? "#0A122A"
-      : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0a0a1a"
-        : isIpl ? "#0A112E" : isIpl25 ? "#081c0c" : isBblBlack ? "#22095A" : isCwc23 ? "#080721"
+      : isFusion ? "#120406" : isSa20 ? "#171705" : isGeo ? "#0D1322" : isEac ? "#0C2560"
+        : isIpl ? "#0A112E" : isIpl25 ? "#0c1322" : isStarT20 ? "#18212f" : isBblBlack ? "#22095A" : isCwc23 ? "#080721"
           : isCwc ? "#14122A" : isAsia ? "#142248" : isBbl ? "#0a1020" : "#091120";
 
-    const circleBg = accent;
-    const circleText = (isCri || isSa20 || isIpl || isIpl25) ? "#000" : (isGeo || isCt25 || isWcl || isCwc) ? "#fff" : "#000";
+    const circleBg = isStarT20 ? "#0284c7" : accent;
+    const circleText = (isCri || isSa20 || isIpl || isIpl25) ? "#000" : (isGeo || isCt25 || isWcl || isCwc || isStarT20 || isEac || isAsia || isCwc23 || isBblBlack || isFusion || isCwc19 || isBbl) ? "#fff" : "#000";
 
     return (
       <div
@@ -7615,89 +7624,89 @@ export default function OverlayPage() {
       const cardBg = isIpl2025
         ? "linear-gradient(135deg, rgba(10, 17, 40, 0.96) 0%, rgba(16, 31, 66, 0.98) 100%)"
         : isBbl
-        ? "linear-gradient(135deg, rgba(12, 6, 26, 0.97) 0%, rgba(26, 11, 48, 0.98) 100%)"
-        : isJio
-        ? "linear-gradient(135deg, rgba(11, 17, 32, 0.97) 0%, rgba(18, 28, 48, 0.98) 100%)"
-        : isEac
-        ? "linear-gradient(135deg, rgba(12, 37, 96, 0.98) 0%, rgba(8, 23, 61, 0.98) 100%)"
-        : isCwc23
-        ? "linear-gradient(135deg, rgba(8, 7, 33, 0.98) 0%, rgba(21, 13, 58, 0.98) 100%)"
-        : isCwc25
-        ? "linear-gradient(135deg, rgba(14, 19, 40, 0.98) 0%, rgba(24, 20, 56, 0.98) 100%)"
-        : isCt25
-        ? "linear-gradient(135deg, rgba(10, 18, 42, 0.98) 0%, rgba(6, 43, 27, 0.98) 100%)"
-        : isSa20
-        ? "linear-gradient(135deg, rgba(23, 23, 5, 0.98) 0%, rgba(41, 36, 8, 0.98) 100%)"
-        : isFusion
-        ? "linear-gradient(135deg, rgba(18, 4, 6, 0.98) 0%, rgba(46, 9, 11, 0.98) 100%)"
-        : isCri
-        ? "linear-gradient(135deg, rgba(9, 17, 32, 0.98) 0%, rgba(5, 26, 20, 0.98) 100%)"
-        : isWcl
-        ? "linear-gradient(135deg, rgba(31, 41, 55, 0.98) 0%, rgba(17, 24, 39, 0.98) 100%)"
-        : isAsia
-        ? "linear-gradient(135deg, rgba(20, 34, 72, 0.98) 0%, rgba(11, 21, 48, 0.98) 100%)"
-        : `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`;
+          ? "linear-gradient(135deg, rgba(12, 6, 26, 0.97) 0%, rgba(26, 11, 48, 0.98) 100%)"
+          : isJio
+            ? "linear-gradient(135deg, rgba(11, 17, 32, 0.97) 0%, rgba(18, 28, 48, 0.98) 100%)"
+            : isEac
+              ? "linear-gradient(135deg, rgba(12, 37, 96, 0.98) 0%, rgba(8, 23, 61, 0.98) 100%)"
+              : isCwc23
+                ? "linear-gradient(135deg, rgba(8, 7, 33, 0.98) 0%, rgba(21, 13, 58, 0.98) 100%)"
+                : isCwc25
+                  ? "linear-gradient(135deg, rgba(14, 19, 40, 0.98) 0%, rgba(24, 20, 56, 0.98) 100%)"
+                  : isCt25
+                    ? "linear-gradient(135deg, rgba(10, 18, 42, 0.98) 0%, rgba(6, 43, 27, 0.98) 100%)"
+                    : isSa20
+                      ? "linear-gradient(135deg, rgba(23, 23, 5, 0.98) 0%, rgba(41, 36, 8, 0.98) 100%)"
+                      : isFusion
+                        ? "linear-gradient(135deg, rgba(18, 4, 6, 0.98) 0%, rgba(46, 9, 11, 0.98) 100%)"
+                        : isCri
+                          ? "linear-gradient(135deg, rgba(9, 17, 32, 0.98) 0%, rgba(5, 26, 20, 0.98) 100%)"
+                          : isWcl
+                            ? "linear-gradient(135deg, rgba(31, 41, 55, 0.98) 0%, rgba(17, 24, 39, 0.98) 100%)"
+                            : isAsia
+                              ? "linear-gradient(135deg, rgba(20, 34, 72, 0.98) 0%, rgba(11, 21, 48, 0.98) 100%)"
+                              : `linear-gradient(135deg, ${theme.headerBg}, ${theme.primaryBg})`;
 
       const cardBorder = isIpl2025 ? "2.5px solid #38bdf8"
         : isBbl ? "2.5px solid #ec4899"
-        : isJio ? "2.5px solid #e11d48"
-        : isEac ? "2.5px solid #facc15"
-        : isCwc23 ? "2.5px solid #d946ef"
-        : isCwc25 ? "2.5px solid #00e5ff"
-        : isCt25 ? "2.5px solid #03a360"
-        : isSa20 ? "2.5px solid #ebb509"
-        : isFusion ? "2.5px solid #cc271f"
-        : isCri ? "2.5px solid #74fb05"
-        : isWcl ? "2.5px solid #0284c7"
-        : isAsia ? "2.5px solid #e58808"
-        : `2.5px solid ${theme.borderColor}`;
+          : isJio ? "2.5px solid #e11d48"
+            : isEac ? "2.5px solid #facc15"
+              : isCwc23 ? "2.5px solid #d946ef"
+                : isCwc25 ? "2.5px solid #00e5ff"
+                  : isCt25 ? "2.5px solid #03a360"
+                    : isSa20 ? "2.5px solid #ebb509"
+                      : isFusion ? "2.5px solid #cc271f"
+                        : isCri ? "2.5px solid #74fb05"
+                          : isWcl ? "2.5px solid #0284c7"
+                            : isAsia ? "2.5px solid #e58808"
+                              : `2.5px solid ${theme.borderColor}`;
 
       const cardShadow = isIpl2025 ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(56,189,248,0.25)"
         : isBbl ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(236,72,153,0.3)"
-        : isJio ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(225,29,72,0.25)"
-        : isEac ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(250,204,21,0.25)"
-        : isCwc23 ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(217,70,239,0.3)"
-        : `0 25px 60px rgba(0,0,0,0.8), 0 0 30px ${theme.accent}30`;
+          : isJio ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(225,29,72,0.25)"
+            : isEac ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(250,204,21,0.25)"
+              : isCwc23 ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(217,70,239,0.3)"
+                : `0 25px 60px rgba(0,0,0,0.8), 0 0 30px ${theme.accent}30`;
 
       const primaryAccent = isIpl2025 ? "#facc15"
         : isBbl ? "#ec4899"
-        : isJio ? "#e11d48"
-        : isEac ? "#facc15"
-        : isCwc23 ? "#d946ef"
-        : isCwc25 ? "#00e5ff"
-        : isCt25 ? "#03a360"
-        : isSa20 ? "#ebb509"
-        : isFusion ? "#cc271f"
-        : isCri ? "#74fb05"
-        : isWcl ? "#0284c7"
-        : isAsia ? "#e58808"
-        : theme.accent;
+          : isJio ? "#e11d48"
+            : isEac ? "#facc15"
+              : isCwc23 ? "#d946ef"
+                : isCwc25 ? "#00e5ff"
+                  : isCt25 ? "#03a360"
+                    : isSa20 ? "#ebb509"
+                      : isFusion ? "#cc271f"
+                        : isCri ? "#74fb05"
+                          : isWcl ? "#0284c7"
+                            : isAsia ? "#e58808"
+                              : theme.accent;
 
       const secondaryAccent = isIpl2025 ? "#38bdf8"
         : isBbl ? "#06b6d4"
-        : isJio ? "#ffffff"
-        : isEac ? "#781010"
-        : isCwc23 ? "#0ea5e9"
-        : isCwc25 ? "#ff007f"
-        : isCt25 ? "#f59e0b"
-        : isSa20 ? "#ffffff"
-        : isFusion ? "#f97316"
-        : isCri ? "#38bdf8"
-        : isWcl ? "#38bdf8"
-        : isAsia ? "#facc15"
-        : theme.textSecondary;
+          : isJio ? "#ffffff"
+            : isEac ? "#781010"
+              : isCwc23 ? "#0ea5e9"
+                : isCwc25 ? "#ff007f"
+                  : isCt25 ? "#f59e0b"
+                    : isSa20 ? "#ffffff"
+                      : isFusion ? "#f97316"
+                        : isCri ? "#38bdf8"
+                          : isWcl ? "#38bdf8"
+                            : isAsia ? "#facc15"
+                              : theme.textSecondary;
 
       const team1Grad = isJio ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
         : isEac ? "linear-gradient(135deg, #0c2560 0%, #16469d 100%)"
-        : isCwc23 ? "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)"
-        : isBbl ? "linear-gradient(135deg, #4c1d95 0%, #2e1065 100%)"
-        : `linear-gradient(135deg, ${theme.primaryBg}, ${theme.headerBg})`;
+          : isCwc23 ? "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)"
+            : isBbl ? "linear-gradient(135deg, #4c1d95 0%, #2e1065 100%)"
+              : `linear-gradient(135deg, ${theme.primaryBg}, ${theme.headerBg})`;
 
       const team2Grad = isJio ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
         : isEac ? "linear-gradient(135deg, #781010 0%, #991b1b 100%)"
-        : isCwc23 ? "linear-gradient(135deg, #eab308 0%, #ca8a04 100%)"
-        : isBbl ? "linear-gradient(135deg, #be185d 0%, #831843 100%)"
-        : `linear-gradient(135deg, ${theme.secondaryBg}, ${theme.headerBg})`;
+          : isCwc23 ? "linear-gradient(135deg, #eab308 0%, #ca8a04 100%)"
+            : isBbl ? "linear-gradient(135deg, #be185d 0%, #831843 100%)"
+              : `linear-gradient(135deg, ${theme.secondaryBg}, ${theme.headerBg})`;
 
       return (
         <div className="fade-in" style={{
@@ -8684,7 +8693,7 @@ export default function OverlayPage() {
       return null;
     }
 
-    if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports" || currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024" || currentThemeSlug === "bbl-black" || currentThemeSlug === "wcl-fancode" || currentThemeSlug === "crioverlay-green" || currentThemeSlug === "jiocinema" || currentThemeSlug === "cwc-23-india") {
+    if (currentThemeSlug === "asia-cup" || currentThemeSlug === "t20-emerging-asia-cup" || currentThemeSlug === "ipl-2025" || currentThemeSlug === "bbl-starsports" || currentThemeSlug === "cwc-25-india" || currentThemeSlug === "wt20-2024" || currentThemeSlug === "bbl-black" || currentThemeSlug === "wcl-fancode" || currentThemeSlug === "crioverlay-green" || currentThemeSlug === "jiocinema" || currentThemeSlug === "cwc-23-india" || currentThemeSlug === "starsports-t20") {
       if (isMatchNotStarted) return renderScoreboardPreMatchRibbon(currentThemeSlug, currentMatch);
       return null;
     }
@@ -15979,6 +15988,313 @@ export default function OverlayPage() {
             </div>
             <div style={{ color: "#00a0e9", fontSize: "11px", fontWeight: 900, marginTop: "8px", letterSpacing: "2px" }}>
               BBL STAR SPORTS • MATCH NOT STARTED
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── STAR SPORTS T20 — 13th Theme: Exact match to broadcast reference screenshot ──
+  if (themeSlug === "starsports-t20") {
+    const bpo = match.ballsPerOver || 6;
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const bLeft = scoringState.target !== null ? Math.max(0, match.overs * match.ballsPerOver - scoringState.balls) : null;
+    const rrr = bLeft !== null && bLeft > 0 && need !== null ? ((need / bLeft) * bpo).toFixed(2) : "0.00";
+    const crr = calcRR(scoringState);
+    const oversText = fmtOv(scoringState.balls, bpo);
+    const getShortNameLocal = (name: string) => {
+      const words = (name || "").trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 3) return (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+      if (words.length === 2) return (words[0][0] + words[1][0]).toUpperCase();
+      return (name || "").slice(0, 3).toUpperCase();
+    };
+    const batShort = getShortNameLocal(currentBatTeam);
+    const bowlShort = getShortNameLocal(currentBowlTeam);
+    const thisOver = scoringState.thisOver || [];
+    const target = scoringState.target;
+
+    // Animation state
+    const ssAnim = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "DRS REVIEW" : null) || "").trim().toUpperCase();
+    let ssWord = ssAnim;
+    if (ssAnim === "FOUR" || ssAnim === "4" || ssAnim === "4S" || ssAnim === "FOUR!") ssWord = "FOUR!";
+    else if (ssAnim === "SIX" || ssAnim === "6" || ssAnim === "6S" || ssAnim === "SIX!") ssWord = "SIX!";
+    else if (ssAnim === "WICKET" || ssAnim === "W" || ssAnim === "WICKET!") ssWord = "WICKET!";
+    else if (ssAnim === "OUT") ssWord = "OUT!";
+    else if (ssAnim === "NOT OUT" || ssAnim === "NOT_OUT" || ssAnim === "NOTOUT") ssWord = "NOT OUT!";
+    else if (ssAnim === "FREE HIT" || ssAnim === "FREE_HIT" || ssAnim === "FREEHIT") ssWord = "FREE HIT!";
+    else if (ssAnim === "NO BALL" || ssAnim === "NB" || ssAnim === "NOBALL") ssWord = "NO BALL!";
+    else if (ssAnim === "HAT-TRICK" || ssAnim === "HATTRICK" || ssAnim === "HAT TRICK") ssWord = "HAT-TRICK!";
+    else if (ssAnim === "REVIEW" || ssAnim === "DRS" || ssAnim === "PENDING") ssWord = "DRS REVIEW";
+    let ssAnimColor = "#facc15";
+    if (ssWord === "WICKET!" || ssWord === "OUT!") ssAnimColor = "#ef4444";
+    else if (ssWord === "SIX!") ssAnimColor = "#34d399";
+    else if (ssWord === "FREE HIT!") ssAnimColor = "#6ee7b7";
+    else if (ssWord === "NOT OUT!") ssAnimColor = "#4ade80";
+    else if (ssWord === "NO BALL!") ssAnimColor = "#c084fc";
+    else if (ssWord === "DRS REVIEW") ssAnimColor = "#fde68a";
+    else if (ssWord === "HAT-TRICK!") ssAnimColor = "#e879f9";
+    const ssRepeated = Array(16).fill(ssWord || " ").join("     ");
+
+    return (
+      <div style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: isPreview ? "center" : "flex-end",
+        padding: isPreview ? "80px 0 28px" : "0 0 16px",
+        fontFamily: "'Outfit', Arial, sans-serif",
+        overflow: "hidden"
+      }}>
+        <style>{GLOBAL_CSS}</style>
+        <GroundBG bgUrl={theme.bgUrl} />
+
+        {isPreview && (
+          <div style={{
+            position: "fixed",
+            top: 0, left: 0, right: 0,
+            background: "rgba(0,0,0,0.92)",
+            backdropFilter: "blur(8px)",
+            color: "#facc15",
+            padding: "8px 16px",
+            fontSize: 10.5, fontWeight: 900, letterSpacing: 2, zIndex: 999,
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 12
+          }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span className="live-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+              PREVIEW MODE
+            </span>
+            <span style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
+            <span>Star Sports T20 Theme</span>
+          </div>
+        )}
+        {renderCustomOverlay()}{renderMom()}{renderBatterStatsPanel()}{renderBatterMatchPanel()}
+
+        {scoringState.inningsStarted ? (
+          <div className="slide-up" style={{ width: "96vw", maxWidth: "1120px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.85))" }}>
+            {renderScoreboardMarqueeRibbon("starsports-t20", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
+              <>
+                {/* ── MAIN SCOREBOARD ROW ── */}
+                <div style={{ display: "flex", alignItems: "stretch", height: "46px", borderRadius: "5px 5px 0 0", overflow: "hidden" }}>
+
+                  {/* 1. LEFT DARK TEAM PILL */}
+                  <div style={{
+                    background: "linear-gradient(135deg, #18212f 0%, #1e2a42 100%)",
+                    display: "flex", flexDirection: "column", alignItems: "flex-start",
+                    justifyContent: "center", padding: "0 14px 0 12px",
+                    flexShrink: 0, minWidth: "120px", position: "relative", overflow: "hidden"
+                  }}>
+                    {/* Diagonal cyan spark stripes */}
+                    <svg style={{ position: "absolute", right: 0, top: 0, height: "100%", width: "28px", opacity: 0.9 }} viewBox="0 0 28 46" fill="none" preserveAspectRatio="none">
+                      <path d="M28 0 L14 0 L0 46 L14 46 Z" fill="#0284c7" opacity="0.7" />
+                      <path d="M28 0 L20 0 L6 46 L20 46 Z" fill="#38bdf8" opacity="0.35" />
+                    </svg>
+                    <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "14px", letterSpacing: "0.5px", textTransform: "uppercase", lineHeight: 1, zIndex: 1 }}>{currentBatTeam.length > 10 ? batShort : currentBatTeam.toUpperCase()}</span>
+                    <span style={{ color: "#94a3b8", fontWeight: 700, fontSize: "9.5px", letterSpacing: "0.3px", textTransform: "uppercase", lineHeight: 1, marginTop: "2px", zIndex: 1 }}>v {currentBowlTeam.length > 8 ? bowlShort : currentBowlTeam.toUpperCase()}</span>
+                  </div>
+
+                  {/* 2. BLUE SCORE BLOCK */}
+                  <div style={{
+                    background: "linear-gradient(180deg, #0369a1 0%, #0284c7 60%, #0ea5e9 100%)",
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    justifyContent: "center", padding: "2px 16px",
+                    flexShrink: 0, minWidth: "110px",
+                    borderLeft: "2px solid #0369a1", borderRight: "2px solid #0369a1"
+                  }}>
+                    <span style={{ color: "#ffffff", fontWeight: 950, fontSize: "22px", lineHeight: 1, letterSpacing: "-0.5px" }}>
+                      {scoringState.score}-{scoringState.wickets}
+                    </span>
+                    <span style={{ color: "#e0f2fe", fontWeight: 800, fontSize: "9.5px", letterSpacing: "0.3px", marginTop: "2px" }}>
+                      {oversText} OV{target !== null ? ` • TGT ${target}` : ` • ${match.overs} OV`}
+                    </span>
+                  </div>
+
+                  {/* 3. WHITE BATSMEN SECTION */}
+                  <div style={{
+                    background: "#ffffff", display: "flex", flexDirection: "column",
+                    justifyContent: "center", padding: "2px 14px", flex: 1, minWidth: "160px", gap: "1px"
+                  }}>
+                    {/* Non-striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", overflow: "hidden" }}>
+                        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#94a3b8", display: "inline-block", flexShrink: 0 }} />
+                        <span style={{ color: "#1e293b", fontWeight: 800, fontSize: "12.5px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.nonStriker || "Player B"}</span>
+                      </div>
+                      <span style={{ color: "#1e293b", fontWeight: 950, fontSize: "13px", flexShrink: 0, marginLeft: "8px" }}>
+                        {nonStriker?.runs ?? 0}<span style={{ color: "#64748b", fontWeight: 700, fontSize: "11px" }}> {nonStriker?.balls ?? 0}</span>
+                      </span>
+                    </div>
+                    {/* Striker */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", overflow: "hidden" }}>
+                        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#0284c7", display: "inline-block", flexShrink: 0 }} />
+                        <span style={{ color: "#0c1a2e", fontWeight: 950, fontSize: "12.5px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.striker || "Player A"}</span>
+                      </div>
+                      <span style={{ color: "#0c1a2e", fontWeight: 950, fontSize: "13px", flexShrink: 0, marginLeft: "8px" }}>
+                        {striker?.runs ?? 0}<span style={{ color: "#475569", fontWeight: 700, fontSize: "11px" }}> {striker?.balls ?? 0}</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 4. YELLOW CRR/RRR BLOCK */}
+                  <div style={{
+                    background: "#facc15",
+                    display: "flex", flexDirection: "column", alignItems: "center",
+                    justifyContent: "center", padding: "2px 16px",
+                    flexShrink: 0, minWidth: "100px", gap: "2px"
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px", lineHeight: 1 }}>
+                      <span style={{ color: "#1c1400", fontWeight: 800, fontSize: "9px", letterSpacing: "0.3px", textTransform: "uppercase" }}>CRR:</span>
+                      <span style={{ color: "#1c1400", fontWeight: 950, fontSize: "13px" }}>{crr}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px", lineHeight: 1 }}>
+                      <span style={{ color: "#1c1400", fontWeight: 800, fontSize: "9px", letterSpacing: "0.3px", textTransform: "uppercase" }}>RRR:</span>
+                      <span style={{ color: "#1c1400", fontWeight: 950, fontSize: "13px" }}>{target !== null ? rrr : "—"}</span>
+                    </div>
+                  </div>
+
+                  {/* 5. WHITE BOWLER SECTION */}
+                  <div style={{
+                    background: "#ffffff", display: "flex", flexDirection: "column",
+                    justifyContent: "center", padding: "2px 12px", flex: 1, minWidth: "160px"
+                  }}>
+                    {/* Bowler name + figures */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", overflow: "hidden" }}>
+                        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#dc2626", display: "inline-block", flexShrink: 0 }} />
+                        <span style={{ color: "#1e293b", fontWeight: 950, fontSize: "12.5px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{scoringState.bowler || "Bowler"}</span>
+                      </div>
+                      <span style={{ color: "#1e293b", fontWeight: 950, fontSize: "13px", flexShrink: 0, marginLeft: "8px" }}>
+                        {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}<span style={{ color: "#64748b", fontWeight: 700, fontSize: "11px" }}> {fmtOv(bowler?.ballsBowled ?? 0, bpo)}</span>
+                      </span>
+                    </div>
+                    {/* This over balls */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "2px" }}>
+                      {thisOver.length > 0 ? thisOver.slice(-6).map((ball, i) => {
+                        const bv = ball.toUpperCase();
+                        const isW = bv === "W" || bv === "WICKET" || bv === "OUT";
+                        const is4 = bv === "4" || bv === "FOUR";
+                        const is6 = bv === "6" || bv === "SIX";
+                        const isNb = bv === "NB" || bv === "NO BALL";
+                        const isWide = bv === "WD" || bv === "WIDE";
+                        const isDot = bv === "0" || bv === "DOT";
+                        const bg = isW ? "#dc2626" : is4 ? "#0284c7" : is6 ? "#16a34a" : isNb ? "#7c3aed" : isWide ? "#0891b2" : isDot ? "#374151" : "#475569";
+                        const label = isW ? "W" : is4 ? "4" : is6 ? "6" : isNb ? "NB" : isWide ? "Wd" : isDot ? "•" : ball;
+                        return (
+                          <span key={i} style={{
+                            width: "16px", height: "16px", borderRadius: "50%",
+                            background: bg, display: "inline-flex", alignItems: "center", justifyContent: "center",
+                            color: "#ffffff", fontSize: "8px", fontWeight: 900, flexShrink: 0
+                          }}>{label}</span>
+                        );
+                      }) : <span style={{ color: "#94a3b8", fontSize: "9px", fontStyle: "italic" }}>This over</span>}
+                    </div>
+                  </div>
+
+                  {/* 6. RIGHT DARK TEAM PILL */}
+                  <div style={{
+                    background: "linear-gradient(225deg, #18212f 0%, #1e2a42 100%)",
+                    display: "flex", flexDirection: "column", alignItems: "flex-end",
+                    justifyContent: "center", padding: "0 12px 0 24px",
+                    flexShrink: 0, minWidth: "100px", position: "relative", overflow: "hidden"
+                  }}>
+                    {/* Diagonal cyan spark stripes (mirrored) */}
+                    <svg style={{ position: "absolute", left: 0, top: 0, height: "100%", width: "28px", opacity: 0.9 }} viewBox="0 0 28 46" fill="none" preserveAspectRatio="none">
+                      <path d="M0 0 L14 0 L28 46 L14 46 Z" fill="#0284c7" opacity="0.7" />
+                      <path d="M0 0 L8 0 L22 46 L8 46 Z" fill="#38bdf8" opacity="0.35" />
+                    </svg>
+                    <span style={{ color: "#ffffff", fontWeight: 900, fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase", lineHeight: 1, zIndex: 1, textAlign: "right" }}>{currentBowlTeam.length > 10 ? bowlShort : currentBowlTeam.toUpperCase()}</span>
+                  </div>
+
+                </div>{/* end main row */}
+
+                {/* ── BOTTOM NAVY STRIP ── */}
+                <div style={{
+                  background: "linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
+                  height: "18px", display: "flex", alignItems: "center",
+                  justifyContent: "space-between", position: "relative",
+                  overflow: "hidden", borderTop: "1.5px solid #0284c7",
+                  borderRadius: "0 0 5px 5px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.6)",
+                  padding: "0 44px"
+                }}>
+                  <style>{`
+                    @keyframes ssT20MarqueeLTR {
+                      0%   { transform: translateX(-50%); }
+                      100% { transform: translateX(0%); }
+                    }
+                  `}</style>
+
+                  {/* LTR Marquee for animation events */}
+                  {ssWord && (
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", whiteSpace: "nowrap", pointerEvents: "none", zIndex: 1, overflow: "hidden" }}>
+                      <div style={{ width: "200%", flexShrink: 0, display: "flex", alignItems: "center", animation: "ssT20MarqueeLTR 5.5s linear infinite" }}>
+                        <span style={{ display: "inline-block", paddingRight: "60px", fontWeight: 950, fontSize: "12.5px", letterSpacing: "4px", color: ssAnimColor, textTransform: "uppercase", textShadow: `0 0 14px ${ssAnimColor}cc`, opacity: 0.96 }}>{ssRepeated}</span>
+                        <span style={{ display: "inline-block", paddingRight: "60px", fontWeight: 950, fontSize: "12.5px", letterSpacing: "4px", color: ssAnimColor, textTransform: "uppercase", textShadow: `0 0 14px ${ssAnimColor}cc`, opacity: 0.96 }}>{ssRepeated}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Left cyan chevron watermark */}
+                  <div style={{ position: "absolute", left: 2, bottom: 0, opacity: 0.9, zIndex: 3 }}>
+                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
+                    </svg>
+                  </div>
+
+                  {/* Left: Fours/Sixes */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                    <span style={{ color: "#facc15" }}>●</span>
+                    <span style={{ color: "#bae6fd" }}>BOWLING:</span>
+                    <strong style={{ color: "#ffffff" }}>{scoringState.bowler || "Bowler"}</strong>
+                    <span style={{ color: "#facc15", fontWeight: 950, marginLeft: 2 }}>{bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}</span>
+                    <span style={{ color: "#bae6fd", fontSize: "9.5px" }}>({fmtOv(bowler?.ballsBowled ?? 0, bpo)} ov)</span>
+                  </div>
+
+                  <span style={{ opacity: 0.4, color: "#ffffff", position: "relative", zIndex: 5, flexShrink: 0 }}>|</span>
+
+                  {/* Right: Target info or fours/sixes */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#ffffff", fontSize: "10.5px", fontWeight: 900, letterSpacing: "0.4px", position: "relative", zIndex: 5, flexShrink: 0 }}>
+                    {target !== null ? (
+                      <>
+                        <span style={{ color: "#bae6fd" }}>NEED:</span>
+                        <strong style={{ color: "#f87171" }}>{need} runs</strong>
+                        <span style={{ opacity: 0.4 }}>from</span>
+                        <strong style={{ color: "#facc15" }}>{bLeft} balls</strong>
+                      </>
+                    ) : (
+                      <>
+                        <span>Fours <strong style={{ color: "#facc15" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.fours || 0), 0)}</strong></span>
+                        <span style={{ opacity: 0.4 }}>•</span>
+                        <span>Sixes <strong style={{ color: "#34d399" }}>{(scoringState.batsmen || []).reduce((a, b) => a + (b.sixes || 0), 0)}</strong></span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Right cyan chevron watermark */}
+                  <div style={{ position: "absolute", right: 2, bottom: 0, opacity: 0.9, transform: "scaleX(-1)", zIndex: 3 }}>
+                    <svg width="36" height="18" viewBox="0 0 36 18" fill="none">
+                      <path d="M0 18 C2 10 5 4 9 1 C7 7 11 11 14 18 C16 10 21 5 26 0 C22 7 24 13 26 18 C28 11 31 7 36 3 C32 9 34 14 36 18 Z" fill="#0284c7" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="scale-in" style={{
+            position: "relative", zIndex: 1,
+            background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
+            border: "2px solid #0284c7", borderRadius: 14, padding: "32px 52px",
+            textAlign: "center", boxShadow: "0 16px 36px rgba(0,0,0,0.7)"
+          }}>
+            <div style={{ color: "#facc15", fontWeight: 950, fontSize: "22px", letterSpacing: "1.5px" }}>
+              🏏 {match.team1Name.toUpperCase()} VS {match.team2Name.toUpperCase()}
+            </div>
+            <div style={{ color: "#0284c7", fontSize: "11px", fontWeight: 900, marginTop: "8px", letterSpacing: "2px" }}>
+              STAR SPORTS T20 • MATCH NOT STARTED
             </div>
           </div>
         )}

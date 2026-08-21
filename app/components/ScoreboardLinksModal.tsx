@@ -17,6 +17,7 @@ const THEME_COLORS: Record<string, { accent: string; bg: string; border: string;
   "bbl-starsports":        { accent: "#ef4444", bg: "rgba(0,30,10,0.97)",   border: "#dc2626", text: "#fca5a5" },
   "ipl-2025":              { accent: "#fbbf24", bg: "rgba(4,6,35,0.97)",    border: "#f59e0b", text: "#fde68a" },
   "crioverlay-green":      { accent: "#76ff03", bg: "rgba(9,13,22,0.97)",   border: "#76ff03", text: "#b2ff59" },
+  "starsports-t20":        { accent: "#0284c7", bg: "rgba(15,23,42,0.97)",   border: "#0284c7", text: "#38bdf8" },
 };
 
 const getFallbackColors = (slug: string) =>

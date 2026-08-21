@@ -2692,6 +2692,8 @@ export default function MatchScoringPage() {
                   { label: "SUMMARY", color: "bg-cyan-600", hover: "hover:bg-cyan-700", selected: "bg-cyan-400/30 border-cyan-400 text-cyan-300" },
                   { label: "FULLSCORE", color: "bg-blue-600", hover: "hover:bg-blue-700", selected: "bg-blue-400/30 border-blue-400 text-blue-300" },
                   { label: "FOW", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
+                  { label: "B1", color: "bg-teal-600", hover: "hover:bg-teal-700", selected: "bg-teal-400/30 border-teal-400 text-teal-300" },
+                  { label: "B2", color: "bg-fuchsia-600", hover: "hover:bg-fuchsia-700", selected: "bg-fuchsia-400/30 border-fuchsia-400 text-fuchsia-300" },
                   { label: "B1M", color: "bg-emerald-600", hover: "hover:bg-emerald-700", selected: "bg-emerald-400/30 border-emerald-400 text-emerald-300" },
                   { label: "B2M", color: "bg-green-600", hover: "hover:bg-green-700", selected: "bg-green-400/30 border-green-400 text-green-300" },
                   { label: "BOWLER", color: "bg-lime-600", hover: "hover:bg-lime-700", selected: "bg-lime-400/30 border-lime-400 text-lime-300" },

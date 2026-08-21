@@ -19,6 +19,7 @@ const DEFAULT_THEMES = [
   { themeId: 10, name: "BBL Star Sports",                slug: "bbl-starsports",        price: 150 },
   { themeId: 11, name: "IPL 2025",                      slug: "ipl-2025",              price: 150 },
   { themeId: 12, name: "CriOverlay Green",               slug: "crioverlay-green",      price: 0, badge: "FREE" },
+  { themeId: 13, name: "Star Sports T20",               slug: "starsports-t20",        price: 150, badge: "NEW" },
 ];
 
 export async function GET() {
