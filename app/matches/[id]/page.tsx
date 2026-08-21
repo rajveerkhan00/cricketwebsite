@@ -1914,10 +1914,7 @@ export default function MatchScoringPage() {
                       <option value="asia-cup">Asia Cup</option>
                       <option value="cwc-19">CWC 19</option>
                       <option value="champions-trophy-2025">Champions Trophy 2025</option>
-                      <option value="cwc-25-india">CWC 25 India</option>
-                      <option value="wcl-fancode">WCL (Fancode)</option>
                       <option value="cwc-23-india">CWC 23 India</option>
-                      <option value="ipl">IPL</option>
                       <option value="t20-wc-2024">T20 World Cup 2024</option>
                       <option value="legends-league-2024">Legends League 2024</option>
                       <option value="asia-cup-2023">Asia Cup 2023</option>

@@ -1473,6 +1473,8 @@ export default function AdminDashboard() {
   const [scoreboardThemes, setScoreboardThemes] = useState<ScoreboardThemeRecord[]>([]);
   const [loadingScoreboard, setLoadingScoreboard] = useState(false);
   const [showCreateScoreboardModal, setShowCreateScoreboardModal] = useState(false);
+  const [inlinePrices, setInlinePrices] = useState<Record<string, string>>({});
+  const [savingPriceId, setSavingPriceId] = useState<string | null>(null);
   const [editScoreboardTarget, setEditScoreboardTarget] = useState<ScoreboardThemeRecord | null>(null);
   const [deleteScoreboardTarget, setDeleteScoreboardTarget] = useState<ScoreboardThemeRecord | null>(null);
 
@@ -1553,7 +1555,8 @@ export default function AdminDashboard() {
         }),
       });
       if (res.ok) {
-        toast.success(`Theme "${theme.name}" is now ${isCurrentlyFree ? "PAID (PKR 150/day)" : "FREE"}!`);
+        toast.success(`Theme "${theme.name}" is now ${isCurrentlyFree ? `PAID (PKR 150/day)` : "FREE"}!`);
+        setInlinePrices(prev => { const n = {...prev}; delete n[theme._id]; return n; });
         fetchScoreboardThemes();
       } else {
         const data = await res.json();
@@ -1561,6 +1564,38 @@ export default function AdminDashboard() {
       }
     } catch {
       toast.error("Network error.");
+    }
+  };
+
+  const saveInlinePrice = async (theme: ScoreboardThemeRecord) => {
+    const rawPrice = inlinePrices[theme._id];
+    const newPrice = Number(rawPrice);
+    if (isNaN(newPrice) || newPrice < 0) { toast.error("Enter a valid price (0 = free)."); return; }
+    setSavingPriceId(theme._id);
+    try {
+      const res = await fetch(`/api/admin/scoreboard-themes/${theme._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          themeId: theme.themeId,
+          name: theme.name,
+          slug: theme.slug,
+          price: newPrice,
+          badge: newPrice <= 0 ? "FREE" : (theme.badge && theme.badge !== "FREE" ? theme.badge : undefined),
+        }),
+      });
+      if (res.ok) {
+        toast.success(`Price updated → PKR ${newPrice <= 0 ? "FREE" : newPrice}`);
+        setInlinePrices(prev => { const n = {...prev}; delete n[theme._id]; return n; });
+        fetchScoreboardThemes();
+      } else {
+        const data = await res.json();
+        toast.error(data.message || "Failed to update price.");
+      }
+    } catch {
+      toast.error("Network error.");
+    } finally {
+      setSavingPriceId(null);
     }
   };
 
@@ -2269,14 +2304,33 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 text-zinc-500 font-mono text-xs">
                             {theme.slug}
                           </td>
-                          <td className="px-6 py-4 text-emerald-400 font-extrabold text-sm">
-                            {theme.price <= 0 ? (
-                              <span className="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded text-xs font-black">
-                                FREE
-                              </span>
-                            ) : (
-                              `PKR ${theme.price}`
-                            )}
+                          {/* Price column with inline edit */}
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2">
+                              {theme.price <= 0 ? (
+                                <span className="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded text-xs font-black">FREE</span>
+                              ) : (
+                                <span className="text-amber-400 font-extrabold text-sm">PKR {theme.price}</span>
+                              )}
+                              <input
+                                type="number"
+                                min="0"
+                                placeholder="Set price"
+                                value={inlinePrices[theme._id] ?? ""}
+                                onChange={(e) => setInlinePrices(prev => ({ ...prev, [theme._id]: e.target.value }))}
+                                onKeyDown={(e) => e.key === "Enter" && saveInlinePrice(theme)}
+                                className="w-20 bg-white/5 border border-white/10 rounded-md px-2 py-1 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 focus:bg-white/8 transition-colors"
+                              />
+                              {inlinePrices[theme._id] !== undefined && (
+                                <button
+                                  onClick={() => saveInlinePrice(theme)}
+                                  disabled={savingPriceId === theme._id}
+                                  className="px-2 py-1 rounded-md text-xs font-bold bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/20 cursor-pointer disabled:opacity-50 transition-colors"
+                                >
+                                  {savingPriceId === theme._id ? "..." : "Save"}
+                                </button>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4">
                             {theme.badge ? (
@@ -2288,21 +2342,23 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex items-center justify-end gap-2">
+                              {/* Free / Paid toggle pill */}
                               <button
                                 onClick={() => toggleFreeStatus(theme)}
-                                className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border cursor-pointer transition-colors ${
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border cursor-pointer transition-all ${
                                   theme.price <= 0
-                                    ? "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border-amber-500/20"
-                                    : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border-emerald-500/20"
+                                    ? "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border-amber-500/30"
+                                    : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border-emerald-500/30"
                                 }`}
                               >
+                                <span>{theme.price <= 0 ? "🔒" : "✅"}</span>
                                 {theme.price <= 0 ? "Make Paid" : "Make Free"}
                               </button>
                               <button
                                 onClick={() => setEditScoreboardTarget(theme)}
                                 className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"
                               >
-                                Edit Theme
+                                Edit
                               </button>
                               <button
                                 onClick={() => setDeleteScoreboardTarget(theme)}
