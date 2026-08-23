@@ -182,7 +182,6 @@ function MatchModal({
   onSubmit,
   loading,
   error,
-  storageExceeded = false,
   teamRegistry,
 }: {
   mode: "create" | "edit";
@@ -193,7 +192,6 @@ function MatchModal({
   onSubmit: (form: typeof defaultForm, prefillTeam1?: string[], prefillTeam2?: string[]) => void;
   loading: boolean;
   error: string | null;
-  storageExceeded?: boolean;
   teamRegistry: Map<string, string[]>;
 }) {
   const [form, setForm] = useState<typeof defaultForm>(initial ?? defaultForm);
@@ -250,17 +248,6 @@ function MatchModal({
           {error && (
             <div className="bg-red-50 border border-red-300 text-red-700 text-xs rounded-xl p-3 text-center font-semibold">
               {error}
-            </div>
-          )}
-
-          {mode === "create" && storageExceeded && (
-            <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-xs font-semibold flex items-start gap-2 leading-relaxed animate-pulse">
-              <svg className="w-4.5 h-4.5 flex-shrink-0 mt-0.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span>
-                Storage limit of 10000 KB exceeded! Please delete existing tournaments/matches to free up space.
-              </span>
             </div>
           )}
 
@@ -508,7 +495,7 @@ function MatchModal({
             <div className="flex gap-3 mt-2">
               <button
                 type="submit"
-                disabled={loading || (mode === "create" && storageExceeded)}
+                disabled={loading}
                 className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white font-bold py-3 rounded-lg text-sm tracking-wide transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? (
@@ -649,7 +636,6 @@ export default function TourPage() {
   const [deleteTarget, setDeleteTarget] = useState<Match | null>(null);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState<string | null>(null);
-  const [storageExceeded, setStorageExceeded] = useState(false);
   const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
   const [sendLoadingMatchId, setSendLoadingMatchId] = useState<string | null>(null);
 
@@ -703,18 +689,6 @@ export default function TourPage() {
     }
   };
 
-  const checkStorage = async () => {
-    try {
-      const res = await fetch("/api/user/storage");
-      if (res.ok) {
-        const data = await res.json();
-        setStorageExceeded(data.usedKB >= data.limitKB);
-      }
-    } catch (err) {
-      console.error("Failed to check storage:", err);
-    }
-  };
-
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
@@ -722,7 +696,6 @@ export default function TourPage() {
   useEffect(() => {
     if (status !== "authenticated" || !tournamentId) return;
     loadPage();
-    checkStorage();
   }, [status, tournamentId]);
 
   const loadPage = async () => {
@@ -772,7 +745,6 @@ export default function TourPage() {
       if (!res.ok) throw new Error(data.error || "Failed to create match.");
       setMatches((prev) => [...prev, data.match].sort((a, b) => a.matchNo - b.matchNo));
       setShowCreate(false);
-      checkStorage();
       window.dispatchEvent(new Event("storage-update"));
     } catch (err: any) {
       setModalError(err.message || "Something went wrong.");
@@ -834,7 +806,6 @@ export default function TourPage() {
       if (!res.ok) throw new Error(data.error || "Failed to delete match.");
       setMatches((prev) => prev.filter((m) => m._id !== deleteTarget._id));
       setDeleteTarget(null);
-      checkStorage();
       window.dispatchEvent(new Event("storage-update"));
     } catch (err: any) {
       setModalError(err.message || "Something went wrong.");
@@ -1163,7 +1134,6 @@ export default function TourPage() {
           onSubmit={handleCreate}
           loading={modalLoading}
           error={modalError}
-          storageExceeded={storageExceeded}
           teamRegistry={teamRegistry()}
         />
       )}

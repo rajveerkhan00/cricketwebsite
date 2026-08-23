@@ -12,16 +12,8 @@ export async function GET() {
 
     const userId = (session.user as any).id;
     const usedKB = await getUserStorageUsage(userId);
-    const limitKB = 10000;
 
-    return NextResponse.json(
-      {
-        usedKB,
-        limitKB,
-        exceeded: usedKB >= limitKB,
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({ usedKB }, { status: 200 });
   } catch (error: any) {
     console.error("GET /api/user/storage error:", error);
     return NextResponse.json(
