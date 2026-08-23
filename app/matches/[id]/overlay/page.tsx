@@ -9078,6 +9078,54 @@ export default function OverlayPage() {
     );
   };
 
+  // ════════════════════ MINI SCOREBOARD — compact left-docked bug (all themes) ════════════════════
+  if (ds === "MINI") {
+    const bpo = match.ballsPerOver || 6;
+    const shortName = (name: string) => {
+      const words = (name || "").trim().split(/\s+/).filter(Boolean);
+      if (words.length >= 2) return words.map((w: string) => w[0]).join("").slice(0, 3).toUpperCase();
+      return (name || "").slice(0, 3).toUpperCase();
+    };
+    const need = scoringState.target !== null ? Math.max(0, scoringState.target - scoringState.score) : null;
+    const ballsLeft = scoringState.target !== null ? Math.max(0, match.overs * bpo - scoringState.balls) : null;
+    return (
+      <div style={{ background: "transparent", minHeight: "100vh", fontFamily: activeFont }}>
+        <style>{GLOBAL_CSS}</style>
+        {renderMom()}
+        <div className="animate-slide-up" style={{ position: "fixed", left: 14, bottom: 14, zIndex: 500, minWidth: 210, background: theme.headerBg, border: `2px solid ${theme.accent}`, borderRadius: 14, overflow: "hidden", boxShadow: `0 8px 30px rgba(0,0,0,0.6), 0 0 18px ${theme.accent}40`, fontFamily: activeFont }}>
+          <div style={{ background: theme.accent, padding: "5px 12px", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <span style={{ fontSize: 12, fontWeight: 950, color: "#0b0b12", letterSpacing: 1 }}>{shortName(currentBatTeam)}</span>
+            <span style={{ fontSize: 9, fontWeight: 800, color: "rgba(0,0,0,0.6)" }}>vs</span>
+            <span style={{ fontSize: 12, fontWeight: 950, color: "#0b0b12", letterSpacing: 1 }}>{shortName(currentBowlTeam)}</span>
+          </div>
+          <div style={{ padding: "8px 12px 6px", display: "flex", alignItems: "baseline", gap: 8, justifyContent: "center" }}>
+            <span style={{ fontSize: 28, fontWeight: 950, color: theme.textPrimary, lineHeight: 1 }}>{scoringState.score}-{scoringState.wickets}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: theme.accent }}>{fmtOv(scoringState.balls, bpo)}</span>
+          </div>
+          <div style={{ padding: "0 12px 6px", display: "flex", flexDirection: "column", gap: 2 }}>
+            {striker && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 10, fontWeight: 800, color: theme.textPrimary }}>
+                <span>🏏 {striker.name}</span>
+                <span style={{ color: theme.accent }}>{striker.runs} ({striker.balls})</span>
+              </div>
+            )}
+            {bowler && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 10, fontWeight: 800, color: theme.textSecondary }}>
+                <span>⚾ {bowler.name}</span>
+                <span>{bowler.wickets}-{bowler.runsConceded} ({fmtOv(bowler.ballsBowled, bpo)})</span>
+              </div>
+            )}
+          </div>
+          {need !== null && (
+            <div style={{ padding: "4px 12px", background: `${theme.accent}20`, borderTop: `1px solid ${theme.accent}40`, textAlign: "center", fontSize: 9, fontWeight: 900, color: theme.textPrimary, letterSpacing: 0.5, textTransform: "uppercase" }}>
+              NEED {need} OFF {ballsLeft}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   // ════════════════════ 6. DEFAULT LOWER THIRD ════════════════════
   // ════════════════════ THEME 16: CRIOVERLAY GREEN ════════════════════
   if (themeSlug === "crioverlay-green") {
