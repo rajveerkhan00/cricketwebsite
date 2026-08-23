@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { connectDB } from "@/lib/mongodb";
 import { Match } from "@/models/Match";
+import { Tournament } from "@/models/Tournament";
 
 // GET /api/matches/[id] — fetch match details (public or owner)
 export async function GET(
@@ -19,7 +20,13 @@ export async function GET(
     if (!match) {
       return NextResponse.json({ error: "Match not found" }, { status: 404 });
     }
-    return NextResponse.json({ match }, { status: 200 });
+    const tournament = await Tournament.findById((match as any).tournamentId)
+      .select("name")
+      .lean();
+    return NextResponse.json(
+      { match: { ...match, tournamentName: (tournament as any)?.name ?? null } },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error("GET /api/matches/[id] error:", error);
     return NextResponse.json({ error: "Failed to fetch match." }, { status: 500 });

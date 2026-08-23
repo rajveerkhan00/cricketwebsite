@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/authOptions";
 import { connectDB } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { Match } from "@/models/Match";
+import { Tournament } from "@/models/Tournament";
 
 // GET /api/matches/active — Fetch active match of a user by email
 export async function GET(req: Request) {
@@ -35,7 +36,16 @@ export async function GET(req: Request) {
     }
 
     const match = await Match.findById(user.activeMatchId).lean();
-    return NextResponse.json({ match }, { status: 200 });
+    if (!match) {
+      return NextResponse.json({ match: null }, { status: 200 });
+    }
+    const tournament = await Tournament.findById((match as any).tournamentId)
+      .select("name")
+      .lean();
+    return NextResponse.json(
+      { match: { ...match, tournamentName: (tournament as any)?.name ?? null } },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error("GET /api/matches/active error:", error);
     return NextResponse.json({ error: "Failed to fetch active match." }, { status: 500 });
