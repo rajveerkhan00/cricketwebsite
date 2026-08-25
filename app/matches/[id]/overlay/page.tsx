@@ -951,6 +951,41 @@ export default function OverlayPage() {
 
   const fmtOv = (balls: number, bpo = 6) => `${Math.floor(balls / bpo)}.${balls % bpo}`;
   const calcRR = (state: ScoringState) => (!match || state.balls === 0) ? "0.00" : (state.score / (state.balls / match.ballsPerOver)).toFixed(2);
+
+  // Initialize mock scoringState so all 16 theme scoreboards render their exact
+  // lower-third structure & pre-match toss ribbon with identical dimensions and theme styling.
+  if (match && !match.scoringState) {
+    const tossWinnerKey = match.tossWonBy as "team1" | "team2";
+    const battingTeamKey: "team1" | "team2" = match.optedTo === "Bat" ? tossWinnerKey : (tossWinnerKey === "team1" ? "team2" : "team1");
+    const bowlingTeamKey: "team1" | "team2" = battingTeamKey === "team1" ? "team2" : "team1";
+    match.scoringState = {
+      battingTeam: battingTeamKey || "team1",
+      bowlingTeam: bowlingTeamKey || "team2",
+      inningsStarted: false,
+      inningsNo: 1,
+      striker: "",
+      nonStriker: "",
+      bowler: "",
+      score: 0,
+      wickets: 0,
+      balls: 0,
+      overs: 0,
+      target: null,
+      thisOver: [],
+      batsmen: [],
+      bowlers: [],
+      fallOfWickets: [],
+      animation: null,
+      displayScreen: "default",
+      customInputText: "",
+      momPlayer: "",
+      tournamentStatsPlayer: "",
+      decision: null,
+      displayStatsMode: null,
+      history: [],
+    };
+  }
+
   const scoringState = match?.scoringState;
 
   // Active notification string resolution
@@ -1097,9 +1132,10 @@ export default function OverlayPage() {
     );
   }
 
+  // ── No match found at all ────────────────────────────────────────────────────
   if (!match || !scoringState) return (
     <div style={{ background: "transparent", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#ef4444", fontWeight: 800, fontFamily: activeFont, fontSize: 18 }}>
-      <style>{GLOBAL_CSS}</style>🏏 MATCH DATA NOT STARTED
+      <style>{GLOBAL_CSS}</style>🏏 MATCH NOT FOUND
     </div>
   );
 

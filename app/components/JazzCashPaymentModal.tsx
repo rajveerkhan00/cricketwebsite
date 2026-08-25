@@ -99,7 +99,7 @@ export default function JazzCashPaymentModal({
 
       {/* Modal Container */}
       <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0c0f1e] border border-white/10 text-slate-100 rounded-3xl shadow-2xl font-sans animate-scale-up-fade">
-        
+
         {/* Top JazzCash Brand bar */}
         <div className="bg-gradient-to-r from-[#d22630] to-[#ffb612] h-2 w-full rounded-t-3xl" />
 
@@ -141,21 +141,19 @@ export default function JazzCashPaymentModal({
         <div className="flex border-b border-white/10 bg-white/[0.03]">
           <button
             onClick={() => setActiveTab("till")}
-            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === "till"
+            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${activeTab === "till"
                 ? "border-[#d22630] text-[#ffb612] bg-white/[0.04]"
                 : "border-transparent text-slate-500 hover:text-slate-300"
-            }`}
+              }`}
           >
             Option 1: Till Number
           </button>
           <button
             onClick={() => setActiveTab("iban")}
-            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === "iban"
+            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${activeTab === "iban"
                 ? "border-[#d22630] text-[#ffb612] bg-white/[0.04]"
                 : "border-transparent text-slate-500 hover:text-slate-300"
-            }`}
+              }`}
           >
             Option 2: Mobile / IBAN
           </button>
