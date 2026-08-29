@@ -9,6 +9,7 @@ import Link from "next/link";
 import StorageIndicator from "../../components/StorageIndicator";
 import { toast } from "react-toastify";
 import ScoreboardLinksModal from "../../components/ScoreboardLinksModal";
+import TeamManagerModal, { ISavedTeam } from "../../components/TeamManagerModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Tournament {
@@ -198,6 +199,8 @@ function MatchModal({
   const firstRef = useRef<HTMLInputElement>(null);
   const [prefillTeam1, setPrefillTeam1] = useState<string[]>([]);
   const [prefillTeam2, setPrefillTeam2] = useState<string[]>([]);
+  const [isTeamManagerOpen, setIsTeamManagerOpen] = useState(false);
+  const [importSlot, setImportSlot] = useState<"team1" | "team2" | undefined>(undefined);
 
   useEffect(() => {
     firstRef.current?.focus();
@@ -205,6 +208,26 @@ function MatchModal({
 
   const set = (key: keyof typeof defaultForm, value: any) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  const handleImportTeamSelected = (team: ISavedTeam, slot?: "team1" | "team2") => {
+    const formattedPlayers = (team.players || [])
+      .filter((p) => p && p.name && p.name.trim().length > 0)
+      .map((p) => {
+        const tags: string[] = [];
+        if (p.isCaptain) tags.push("(C)");
+        if (p.isViceCaptain) tags.push("(VC)");
+        if (p.isWicketKeeper) tags.push("(WK)");
+        return tags.length > 0 ? `${p.name.trim()} ${tags.join(" ")}` : p.name.trim();
+      });
+
+    if (slot === "team1") {
+      set("team1Name", team.name);
+      setPrefillTeam1(formattedPlayers);
+    } else if (slot === "team2") {
+      set("team2Name", team.name);
+      setPrefillTeam2(formattedPlayers);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -253,28 +276,41 @@ function MatchModal({
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Team 1 Name with autocomplete */}
-            {mode === "create" ? (
-              <TeamAutocompleteInput
-                label="Team 1 Name"
-                value={form.team1Name}
-                onChange={(val) => {
-                  set("team1Name", val);
-                  if (prefillTeam1.length > 0) setPrefillTeam1([]);
-                }}
-                onSelectTeam={(name, players) => {
-                  set("team1Name", name);
-                  setPrefillTeam1(players);
-                }}
-                disabled={loading}
-                inputRef={firstRef}
-                teamRegistry={teamRegistry}
-                placeholder="Enter Team 1 Name"
-                required
-              />
-            ) : (
-              <div className="flex flex-col gap-1.5">
+            {/* Team 1 Name with Import Button */}
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center justify-between">
                 <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 1 Name</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImportSlot("team1");
+                    setIsTeamManagerOpen(true);
+                  }}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition cursor-pointer"
+                >
+                  <span>📥</span> Import Team
+                </button>
+              </div>
+
+              {mode === "create" ? (
+                <TeamAutocompleteInput
+                  label=""
+                  value={form.team1Name}
+                  onChange={(val) => {
+                    set("team1Name", val);
+                    if (prefillTeam1.length > 0) setPrefillTeam1([]);
+                  }}
+                  onSelectTeam={(name, players) => {
+                    set("team1Name", name);
+                    setPrefillTeam1(players);
+                  }}
+                  disabled={loading}
+                  inputRef={firstRef}
+                  teamRegistry={teamRegistry}
+                  placeholder="Enter Team 1 Name"
+                  required
+                />
+              ) : (
                 <input
                   ref={firstRef}
                   type="text"
@@ -285,8 +321,8 @@ function MatchModal({
                   required
                   disabled={loading}
                 />
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Prefill Team 1 indicator */}
             {prefillTeam1.length > 0 && (
@@ -294,33 +330,46 @@ function MatchModal({
                 <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
-                <p className="text-[11px] text-emerald-700 font-semibold">
-                  {prefillTeam1.length} player{prefillTeam1.length !== 1 ? "s" : ""} from previous match will be auto-loaded
+                <p className="text-[11px] text-emerald-700 font-semibold truncate">
+                  {prefillTeam1.length} player squad loaded ({prefillTeam1.slice(0, 3).join(", ")}{prefillTeam1.length > 3 ? "..." : ""})
                 </p>
               </div>
             )}
 
-            {/* Team 2 Name with autocomplete */}
-            {mode === "create" ? (
-              <TeamAutocompleteInput
-                label="Team 2 Name"
-                value={form.team2Name}
-                onChange={(val) => {
-                  set("team2Name", val);
-                  if (prefillTeam2.length > 0) setPrefillTeam2([]);
-                }}
-                onSelectTeam={(name, players) => {
-                  set("team2Name", name);
-                  setPrefillTeam2(players);
-                }}
-                disabled={loading}
-                teamRegistry={teamRegistry}
-                placeholder="Enter Team 2 Name"
-                required
-              />
-            ) : (
-              <div className="flex flex-col gap-1.5">
+            {/* Team 2 Name with Import Button */}
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center justify-between">
                 <label className="text-xs font-bold tracking-wider text-slate-600 uppercase">Team 2 Name</label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImportSlot("team2");
+                    setIsTeamManagerOpen(true);
+                  }}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 px-2 py-0.5 rounded border border-amber-200 transition cursor-pointer"
+                >
+                  <span>📥</span> Import Team
+                </button>
+              </div>
+
+              {mode === "create" ? (
+                <TeamAutocompleteInput
+                  label=""
+                  value={form.team2Name}
+                  onChange={(val) => {
+                    set("team2Name", val);
+                    if (prefillTeam2.length > 0) setPrefillTeam2([]);
+                  }}
+                  onSelectTeam={(name, players) => {
+                    set("team2Name", name);
+                    setPrefillTeam2(players);
+                  }}
+                  disabled={loading}
+                  teamRegistry={teamRegistry}
+                  placeholder="Enter Team 2 Name"
+                  required
+                />
+              ) : (
                 <input
                   type="text"
                   value={form.team2Name}
@@ -330,8 +379,8 @@ function MatchModal({
                   required
                   disabled={loading}
                 />
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Prefill Team 2 indicator */}
             {prefillTeam2.length > 0 && (
@@ -339,8 +388,8 @@ function MatchModal({
                 <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                 </svg>
-                <p className="text-[11px] text-emerald-700 font-semibold">
-                  {prefillTeam2.length} player{prefillTeam2.length !== 1 ? "s" : ""} from previous match will be auto-loaded
+                <p className="text-[11px] text-emerald-700 font-semibold truncate">
+                  {prefillTeam2.length} player squad loaded ({prefillTeam2.slice(0, 3).join(", ")}{prefillTeam2.length > 3 ? "..." : ""})
                 </p>
               </div>
             )}
@@ -522,6 +571,14 @@ function MatchModal({
           </form>
         </div>
       </div>
+
+      {/* Team Manager / Import Modal */}
+      <TeamManagerModal
+        isOpen={isTeamManagerOpen}
+        onClose={() => setIsTeamManagerOpen(false)}
+        onTeamSelected={handleImportTeamSelected}
+        targetSlot={importSlot}
+      />
     </div>
   );
 }
@@ -638,6 +695,7 @@ export default function TourPage() {
   const [modalError, setModalError] = useState<string | null>(null);
   const [selectedMatchIdForLinks, setSelectedMatchIdForLinks] = useState<string | null>(null);
   const [sendLoadingMatchId, setSendLoadingMatchId] = useState<string | null>(null);
+  const [isGlobalTeamModalOpen, setIsGlobalTeamModalOpen] = useState(false);
 
   // End tournament state
   const [showEndTournament, setShowEndTournament] = useState(false);
@@ -981,6 +1039,14 @@ export default function TourPage() {
               </span>
             )}
 
+            {/* MANAGE TEAMS */}
+            <button
+              onClick={() => setIsGlobalTeamModalOpen(true)}
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-amber-400 hover:text-amber-300 font-bold text-xs tracking-wider px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer shadow-sm"
+            >
+              <span>👥</span> MANAGE TEAMS
+            </button>
+
             {/* CREATE MATCH */}
             <button
               onClick={() => { setShowCreate(true); setModalError(null); }}
@@ -1215,6 +1281,12 @@ export default function TourPage() {
           userEmail={session?.user?.email || ""}
         />
       )}
+
+      {/* Global Team Manager Modal */}
+      <TeamManagerModal
+        isOpen={isGlobalTeamModalOpen}
+        onClose={() => setIsGlobalTeamModalOpen(false)}
+      />
     </div>
   );
 }
