@@ -12,6 +12,8 @@ interface JazzCashPaymentModalProps {
   onSuccess: () => void;
 }
 
+type Step = "enter_number" | "otp_pending" | "enter_trx" | "success";
+
 export default function JazzCashPaymentModal({
   isOpen,
   onClose,
@@ -20,50 +22,87 @@ export default function JazzCashPaymentModal({
   planType,
   onSuccess,
 }: JazzCashPaymentModalProps) {
-  const [activeTab, setActiveTab] = useState<"till" | "iban">("till");
+  const [step, setStep] = useState<Step>("enter_number");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [cnic, setCnic] = useState("");
   const [email, setEmail] = useState("");
-  const [senderNumber, setSenderNumber] = useState("");
-  const [trxId, setTrxId] = useState("");
-  const [verifying, setVerifying] = useState(false);
+  const [txnRefNo, setTxnRefNo] = useState("");
+  const [manualTrxId, setManualTrxId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   if (!isOpen) return null;
 
-  // Format price display
-  const priceDisplay = typeof itemPrice === "number" ? `PKR ${itemPrice}` : itemPrice;
+  // Convert PKR price to paisa (multiply by 100)
+  const priceNum = typeof itemPrice === "number" ? itemPrice : parseFloat(String(itemPrice).replace(/[^0-9.]/g, ""));
+  const amountPaisa = Math.round(priceNum * 100);
+  const priceDisplay = `PKR ${priceNum.toLocaleString()}`;
 
-  // QR Code URL based on the extracted Till Number
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=JazzCash Till ID: 983622181, Shop: MUHAMMAD Shop, Amount: ${itemPrice}`;
+  const startCountdown = (seconds: number) => {
+    setCountdown(seconds);
+    const iv = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) { clearInterval(iv); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  };
 
-  const handleVerify = async (e: React.FormEvent) => {
+  // ── Step 1: Initiate mWallet payment (sends OTP to JazzCash app) ────────────
+  const handleInitiate = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const cleaned = mobileNumber.trim().replace(/\D/g, "");
+    if (cleaned.length < 10 || cleaned.length > 11) {
+      toast.error("Enter a valid 11-digit JazzCash mobile number (e.g. 03001234567).");
+      return;
+    }
     if (!email || !email.includes("@")) {
-      toast.error("Please enter a valid email address.");
+      toast.error("Enter a valid email address.");
       return;
     }
 
-    if (!senderNumber || senderNumber.trim().length < 10) {
-      toast.error("Please enter a valid JazzCash sender mobile number.");
-      return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/jazzcash/initiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mobileNumber: cleaned,
+          amountPaisa,
+          description: itemName,
+          cnic: cnic.trim(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setTxnRefNo(data.txnRefNo || "");
+        setStep("otp_pending");
+        startCountdown(120); // 2-minute window to approve
+        toast.success("Payment request sent! Check your JazzCash app to approve.");
+      } else {
+        toast.error(data.message || "Failed to initiate payment. Check your number and try again.");
+      }
+    } catch {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (!trxId || trxId.trim().length < 8) {
-      toast.error("Please enter a valid JazzCash Transaction ID (TRX ID).");
-      return;
-    }
-
-    setVerifying(true);
-
+  // ── Step 2: User has approved in app — now record the payment ───────────────
+  const handleConfirmPayment = async () => {
+    setLoading(true);
     try {
       const res = await fetch("/api/payments", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
-          senderNumber,
-          trxId,
+          email: email.toLowerCase().trim(),
+          senderNumber: mobileNumber.trim(),
+          trxId: txnRefNo || manualTrxId.trim(),
           itemName,
           itemPrice,
           planType,
@@ -73,256 +112,321 @@ export default function JazzCashPaymentModal({
       const data = await res.json();
 
       if (res.ok) {
-        toast.success(data.message || "Payment submitted! Admin will verify and email credentials within 1 hour.");
-        onSuccess();
-        onClose();
+        setStep("success");
+        toast.success(data.message || "Payment confirmed! Your plan is now active.");
+        setTimeout(() => {
+          onSuccess();
+          onClose();
+        }, 2500);
       } else {
-        toast.error(data.message || "Failed to submit payment details.");
+        toast.error(data.message || "Payment confirmation failed. Please contact support.");
       }
-    } catch (error) {
-      console.error("Payment submission error:", error);
+    } catch {
       toast.error("Network error. Please try again.");
     } finally {
-      setVerifying(false);
+      setLoading(false);
     }
   };
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast.info(`Copied ${label} to clipboard!`);
+  const handleManualTrx = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!manualTrxId.trim() || manualTrxId.trim().length < 6) {
+      toast.error("Enter the Transaction ID from your JazzCash SMS.");
+      return;
+    }
+    await handleConfirmPayment();
+  };
+
+  const handleReset = () => {
+    setStep("enter_number");
+    setMobileNumber("");
+    setCnic("");
+    setEmail("");
+    setTxnRefNo("");
+    setManualTrxId("");
+    setLoading(false);
+    setCountdown(0);
   };
 
   return (
-    <div className="fixed inset-0 z-99 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs select-none">
-      {/* Backdrop click */}
+    <div className="fixed inset-0 z-[99] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm select-none">
+      {/* Backdrop */}
       <div className="fixed inset-0" onClick={onClose} />
 
-      {/* Modal Container */}
-      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-[#0c0f1e] border border-white/10 text-slate-100 rounded-3xl shadow-2xl font-sans animate-scale-up-fade">
+      {/* Modal */}
+      <div className="relative w-full max-w-[420px] bg-[#0b0e1c] border border-white/10 text-slate-100 rounded-3xl shadow-2xl overflow-hidden">
+        {/* JazzCash brand gradient bar */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#d22630] via-[#e84040] to-[#ffb612]" />
 
-        {/* Top JazzCash Brand bar */}
-        <div className="bg-gradient-to-r from-[#d22630] to-[#ffb612] h-2 w-full rounded-t-3xl" />
-
-        {/* Modal Header */}
-        <div className="p-6 pb-4 border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            {/* Mock JazzCash Logo Icon */}
-            <div className="w-8 h-8 rounded-lg bg-[#d22630] flex items-center justify-center font-extrabold text-xs tracking-tighter text-white shadow-lg border border-[#ffb612]/30">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-[#d22630] flex items-center justify-center font-black text-xs text-white shadow-lg shadow-red-900/40 border border-[#ffb612]/20">
               JC
             </div>
             <div>
-              <h2 className="text-base font-black tracking-wide text-white font-space uppercase">
-                JazzCash <span className="text-[#d22630]">Pay</span>
+              <h2 className="text-sm font-black tracking-wide text-white uppercase">
+                JazzCash <span className="text-[#ffb612]">Pay</span>
               </h2>
-              <p className="text-[10px] text-slate-400 font-semibold uppercase">Secure Checkout</p>
+              <p className="text-[10px] text-slate-400 font-semibold">Secure Mobile Payment</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white font-extrabold text-lg w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+            className="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-base font-bold transition-colors cursor-pointer"
           >
             ×
           </button>
         </div>
 
-        {/* Item & Price details */}
-        <div className="px-6 py-4 bg-white/5 border-b border-white/10 flex justify-between items-center">
-          <div className="min-w-0">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Product</p>
-            <p className="text-sm font-extrabold truncate text-white">{itemName}</p>
+        {/* Product summary */}
+        <div className="px-6 py-3 bg-white/[0.04] border-b border-white/10 flex justify-between items-center">
+          <div>
+            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Product</p>
+            <p className="text-sm font-extrabold text-white truncate max-w-[210px]">{itemName}</p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Amount</p>
+            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Amount</p>
             <p className="text-base font-black text-[#ffb612] font-mono">{priceDisplay}</p>
           </div>
         </div>
 
-        {/* Tabs for payment options */}
-        <div className="flex border-b border-white/10 bg-white/[0.03]">
-          <button
-            onClick={() => setActiveTab("till")}
-            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${activeTab === "till"
-                ? "border-[#d22630] text-[#ffb612] bg-white/[0.04]"
-                : "border-transparent text-slate-500 hover:text-slate-300"
-              }`}
-          >
-            Option 1: Till Number
-          </button>
-          <button
-            onClick={() => setActiveTab("iban")}
-            className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${activeTab === "iban"
-                ? "border-[#d22630] text-[#ffb612] bg-white/[0.04]"
-                : "border-transparent text-slate-500 hover:text-slate-300"
-              }`}
-          >
-            Option 2: Mobile / IBAN
-          </button>
-        </div>
+        {/* ── STEP 1: Enter JazzCash number ─────────────────────────────── */}
+        {step === "enter_number" && (
+          <form onSubmit={handleInitiate} className="p-6 flex flex-col gap-4">
+            <div className="text-center mb-1">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#d22630]/20 border border-[#d22630]/30 flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-[#ffb612]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-sm font-black text-white">Pay via JazzCash Wallet</h3>
+              <p className="text-[11px] text-slate-400 mt-1">Enter your JazzCash number. We'll send a payment request to your JazzCash app.</p>
+            </div>
 
-        {/* Payment Details Content */}
-        <div className="p-6">
-          {activeTab === "till" ? (
-            <div className="flex flex-col items-center gap-4 text-center animate-scale-up-fade">
-              {/* QR Code */}
-              <div className="p-2.5 bg-white rounded-xl shadow-md border border-white/20 flex items-center justify-center relative">
-                <img
-                  src={qrCodeUrl}
-                  alt="JazzCash Till QR Code"
-                  className="w-[140px] h-[140px] block"
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">JazzCash Mobile Number</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs font-mono">🇵🇰</span>
+                <input
+                  type="tel"
+                  placeholder="03XX XXXXXXX"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
+                  required
+                  disabled={loading}
+                  maxLength={13}
+                  className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl pl-9 pr-4 py-3 text-sm font-mono focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-all"
                 />
-                <span className="absolute bottom-1 bg-[#d22630] text-white text-[8px] font-black px-1.5 py-0.5 rounded shadow-sm border border-[#ffb612]/30 uppercase">
-                  MUHAMMAD Shop
-                </span>
-              </div>
-
-              {/* Till Info */}
-              <div className="w-full">
-                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">JazzCash Till ID</p>
-                <div className="flex items-center justify-center gap-2 mt-1">
-                  <span className="text-xl font-extrabold text-[#ffb612] font-mono tracking-widest bg-white/5 border border-white/10 px-3 py-1 rounded-lg">
-                    983622181
-                  </span>
-                  <button
-                    onClick={() => copyToClipboard("983622181", "Till ID")}
-                    className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-400 hover:text-white transition-colors cursor-pointer border border-white/10"
-                    title="Copy Till ID"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                    </svg>
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-400 font-semibold mt-2">
-                  Till Name: <span className="text-white font-bold">MUHAMMAD Shop</span>
-                </p>
-              </div>
-
-              {/* Steps */}
-              <div className="text-left w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs leading-relaxed text-slate-400">
-                <p className="font-bold text-white mb-2">How to pay:</p>
-                <ol className="list-decimal list-inside space-y-1.5">
-                  <li>Open the <span className="text-white font-semibold">JazzCash App</span>.</li>
-                  <li>Tap on <span className="text-white font-semibold">Scan QR</span> or enter Till Number.</li>
-                  <li>Scan QR above or type Till ID: <span className="text-white font-mono font-bold">983622181</span>.</li>
-                  <li>Enter exact amount: <span className="text-[#ffb612] font-bold">{priceDisplay}</span> and confirm.</li>
-                </ol>
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col gap-3.5 text-xs animate-scale-up-fade">
-              {/* Account Details */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-                <div className="flex justify-between items-center border-b border-white/10 pb-3">
-                  <div>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase">Account Title</p>
-                    <p className="text-sm font-extrabold text-white mt-0.5">MUHAMMAD RASHID</p>
-                  </div>
-                </div>
 
-                <div className="flex justify-between items-center border-b border-white/10 pb-3">
-                  <div>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase">JazzCash Account / Mobile</p>
-                    <p className="text-sm font-extrabold text-white font-mono mt-0.5">01021410502</p>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard("01021410502", "Account Number")}
-                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer font-bold border border-white/10"
-                  >
-                    Copy
-                  </button>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <div className="min-w-0">
-                    <p className="text-[10px] text-slate-400 font-bold uppercase">IBAN Number</p>
-                    <p className="text-[11px] font-mono font-bold text-white mt-0.5 truncate max-w-[200px]">
-                      PK82JCMA1806921021410502
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard("PK82JCMA1806921021410502", "IBAN")}
-                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer font-bold flex-shrink-0 border border-white/10"
-                  >
-                    Copy
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3 leading-relaxed text-slate-400">
-                <p className="font-bold text-white mb-1">Transfer instructions:</p>
-                <p>
-                  Send the payment via your bank app or mobile wallet to <span className="text-white font-semibold">Mobilink Microfinance Bank</span> using the IBAN or directly transfer to the JazzCash mobile wallet.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Form for TRX submission */}
-          <form onSubmit={handleVerify} className="mt-5 border-t border-white/10 pt-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Your Email Address (For Account Credentials)
+                CNIC Last 6 Digits <span className="text-slate-600 font-normal normal-case">(required by JazzCash)</span>
               </label>
               <input
+                type="text"
+                placeholder="e.g. 123456"
+                value={cnic}
+                onChange={(e) => setCnic(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                disabled={loading}
+                maxLength={6}
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-all"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Your Email (for plan activation)</label>
+              <input
                 type="email"
-                placeholder="e.g. customer@example.com"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={verifying}
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-colors"
+                disabled={loading}
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-all"
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Your Sender JazzCash Mobile Number
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. 03001234567"
-                value={senderNumber}
-                onChange={(e) => setSenderNumber(e.target.value)}
-                required
-                disabled={verifying}
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-colors font-mono"
-              />
+            {/* How it works */}
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3.5 text-[11px] text-slate-400 leading-relaxed">
+              <p className="font-bold text-white mb-1.5">How it works:</p>
+              <ol className="list-decimal list-inside space-y-1">
+                <li>Enter your JazzCash number above</li>
+                <li>A payment request of <span className="text-[#ffb612] font-bold">{priceDisplay}</span> will be sent to your app</li>
+                <li>Open <span className="text-white font-semibold">JazzCash</span> app → approve the request</li>
+                <li>Your plan activates instantly ✓</li>
+              </ol>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-widest text-white bg-gradient-to-r from-[#d22630] to-[#ffb612] hover:from-[#b91e27] hover:to-[#e09e0c] disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-red-900/30"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending Request...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  Send Payment Request
+                </>
+              )}
+            </button>
+          </form>
+        )}
+
+        {/* ── STEP 2: OTP Pending — waiting for user to approve in app ─── */}
+        {step === "otp_pending" && (
+          <div className="p-6 flex flex-col items-center gap-5 text-center">
+            {/* Pulsing ring animation */}
+            <div className="relative w-20 h-20">
+              <div className="absolute inset-0 rounded-full bg-[#ffb612]/20 animate-ping" />
+              <div className="absolute inset-2 rounded-full bg-[#d22630]/20 animate-ping" style={{ animationDelay: "0.3s" }} />
+              <div className="relative w-20 h-20 rounded-full bg-[#d22630]/20 border-2 border-[#d22630]/50 flex items-center justify-center">
+                <svg className="w-9 h-9 text-[#ffb612]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-base font-black text-white">Approve in Your JazzCash App</h3>
+              <p className="text-[11px] text-slate-400 mt-2 leading-relaxed max-w-[280px]">
+                A payment request of <span className="text-[#ffb612] font-bold">{priceDisplay}</span> has been sent to{" "}
+                <span className="text-white font-bold">{mobileNumber}</span>.
+                Open the <span className="text-white font-semibold">JazzCash app</span> and approve it.
+              </p>
+            </div>
+
+            {countdown > 0 && (
+              <div className="flex items-center gap-2 text-xs text-slate-400">
+                <div className="w-4 h-4 border-2 border-slate-600 border-t-[#ffb612] rounded-full animate-spin" />
+                Expires in <span className="text-[#ffb612] font-bold font-mono">{countdown}s</span>
+              </div>
+            )}
+
+            {txnRefNo && (
+              <div className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold">Ref No:</span>
+                <span className="text-white font-mono font-bold">{txnRefNo}</span>
+              </div>
+            )}
+
+            {/* Once approved, user clicks "I've Approved" */}
+            <button
+              onClick={handleConfirmPayment}
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-widest text-slate-900 bg-gradient-to-r from-[#ffb612] to-[#f59e0b] hover:from-[#f0a800] hover:to-[#d97706] disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-900/30"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                  Confirming...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                  I've Approved — Confirm Payment
+                </>
+              )}
+            </button>
+
+            {/* Fallback: enter TRX ID manually */}
+            <div className="w-full border-t border-white/10 pt-4">
+              <button
+                onClick={() => setStep("enter_trx")}
+                className="text-[11px] text-slate-500 hover:text-slate-300 font-semibold underline underline-offset-2 cursor-pointer transition-colors"
+              >
+                Didn't receive? Enter Transaction ID manually →
+              </button>
+            </div>
+
+            <button
+              onClick={handleReset}
+              className="text-[11px] text-slate-600 hover:text-slate-400 cursor-pointer transition-colors"
+            >
+              ← Use different number
+            </button>
+          </div>
+        )}
+
+        {/* ── STEP 3: Manual TRX ID entry (fallback) ───────────────────── */}
+        {step === "enter_trx" && (
+          <form onSubmit={handleManualTrx} className="p-6 flex flex-col gap-4">
+            <div className="text-center">
+              <h3 className="text-sm font-black text-white">Enter Transaction ID</h3>
+              <p className="text-[11px] text-slate-400 mt-1">
+                After approving, enter the Transaction ID from your JazzCash SMS confirmation.
+              </p>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Transaction ID (TRX ID)
-              </label>
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Transaction ID (TRX ID)</label>
               <input
                 type="text"
-                placeholder="e.g. 02345678901 (11 digits)"
-                value={trxId}
-                onChange={(e) => setTrxId(e.target.value)}
+                placeholder="e.g. TT2346789012"
+                value={manualTrxId}
+                onChange={(e) => setManualTrxId(e.target.value.trim())}
                 required
-                disabled={verifying}
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#d22630] focus:bg-white/8 transition-colors font-mono"
+                disabled={loading}
+                className="w-full bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-[#ffb612] focus:bg-white/8 transition-all"
               />
             </div>
 
             <button
               type="submit"
-              disabled={verifying}
-              className="w-full mt-2 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-white shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-[#d22630] to-[#ffb612] hover:from-[#b91e27] hover:to-[#e09e0c] disabled:opacity-60 disabled:cursor-not-allowed"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-widest text-white bg-gradient-to-r from-[#d22630] to-[#ffb612] hover:from-[#b91e27] hover:to-[#e09e0c] disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              {verifying ? (
+              {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Verifying with JazzCash...
+                  Verifying...
                 </>
               ) : (
-                "Verify Payment & Unlock"
+                "Confirm & Unlock"
               )}
             </button>
+
+            <button type="button" onClick={() => setStep("otp_pending")} className="text-[11px] text-slate-500 hover:text-slate-300 cursor-pointer transition-colors text-center underline">
+              ← Back
+            </button>
           </form>
-        </div>
+        )}
+
+        {/* ── STEP 4: Success ───────────────────────────────────────────── */}
+        {step === "success" && (
+          <div className="p-8 flex flex-col items-center gap-4 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400/50 flex items-center justify-center">
+              <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-black text-white">Payment Successful!</h3>
+            <p className="text-[12px] text-slate-400 leading-relaxed">
+              Your plan has been activated. A confirmation has been sent to{" "}
+              <span className="text-white font-bold">{email}</span>.
+            </p>
+            <div className="text-[11px] text-slate-500 animate-pulse">Redirecting you...</div>
+          </div>
+        )}
+
+        {/* Footer note */}
+        {step !== "success" && (
+          <div className="px-6 pb-5 text-center text-[10px] text-slate-600 leading-relaxed">
+            Powered by <span className="text-slate-400 font-semibold">JazzCash</span> · Secured with HMAC-SHA256
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-

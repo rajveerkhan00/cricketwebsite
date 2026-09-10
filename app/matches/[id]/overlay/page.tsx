@@ -1061,55 +1061,26 @@ export default function OverlayPage() {
             </p>
           </div>
 
-          {/* JazzCash Instructions */}
-          <div style={{ background: "rgba(255,182,18,0.05)", border: "1px solid rgba(255,182,18,0.15)", borderRadius: 14, padding: "14px 18px", marginBottom: 20 }}>
-            <div style={{ fontSize: 10, color: "#ffb612", fontWeight: 900, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 10 }}>💳 Pay via JazzCash</div>
-            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "6px 14px", fontSize: 13, alignItems: "center" }}>
-              <span style={{ color: "#64748b" }}>Number:</span>
-              <span style={{ fontWeight: 800, fontFamily: "monospace", color: "#fff", fontSize: 15 }}>01021410502</span>
-              <span style={{ color: "#64748b" }}>Name:</span>
-              <span style={{ fontWeight: 800, color: "#fff" }}>MUHAMMAD RASHID</span>
-              <span style={{ color: "#64748b" }}>Amount:</span>
-              <span style={{ fontWeight: 900, color: "#ffb612", fontSize: 16 }}>PKR 250</span>
-            </div>
-            <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 10, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 8 }}>
-              Send PKR 250 → get TID from JazzCash → fill below → unlocks instantly ✅
-            </div>
+          {/* SafePay / Pricing Link */}
+          <div style={{ background: "rgba(0,208,156,0.06)", border: "1px solid rgba(0,208,156,0.2)", borderRadius: 16, padding: "18px", marginBottom: 20, textAlign: "center" }}>
+            <div style={{ fontSize: 11, color: "#00D09C", fontWeight: 900, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 8 }}>💳 SafePay Instant Unlock</div>
+            <p style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.5, margin: "0 0 14px" }}>
+              Get instant access to all scoreboards and premium themes using SafePay.
+            </p>
+            <a
+              href="/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-block", background: "linear-gradient(135deg, #00D09C, #00b386)", color: "#000", fontWeight: 900, textDecoration: "none", padding: "12px 24px", borderRadius: 10, fontSize: 13, textTransform: "uppercase", letterSpacing: 1 }}
+            >
+              🚀 View Pricing & Unlock
+            </a>
           </div>
 
-          {/* New Payment Form */}
-          <form onSubmit={handlePaymentSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Your Email</label>
-              <input type="email" required placeholder="email@example.com" value={formEmail} onChange={e => setFormEmail(e.target.value)}
-                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Your JazzCash Number</label>
-              <input type="text" required placeholder="e.g. 03001234567" value={formSender} onChange={e => setFormSender(e.target.value)}
-                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              <label style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", color: "#64748b", letterSpacing: 1 }}>Transaction ID (TID)</label>
-              <input type="text" required placeholder="TID from JazzCash app" value={formTrxId} onChange={e => setFormTrxId(e.target.value)}
-                style={{ background: "#060919", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "11px 14px", color: "#fff", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box", textTransform: "uppercase" }} />
-            </div>
-            {submitErr && (
-              <div style={{ fontSize: 12, color: "#f87171", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", padding: "10px 14px", borderRadius: 10 }}>❌ {submitErr}</div>
-            )}
-            {submitMsg && (
-              <div style={{ fontSize: 12, color: "#34d399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", padding: "10px 14px", borderRadius: 10, lineHeight: 1.5 }}>✅ {submitMsg}</div>
-            )}
-            <button type="submit" disabled={submitting}
-              style={{ background: submitting ? "#334155" : "linear-gradient(135deg, #ffb612, #ea580c)", border: "none", borderRadius: 12, padding: "14px", color: submitting ? "#94a3b8" : "#000", fontWeight: 900, cursor: submitting ? "not-allowed" : "pointer", fontSize: 14, textTransform: "uppercase", letterSpacing: 1, marginTop: 4 }}>
-              {submitting ? "⏳ Verifying..." : "🔓 Unlock Scoreboard"}
-            </button>
-          </form>
-
           {/* Divider */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "20px 0 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "16px 0" }}>
             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)" }} />
-            <span style={{ fontSize: 11, color: "#475569", fontWeight: 600 }}>ALREADY PAID?</span>
+            <span style={{ fontSize: 11, color: "#475569", fontWeight: 600 }}>ALREADY PURCHASED A PLAN?</span>
             <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)" }} />
           </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import JazzCashPaymentModal from "./JazzCashPaymentModal";
+import SafePayModal from "./SafePayModal";
 
 // ── Theme color palette (mirrors overlay THEME_MAP) ──────────────────────────
 const THEME_COLORS: Record<string, { accent: string; bg: string; border: string; text: string }> = {
@@ -49,7 +49,7 @@ export default function ScoreboardLinksModal({
 }: ScoreboardLinksModalProps) {
   const [themes, setThemes] = useState<ThemeItem[]>([]);
   const [loadingThemes, setLoadingThemes] = useState(true);
-  const [isJazzCashOpen, setIsJazzCashOpen] = useState(false);
+  const [isSafePayOpen, setIsSafePayOpen] = useState(false);
   const [selectedThemeForPurchase, setSelectedThemeForPurchase] = useState<ThemeItem | null>(null);
   const [approvedSlugs, setApprovedSlugs] = useState<string[]>([]);
   const [loadingPurchases, setLoadingPurchases] = useState(false);
@@ -225,10 +225,10 @@ export default function ScoreboardLinksModal({
               {/* Theme store instruction panel */}
               <div className="flex flex-col items-center gap-3 mt-4 w-full max-w-xl text-center bg-slate-50 border border-slate-200 rounded-2xl p-4">
                 <p className="text-slate-800 font-extrabold text-xs font-space uppercase">
-                  ⚡ Theme Store (JazzCash Checkout Only)
+                  ⚡ Theme Store (SafePay Checkout)
                 </p>
                 <p className="text-zinc-500 text-[10px] md:text-xs max-w-md">
-                  Click <span className="font-extrabold text-[#d22630]">Buy Theme</span> next to any theme to submit payment via JazzCash. The admin will approve and unlock the theme link within 1 hour.
+                  Click <span className="font-extrabold text-[#00D09C]">Buy Theme</span> next to any theme to pay via SafePay debit/credit card. Your scoreboard unlocks instantly after payment.
                 </p>
                 <div className="flex items-center gap-2 mt-1 flex-wrap justify-center">
                   <span className="text-[10px] font-bold text-zinc-600">Your Email:</span>
@@ -412,11 +412,11 @@ export default function ScoreboardLinksModal({
                                 <button
                                   onClick={() => {
                                     setSelectedThemeForPurchase(theme);
-                                    setIsJazzCashOpen(true);
+                                    setIsSafePayOpen(true);
                                   }}
-                                  className="w-full max-w-[280px] mx-auto py-1 px-4 rounded-full font-black text-[10px] uppercase tracking-wider text-white shadow bg-gradient-to-r from-[#d22630] to-[#ffb612] hover:from-[#b91e27] hover:to-[#e09e0c] active:scale-95 transition-all cursor-pointer"
+                                  className="w-full max-w-[280px] mx-auto py-1 px-4 rounded-full font-black text-[10px] uppercase tracking-wider text-slate-900 shadow bg-gradient-to-r from-[#00D09C] to-[#00b386] hover:from-[#00ba8a] hover:to-[#009a74] active:scale-95 transition-all cursor-pointer"
                                 >
-                                  🔒 Buy Theme (JazzCash)
+                                  🔒 Buy Theme (SafePay)
                                 </button>
                               </td>
                             )}
@@ -436,21 +436,14 @@ export default function ScoreboardLinksModal({
       </div>
 
       {selectedThemeForPurchase && (
-        <JazzCashPaymentModal
-          isOpen={isJazzCashOpen}
+        <SafePayModal
+          isOpen={isSafePayOpen}
           onClose={() => {
-            setIsJazzCashOpen(false);
+            setIsSafePayOpen(false);
             setSelectedThemeForPurchase(null);
           }}
           itemName={`Scoreboard Theme: ${selectedThemeForPurchase.slug}`}
           itemPrice={`${selectedThemeForPurchase.price}`}
-          onSuccess={() => {
-            showToast(
-              `JazzCash payment details submitted for theme ${selectedThemeForPurchase.name}! Check your email once admin approves it.`,
-              "success"
-            );
-            fetchPurchases();
-          }}
         />
       )}
 

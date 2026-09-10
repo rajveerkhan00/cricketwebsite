@@ -5,13 +5,18 @@ export default function Footer() {
     { name: "ABOUT US", href: "/about" },
     { name: "SERVICES", href: "/#services" },
     { name: "PRICING", href: "/pricing" },
+    { name: "TERMS & CONDITIONS", href: "/terms-and-conditions" },
     { name: "PRIVACY POLICY", href: "/privacy-policy" },
+    { name: "REFUND POLICY", href: "/refund-policy" },
+    { name: "COMPLAINT HANDLING", href: "/complaint-mechanism" },
   ];
 
   const services = [
     { name: "LIVE SCORING", href: "/#services" },
     { name: "LIVE STREAMING", href: "/#services" },
     { name: "TOURNAMENT MANAGEMENT", href: "/#services" },
+    { name: "OBS / VMIX OVERLAYS", href: "/themes" },
+    { name: "SAFEPAY CHECKOUT", href: "/pricing" },
   ];
 
   const owners = [
@@ -28,11 +33,11 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <h3 className="text-slate-900 text-lg font-bold tracking-wider font-space uppercase">
-                Quick Links
+                Legal &amp; Support
               </h3>
               <span className="w-10 h-[3px] bg-orange-500 rounded-full" />
             </div>
-            <ul className="flex flex-col gap-3 font-semibold text-sm tracking-wider">
+            <ul className="flex flex-col gap-2.5 font-semibold text-xs tracking-wider">
               {quickLinks.map((link, idx) => (
                 <li key={idx} className="group">
                   <a href={link.href} className="text-slate-600 hover:text-orange-600 transition-colors duration-200 flex items-center gap-2">
@@ -52,7 +57,7 @@ export default function Footer() {
               </h3>
               <span className="w-10 h-[3px] bg-orange-500 rounded-full" />
             </div>
-            <ul className="flex flex-col gap-3 font-semibold text-sm tracking-wider">
+            <ul className="flex flex-col gap-2.5 font-semibold text-xs tracking-wider">
               {services.map((service, idx) => (
                 <li key={idx} className="group">
                   <a href={service.href} className="text-slate-600 hover:text-orange-600 transition-colors duration-200 flex items-center gap-2">
@@ -75,7 +80,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-4 font-semibold text-sm tracking-wider text-slate-600">
               {/* Address */}
               <li className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex-shrink-0">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -86,7 +91,7 @@ export default function Footer() {
 
               {/* Email */}
               <li className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-700">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex-shrink-0">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -98,13 +103,13 @@ export default function Footer() {
 
               {/* Phone */}
               <li className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex-shrink-0">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </span>
-                <a href="tel:+3013113580" className="text-slate-700 hover:text-orange-600 transition-colors">
-                  +923013113580
+                <a href="tel:03704788581" className="text-slate-700 hover:text-orange-600 transition-colors">
+                  03704788581 <span className="text-xs text-slate-500 font-normal">(+92 370 4788581)</span>
                 </a>
               </li>
             </ul>

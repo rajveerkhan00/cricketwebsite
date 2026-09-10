@@ -57,8 +57,8 @@ export default function Contact() {
                   </svg>
                 </span>
                 <div className="flex flex-col text-sm">
-                  <span className="text-slate-500 font-normal">Location</span>
-                  <span className="font-semibold text-slate-900">Sherpur, Dhaka, Bangladesh</span>
+                  <span className="text-slate-500 font-normal">Location &amp; Office</span>
+                  <span className="font-semibold text-slate-900">Lahore, Punjab, Pakistan</span>
                 </div>
               </div>
 
@@ -69,7 +69,7 @@ export default function Contact() {
                   </svg>
                 </span>
                 <div className="flex flex-col text-sm">
-                  <span className="text-slate-500 font-normal">Email Us</span>
+                  <span className="text-slate-500 font-normal">Official Email</span>
                   <a href="mailto:crioverlay@gmail.com" className="font-semibold text-slate-900 hover:text-orange-600 transition-colors">
                     crioverlay@gmail.com
                   </a>
@@ -83,16 +83,17 @@ export default function Contact() {
                   </svg>
                 </span>
                 <div className="flex flex-col text-sm">
-                  <span className="text-slate-500 font-normal">Call Us</span>
-                  <a href="tel:+3013113580" className="font-semibold text-slate-900 hover:text-orange-600 transition-colors">
-                    +3013113580
+                  <span className="text-slate-500 font-normal">Helpline / WhatsApp</span>
+                  <a href="tel:03704788581" className="font-bold text-slate-900 hover:text-orange-600 transition-colors">
+                    03704788581 <span className="text-xs text-slate-500 font-normal">(+92 370 4788581)</span>
                   </a>
                 </div>
               </div>
             </div>
 
-            <div className="text-[10px] text-slate-400 font-semibold tracking-wider">
-              CriOverlay TEAM CO.
+            <div className="text-[10px] text-slate-400 font-semibold tracking-wider pt-2 border-t border-slate-100 flex items-center justify-between">
+              <span>CriOverlay OFFICIAL SUPPORT</span>
+              <span className="text-emerald-600 font-bold">● ONLINE (9 AM - 9 PM PKT)</span>
             </div>
           </div>
 
@@ -124,13 +125,41 @@ export default function Contact() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    Contact Phone (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="0300 1234567"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold tracking-wider text-slate-700 uppercase">
+                    Inquiry Category
+                  </label>
+                  <select
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors"
+                    defaultValue="general"
+                  >
+                    <option value="general">General Inquiry</option>
+                    <option value="safepay">SafePay Billing / Payment Question</option>
+                    <option value="technical">Technical / OBS Scoreboard Support</option>
+                    <option value="refund">Refund / Order Cancellation</option>
+                    <option value="complaint">Formal Complaint / Grievance</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold tracking-wider text-slate-700 uppercase">
-                  Subject
+                  Subject / Order ID
                 </label>
                 <input
                   type="text"
-                  placeholder="How can we help?"
+                  placeholder="e.g. Help with SafePay Order SP-..."
                   className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors"
                   required
                 />
@@ -142,7 +171,7 @@ export default function Contact() {
                 </label>
                 <textarea
                   placeholder="Tell us what you need..."
-                  rows={5}
+                  rows={4}
                   className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors resize-none"
                   required
                 />

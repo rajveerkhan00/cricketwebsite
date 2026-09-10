@@ -3,28 +3,41 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import JazzCashPaymentModal from "../components/JazzCashPaymentModal";
+import SafePayModal from "../components/SafePayModal";
 import { toast } from "react-toastify";
 
 export default function Pricing() {
   const [tiers, setTiers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
-  const [isJazzCashOpen, setIsJazzCashOpen] = useState(false);
+  const [isSafePayOpen, setIsSafePayOpen] = useState(false);
 
-  const normalizePrice = (price: string) => price?.toString().trim().toLowerCase().replace(/\s/g, "");
+  const normalizePrice = (price: string) =>
+    price?.toString().trim().toLowerCase().replace(/\s/g, "");
   const isFreePrice = (price: string) => {
     const normalized = normalizePrice(price);
-    return normalized === "0" || normalized === "pkr0" || normalized === "pk0" || normalized.includes("free");
+    return (
+      normalized === "0" ||
+      normalized === "pkr0" ||
+      normalized === "pk0" ||
+      normalized.includes("free")
+    );
   };
 
   const handlePlanCheckout = (tier: any) => {
     if (isFreePrice(tier.price)) {
-      toast.success(`Welcome to CriOverlay! You are now subscribed to the ${tier.name} Plan.`);
+      toast.success(
+        `Welcome to CriOverlay! You are now subscribed to the ${tier.name} Plan.`
+      );
       return;
     }
     setSelectedPlan(tier);
-    setIsJazzCashOpen(true);
+    setIsSafePayOpen(true);
+  };
+
+  const closeSafePay = () => {
+    setIsSafePayOpen(false);
+    setSelectedPlan(null);
   };
 
   useEffect(() => {
@@ -87,18 +100,27 @@ export default function Pricing() {
                 )}
 
                 <div className="flex flex-col gap-2 mb-6">
-                  <h3 className="text-xl font-bold font-space uppercase text-slate-900">{tier.name}</h3>
-                  <p className="text-xs text-slate-500 font-normal leading-relaxed">{tier.description}</p>
+                  <h3 className="text-xl font-bold font-space uppercase text-slate-900">
+                    {tier.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 font-normal leading-relaxed">
+                    {tier.description}
+                  </p>
                 </div>
 
                 <div className="flex items-baseline gap-2 mb-6 border-b border-slate-200 pb-6">
-                  <span className="text-4xl font-extrabold text-slate-900 font-space">{tier.price}</span>
+                  <span className="text-4xl font-extrabold text-slate-900 font-space">
+                    {tier.price}
+                  </span>
                   <span className="text-xs text-slate-500">/ {tier.period}</span>
                 </div>
 
                 <ul className="flex flex-col gap-4 mb-8 flex-1">
                   {tier.features.map((feature: string, fIdx: number) => (
-                    <li key={fIdx} className="flex items-center gap-3 text-sm font-semibold tracking-wide text-slate-700">
+                    <li
+                      key={fIdx}
+                      className="flex items-center gap-3 text-sm font-semibold tracking-wide text-slate-700"
+                    >
                       <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
                       <span className="break-words">{feature}</span>
                     </li>
@@ -123,19 +145,14 @@ export default function Pricing() {
 
       <Footer />
 
+      {/* ── SafePay Modal ── */}
       {selectedPlan && (
-        <JazzCashPaymentModal
-          isOpen={isJazzCashOpen}
-          onClose={() => {
-            setIsJazzCashOpen(false);
-            setSelectedPlan(null);
-          }}
+        <SafePayModal
+          isOpen={isSafePayOpen}
+          onClose={closeSafePay}
           itemName={`${selectedPlan.name} Plan`}
-          itemPrice={`${selectedPlan.price}`}
+          itemPrice={selectedPlan.price}
           planType={selectedPlan.planType}
-          onSuccess={() => {
-            toast.success(`Successfully subscribed to ${selectedPlan.name} Plan!`);
-          }}
         />
       )}
     </div>
