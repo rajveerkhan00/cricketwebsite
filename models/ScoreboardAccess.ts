@@ -1,7 +1,7 @@
-import { Schema, model, models, connection } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 // ScoreboardAccess tracks who has active access to a scoreboard theme.
-// Access is keyed by: email + themeSlug
+// Access is keyed by: email + themeSlug (where themeSlug can be "all-themes" or specific theme slug)
 const ScoreboardAccessSchema = new Schema(
   {
     email: {
@@ -20,11 +20,26 @@ const ScoreboardAccessSchema = new Schema(
     paymentId: {
       type: Schema.Types.ObjectId,
       ref: "Payment",
-      required: [true, "Payment ID is required"],
+      required: false,
     },
     trxId: {
       type: String,
-      required: [true, "Transaction ID is required"],
+      default: "ADMIN_UNLOCK",
+      trim: true,
+    },
+    grantedBy: {
+      type: String,
+      default: "admin",
+      trim: true,
+    },
+    durationLabel: {
+      type: String,
+      default: "Custom",
+      trim: true,
+    },
+    note: {
+      type: String,
+      default: "",
       trim: true,
     },
     grantedAt: {
@@ -40,6 +55,7 @@ const ScoreboardAccessSchema = new Schema(
       type: String,
       enum: ["active", "revoked"],
       default: "active",
+      index: true,
     },
   },
   {
@@ -53,3 +69,4 @@ if (models.ScoreboardAccess) {
 }
 
 export const ScoreboardAccess = model("ScoreboardAccess", ScoreboardAccessSchema);
+

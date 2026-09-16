@@ -49,14 +49,14 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#03041c] px-6 py-12 font-outfit select-none relative overflow-hidden">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#03041c] px-4 sm:px-6 py-8 sm:py-12 font-outfit select-none relative overflow-hidden">
       {/* Background glows */}
       <div className="absolute top-[-15%] left-[-10%] w-[45%] h-[55%] rounded-full bg-red-600/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-[-15%] right-[-10%] w-[45%] h-[55%] rounded-full bg-orange-600/10 blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] rounded-full bg-amber-500/5 blur-[120px] pointer-events-none" />
 
       {/* Card */}
-      <div className="w-full max-w-md bg-[#07092e] border border-zinc-800/60 rounded-2xl p-8 shadow-2xl shadow-black/60 z-10 flex flex-col gap-6">
+      <div className="w-full max-w-md bg-[#07092e] border border-zinc-800/60 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/60 z-10 flex flex-col gap-6">
 
         {/* Header */}
         <div className="flex flex-col items-center text-center gap-3">
