@@ -203,34 +203,53 @@ export default function ThemesPage() {
                     </span>
                     <span className="text-zinc-500 text-xs font-semibold hidden sm:block">· Demo match data</span>
                   </div>
-                  <button
-                    onClick={() => setPreviewTheme(null)}
-                    className="bg-zinc-800 hover:bg-red-700/50 text-white border border-zinc-700 hover:border-red-500 rounded-lg px-3 py-1.5 text-xs font-bold cursor-pointer transition-all"
-                  >
-                    ✕ Close Preview
-                  </button>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-[11px] text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full xl:hidden flex items-center gap-1">
+                      ⇄ Scroll horizontally
+                    </span>
+                    <button
+                      onClick={() => setPreviewTheme(null)}
+                      className="bg-zinc-800 hover:bg-red-700/50 text-white border border-zinc-700 hover:border-red-500 rounded-lg px-3 py-1.5 text-xs font-bold cursor-pointer transition-all"
+                    >
+                      ✕ Close Preview
+                    </button>
+                  </div>
                 </div>
 
-                {/* iframe */}
+                {/* Horizontal scroller wrapper so scoreboard maintains desktop layout on all screens */}
                 <div
-                  className="w-full bg-black"
-                  style={{ aspectRatio: "16/9", maxHeight: "600px" }}
+                  className="w-full bg-black overflow-x-auto overflow-y-hidden scrollbar-thin"
+                  style={{ WebkitOverflowScrolling: "touch" }}
                 >
-                  <iframe
-                    key={previewTheme.slug}
-                    src={`/matches/overlay/overlay?theme=${encodeURIComponent(previewTheme.slug)}&preview=true`}
-                    className="w-full h-full border-none"
-                    style={{ display: "block", height: "600px" }}
-                    title={`Preview: ${previewTheme.name}`}
-                    allow="autoplay"
-                  />
+                  <div
+                    style={{
+                      minWidth: "1200px",
+                      width: "100%",
+                      height: "580px",
+                      position: "relative",
+                    }}
+                  >
+                    <iframe
+                      key={previewTheme.slug}
+                      src={`/matches/overlay/overlay?theme=${encodeURIComponent(previewTheme.slug)}&preview=true`}
+                      className="w-full h-full border-none"
+                      style={{ display: "block", width: "100%", height: "100%" }}
+                      title={`Preview: ${previewTheme.name}`}
+                      allow="autoplay"
+                    />
+                  </div>
                 </div>
 
                 {/* Footer note */}
                 <div className="px-6 py-3 bg-[#0b1030] border-t border-white/10 flex items-center justify-between flex-wrap gap-2">
-                  <p className="text-zinc-500 text-xs font-semibold">
-                    🎮 Showing demo match: India vs Australia · 125/2 (14.2 overs) — preview mode only
-                  </p>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <p className="text-zinc-400 text-xs font-semibold">
+                      🎮 Showing demo match: India vs Australia · 125/2 (14.2 overs) — preview mode only
+                    </p>
+                    <span className="text-amber-400/80 text-[11px] font-semibold xl:hidden">
+                      (Swipe horizontally ⇄ to view full scoreboard)
+                    </span>
+                  </div>
                   <Link
                     href="/pricing"
                     className="text-amber-400 text-xs font-bold hover:text-amber-300 transition"

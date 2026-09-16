@@ -450,7 +450,7 @@ export default function ScoreboardLinksModal({
       {/* ── Inline Scoreboard Preview Overlay ───────────────────────────── */}
       {previewTheme && (
         <div
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md p-3 sm:p-4"
           onClick={(e) => { if (e.target === e.currentTarget) setPreviewTheme(null); }}
         >
           {/* Header bar */}
@@ -462,7 +462,10 @@ export default function ScoreboardLinksModal({
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-zinc-500 text-xs font-semibold">Demo match data (preview mode)</span>
+              <span className="text-[11px] text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full xl:hidden flex items-center gap-1">
+                ⇄ Scroll horizontally
+              </span>
+              <span className="text-zinc-500 text-xs font-semibold hidden md:inline">Demo match data (preview mode)</span>
               <button
                 onClick={() => setPreviewTheme(null)}
                 className="bg-zinc-800 hover:bg-red-700/50 text-white border border-zinc-700 hover:border-red-500 rounded-lg px-3 py-1.5 text-xs font-bold cursor-pointer transition-all ml-2"
@@ -472,23 +475,36 @@ export default function ScoreboardLinksModal({
             </div>
           </div>
 
-          {/* iframe */}
-          <div className="w-full max-w-5xl bg-black border-x border-b border-zinc-700 rounded-b-2xl overflow-hidden shadow-2xl"
-            style={{ height: "calc(min(56.25vw, 600px))" }}
+          {/* iframe wrapper with horizontal scroller and full desktop width */}
+          <div
+            className="w-full max-w-5xl bg-black border-x border-b border-zinc-700 rounded-b-2xl overflow-x-auto overflow-y-hidden shadow-2xl scrollbar-thin"
+            style={{
+              maxHeight: "calc(85vh - 70px)",
+              WebkitOverflowScrolling: "touch",
+            }}
           >
-            <iframe
-              key={previewTheme.slug}
-              src={`${typeof window !== "undefined" ? window.location.origin : ""}/matches/${matchId}/overlay?theme=${previewTheme.slug}&preview=true`}
-              className="w-full h-full border-none"
-              style={{ display: "block", background: "transparent" }}
-              title={`Preview: ${previewTheme.name}`}
-              allow="autoplay"
-            />
+            <div
+              style={{
+                minWidth: "1200px",
+                width: "100%",
+                height: "580px",
+                position: "relative",
+              }}
+            >
+              <iframe
+                key={previewTheme.slug}
+                src={`${typeof window !== "undefined" ? window.location.origin : ""}/matches/${matchId}/overlay?theme=${previewTheme.slug}&preview=true`}
+                className="w-full h-full border-none"
+                style={{ display: "block", width: "100%", height: "100%", background: "transparent" }}
+                title={`Preview: ${previewTheme.name}`}
+                allow="autoplay"
+              />
+            </div>
           </div>
 
           {/* Footer hint */}
-          <p className="mt-3 text-zinc-500 text-xs font-semibold">
-            Click outside the preview to close it
+          <p className="mt-3 text-zinc-500 text-xs font-semibold text-center">
+            Click outside the preview to close it · <span className="text-amber-400/80">Swipe horizontally ⇄ to view full scoreboard</span>
           </p>
         </div>
       )}

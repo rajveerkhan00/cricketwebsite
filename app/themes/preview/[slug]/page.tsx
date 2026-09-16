@@ -9,18 +9,28 @@ export default function ThemePreviewPage() {
   const slug = params?.slug as string;
 
   return (
-    <main style={{ minHeight: "100vh", background: "#000" }}>
-      <iframe
-        src={`/matches/overlay/overlay?theme=${encodeURIComponent(slug)}&preview=true`}
-        style={{
-          width: "100%",
-          height: "100vh",
-          border: "none",
-          display: "block",
-        }}
-        title={`Preview: ${slug}`}
-        allow="autoplay"
-      />
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "#000",
+        overflowX: "auto",
+        overflowY: "hidden",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      <div style={{ minWidth: "1200px", width: "100%", height: "100vh" }}>
+        <iframe
+          src={`/matches/overlay/overlay?theme=${encodeURIComponent(slug)}&preview=true`}
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "none",
+            display: "block",
+          }}
+          title={`Preview: ${slug}`}
+          allow="autoplay"
+        />
+      </div>
     </main>
   );
 }
