@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -48,8 +49,20 @@ export default function ForgotPassword() {
 
         {/* Logo and Header */}
         <div className="flex flex-col items-center text-center gap-2">
-          <Link href="/" className="text-3xl font-extrabold tracking-tight text-slate-900 font-space">
-            Cric<span className="text-amber-500 font-black">Over</span>lay
+          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
+            <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-amber-500/40 shadow-sm transition-all duration-300 group-hover:rotate-[12deg] group-hover:scale-105 group-hover:border-amber-500 flex-shrink-0">
+              <Image
+                src="/image.jpeg"
+                alt="CriOverlay Logo"
+                fill
+                sizes="44px"
+                className="object-cover rounded-full"
+                priority
+              />
+            </div>
+            <span className="text-3xl font-extrabold tracking-tight text-slate-900 font-space">
+              Cri<span className="text-amber-500 font-black">Over</span>lay
+            </span>
           </Link>
           <h2 className="text-xl font-bold text-slate-900 font-space tracking-wide mt-2">
             Forgot Password

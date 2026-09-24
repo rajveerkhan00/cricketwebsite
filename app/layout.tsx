@@ -28,9 +28,12 @@ export const metadata: Metadata = {
   description:
     "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
   icons: {
-    icon: [{ url: "/criclogo-round.png", type: "image/png" }],
-    shortcut: "/criclogo-round.png",
-    apple: "/criclogo-round.png",
+    icon: [
+      { url: "/api/favicon", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/api/favicon",
+    apple: "/api/favicon",
   },
 };
 
@@ -45,6 +48,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${outfit.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="icon" href="/api/favicon" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/api/favicon" />
+      </head>
       <body
         className="min-h-full flex flex-col bg-white text-slate-900"
         suppressHydrationWarning

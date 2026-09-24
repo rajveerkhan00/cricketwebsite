@@ -35,13 +35,16 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 cursor-pointer select-none group">
-          <Image
-            src="/criclogo.jpeg"
-            alt="CriOverlay Logo"
-            width={38}
-            height={38}
-            className="rounded-full border border-slate-200 shadow-sm transition-all duration-300 group-hover:rotate-[15deg] group-hover:scale-105"
-          />
+          <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-amber-500/40 shadow-sm transition-all duration-300 group-hover:rotate-[12deg] group-hover:scale-105 group-hover:border-amber-500 group-hover:shadow-amber-500/20 flex-shrink-0">
+            <Image
+              src="/image.jpeg"
+              alt="CriOverlay Logo"
+              fill
+              sizes="40px"
+              className="object-cover rounded-full"
+              priority
+            />
+          </div>
           <span className="text-2xl font-extrabold tracking-tight text-slate-900 transition-transform duration-300 group-hover:scale-[1.02] font-space">
             Cri<span className="text-amber-500 font-black">Over</span>lay
           </span>

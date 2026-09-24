@@ -48,7 +48,7 @@ export default function SafePayModal({
 
       // Build redirect URLs
       const origin = window.location.origin;
-      const successUrl = `${origin}/safepay/success?email=${encodeURIComponent(email)}&item=${encodeURIComponent(itemName)}&price=${encodeURIComponent(String(itemPrice))}&planType=${encodeURIComponent(planType || "")}&order_id=${orderId}`;
+      const successUrl = `${origin}/safepay/success?email=${encodeURIComponent(email)}&item=${encodeURIComponent(itemName)}&price=${encodeURIComponent(String(itemPrice))}&planType=${encodeURIComponent(planType || "")}&order_id=${encodeURIComponent(orderId)}`;
       const cancelUrl = `${origin}/safepay/cancel`;
 
       // Create SafePay payment session (server-side, keeps secret key safe)
@@ -59,6 +59,10 @@ export default function SafePayModal({
           amount: priceNum,
           orderId,
           currency: "PKR",
+          redirectUrl: successUrl,
+          cancelUrl: cancelUrl,
+          source: "custom",
+          webhooks: true,
         }),
       });
 
@@ -69,11 +73,8 @@ export default function SafePayModal({
         return;
       }
 
-      // Append success / cancel redirect URLs to SafePay's hosted checkout URL
-      const finalUrl = `${data.checkoutUrl}&redirect_url=${encodeURIComponent(successUrl)}&cancel_url=${encodeURIComponent(cancelUrl)}`;
-
-      // Redirect user to SafePay hosted checkout
-      window.location.href = finalUrl;
+      // Redirect user directly to SafePay hosted checkout
+      window.location.href = data.checkoutUrl;
     } catch {
       toast.error("Network error. Please try again.");
     } finally {
