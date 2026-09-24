@@ -169,35 +169,31 @@ export default function MatchScoringPage() {
     }
   };
 
-  const showConfirm = (message: string, onConfirm: () => void) => {
-    const toastId = toast.info(
-      <div className="flex flex-col gap-2 p-1 text-left">
-        <p className="font-semibold text-xs text-white leading-relaxed">{message}</p>
-        <div className="flex gap-2 justify-end mt-1">
-          <button
-            onClick={() => {
-              onConfirm();
-              toast.dismiss(toastId);
-            }}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] px-3 py-1.5 rounded active:scale-95 transition-all cursor-pointer uppercase tracking-wider"
-          >
-            Confirm
-          </button>
-          <button
-            onClick={() => toast.dismiss(toastId)}
-            className="bg-zinc-700 hover:bg-zinc-600 text-zinc-300 font-bold text-[10px] px-3 py-1.5 rounded active:scale-95 transition-all cursor-pointer uppercase tracking-wider"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>,
-      {
-        autoClose: false,
-        closeOnClick: false,
-        draggable: false,
-        closeButton: false,
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    subtitle?: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    badge?: string;
+    icon?: string;
+    themeColor?: string;
+    onConfirm: () => void;
+  } | null>(null);
+
+  const showConfirm = (message: string, onConfirm: () => void, title?: string, confirmText?: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: title || "Confirm Action",
+      message,
+      confirmText: confirmText || "Confirm",
+      cancelText: "Cancel",
+      onConfirm: () => {
+        setConfirmModal(null);
+        onConfirm();
       }
-    );
+    });
   };
 
   const isOwner = session?.user && match && (session.user as any).id === match.userId;
@@ -1084,57 +1080,69 @@ export default function MatchScoringPage() {
       showToast("You can only archive Innings 1.", "error");
       return;
     }
-    showConfirm("Are you sure you want to manually archive Innings 1 and transition to Innings 2?", () => {
-      const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
-      const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
+    setConfirmModal({
+      isOpen: true,
+      title: "End 1st Innings?",
+      subtitle: `${currentBattingTeamLabel || "Batting Team"} finished with ${scoringState.score}/${scoringState.wickets}`,
+      message: `Target for 2nd innings will be set to ${scoringState.score + 1} runs. Are you sure you want to end Innings 1 and transition to Innings 2?`,
+      confirmText: "End 1st Innings",
+      cancelText: "Cancel",
+      badge: "Innings 1 Transition",
+      icon: "🏏",
+      themeColor: "#701a75",
+      onConfirm: () => {
+        setConfirmModal(null);
+        const secondInningsBatting = scoringState.battingTeam === "team1" ? "team2" : "team1";
+        const secondInningsBowling = scoringState.battingTeam === "team1" ? "team1" : "team2";
 
-      const { history: currentHistory, ...stateWithoutHistory } = scoringState;
+        const { history: currentHistory, ...stateWithoutHistory } = scoringState;
 
-      const nextInningsState: ScoringState = {
-        battingTeam: secondInningsBatting,
-        bowlingTeam: secondInningsBowling,
-        inningsStarted: true,
-        inningsNo: 2,
-        striker: "",
-        nonStriker: "",
-        bowler: "",
-        score: 0,
-        wickets: 0,
-        balls: 0,
-        overs: 0,
-        target: scoringState.score + 1,
-        thisOver: [],
-        batsmen: [],
-        bowlers: [],
-        fallOfWickets: [],
-        animation: "INNINGS BREAK",
-        displayScreen: "default",
-        customInputText: "",
-        momPlayer: "",
-        tournamentStatsPlayer: "",
-        decision: null,
-        displayStatsMode: null,
-        history: [...(currentHistory || []), stateWithoutHistory],
-        firstInnings: {
-          score: scoringState.score,
-          wickets: scoringState.wickets,
-          balls: scoringState.balls,
-          overs: scoringState.overs,
-          batsmen: scoringState.batsmen,
-          bowlers: scoringState.bowlers,
-          fallOfWickets: scoringState.fallOfWickets || [],
-        },
-      };
+        const nextInningsState: ScoringState = {
+          battingTeam: secondInningsBatting,
+          bowlingTeam: secondInningsBowling,
+          inningsStarted: true,
+          inningsNo: 2,
+          striker: "",
+          nonStriker: "",
+          bowler: "",
+          score: 0,
+          wickets: 0,
+          balls: 0,
+          overs: 0,
+          target: scoringState.score + 1,
+          thisOver: [],
+          batsmen: [],
+          bowlers: [],
+          fallOfWickets: [],
+          animation: "INNINGS BREAK",
+          displayScreen: "default",
+          customInputText: "",
+          momPlayer: "",
+          tournamentStatsPlayer: "",
+          decision: null,
+          displayStatsMode: null,
+          history: [...(currentHistory || []), stateWithoutHistory],
+          firstInnings: {
+            score: scoringState.score,
+            wickets: scoringState.wickets,
+            balls: scoringState.balls,
+            overs: scoringState.overs,
+            batsmen: scoringState.batsmen,
+            bowlers: scoringState.bowlers,
+            fallOfWickets: scoringState.fallOfWickets || [],
+          },
+        };
 
-      setScoringState(nextInningsState);
-      saveScoringState(nextInningsState, "Live");
-      showToast("First innings manually archived! Setting up 2nd innings...");
+        setScoringState(nextInningsState);
+        saveScoringState(nextInningsState, "Live");
+        showToast("First innings archived! Setting up 2nd innings...");
 
-      // Open Innings Setup modal
-      setStrikerInput("");
-      setNonStrikerInput("");
-      setBowlerInput("");
-      setShowStartInningsModal(true);
+        // Open Innings Setup modal
+        setStrikerInput("");
+        setNonStrikerInput("");
+        setBowlerInput("");
+        setShowStartInningsModal(true);
+      }
     });
   };
 
@@ -2072,8 +2080,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("TOUR")}
                     className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "TOUR" || scoringState?.displayScreen?.toUpperCase() === "TOURNAME" || scoringState?.displayScreen?.toUpperCase() === "TOUR BOUNDARIES"
-                        ? "bg-blue-500/40 border-blue-300 ring-2 ring-blue-400 shadow-blue-500/30"
-                        : "border-white/10 bg-blue-700 hover:bg-blue-600"
+                      ? "bg-blue-500/40 border-blue-300 ring-2 ring-blue-400 shadow-blue-500/30"
+                      : "border-white/10 bg-blue-700 hover:bg-blue-600"
                       } ${scoringState?.inningsNo !== 2 ? 'ml-0' : ''}`}
                   >
                     Tour
@@ -2081,8 +2089,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("B1")}
                     className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "B1"
-                        ? "bg-teal-500/40 border-teal-300 ring-2 ring-teal-400 shadow-teal-500/30"
-                        : "border-white/10"
+                      ? "bg-teal-500/40 border-teal-300 ring-2 ring-teal-400 shadow-teal-500/30"
+                      : "border-white/10"
                       }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "B1" ? "linear-gradient(135deg, #0d9488, #115e59)" : "linear-gradient(135deg, #14b8a6, #1e1b4b)" }}
                   >
@@ -2091,8 +2099,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("B2")}
                     className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "B2"
-                        ? "bg-fuchsia-500/40 border-fuchsia-300 ring-2 ring-fuchsia-400 shadow-fuchsia-500/30"
-                        : "border-white/10"
+                      ? "bg-fuchsia-500/40 border-fuchsia-300 ring-2 ring-fuchsia-400 shadow-fuchsia-500/30"
+                      : "border-white/10"
                       }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "B2" ? "linear-gradient(135deg, #c026d3, #86198f)" : "linear-gradient(135deg, #d946ef, #701a75)" }}
                   >
@@ -2101,8 +2109,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("BOWLER")}
                     className={`w-12 md:w-18 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "BOWLER"
-                        ? "bg-cyan-500/40 border-cyan-300 ring-2 ring-cyan-400 shadow-cyan-500/30"
-                        : "border-white/10"
+                      ? "bg-cyan-500/40 border-cyan-300 ring-2 ring-cyan-400 shadow-cyan-500/30"
+                      : "border-white/10"
                       }`}
                     style={{ background: scoringState?.displayScreen?.toUpperCase() === "BOWLER" ? "linear-gradient(135deg, #0284c7, #0369a1)" : "linear-gradient(135deg, #06b6d4, #2563eb)" }}
                   >
@@ -2115,8 +2123,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BAT" : "Y2BAT")}
                     className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT"
-                        ? "bg-pink-500/40 border-pink-300 ring-2 ring-pink-400 shadow-pink-500/30"
-                        : "border-white/10"
+                      ? "bg-pink-500/40 border-pink-300 ring-2 ring-pink-400 shadow-pink-500/30"
+                      : "border-white/10"
                       }`}
                     style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BAT" || scoringState?.displayScreen?.toUpperCase() === "Y2BAT" || scoringState?.displayScreen?.toUpperCase() === "1BAT" || scoringState?.displayScreen?.toUpperCase() === "2BAT") ? "linear-gradient(135deg, #be185d, #9d174d)" : "linear-gradient(135deg, #ec4899, #db2777)" }}
                   >
@@ -2125,8 +2133,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen(scoringState?.inningsNo === 1 ? "Y1BALL" : "Y2BALL")}
                     className={`flex-1 py-1.5 md:py-2 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase transition-all active:scale-95 shadow-md border ${scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL"
-                        ? "bg-rose-900 border-rose-400 ring-2 ring-rose-400 shadow-rose-500/30"
-                        : "border-white/10"
+                      ? "bg-rose-900 border-rose-400 ring-2 ring-rose-400 shadow-rose-500/30"
+                      : "border-white/10"
                       }`}
                     style={{ background: (scoringState?.displayScreen?.toUpperCase() === "Y1BALL" || scoringState?.displayScreen?.toUpperCase() === "Y2BALL" || scoringState?.displayScreen?.toUpperCase() === "1BALL" || scoringState?.displayScreen?.toUpperCase() === "2BALL") ? "linear-gradient(135deg, #701a75, #4a044e)" : "linear-gradient(135deg, #881337, #4c0519)" }}
                   >
@@ -2154,16 +2162,28 @@ export default function MatchScoringPage() {
                     <button
                       onClick={() => {
                         if (!scoringState) return;
-                        showConfirm("End Inning 2 and complete the match?", () => {
-                          const { history: _, ...stateWithoutHistory } = scoringState;
-                          const updated: ScoringState = {
-                            ...(scoringState as ScoringState),
-                            history: [...(scoringState.history || []), stateWithoutHistory]
-                          };
-                          setScoringState(updated);
-                          setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
-                          saveScoringState(updated, "Completed");
-                          showToast("Inning 2 ended!");
+                        setConfirmModal({
+                          isOpen: true,
+                          title: "End 2nd Innings?",
+                          subtitle: `${currentBattingTeamLabel || "Batting Team"} • ${scoringState.score}/${scoringState.wickets}`,
+                          message: "Are you sure you want to end Innings 2 and conclude the match? This will mark the match as Completed.",
+                          confirmText: "End Inning 2 & Complete",
+                          cancelText: "Cancel",
+                          badge: "Match Completion",
+                          icon: "🏆",
+                          themeColor: "#701a75",
+                          onConfirm: () => {
+                            setConfirmModal(null);
+                            const { history: _, ...stateWithoutHistory } = scoringState;
+                            const updated: ScoringState = {
+                              ...(scoringState as ScoringState),
+                              history: [...(scoringState.history || []), stateWithoutHistory]
+                            };
+                            setScoringState(updated);
+                            setMatch(prev => prev ? { ...prev, status: "Completed" } : null);
+                            saveScoringState(updated, "Completed");
+                            showToast("Inning 2 ended! Match marked as Completed.");
+                          }
                         });
                       }}
                       className="flex-1 py-2 md:py-2.5 rounded-lg text-white font-extrabold text-[8px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md border border-white/10"
@@ -2640,8 +2660,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("TOSS")}
                     className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "TOSS"
-                        ? "bg-emerald-500/30 border-emerald-400 text-emerald-200 shadow-emerald-500/20"
-                        : "bg-gradient-to-br from-emerald-600 to-teal-700 border-emerald-500/40 text-white hover:from-emerald-500 hover:to-teal-600 shadow-emerald-500/10"
+                      ? "bg-emerald-500/30 border-emerald-400 text-emerald-200 shadow-emerald-500/20"
+                      : "bg-gradient-to-br from-emerald-600 to-teal-700 border-emerald-500/40 text-white hover:from-emerald-500 hover:to-teal-600 shadow-emerald-500/10"
                       }`}
                   >
                     <span className="text-sm md:text-xl">🪙</span>
@@ -2650,8 +2670,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("SUMMARY")}
                     className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "SUMMARY"
-                        ? "bg-cyan-500/30 border-cyan-400 text-cyan-200 shadow-cyan-500/20"
-                        : "bg-gradient-to-br from-cyan-600 to-teal-700 border-cyan-500/40 text-white hover:from-cyan-500 hover:to-teal-600 shadow-cyan-500/10"
+                      ? "bg-cyan-500/30 border-cyan-400 text-cyan-200 shadow-cyan-500/20"
+                      : "bg-gradient-to-br from-cyan-600 to-teal-700 border-cyan-500/40 text-white hover:from-cyan-500 hover:to-teal-600 shadow-cyan-500/10"
                       }`}
                   >
                     <span className="text-sm md:text-xl">📋</span>
@@ -2660,8 +2680,8 @@ export default function MatchScoringPage() {
                   <button
                     onClick={() => handleUpdateDisplayScreen("FULLSCORE")}
                     className={`flex flex-col items-center justify-center gap-1 py-2 md:py-3 rounded-xl text-[9px] md:text-xs font-black tracking-wider transition-all active:scale-95 cursor-pointer border-2 shadow-lg ${scoringState?.displayScreen === "FULLSCORE"
-                        ? "bg-blue-500/30 border-blue-400 text-blue-200 shadow-blue-500/20"
-                        : "bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500/40 text-white hover:from-blue-500 hover:to-indigo-600 shadow-blue-500/10"
+                      ? "bg-blue-500/30 border-blue-400 text-blue-200 shadow-blue-500/20"
+                      : "bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500/40 text-white hover:from-blue-500 hover:to-indigo-600 shadow-blue-500/10"
                       }`}
                   >
                     <span className="text-sm md:text-xl">📊</span>
@@ -2906,8 +2926,8 @@ export default function MatchScoringPage() {
                       key={mode}
                       onClick={() => handleTourStatsController(mode)}
                       className={`px-4 py-2 text-black font-black text-[10px] tracking-wider rounded-lg active:scale-95 transition-all cursor-pointer ${isActive
-                          ? "bg-amber-400 ring-2 ring-amber-500 shadow-lg shadow-amber-500/20 scale-105"
-                          : "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 shadow-md shadow-orange-500/5"
+                        ? "bg-amber-400 ring-2 ring-amber-500 shadow-lg shadow-amber-500/20 scale-105"
+                        : "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 shadow-md shadow-orange-500/5"
                         }`}
                     >
                       {mode}
@@ -2939,25 +2959,115 @@ export default function MatchScoringPage() {
         )}
       </main>
 
+      {/* ── Responsive Confirmation Modal (End Innings 1, End Innings 2, Confirm Actions) ── */}
+      {confirmModal && confirmModal.isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+            onClick={() => setConfirmModal(null)}
+          />
+
+          {/* Dialog Container */}
+          <div className="relative w-full max-w-[95vw] sm:max-w-md bg-zinc-950 border border-zinc-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200">
+            {/* Top accent bar */}
+            <div
+              className="h-1.5 w-full shrink-0"
+              style={{ backgroundColor: confirmModal.themeColor || "#701a75" }}
+            />
+
+            {/* Scrollable Content */}
+            <div className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4 text-center">
+              {/* Badge & Icon */}
+              <div className="flex flex-col items-center gap-2">
+                <div
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg border border-white/10"
+                  style={{
+                    backgroundColor: `${confirmModal.themeColor || "#701a75"}33`,
+                    borderColor: `${confirmModal.themeColor || "#701a75"}66`
+                  }}
+                >
+                  {confirmModal.icon || "🏏"}
+                </div>
+                {confirmModal.badge && (
+                  <span
+                    className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wider uppercase border"
+                    style={{
+                      backgroundColor: `${confirmModal.themeColor || "#701a75"}22`,
+                      color: "#e879f9",
+                      borderColor: `${confirmModal.themeColor || "#701a75"}55`
+                    }}
+                  >
+                    {confirmModal.badge}
+                  </span>
+                )}
+              </div>
+
+              {/* Title & Subtitle */}
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-white tracking-wide">
+                  {confirmModal.title}
+                </h3>
+                {confirmModal.subtitle && (
+                  <p className="text-xs sm:text-sm text-zinc-400 font-semibold mt-1">
+                    {confirmModal.subtitle}
+                  </p>
+                )}
+              </div>
+
+              {/* Message Box */}
+              <div className="bg-zinc-900/90 border border-zinc-800/80 rounded-xl p-3 sm:p-4 text-left">
+                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                  {confirmModal.message}
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 mt-1 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setConfirmModal(null)}
+                  className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer uppercase tracking-wider"
+                >
+                  {confirmModal.cancelText || "Cancel"}
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmModal.onConfirm}
+                  className="w-full sm:flex-1 py-3 px-4 rounded-xl text-white font-black text-xs sm:text-sm transition-all active:scale-95 cursor-pointer uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+                  style={{
+                    backgroundColor: confirmModal.themeColor || "#701a75",
+                    boxShadow: `0 8px 20px -4px ${confirmModal.themeColor || "#701a75"}88`
+                  }}
+                >
+                  <span>{confirmModal.confirmText || "Confirm"}</span>
+                  <span>➔</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Start Innings Modal (Image 2) ─────────────────────────────── */}
       {showStartInningsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/75 backdrop-blur-xs" onClick={() => setShowStartInningsModal(false)} />
 
           {/* Dialog Body */}
-          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 text-slate-800">
-            <div className="p-7 flex flex-col gap-5">
+          <div className="relative w-full max-w-[95vw] sm:max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-200 text-slate-800 max-h-[90vh] flex flex-col">
+            <div className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
               {/* Batting Team Header */}
               <div className="text-center">
-                <h3 className="text-amber-600 font-extrabold text-xl tracking-wider font-space">
+                <h3 className="text-amber-600 font-extrabold text-lg sm:text-xl tracking-wider font-space">
                   {currentBattingTeamLabel || "Batting Team"}
                 </h3>
-                <p className="text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Striker Setup</p>
+                <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Striker Setup</p>
               </div>
 
               {/* Form Input fields */}
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3.5">
                 {/* Striker */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-black uppercase tracking-wider text-slate-600">Striker</label>
@@ -3023,10 +3133,10 @@ export default function MatchScoringPage() {
 
                 {/* Bowling Team Header */}
                 <div className="text-center pt-2 border-t border-slate-200">
-                  <h3 className="text-blue-600 font-extrabold text-lg tracking-wider font-space">
+                  <h3 className="text-blue-600 font-extrabold text-base sm:text-lg tracking-wider font-space">
                     {currentBowlingTeamLabel || "Bowling Team"}
                   </h3>
-                  <p className="text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Bowler Setup</p>
+                  <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-black mt-1">Bowler Setup</p>
                 </div>
 
                 {/* Bowler */}
@@ -3058,17 +3168,17 @@ export default function MatchScoringPage() {
 
               </div>
 
-              {/* Action buttons (Image 2) */}
-              <div className="flex gap-3 mt-4">
+              {/* Action buttons */}
+              <div className="flex gap-2 sm:gap-3 mt-2 pt-3 border-t border-slate-200 shrink-0">
                 <button
                   onClick={handleStartInningsSubmit}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-lg text-sm transition-all cursor-pointer"
+                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer shadow-md active:scale-95"
                 >
                   Start Innings
                 </button>
                 <button
                   onClick={() => setShowStartInningsModal(false)}
-                  className="px-5 py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-lg text-sm transition-all cursor-pointer"
+                  className="px-4 sm:px-5 py-2.5 sm:py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-extrabold rounded-xl text-xs sm:text-sm transition-all cursor-pointer active:scale-95"
                 >
                   Cancel
                 </button>
@@ -3289,8 +3399,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setRetireTarget("1")}
                     className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${retireTarget === "1"
-                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span className="block text-[9px] uppercase opacity-75">Striker</span>
@@ -3300,8 +3410,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setRetireTarget("2")}
                     className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${retireTarget === "2"
-                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span className="block text-[9px] uppercase opacity-75">Non-Striker</span>
@@ -3479,8 +3589,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setTossWonByInput("team1")}
                     className={`p-3.5 rounded-xl border text-xs font-black transition-all cursor-pointer text-center ${tossWonByInput === "team1"
-                        ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span className="block text-[10px] uppercase opacity-75">Team 1</span>
@@ -3490,8 +3600,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setTossWonByInput("team2")}
                     className={`p-3.5 rounded-xl border text-xs font-black transition-all cursor-pointer text-center ${tossWonByInput === "team2"
-                        ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-emerald-500 border-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-400/40"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span className="block text-[10px] uppercase opacity-75">Team 2</span>
@@ -3510,8 +3620,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setOptedToInput("Bat")}
                     className={`py-3 px-4 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${optedToInput === "Bat"
-                        ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25 ring-2 ring-amber-400/40"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-amber-500 border-amber-600 text-white shadow-md shadow-amber-500/25 ring-2 ring-amber-400/40"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span>🏏</span>
@@ -3521,8 +3631,8 @@ export default function MatchScoringPage() {
                     type="button"
                     onClick={() => setOptedToInput("Bowl")}
                     className={`py-3 px-4 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${optedToInput === "Bowl"
-                        ? "bg-cyan-600 border-cyan-700 text-white shadow-md shadow-cyan-600/25 ring-2 ring-cyan-400/40"
-                        : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
+                      ? "bg-cyan-600 border-cyan-700 text-white shadow-md shadow-cyan-600/25 ring-2 ring-cyan-400/40"
+                      : "bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                       }`}
                   >
                     <span>⚾</span>

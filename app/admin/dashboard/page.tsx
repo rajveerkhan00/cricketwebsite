@@ -110,18 +110,18 @@ function CreateUserModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-emerald-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-space">Create New User</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Create New User</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -130,7 +130,7 @@ function CreateUserModal({
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Full Name</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Full Name</label>
             <input
               type="text"
               placeholder="John Doe"
@@ -138,11 +138,11 @@ function CreateUserModal({
               onChange={(e) => setName(e.target.value)}
               required
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors placeholder:text-zinc-600"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition-colors placeholder:text-slate-400"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Email Address</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Email Address</label>
             <input
               type="email"
               placeholder="user@example.com"
@@ -150,11 +150,11 @@ function CreateUserModal({
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors placeholder:text-zinc-600"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition-colors placeholder:text-slate-400"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Password</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Password</label>
             <input
               type="password"
               placeholder="Min. 8 characters"
@@ -163,16 +163,16 @@ function CreateUserModal({
               required
               minLength={8}
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors placeholder:text-zinc-600"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition-colors placeholder:text-slate-400"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Role</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Role</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as "user" | "admin")}
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition-colors"
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
@@ -184,14 +184,14 @@ function CreateUserModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+              className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 cursor-pointer"
             >
               {loading ? "Creating..." : "Create User"}
             </button>
@@ -234,18 +234,18 @@ function DeleteConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-sm bg-[#07092e] border border-red-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-black/80 animate-scale-up-fade">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-900/10 animate-scale-up-fade">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-white font-space">Delete User?</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-              This will permanently delete <span className="text-white font-semibold">{user.name}</span>.
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-space">Delete User?</h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              This will permanently delete <span className="text-slate-900 font-semibold">{user.name}</span>.
               This action cannot be undone.
             </p>
           </div>
@@ -253,14 +253,14 @@ function DeleteConfirmModal({
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-red-500/20"
             >
               {loading ? "Deleting..." : "Delete"}
             </button>
@@ -318,21 +318,21 @@ function EditUserModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-white font-space">Edit User</h2>
-              <p className="text-[11px] text-zinc-500 truncate max-w-[200px]">{user.email}</p>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Edit User</h2>
+              <p className="text-[11px] text-slate-500 truncate max-w-[200px]">{user.email}</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -341,31 +341,31 @@ function EditUserModal({
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Full Name</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Email Address</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase flex items-center gap-2">
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase flex items-center gap-2">
               New Password
-              <span className="normal-case font-normal text-zinc-500 text-[10px]">(optional)</span>
+              <span className="normal-case font-normal text-slate-400 text-[10px]">(optional)</span>
             </label>
             <div className="relative">
               <input
@@ -374,24 +374,24 @@ function EditUserModal({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 pr-12 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors placeholder:text-zinc-600"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 pr-12 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-colors placeholder:text-slate-400"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors px-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700 transition-colors px-1"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Role</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Role</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as "user" | "admin")}
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
@@ -399,12 +399,12 @@ function EditUserModal({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Account Status</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Account Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as "pending" | "approved" | "rejected")}
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
             >
               <option value="pending">Pending (Awaiting Approval)</option>
               <option value="approved">Approved (Active)</option>
@@ -417,14 +417,14 @@ function EditUserModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200"
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 cursor-pointer shadow-md shadow-blue-500/20"
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>
@@ -490,18 +490,18 @@ function CreatePricingModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-amber-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-space">Create Pricing Plan</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Create Pricing Plan</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -511,63 +511,63 @@ function CreatePricingModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Name</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Plan Name</label>
               <input
                 type="text"
                 placeholder="e.g. Starter Plan"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price String</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Price String</label>
               <input
                 type="text"
                 placeholder="e.g. PKR 4,999"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Period</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Period</label>
               <input
                 type="text"
                 placeholder="e.g. per month or 24 Hours"
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Button Text</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Button Text</label>
               <input
                 type="text"
                 placeholder="e.g. Choose Pro"
                 value={buttonText}
                 onChange={(e) => setButtonText(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-center">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Order (for sorting)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Order (for sorting)</label>
               <input
                 type="number"
                 placeholder="0"
                 value={order}
                 onChange={(e) => setOrder(e.target.value)}
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
             <div className="flex items-center gap-2 pt-2 sm:pt-4">
@@ -576,20 +576,20 @@ function CreatePricingModal({
                 id="featured-checkbox"
                 checked={featured}
                 onChange={(e) => setFeatured(e.target.checked)}
-                className="w-4 h-4 rounded border-zinc-800 text-amber-500 focus:ring-amber-500 bg-[#0d0f3a]"
+                className="w-4 h-4 rounded border-slate-300 text-amber-500 focus:ring-amber-500 bg-white"
               />
-              <label htmlFor="featured-checkbox" className="text-xs font-semibold tracking-wider text-zinc-300 uppercase cursor-pointer">
+              <label htmlFor="featured-checkbox" className="text-xs font-semibold tracking-wider text-slate-700 uppercase cursor-pointer">
                 Featured / Popular Plan
               </label>
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Type (Automatic Unlock)</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Plan Type (Automatic Unlock)</label>
             <select
               value={planType}
               onChange={(e) => setPlanType(e.target.value)}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white"
             >
               <option value="">None (Per-Theme / Custom)</option>
               <option value="basic">Basic (1 Day Unlock)</option>
@@ -599,19 +599,19 @@ function CreatePricingModal({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Description</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Description</label>
             <textarea
               placeholder="Enter plan brief description..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={2}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 resize-none"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white resize-none placeholder:text-slate-400"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">
               Features (One per line)
             </label>
             <textarea
@@ -620,7 +620,7 @@ function CreatePricingModal({
               onChange={(e) => setFeaturesText(e.target.value)}
               required
               rows={3}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-amber-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400"
             />
           </div>
 
@@ -629,14 +629,14 @@ function CreatePricingModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+              className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 cursor-pointer"
             >
               {loading ? "Creating..." : "Create Plan"}
             </button>
@@ -704,18 +704,18 @@ function EditPricingModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-space">Edit Pricing Plan</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Edit Pricing Plan</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -725,58 +725,58 @@ function EditPricingModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Name</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Plan Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price String</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Price String</label>
               <input
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Period</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Period</label>
               <input
                 type="text"
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Button Text</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Button Text</label>
               <input
                 type="text"
                 value={buttonText}
                 onChange={(e) => setButtonText(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-center">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Order</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Order</label>
               <input
                 type="number"
                 value={order}
                 onChange={(e) => setOrder(e.target.value)}
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
             <div className="flex items-center gap-2 pt-2 sm:pt-4">
@@ -785,20 +785,20 @@ function EditPricingModal({
                 id="edit-featured-checkbox"
                 checked={featured}
                 onChange={(e) => setFeatured(e.target.checked)}
-                className="w-4 h-4 rounded border-zinc-800 text-blue-500 focus:ring-blue-500 bg-[#0d0f3a]"
+                className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 bg-white"
               />
-              <label htmlFor="edit-featured-checkbox" className="text-xs font-semibold tracking-wider text-zinc-300 uppercase cursor-pointer">
+              <label htmlFor="edit-featured-checkbox" className="text-xs font-semibold tracking-wider text-slate-700 uppercase cursor-pointer">
                 Featured / Popular Plan
               </label>
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Plan Type (Automatic Unlock)</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Plan Type (Automatic Unlock)</label>
             <select
               value={planType}
               onChange={(e) => setPlanType(e.target.value)}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
             >
               <option value="">None (Per-Theme / Custom)</option>
               <option value="basic">Basic (1 Day Unlock)</option>
@@ -808,18 +808,18 @@ function EditPricingModal({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Description</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={2}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 resize-none"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white resize-none"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">
               Features (One per line)
             </label>
             <textarea
@@ -827,7 +827,7 @@ function EditPricingModal({
               onChange={(e) => setFeaturesText(e.target.value)}
               required
               rows={3}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-blue-500 focus:bg-white"
             />
           </div>
 
@@ -836,14 +836,14 @@ function EditPricingModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-lg shadow-blue-500/20"
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-md shadow-blue-500/20 cursor-pointer"
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>
@@ -886,32 +886,32 @@ function DeletePricingConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-sm bg-[#07092e] border border-red-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-black/80 animate-scale-up-fade">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-900/10 animate-scale-up-fade">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-white font-space">Delete Pricing Plan?</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-              This will permanently delete the pricing plan <span className="text-white font-semibold">{tier.name}</span>.
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-space">Delete Pricing Plan?</h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              This will permanently delete the pricing plan <span className="text-slate-900 font-semibold">{tier.name}</span>.
             </p>
           </div>
           <div className="flex gap-2.5 sm:gap-3 w-full mt-2">
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center cursor-pointer shadow-md shadow-red-500/20"
             >
               {loading ? "Deleting..." : "Delete"}
             </button>
@@ -968,18 +968,18 @@ function CreateScoreboardThemeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-emerald-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-space">Create Scoreboard Theme</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Create Scoreboard Theme</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -989,61 +989,61 @@ function CreateScoreboardThemeModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme ID (No.)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme ID (No.)</label>
               <input
                 type="number"
                 placeholder="e.g. 16"
                 value={themeId}
                 onChange={(e) => setThemeId(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme Name</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme Name</label>
               <input
                 type="text"
                 placeholder="e.g. IPL 2026"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme Slug</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme Slug</label>
             <input
               type="text"
               placeholder="e.g. ipl-2026"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               required
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (PKR/day)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Price (PKR/day)</label>
               <input
                 type="number"
                 placeholder="0 = FREE"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Badge (Optional)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Badge (Optional)</label>
               <input
                 type="text"
                 placeholder="e.g. NEW or PRO"
                 value={badge}
                 onChange={(e) => setBadge(e.target.value)}
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -1053,14 +1053,14 @@ function CreateScoreboardThemeModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-lg shadow-emerald-500/20"
+              className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-md shadow-emerald-500/20 cursor-pointer"
             >
               {loading ? "Creating..." : "Create Theme"}
             </button>
@@ -1119,18 +1119,18 @@ function EditScoreboardThemeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-space">Edit Scoreboard Theme</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Edit Scoreboard Theme</h2>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -1140,56 +1140,56 @@ function EditScoreboardThemeModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme ID (No.)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme ID (No.)</label>
               <input
                 type="number"
                 value={themeId}
                 onChange={(e) => setThemeId(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme Name</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Theme Slug</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Theme Slug</label>
             <input
               type="text"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               required
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Price (PKR/day)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Price (PKR/day)</label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Badge (Optional)</label>
+              <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Badge (Optional)</label>
               <input
                 type="text"
                 value={badge}
                 onChange={(e) => setBadge(e.target.value)}
-                className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
@@ -1199,14 +1199,14 @@ function EditScoreboardThemeModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-lg shadow-blue-500/20"
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center shadow-md shadow-blue-500/20 cursor-pointer"
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>
@@ -1249,32 +1249,32 @@ function DeleteScoreboardThemeConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-sm bg-[#07092e] border border-red-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-black/80 animate-scale-up-fade">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-900/10 animate-scale-up-fade">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-white font-space">Delete Theme?</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-              This will permanently delete <span className="text-white font-semibold">{theme.name}</span>.
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-space">Delete Theme?</h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              This will permanently delete <span className="text-slate-900 font-semibold">{theme.name}</span>.
             </p>
           </div>
           <div className="flex gap-2.5 sm:gap-3 w-full mt-2">
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center cursor-pointer shadow-md shadow-red-500/20"
             >
               {loading ? "Deleting..." : "Delete"}
             </button>
@@ -1323,21 +1323,21 @@ function SendCustomEmailModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-[#07092e] border border-zinc-700/60 rounded-2xl shadow-2xl shadow-black/80 animate-scale-up-fade overflow-hidden">
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00D09C] to-teal-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-emerald-500/10">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-white font-space">Send Credentials / Email</h2>
-              <p className="text-[11px] text-zinc-500 truncate max-w-[200px]">To: {payment.email}</p>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space">Send Credentials / Email</h2>
+              <p className="text-[11px] text-slate-500 truncate max-w-[200px]">To: {payment.email}</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -1346,19 +1346,19 @@ function SendCustomEmailModal({
 
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 sm:gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Subject</label>
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">Subject</label>
             <input
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               required
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#00D09C] transition-colors"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">
               Email Body Message
             </label>
             <textarea
@@ -1367,7 +1367,7 @@ function SendCustomEmailModal({
               required
               rows={7}
               disabled={loading}
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-[#00D09C]"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:border-emerald-500 focus:bg-white"
             />
           </div>
 
@@ -1376,14 +1376,14 @@ function SendCustomEmailModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-[#00D09C] to-teal-600 hover:from-[#00b887] hover:to-teal-700 text-slate-950 font-black py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#00D09C]/20"
+              className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-500/20 cursor-pointer"
             >
               {loading ? "Sending..." : "Send Email"}
             </button>
@@ -1426,32 +1426,32 @@ function DeletePaymentConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-sm bg-[#07092e] border border-red-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-black/80 animate-scale-up-fade">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-900/10 animate-scale-up-fade">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 sm:w-7 sm:h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-white font-space">Delete SafePay Log?</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-              This will permanently delete transaction <span className="text-[#00D09C] font-mono font-semibold">{payment.trxId}</span> for <span className="text-white font-semibold">{payment.email}</span>.
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-space">Delete SafePay Log?</h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              This will permanently delete transaction <span className="text-emerald-700 font-mono font-semibold">{payment.trxId}</span> for <span className="text-slate-900 font-semibold">{payment.email}</span>.
             </p>
           </div>
           <div className="flex gap-2.5 sm:gap-3 w-full mt-2">
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center cursor-pointer shadow-md shadow-red-500/20"
             >
               {loading ? "Deleting..." : "Delete"}
             </button>
@@ -1608,27 +1608,27 @@ function GrantScoreboardAccessModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="w-full max-w-2xl max-h-[92vh] flex flex-col bg-[#07092e] border border-amber-500/40 rounded-2xl shadow-2xl shadow-black/90 animate-scale-up-fade overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-2xl max-h-[92vh] flex flex-col bg-white border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/10 animate-scale-up-fade overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/5 flex-shrink-0 bg-gradient-to-r from-amber-500/10 via-transparent to-transparent">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 flex-shrink-0 bg-gradient-to-r from-amber-500/5 via-transparent to-transparent">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-md shadow-amber-500/10">
               <svg className="w-5 h-5 text-slate-950 font-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-white font-space flex items-center gap-2">
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 font-space flex items-center gap-2">
                 Grant Scoreboard Access
-                <span className="bg-amber-500/20 border border-amber-500/40 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                <span className="bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                   Admin Tool
                 </span>
               </h2>
-              <p className="text-xs text-zinc-400">Unlock all scoreboards or specific overlays for any user for a chosen duration</p>
+              <p className="text-xs text-slate-500">Unlock all scoreboards or specific overlays for any user for a chosen duration</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -1639,9 +1639,9 @@ function GrantScoreboardAccessModal({
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-5 scrollbar-thin">
           {/* 1. Target User */}
           <div className="flex flex-col gap-1.5 relative">
-            <label className="text-xs font-semibold tracking-wider text-zinc-300 uppercase flex items-center justify-between">
+            <label className="text-xs font-semibold tracking-wider text-slate-700 uppercase flex items-center justify-between">
               <span>Target User Email *</span>
-              <span className="text-[11px] text-zinc-500 normal-case">Pick from registered users or type new email</span>
+              <span className="text-[11px] text-slate-400 normal-case">Pick from registered users or type new email</span>
             </label>
             <div className="relative">
               <input
@@ -1655,7 +1655,7 @@ function GrantScoreboardAccessModal({
                 onFocus={() => setIsDropdownOpen(true)}
                 placeholder="search user name or enter user@example.com..."
                 required
-                className="w-full bg-[#0d0f3a] border border-zinc-700 text-white rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-amber-400 focus:bg-white focus:ring-1 focus:ring-amber-400 transition-colors placeholder:text-slate-400"
               />
               {userSearch && (
                 <button
@@ -1664,7 +1664,7 @@ function GrantScoreboardAccessModal({
                     setUserSearch("");
                     setEmail("");
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs"
                 >
                   ✕
                 </button>
@@ -1673,19 +1673,19 @@ function GrantScoreboardAccessModal({
 
             {/* User autocomplete dropdown */}
             {isDropdownOpen && filteredUserOptions.length > 0 && (
-              <div className="absolute top-full mt-1.5 left-0 right-0 z-30 bg-[#0d0f3a] border border-zinc-700 rounded-xl shadow-2xl max-h-48 overflow-y-auto divide-y divide-white/5">
+              <div className="absolute top-full mt-1.5 left-0 right-0 z-30 bg-white border border-slate-200 rounded-xl shadow-2xl max-h-48 overflow-y-auto divide-y divide-slate-100">
                 {filteredUserOptions.slice(0, 8).map((u) => (
                   <button
                     key={u._id}
                     type="button"
                     onClick={() => handleSelectUser(u)}
-                    className="w-full text-left px-3.5 py-2.5 hover:bg-amber-500/10 flex items-center justify-between transition-colors cursor-pointer"
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-amber-50/70 flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div>
-                      <p className="text-xs font-bold text-white">{u.name}</p>
-                      <p className="text-[11px] text-zinc-400">{u.email}</p>
+                      <p className="text-xs font-bold text-slate-900">{u.name}</p>
+                      <p className="text-[11px] text-slate-500">{u.email}</p>
                     </div>
-                    <span className="text-[10px] uppercase font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    <span className="text-[10px] uppercase font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                       {u.role}
                     </span>
                   </button>
@@ -1696,7 +1696,7 @@ function GrantScoreboardAccessModal({
 
           {/* 2. Unlock Scope (All vs Specific) */}
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold tracking-wider text-zinc-300 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-700 uppercase">
               Unlock Scope *
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1704,25 +1704,23 @@ function GrantScoreboardAccessModal({
               <button
                 type="button"
                 onClick={() => setUnlockType("all")}
-                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
-                  unlockType === "all"
-                    ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
-                    : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
-                }`}
+                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${unlockType === "all"
+                  ? "bg-amber-50 border-amber-400 ring-1 ring-amber-400 shadow-sm"
+                  : "bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-slate-100/70"
+                  }`}
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  unlockType === "all" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
-                }`}>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${unlockType === "all" ? "bg-amber-500 text-slate-950 font-bold" : "bg-slate-200 text-slate-500"
+                  }`}>
                   <span className="text-base">🌐</span>
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-bold text-white">Unlock ALL Scoreboards</span>
-                    <span className="bg-emerald-500/20 text-emerald-400 text-[9px] font-extrabold px-1.5 py-0.2 rounded border border-emerald-500/30 uppercase">
+                    <span className="text-sm font-bold text-slate-900">Unlock ALL Scoreboards</span>
+                    <span className="bg-emerald-50 text-emerald-700 text-[9px] font-extrabold px-1.5 py-0.2 rounded border border-emerald-200 uppercase">
                       Recommended
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-400 mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Grants global VIP access to every current and future theme across the entire platform.
                   </p>
                 </div>
@@ -1732,20 +1730,18 @@ function GrantScoreboardAccessModal({
               <button
                 type="button"
                 onClick={() => setUnlockType("specific")}
-                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
-                  unlockType === "specific"
-                    ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
-                    : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
-                }`}
+                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${unlockType === "specific"
+                  ? "bg-amber-50 border-amber-400 ring-1 ring-amber-400 shadow-sm"
+                  : "bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-slate-100/70"
+                  }`}
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  unlockType === "specific" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
-                }`}>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${unlockType === "specific" ? "bg-amber-500 text-slate-950 font-bold" : "bg-slate-200 text-slate-500"
+                  }`}>
                   <span className="text-base">🎯</span>
                 </div>
                 <div>
-                  <span className="text-sm font-bold text-white">Specific Scoreboard(s)</span>
-                  <p className="text-xs text-zinc-400 mt-0.5">
+                  <span className="text-sm font-bold text-slate-900">Specific Scoreboard(s)</span>
+                  <p className="text-xs text-slate-500 mt-0.5">
                     Pick exact scoreboards/overlays from the list (e.g. IPL, PSL, World Cup).
                   </p>
                 </div>
@@ -1755,23 +1751,23 @@ function GrantScoreboardAccessModal({
 
           {/* 3. Specific Themes Selector (If specific is selected) */}
           {unlockType === "specific" && (
-            <div className="bg-[#05072c] border border-zinc-800 rounded-xl p-3.5 sm:p-4 flex flex-col gap-3">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 sm:p-4 flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                   Select Scoreboards ({selectedSlugs.length} chosen)
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={handleSelectAllThemes}
-                    className="text-[11px] font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20"
+                    className="text-[11px] font-bold text-amber-800 hover:text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 cursor-pointer"
                   >
                     Select All
                   </button>
                   <button
                     type="button"
                     onClick={handleClearThemes}
-                    className="text-[11px] font-bold text-zinc-400 hover:text-zinc-300 bg-white/5 px-2 py-0.5 rounded border border-white/10"
+                    className="text-[11px] font-bold text-slate-600 hover:text-slate-800 bg-slate-200 px-2 py-0.5 rounded border border-slate-300 cursor-pointer"
                   >
                     Clear
                   </button>
@@ -1780,12 +1776,12 @@ function GrantScoreboardAccessModal({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto scrollbar-thin pr-1">
                 {isLoadingThemes ? (
-                  <div className="col-span-2 flex items-center justify-center gap-2 py-6 text-zinc-400">
+                  <div className="col-span-2 flex items-center justify-center gap-2 py-6 text-slate-500">
                     <div className="w-5 h-5 border-2 border-amber-500 border-t-transparent rounded-full animate-spin flex-shrink-0" />
                     <span className="text-xs">Loading scoreboards...</span>
                   </div>
                 ) : localThemes.length === 0 ? (
-                  <p className="text-xs text-zinc-500 col-span-2 py-3 text-center">No themes found in database. Add themes in the Scoreboard Themes tab first.</p>
+                  <p className="text-xs text-slate-500 col-span-2 py-3 text-center">No themes found in database. Add themes in the Scoreboard Themes tab first.</p>
                 ) : (
                   localThemes.map((theme) => {
                     const isSelected = selectedSlugs.includes(theme.slug);
@@ -1793,23 +1789,22 @@ function GrantScoreboardAccessModal({
                       <div
                         key={theme._id}
                         onClick={() => handleToggleSlug(theme.slug)}
-                        className={`px-3 py-2 rounded-lg border text-xs font-semibold flex items-center justify-between cursor-pointer transition-all ${
-                          isSelected
-                            ? "bg-amber-500/20 border-amber-400/80 text-white"
-                            : "bg-[#0d0f3a] border-zinc-800 text-zinc-400 hover:text-zinc-200"
-                        }`}
+                        className={`px-3 py-2 rounded-lg border text-xs font-semibold flex items-center justify-between cursor-pointer transition-all ${isSelected
+                          ? "bg-amber-50 border-amber-400 text-amber-900 font-bold"
+                          : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
+                          }`}
                       >
                         <div className="flex items-center gap-2 truncate">
                           <input
                             type="checkbox"
                             checked={isSelected}
-                            onChange={() => {}}
-                            className="rounded border-zinc-700 text-amber-500 focus:ring-0 pointer-events-none"
+                            onChange={() => { }}
+                            className="rounded border-slate-300 text-amber-500 focus:ring-0 pointer-events-none"
                           />
                           <span className="truncate">{theme.name}</span>
                         </div>
                         {theme.badge && (
-                          <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-white/10 text-amber-300 flex-shrink-0">
+                          <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 flex-shrink-0">
                             {theme.badge}
                           </span>
                         )}
@@ -1823,7 +1818,7 @@ function GrantScoreboardAccessModal({
 
           {/* 4. Duration Presets */}
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold tracking-wider text-zinc-300 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-700 uppercase">
               Access Duration / Expiration Time *
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -1834,14 +1829,13 @@ function GrantScoreboardAccessModal({
                     key={opt.key}
                     type="button"
                     onClick={() => setDurationKey(opt.key)}
-                    className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
-                      isSelected
-                        ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md shadow-amber-500/20"
-                        : "bg-[#0d0f3a] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-white/5"
-                    }`}
+                    className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${isSelected
+                      ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-sm"
+                      : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-100"
+                      }`}
                   >
                     <p className="text-xs font-bold leading-tight">{opt.label}</p>
-                    <p className={`text-[10px] mt-0.5 truncate ${isSelected ? "text-slate-900" : "text-zinc-500"}`}>
+                    <p className={`text-[10px] mt-0.5 truncate ${isSelected ? "text-slate-900 font-medium" : "text-slate-500"}`}>
                       {opt.desc}
                     </p>
                   </button>
@@ -1851,15 +1845,15 @@ function GrantScoreboardAccessModal({
 
             {/* Custom Date Input */}
             {durationKey === "custom" && (
-              <div className="mt-2 p-3 bg-[#05072c] border border-amber-500/40 rounded-xl flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-amber-400">Choose Custom Expiration Date & Time:</label>
+              <div className="mt-2 p-3 bg-amber-50/50 border border-amber-200 rounded-xl flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-amber-800">Choose Custom Expiration Date & Time:</label>
                 <input
                   type="datetime-local"
                   value={customExpiry}
                   onChange={(e) => setCustomExpiry(e.target.value)}
                   min={new Date(Date.now() + 60000).toISOString().slice(0, 16)}
                   required
-                  className="w-full bg-[#0d0f3a] border border-zinc-700 text-white rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-400"
+                  className="w-full bg-white border border-slate-200 text-slate-900 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
             )}
@@ -1867,7 +1861,7 @@ function GrantScoreboardAccessModal({
 
           {/* 5. Optional Admin Note */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">
+            <label className="text-xs font-semibold tracking-wider text-slate-600 uppercase">
               Admin Note (Optional)
             </label>
             <input
@@ -1875,24 +1869,24 @@ function GrantScoreboardAccessModal({
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="e.g. VIP tournament sponsorship, manual SafePay payment, discord trial"
-              className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg px-3.5 py-2 text-xs focus:outline-none focus:border-amber-400 placeholder:text-zinc-600"
+              className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg px-3.5 py-2 text-xs focus:outline-none focus:border-amber-400 focus:bg-white placeholder:text-slate-400"
             />
           </div>
 
           {/* Submit Actions */}
-          <div className="flex gap-2.5 sm:gap-3 pt-2 border-t border-white/5">
+          <div className="flex gap-2.5 sm:gap-3 pt-2 border-t border-slate-100">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 font-bold py-2.5 rounded-xl text-xs sm:text-sm transition-all"
+              className="flex-1 border border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-slate-950 font-black py-2.5 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 cursor-pointer disabled:opacity-50"
+              className="flex-1 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-slate-950 font-black py-2.5 rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 cursor-pointer disabled:opacity-50"
             >
               {loading ? (
                 <>
@@ -2107,15 +2101,13 @@ function ExtendScoreboardAccessModal({
               <button
                 type="button"
                 onClick={() => setUnlockType("all")}
-                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
-                  unlockType === "all"
-                    ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
-                    : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
-                }`}
+                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${unlockType === "all"
+                  ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
+                  : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
+                  }`}
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  unlockType === "all" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
-                }`}>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${unlockType === "all" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
+                  }`}>
                   <span className="text-base">🌐</span>
                 </div>
                 <div>
@@ -2135,15 +2127,13 @@ function ExtendScoreboardAccessModal({
               <button
                 type="button"
                 onClick={() => setUnlockType("specific")}
-                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
-                  unlockType === "specific"
-                    ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
-                    : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
-                }`}
+                className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${unlockType === "specific"
+                  ? "bg-amber-500/15 border-amber-400 ring-1 ring-amber-400 shadow-lg shadow-amber-500/10"
+                  : "bg-[#0d0f3a] border-zinc-800 hover:border-zinc-700 opacity-75 hover:opacity-100"
+                  }`}
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  unlockType === "specific" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
-                }`}>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${unlockType === "specific" ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400"
+                  }`}>
                   <span className="text-base">🎯</span>
                 </div>
                 <div>
@@ -2205,17 +2195,16 @@ function ExtendScoreboardAccessModal({
                       <div
                         key={theme._id}
                         onClick={() => handleToggleSlug(theme.slug)}
-                        className={`px-3 py-2 rounded-lg border text-xs font-semibold flex items-center justify-between cursor-pointer transition-all ${
-                          isSelected
-                            ? "bg-amber-500/20 border-amber-400/80 text-white shadow-sm shadow-amber-500/10"
-                            : "bg-[#0d0f3a] border-zinc-800 text-zinc-400 hover:text-zinc-200"
-                        }`}
+                        className={`px-3 py-2 rounded-lg border text-xs font-semibold flex items-center justify-between cursor-pointer transition-all ${isSelected
+                          ? "bg-amber-500/20 border-amber-400/80 text-white shadow-sm shadow-amber-500/10"
+                          : "bg-[#0d0f3a] border-zinc-800 text-zinc-400 hover:text-zinc-200"
+                          }`}
                       >
                         <div className="flex items-center gap-2 truncate">
                           <input
                             type="checkbox"
                             checked={isSelected}
-                            onChange={() => {}}
+                            onChange={() => { }}
                             className="rounded border-zinc-700 text-amber-500 focus:ring-0 pointer-events-none"
                           />
                           <span className="truncate">{theme.name}</span>
@@ -2246,11 +2235,10 @@ function ExtendScoreboardAccessModal({
                     key={opt.key}
                     type="button"
                     onClick={() => setExtendPreset(opt.key)}
-                    className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
-                      isSelected
-                        ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md shadow-amber-500/20"
-                        : "bg-[#0d0f3a] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-white/5"
-                    }`}
+                    className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${isSelected
+                      ? "bg-amber-500 text-slate-950 border-amber-400 font-extrabold shadow-md shadow-amber-500/20"
+                      : "bg-[#0d0f3a] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-white/5"
+                      }`}
                   >
                     <p className="text-xs font-bold leading-tight">{opt.label}</p>
                     <p className={`text-[10px] mt-0.5 truncate ${isSelected ? "text-slate-900" : "text-zinc-500"}`}>
@@ -2552,7 +2540,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) {
         toast.success(`Theme "${theme.name}" is now ${isCurrentlyFree ? `PAID (PKR 150/day)` : "FREE"}!`);
-        setInlinePrices(prev => { const n = {...prev}; delete n[theme._id]; return n; });
+        setInlinePrices(prev => { const n = { ...prev }; delete n[theme._id]; return n; });
         fetchScoreboardThemes();
       } else {
         const data = await res.json();
@@ -2582,7 +2570,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) {
         toast.success(`Price updated → PKR ${newPrice <= 0 ? "FREE" : newPrice}`);
-        setInlinePrices(prev => { const n = {...prev}; delete n[theme._id]; return n; });
+        setInlinePrices(prev => { const n = { ...prev }; delete n[theme._id]; return n; });
         fetchScoreboardThemes();
       } else {
         const data = await res.json();
@@ -2804,31 +2792,31 @@ export default function AdminDashboard() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-[#03041c] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-4">
           <svg className="animate-spin h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
-          <p className="text-zinc-400 font-outfit text-sm">Verifying admin access...</p>
+          <p className="text-slate-500 font-outfit text-sm">Verifying admin access...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#03041c] font-outfit select-none text-zinc-100 relative">
-      {/* Background ambient glows */}
-      <div className="fixed top-0 left-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-red-600/5 blur-[140px] pointer-events-none" />
-      <div className="fixed bottom-0 right-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-amber-500/5 blur-[140px] pointer-events-none" />
+    <div className="min-h-screen bg-slate-50 font-outfit select-none text-slate-800 relative">
+      {/* Background ambient light glows */}
+      <div className="fixed top-0 left-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-red-500/5 blur-[120px] pointer-events-none" />
+      <div className="fixed bottom-0 right-0 w-80 sm:w-96 h-80 sm:h-96 rounded-full bg-amber-500/5 blur-[120px] pointer-events-none" />
 
       {/* ── MOBILE TOPBAR (Visible only on < lg screens) ────────────────────── */}
-      <header className="sticky top-0 z-40 lg:hidden flex items-center justify-between px-3.5 sm:px-4 py-3 bg-[#05072c]/95 backdrop-blur-md border-b border-white/10 shadow-lg">
+      <header className="sticky top-0 z-40 lg:hidden flex items-center justify-between px-3.5 sm:px-4 py-3 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
-            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-200 active:scale-95 transition-all cursor-pointer"
           >
             {mobileMenuOpen ? (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2847,14 +2835,14 @@ export default function AdminDashboard() {
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
               </svg>
             </div>
-            <span className="text-white font-extrabold text-sm tracking-tight font-space">
-              Crick<span className="text-amber-500">pro</span>BD
+            <span className="text-slate-900 font-extrabold text-sm tracking-tight font-space">
+              Cri<span className="text-amber-500">Overlay</span>
             </span>
           </Link>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+          <span className="bg-amber-500/15 border border-amber-500/30 text-amber-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
             {activeTab === "users" ? "Users" : activeTab === "access" ? "Access" : activeTab === "pricing" ? "Pricing" : activeTab === "scoreboard" ? "Scoreboard" : "Payments"}
           </span>
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs shadow">
@@ -2867,36 +2855,35 @@ export default function AdminDashboard() {
       {mobileMenuOpen && (
         <div
           onClick={() => setMobileMenuOpen(false)}
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
         />
       )}
 
       {/* ── SIDEBAR (Persistent on Desktop w-64, Drawer on Mobile) ─────────── */}
       <aside
-        className={`fixed top-0 left-0 h-full w-72 sm:w-64 bg-[#05072c] border-r border-white/5 flex flex-col z-50 transition-transform duration-300 ease-in-out ${
-          mobileMenuOpen ? "translate-x-0 shadow-2xl shadow-black/80" : "-translate-x-full lg:translate-x-0"
-        }`}
+        className={`fixed top-0 left-0 h-full w-72 sm:w-64 bg-white border-r border-slate-200/90 flex flex-col z-50 transition-transform duration-300 ease-in-out shadow-sm ${mobileMenuOpen ? "translate-x-0 shadow-2xl shadow-slate-900/20" : "-translate-x-full lg:translate-x-0"
+          }`}
       >
         {/* Logo & Close header */}
-        <div className="p-5 sm:p-6 border-b border-white/5 flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between">
           <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-200">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
               </svg>
             </div>
             <div>
-              <span className="text-white font-extrabold text-base tracking-tight font-space">
-                Crick<span className="text-amber-500">pro</span>BD
+              <span className="text-slate-900 font-extrabold text-base tracking-tight font-space">
+                Cri<span className="text-amber-500">Overlay</span>
               </span>
-              <p className="text-[10px] text-zinc-500 font-semibold tracking-wider">ADMIN PANEL</p>
+              <p className="text-[10px] text-slate-500 font-semibold tracking-wider">ADMIN PANEL</p>
             </div>
           </Link>
 
           {/* Close button inside drawer for mobile */}
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="lg:hidden text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-white/5"
+            className="lg:hidden text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100"
             aria-label="Close menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2910,18 +2897,17 @@ export default function AdminDashboard() {
           {/* 1. User Management */}
           <button
             onClick={() => handleTabSelect("users")}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
-              activeTab === "users"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-sm"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
-            }`}
+            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${activeTab === "users"
+              ? "bg-amber-50 text-amber-700 border border-amber-300/80 shadow-sm font-bold"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
           >
-            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "users" ? "text-amber-400" : "text-zinc-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "users" ? "text-amber-600" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             <span>User Management</span>
             {totalPending > 0 && (
-              <span className="ml-auto bg-amber-500 text-black text-[10px] font-black px-1.5 py-0.5 rounded-full">
+              <span className="ml-auto bg-amber-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full">
                 {totalPending}
               </span>
             )}
@@ -2930,18 +2916,17 @@ export default function AdminDashboard() {
           {/* 2. Scoreboard Access (Manual Unlocks) */}
           <button
             onClick={() => handleTabSelect("access")}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
-              activeTab === "access"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-sm"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
-            }`}
+            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${activeTab === "access"
+              ? "bg-amber-50 text-amber-700 border border-amber-300/80 shadow-sm font-bold"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
           >
-            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "access" ? "text-amber-400" : "text-zinc-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "access" ? "text-amber-600" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
             </svg>
             <span>Scoreboard Access</span>
             {activeAccessesCount > 0 && (
-              <span className="ml-auto bg-amber-500/20 text-amber-400 text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-amber-500/30">
+              <span className="ml-auto bg-amber-500/20 text-amber-700 text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-amber-500/30">
                 {activeAccessesCount}
               </span>
             )}
@@ -2950,13 +2935,12 @@ export default function AdminDashboard() {
           {/* 3. Scoreboard Pricing */}
           <button
             onClick={() => handleTabSelect("scoreboard")}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
-              activeTab === "scoreboard"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-sm"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
-            }`}
+            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${activeTab === "scoreboard"
+              ? "bg-amber-50 text-amber-700 border border-amber-300/80 shadow-sm font-bold"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
           >
-            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "scoreboard" ? "text-amber-400" : "text-zinc-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "scoreboard" ? "text-amber-600" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
             <span>Scoreboard Themes</span>
@@ -2965,13 +2949,12 @@ export default function AdminDashboard() {
           {/* 4. Pricing Plans */}
           <button
             onClick={() => handleTabSelect("pricing")}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
-              activeTab === "pricing"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-sm"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
-            }`}
+            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${activeTab === "pricing"
+              ? "bg-amber-50 text-amber-700 border border-amber-300/80 shadow-sm font-bold"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
           >
-            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "pricing" ? "text-amber-400" : "text-zinc-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "pricing" ? "text-amber-600" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>Pricing Plans</span>
@@ -2980,30 +2963,28 @@ export default function AdminDashboard() {
           {/* 5. SafePay Payments */}
           <button
             onClick={() => handleTabSelect("payments")}
-            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${
-              activeTab === "payments"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-sm"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
-            }`}
+            className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-left cursor-pointer ${activeTab === "payments"
+              ? "bg-amber-50 text-amber-700 border border-amber-300/80 shadow-sm font-bold"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
           >
-            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "payments" ? "text-amber-400" : "text-zinc-400"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-4 h-4 flex-shrink-0 ${activeTab === "payments" ? "text-amber-600" : "text-slate-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
             <span>SafePay Payments</span>
             {pendingPayments > 0 && (
-              <span className="ml-auto bg-amber-500 text-black text-[10px] font-black px-1.5 py-0.5 rounded-full">
+              <span className="ml-auto bg-amber-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full">
                 {pendingPayments}
               </span>
             )}
           </button>
 
-
-          <div className="my-2 border-t border-white/5" />
+          <div className="my-2 border-t border-slate-100" />
 
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 font-semibold text-sm transition-all duration-200"
+            className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-semibold text-sm transition-all duration-200"
           >
             <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -3013,19 +2994,19 @@ export default function AdminDashboard() {
         </nav>
 
         {/* Admin profile / Sign Out */}
-        <div className="p-4 border-t border-white/5 flex-shrink-0">
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 mb-3">
+        <div className="p-4 border-t border-slate-100 flex-shrink-0">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200/70 mb-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 text-white font-bold text-xs shadow">
               {session?.user?.name?.charAt(0).toUpperCase() ?? "A"}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-white text-xs font-bold truncate">{session?.user?.name}</p>
-              <p className="text-zinc-500 text-[10px] truncate">{session?.user?.email}</p>
+              <p className="text-slate-900 text-xs font-bold truncate">{session?.user?.name}</p>
+              <p className="text-slate-500 text-[10px] truncate">{session?.user?.email}</p>
             </div>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-zinc-800 text-zinc-400 hover:text-red-400 hover:border-red-500/40 font-semibold text-xs tracking-wide transition-all duration-200 cursor-pointer active:scale-95"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-200 text-slate-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 font-semibold text-xs tracking-wide transition-all duration-200 cursor-pointer active:scale-95"
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -3043,12 +3024,12 @@ export default function AdminDashboard() {
             <div className="space-y-5 sm:space-y-7 animate-scale-up-fade">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-extrabold text-white font-space tracking-tight">User Management</h1>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Manage registered users — create, restrict, or modify access</p>
+                  <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-space tracking-tight">User Management</h1>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Manage registered users — create, restrict, or modify access</p>
                 </div>
                 <button
                   onClick={() => setShowCreateModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-md shadow-emerald-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -3105,27 +3086,27 @@ export default function AdminDashboard() {
                     glow: "shadow-emerald-500/20",
                   },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl p-3 sm:p-4.5 flex items-center gap-2.5 sm:gap-3.5 shadow-lg shadow-black/20">
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-lg ${stat.glow} flex-shrink-0`}>
+                  <div key={stat.label} className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl p-3 sm:p-4.5 flex items-center gap-2.5 sm:gap-3.5 shadow-sm">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-md ${stat.glow} flex-shrink-0`}>
                       {stat.icon}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-zinc-400 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
-                      <p className="text-white text-lg sm:text-2xl font-extrabold font-space truncate">{stat.value}</p>
+                      <p className="text-slate-500 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
+                      <p className="text-slate-900 text-lg sm:text-2xl font-extrabold font-space truncate">{stat.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Users Table Container */}
-              <div className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl shadow-black/30 w-full">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-white/5">
+              <div className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-white font-bold font-space text-sm">All Users</h2>
-                    <span className="text-xs text-zinc-500 font-semibold">({filteredUsers.length})</span>
+                    <h2 className="text-slate-900 font-bold font-space text-sm">All Users</h2>
+                    <span className="text-xs text-slate-400 font-semibold">({filteredUsers.length})</span>
                   </div>
                   <div className="relative w-full sm:w-64">
-                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input
@@ -3133,7 +3114,7 @@ export default function AdminDashboard() {
                       placeholder="Search users..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-600 transition-colors"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400 transition-colors"
                     />
                   </div>
                 </div>
@@ -3141,83 +3122,81 @@ export default function AdminDashboard() {
                 <div className="overflow-x-auto w-full scrollbar-thin">
                   <table className="w-full text-left min-w-[650px]">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02]">
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">User</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Role</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Status</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Joined</th>
-                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Actions</th>
+                      <tr className="border-b border-slate-100 bg-slate-50/75">
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">User</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Role</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Status</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Joined</th>
+                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-100">
                       {loadingUsers ? (
                         <tr>
                           <td colSpan={5} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
                               <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                              <span className="text-zinc-400 text-sm">Loading users...</span>
+                              <span className="text-slate-500 text-sm">Loading users...</span>
                             </div>
                           </td>
                         </tr>
                       ) : filteredUsers.length === 0 ? (
                         <tr>
                           <td colSpan={5} className="text-center py-16">
-                            <span className="text-zinc-400 text-sm">No users found.</span>
+                            <span className="text-slate-500 text-sm">No users found.</span>
                           </td>
                         </tr>
                       ) : (
                         filteredUsers.map((user) => {
                           const isCurrentAdmin = user._id === (session?.user as any)?.id;
                           return (
-                            <tr key={user._id} className="hover:bg-white/[0.03] transition-colors">
+                            <tr key={user._id} className="hover:bg-slate-50/80 transition-colors">
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4">
                                 <div className="flex items-center gap-3">
                                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
                                     {user.name.charAt(0).toUpperCase()}
                                   </div>
                                   <div className="min-w-0 max-w-[160px] sm:max-w-xs">
-                                    <p className="text-white text-xs sm:text-sm font-semibold truncate">{user.name}</p>
-                                    <p className="text-zinc-400 text-[11px] truncate">{user.email}</p>
+                                    <p className="text-slate-900 text-xs sm:text-sm font-semibold truncate">{user.name}</p>
+                                    <p className="text-slate-500 text-[11px] truncate">{user.email}</p>
                                   </div>
                                 </div>
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide ${
-                                  user.role === "admin"
-                                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                                    : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                                }`}>
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide ${user.role === "admin"
+                                  ? "bg-amber-50 text-amber-700 border border-amber-300"
+                                  : "bg-blue-50 text-blue-700 border border-blue-200"
+                                  }`}>
                                   {user.role.toUpperCase()}
                                 </span>
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
                                 <div className="flex flex-col gap-1">
                                   {user.status === "approved" && (
-                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit ${
-                                      user.restricted
-                                        ? "bg-red-500/15 text-red-400 border border-red-500/30"
-                                        : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                    }`}>
-                                      <span className={`w-1.5 h-1.5 rounded-full ${user.restricted ? "bg-red-400" : "bg-emerald-400"}`} />
+                                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit ${user.restricted
+                                      ? "bg-red-50 text-red-600 border border-red-200"
+                                      : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                      }`}>
+                                      <span className={`w-1.5 h-1.5 rounded-full ${user.restricted ? "bg-red-500" : "bg-emerald-500"}`} />
                                       {user.restricted ? "RESTRICTED" : "APPROVED"}
                                     </span>
                                   )}
                                   {user.status === "pending" && (
-                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit bg-amber-50 text-amber-700 border border-amber-300">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                                       PENDING APPROVAL
                                     </span>
                                   )}
                                   {user.status === "rejected" && (
-                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit bg-rose-500/15 text-rose-400 border border-rose-500/30">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide w-fit bg-rose-50 text-rose-600 border border-rose-200">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                                       REJECTED
                                     </span>
                                   )}
                                 </div>
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
-                                <span className="text-zinc-400 text-xs">
+                                <span className="text-slate-500 text-xs">
                                   {new Date(user.createdAt).toLocaleDateString("en-US", {
                                     year: "numeric",
                                     month: "short",
@@ -3232,22 +3211,20 @@ export default function AdminDashboard() {
                                       <button
                                         onClick={() => handleStatusChange(user, "approved")}
                                         disabled={isCurrentAdmin || updatingStatusId === user._id}
-                                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                                          isCurrentAdmin || updatingStatusId === user._id
-                                            ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
-                                            : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20"
-                                        }`}
+                                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${isCurrentAdmin || updatingStatusId === user._id
+                                          ? "opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200"
+                                          : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200"
+                                          }`}
                                       >
                                         {updatingStatusId === user._id ? "..." : "Approve"}
                                       </button>
                                       <button
                                         onClick={() => handleStatusChange(user, "rejected")}
                                         disabled={isCurrentAdmin || updatingStatusId === user._id}
-                                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                                          isCurrentAdmin || updatingStatusId === user._id
-                                            ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
-                                            : "bg-rose-500/15 text-rose-400 hover:bg-rose-500/25 border border-rose-500/20"
-                                        }`}
+                                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${isCurrentAdmin || updatingStatusId === user._id
+                                          ? "opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200"
+                                          : "bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200"
+                                          }`}
                                       >
                                         {updatingStatusId === user._id ? "..." : "Reject"}
                                       </button>
@@ -3257,10 +3234,9 @@ export default function AdminDashboard() {
                                     <button
                                       onClick={() => handleStatusChange(user, "pending")}
                                       disabled={isCurrentAdmin || updatingStatusId === user._id}
-                                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                                        isCurrentAdmin || updatingStatusId === user._id
-                                          ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
-                                          : "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20"
+                                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${isCurrentAdmin || updatingStatusId === user._id
+                                        ? "opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200"
+                                        : "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-300"
                                         }`}
                                     >
                                       {updatingStatusId === user._id ? "..." : "Set Pending"}
@@ -3268,20 +3244,19 @@ export default function AdminDashboard() {
                                   )}
                                   <button
                                     onClick={() => setEditTarget(user)}
-                                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 cursor-pointer"
                                   >
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => handleToggleRestrict(user)}
                                     disabled={isCurrentAdmin || restrictingId === user._id}
-                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                                      isCurrentAdmin
-                                        ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
-                                        : user.restricted
-                                        ? "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20"
-                                        : "bg-orange-500/15 text-orange-400 hover:bg-orange-500/25 border border-orange-500/20"
-                                    }`}
+                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${isCurrentAdmin
+                                      ? "opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200"
+                                      : user.restricted
+                                        ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200"
+                                        : "bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200"
+                                      }`}
                                   >
                                     {user.restricted ? "Unblock" : "Block"}
                                   </button>
@@ -3290,18 +3265,17 @@ export default function AdminDashboard() {
                                       setGrantPrefillEmail(user.email);
                                       setShowGrantModal(true);
                                     }}
-                                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20 cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-300 cursor-pointer"
                                   >
                                     🔓 Unlock
                                   </button>
                                   <button
                                     onClick={() => setDeleteTarget(user)}
                                     disabled={isCurrentAdmin}
-                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${
-                                      isCurrentAdmin
-                                        ? "opacity-30 cursor-not-allowed bg-zinc-800 text-zinc-500"
-                                        : "bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20"
-                                    }`}
+                                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${isCurrentAdmin
+                                      ? "opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border border-slate-200"
+                                      : "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200"
+                                      }`}
                                   >
                                     Delete
                                   </button>
@@ -3325,14 +3299,14 @@ export default function AdminDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h1 className="text-xl sm:text-2xl font-extrabold text-white font-space tracking-tight">Scoreboard Access</h1>
-                    <span className="bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Manual Unlocks</span>
+                    <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-space tracking-tight">Scoreboard Access</h1>
+                    <span className="bg-amber-500/15 border border-amber-500/30 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Manual Unlocks</span>
                   </div>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Grant, extend, or revoke scoreboard access for specific users</p>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Grant, extend, or revoke scoreboard access for specific users</p>
                 </div>
                 <button
                   onClick={() => { setGrantPrefillEmail(""); setShowGrantModal(true); }}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
@@ -3349,31 +3323,31 @@ export default function AdminDashboard() {
                   { label: "Global (All Boards)", value: globalAccessesCount, color: "from-blue-500 to-indigo-600", glow: "shadow-blue-500/20" },
                   { label: "Per-Theme Specific", value: specificAccessesCount, color: "from-purple-500 to-violet-600", glow: "shadow-purple-500/20" },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3.5 shadow-lg shadow-black/20">
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-lg ${stat.glow} flex-shrink-0`}>
+                  <div key={stat.label} className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3.5 shadow-sm">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-md ${stat.glow} flex-shrink-0`}>
                       <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                       </svg>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-zinc-400 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
-                      <p className="text-white text-lg sm:text-2xl font-extrabold font-space">{stat.value}</p>
+                      <p className="text-slate-500 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
+                      <p className="text-slate-900 text-lg sm:text-2xl font-extrabold font-space">{stat.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Filters + Table */}
-              <div className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl shadow-black/30 w-full">
+              <div className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm w-full">
                 {/* Table header with search + filters */}
-                <div className="flex flex-col gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-white/5">
+                <div className="flex flex-col gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-white font-bold font-space text-sm">Access Records</h2>
-                      <span className="text-xs text-zinc-500 font-semibold">({filteredAccesses.length})</span>
+                      <h2 className="text-slate-900 font-bold font-space text-sm">Access Records</h2>
+                      <span className="text-xs text-slate-400 font-semibold">({filteredAccesses.length})</span>
                     </div>
                     <div className="relative w-full sm:w-64">
-                      <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
                       <input
@@ -3381,7 +3355,7 @@ export default function AdminDashboard() {
                         placeholder="Search email, theme..."
                         value={accessSearchQuery}
                         onChange={(e) => setAccessSearchQuery(e.target.value)}
-                        className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-600 transition-colors"
+                        className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white placeholder:text-slate-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -3389,13 +3363,13 @@ export default function AdminDashboard() {
                   <div className="flex flex-wrap gap-2">
                     <div className="flex gap-1.5">
                       {(["all", "global", "specific"] as const).map((t) => (
-                        <button key={t} onClick={() => setAccessFilterType(t)} className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide transition-all cursor-pointer ${ accessFilterType === t ? "bg-amber-500 text-slate-950" : "bg-white/5 text-zinc-400 hover:text-white border border-white/10" }`}>{t === "all" ? "All Types" : t === "global" ? "🌐 Global" : "🎯 Specific"}</button>
+                        <button key={t} onClick={() => setAccessFilterType(t)} className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide transition-all cursor-pointer ${accessFilterType === t ? "bg-amber-500 text-white" : "bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200"}`}>{t === "all" ? "All Types" : t === "global" ? "🌐 Global" : "🎯 Specific"}</button>
                       ))}
                     </div>
-                    <div className="w-px bg-white/10 hidden sm:block" />
+                    <div className="w-px bg-slate-200 hidden sm:block" />
                     <div className="flex gap-1.5">
                       {(["all", "active", "expired", "revoked"] as const).map((s) => (
-                        <button key={s} onClick={() => setAccessFilterStatus(s)} className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide transition-all cursor-pointer ${ accessFilterStatus === s ? (s === "active" ? "bg-emerald-500 text-white" : s === "expired" ? "bg-zinc-500 text-white" : s === "revoked" ? "bg-red-500 text-white" : "bg-amber-500 text-slate-950") : "bg-white/5 text-zinc-400 hover:text-white border border-white/10" }`}>{s}</button>
+                        <button key={s} onClick={() => setAccessFilterStatus(s)} className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide transition-all cursor-pointer ${accessFilterStatus === s ? (s === "active" ? "bg-emerald-500 text-white" : s === "expired" ? "bg-slate-500 text-white" : s === "revoked" ? "bg-red-500 text-white" : "bg-amber-500 text-white") : "bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200"}`}>{s}</button>
                       ))}
                     </div>
                   </div>
@@ -3404,22 +3378,22 @@ export default function AdminDashboard() {
                 <div className="overflow-x-auto w-full scrollbar-thin">
                   <table className="w-full text-left min-w-[700px]">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02]">
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">User</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Scoreboard</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Duration</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Expires</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Status</th>
-                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Actions</th>
+                      <tr className="border-b border-slate-100 bg-slate-50/75">
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">User</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Scoreboard</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Duration</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Expires</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Status</th>
+                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-100">
                       {loadingAccesses ? (
                         <tr>
                           <td colSpan={6} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
                               <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                              <span className="text-zinc-400 text-sm">Loading access records...</span>
+                              <span className="text-slate-500 text-sm">Loading access records...</span>
                             </div>
                           </td>
                         </tr>
@@ -3428,12 +3402,12 @@ export default function AdminDashboard() {
                           <td colSpan={6} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
                               <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                                 </svg>
                               </div>
-                              <p className="text-zinc-400 text-sm">No access records found.</p>
-                              <button onClick={() => { setGrantPrefillEmail(""); setShowGrantModal(true); }} className="px-4 py-2 rounded-lg bg-amber-500/15 text-amber-400 text-xs font-bold border border-amber-500/30 hover:bg-amber-500/25 cursor-pointer">Grant First Access</button>
+                              <p className="text-slate-500 text-sm">No access records found.</p>
+                              <button onClick={() => { setGrantPrefillEmail(""); setShowGrantModal(true); }} className="px-4 py-2 rounded-lg bg-amber-50 text-amber-700 text-xs font-bold border border-amber-300 hover:bg-amber-100 cursor-pointer">Grant First Access</button>
                             </div>
                           </td>
                         </tr>
@@ -3447,45 +3421,44 @@ export default function AdminDashboard() {
                           const timeLeftStr = effectiveStatus === "active" ? (daysLeft > 0 ? `${daysLeft}d ${hoursLeft}h left` : `${hoursLeft}h left`) : "";
                           const isGlobal = access.themeSlug === "all-themes";
                           return (
-                            <tr key={access._id} className="hover:bg-white/[0.03] transition-colors">
+                            <tr key={access._id} className="hover:bg-slate-50/80 transition-colors">
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4">
                                 <div className="flex items-center gap-2.5">
-                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/80 to-orange-600 flex items-center justify-center text-slate-950 font-black text-xs flex-shrink-0">
+                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/80 to-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">
                                     {access.email.charAt(0).toUpperCase()}
                                   </div>
                                   <div className="min-w-0">
-                                    <p className="text-white text-xs sm:text-sm font-semibold truncate max-w-[140px] sm:max-w-[200px]">{access.userName || access.email}</p>
-                                    <p className="text-zinc-400 text-[11px] truncate max-w-[140px] sm:max-w-[200px]">{access.email}</p>
+                                    <p className="text-slate-900 text-xs sm:text-sm font-semibold truncate max-w-[140px] sm:max-w-[200px]">{access.userName || access.email}</p>
+                                    <p className="text-slate-500 text-[11px] truncate max-w-[140px] sm:max-w-[200px]">{access.email}</p>
                                   </div>
                                 </div>
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4">
                                 {isGlobal ? (
-                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
                                     🌐 ALL Scoreboards
                                   </span>
                                 ) : (
                                   <div>
-                                    <p className="text-white text-xs font-semibold">{access.themeName || access.themeSlug}</p>
-                                    <p className="text-zinc-500 font-mono text-[10px]">{access.themeSlug}</p>
+                                    <p className="text-slate-900 text-xs font-semibold">{access.themeName || access.themeSlug}</p>
+                                    <p className="text-slate-500 font-mono text-[10px]">{access.themeSlug}</p>
                                   </div>
                                 )}
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4">
-                                <p className="text-zinc-300 text-xs font-semibold">{access.durationLabel || "—"}</p>
-                                {access.note && <p className="text-zinc-500 text-[10px] truncate max-w-[120px]">{access.note}</p>}
+                                <p className="text-slate-700 text-xs font-semibold">{access.durationLabel || "—"}</p>
+                                {access.note && <p className="text-slate-500 text-[10px] truncate max-w-[120px]">{access.note}</p>}
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
-                                <p className="text-zinc-300 text-xs">{new Date(access.expiresAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
-                                {timeLeftStr && <p className="text-amber-400 text-[10px] font-semibold">{timeLeftStr}</p>}
+                                <p className="text-slate-700 text-xs">{new Date(access.expiresAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+                                {timeLeftStr && <p className="text-amber-600 text-[10px] font-semibold">{timeLeftStr}</p>}
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide ${
-                                  effectiveStatus === "active" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" :
-                                  effectiveStatus === "expired" ? "bg-zinc-800 text-zinc-400 border border-zinc-700" :
-                                  "bg-red-500/15 text-red-400 border border-red-500/30"
-                                }`}>
-                                  <span className={`w-1.5 h-1.5 rounded-full ${ effectiveStatus === "active" ? "bg-emerald-400" : effectiveStatus === "expired" ? "bg-zinc-500" : "bg-red-400" }`} />
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide ${effectiveStatus === "active" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
+                                  effectiveStatus === "expired" ? "bg-slate-100 text-slate-600 border border-slate-200" :
+                                    "bg-red-50 text-red-600 border border-red-200"
+                                  }`}>
+                                  <span className={`w-1.5 h-1.5 rounded-full ${effectiveStatus === "active" ? "bg-emerald-500" : effectiveStatus === "expired" ? "bg-slate-400" : "bg-red-500"}`} />
                                   {effectiveStatus.toUpperCase()}
                                 </span>
                               </td>
@@ -3494,21 +3467,21 @@ export default function AdminDashboard() {
                                   <button
                                     onClick={() => setExtendTarget(access)}
                                     disabled={actionLoadingId === access._id}
-                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20 cursor-pointer"
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-300 cursor-pointer"
                                   >
                                     Extend
                                   </button>
                                   <button
                                     onClick={() => handleToggleRevokeAccess(access)}
                                     disabled={actionLoadingId === access._id}
-                                    className={`px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${ access.status === "revoked" ? "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20" : "bg-orange-500/15 text-orange-400 hover:bg-orange-500/25 border border-orange-500/20" }`}
+                                    className={`px-2.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${access.status === "revoked" ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200" : "bg-orange-50 text-orange-700 hover:bg-orange-100 border border-orange-200"}`}
                                   >
                                     {actionLoadingId === access._id ? "..." : access.status === "revoked" ? "Reactivate" : "Revoke"}
                                   </button>
                                   <button
                                     onClick={() => setDeleteAccessTarget(access)}
                                     disabled={actionLoadingId === access._id}
-                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 cursor-pointer"
                                   >
                                     Delete
                                   </button>
@@ -3530,12 +3503,12 @@ export default function AdminDashboard() {
             <div className="space-y-5 sm:space-y-7 animate-scale-up-fade">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-extrabold text-white font-space tracking-tight">Pricing Page Content</h1>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Configure pricing tiers, features list, and price tags dynamically</p>
+                  <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-space tracking-tight">Pricing Page Content</h1>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Configure pricing tiers, features list, and price tags dynamically</p>
                 </div>
                 <button
                   onClick={() => setShowCreatePricingModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -3545,89 +3518,89 @@ export default function AdminDashboard() {
               </div>
 
               {/* Pricing Plans Table */}
-              <div className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl shadow-black/30 w-full">
-                <div className="flex items-center justify-between px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-white/5">
+              <div className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm w-full">
+                <div className="flex items-center justify-between px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-white font-bold font-space text-sm">All Active Pricing Tiers</h2>
-                    <span className="text-xs text-zinc-500 font-semibold">({pricingTiers.length})</span>
+                    <h2 className="text-slate-900 font-bold font-space text-sm">All Active Pricing Tiers</h2>
+                    <span className="text-xs text-slate-400 font-semibold">({pricingTiers.length})</span>
                   </div>
                 </div>
 
                 <div className="overflow-x-auto w-full scrollbar-thin">
                   <table className="w-full text-left min-w-[700px]">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02]">
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase w-12 text-center">Sort</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Plan Name</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Price Tag</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Period</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase w-20 text-center">Featured</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Features Count</th>
-                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Actions</th>
+                      <tr className="border-b border-slate-100 bg-slate-50/75">
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase w-12 text-center">Sort</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Plan Name</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Price Tag</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Period</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase w-20 text-center">Featured</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Features Count</th>
+                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-100">
                       {loadingPricing ? (
                         <tr>
                           <td colSpan={7} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
                               <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                              <span className="text-zinc-400 text-sm">Loading pricing plans...</span>
+                              <span className="text-slate-500 text-sm">Loading pricing plans...</span>
                             </div>
                           </td>
                         </tr>
                       ) : pricingTiers.length === 0 ? (
                         <tr>
                           <td colSpan={7} className="text-center py-16">
-                            <span className="text-zinc-400 text-sm">No pricing plans found.</span>
+                            <span className="text-slate-500 text-sm">No pricing plans found.</span>
                           </td>
                         </tr>
                       ) : (
                         pricingTiers.map((tier) => (
-                          <tr key={tier._id} className="hover:bg-white/[0.03] transition-colors">
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 font-bold text-center text-xs sm:text-sm">
+                          <tr key={tier._id} className="hover:bg-slate-50/80 transition-colors">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-700 font-bold text-center text-xs sm:text-sm">
                               {tier.order}
                             </td>
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4">
                               <div className="flex items-center gap-2">
-                                <p className="text-white text-xs sm:text-sm font-semibold">{tier.name}</p>
+                                <p className="text-slate-900 text-xs sm:text-sm font-semibold">{tier.name}</p>
                                 {tier.planType && (
-                                  <span className="bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-emerald-500/20 uppercase tracking-wider">
+                                  <span className="bg-emerald-50 text-emerald-700 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-emerald-200 uppercase tracking-wider">
                                     {tier.planType}
                                   </span>
                                 )}
                               </div>
-                              <p className="text-zinc-400 text-[11px] truncate max-w-xs">{tier.description}</p>
+                              <p className="text-slate-500 text-[11px] truncate max-w-xs">{tier.description}</p>
                             </td>
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 font-mono font-extrabold text-amber-400 text-xs sm:text-sm whitespace-nowrap">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 font-mono font-extrabold text-amber-600 text-xs sm:text-sm whitespace-nowrap">
                               {tier.price}
                             </td>
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 text-xs whitespace-nowrap">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-600 text-xs whitespace-nowrap">
                               {tier.period}
                             </td>
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-center whitespace-nowrap">
                               {tier.featured ? (
-                                <span className="bg-amber-500/20 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-500/30 uppercase">
+                                <span className="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-300 uppercase">
                                   Yes
                                 </span>
                               ) : (
-                                <span className="text-zinc-600 text-xs font-semibold">—</span>
+                                <span className="text-slate-300 text-xs font-semibold">—</span>
                               )}
                             </td>
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 text-xs font-semibold whitespace-nowrap">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-600 text-xs font-semibold whitespace-nowrap">
                               {tier.features?.length || 0} features
                             </td>
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
                               <div className="flex items-center justify-end gap-1.5 sm:gap-2">
                                 <button
                                   onClick={() => setEditPricingTarget(tier)}
-                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"
+                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 cursor-pointer"
                                 >
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => setDeletePricingTarget(tier)}
-                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 cursor-pointer"
                                 >
                                   Delete
                                 </button>
@@ -3648,12 +3621,12 @@ export default function AdminDashboard() {
             <div className="space-y-5 sm:space-y-7 animate-scale-up-fade">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-extrabold text-white font-space tracking-tight">Scoreboard Theme Pricing</h1>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Manage overlay themes, daily pricing rates, and promo badges</p>
+                  <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-space tracking-tight">Scoreboard Theme Pricing</h1>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Manage overlay themes, daily pricing rates, and promo badges</p>
                 </div>
                 <button
                   onClick={() => setShowCreateScoreboardModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-md shadow-emerald-500/20 hover:scale-[1.02] active:scale-95 cursor-pointer flex-shrink-0"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -3663,61 +3636,61 @@ export default function AdminDashboard() {
               </div>
 
               {/* Scoreboard Themes Table */}
-              <div className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl shadow-black/30 w-full">
-                <div className="flex items-center justify-between px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-white/5">
+              <div className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm w-full">
+                <div className="flex items-center justify-between px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-white font-bold font-space text-sm">All Scoreboard Themes</h2>
-                    <span className="text-xs text-zinc-500 font-semibold">({scoreboardThemes.length})</span>
+                    <h2 className="text-slate-900 font-bold font-space text-sm">All Scoreboard Themes</h2>
+                    <span className="text-xs text-slate-400 font-semibold">({scoreboardThemes.length})</span>
                   </div>
                 </div>
 
                 <div className="overflow-x-auto w-full scrollbar-thin">
                   <table className="w-full text-left min-w-[700px]">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02]">
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase w-16 text-center">ID</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Theme Name</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Url Slug</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Price (per day)</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Badge</th>
-                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Actions</th>
+                      <tr className="border-b border-slate-100 bg-slate-50/75">
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase w-16 text-center">ID</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Theme Name</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Url Slug</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Price (per day)</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Badge</th>
+                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-100">
                       {loadingScoreboard ? (
                         <tr>
                           <td colSpan={6} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
                               <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                              <span className="text-zinc-400 text-sm">Loading themes...</span>
+                              <span className="text-slate-500 text-sm">Loading themes...</span>
                             </div>
                           </td>
                         </tr>
                       ) : scoreboardThemes.length === 0 ? (
                         <tr>
                           <td colSpan={6} className="text-center py-16">
-                            <span className="text-zinc-400 text-sm">No themes found.</span>
+                            <span className="text-slate-500 text-sm">No themes found.</span>
                           </td>
                         </tr>
                       ) : (
                         scoreboardThemes.map((theme) => (
-                          <tr key={theme._id} className="hover:bg-white/[0.03] transition-colors">
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 font-bold text-center text-xs sm:text-sm">
+                          <tr key={theme._id} className="hover:bg-slate-50/80 transition-colors">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-700 font-bold text-center text-xs sm:text-sm">
                               {theme.themeId}
                             </td>
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 font-semibold text-white text-xs sm:text-sm">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 font-semibold text-slate-900 text-xs sm:text-sm">
                               {theme.name}
                             </td>
-                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 font-mono text-xs">
+                            <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-500 font-mono text-xs">
                               {theme.slug}
                             </td>
                             {/* Price column with inline edit */}
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
                               <div className="flex items-center gap-2">
                                 {theme.price <= 0 ? (
-                                  <span className="text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-xs font-black">FREE</span>
+                                  <span className="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded text-xs font-black">FREE</span>
                                 ) : (
-                                  <span className="text-amber-400 font-extrabold text-xs sm:text-sm">PKR {theme.price}</span>
+                                  <span className="text-amber-600 font-extrabold text-xs sm:text-sm">PKR {theme.price}</span>
                                 )}
                                 <input
                                   type="number"
@@ -3726,13 +3699,13 @@ export default function AdminDashboard() {
                                   value={inlinePrices[theme._id] ?? ""}
                                   onChange={(e) => setInlinePrices(prev => ({ ...prev, [theme._id]: e.target.value }))}
                                   onKeyDown={(e) => e.key === "Enter" && saveInlinePrice(theme)}
-                                  className="w-16 sm:w-20 bg-white/5 border border-white/10 rounded-md px-2 py-1 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 transition-colors"
+                                  className="w-16 sm:w-20 bg-slate-50 border border-slate-200 rounded-md px-2 py-1 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
                                 />
                                 {inlinePrices[theme._id] !== undefined && (
                                   <button
                                     onClick={() => saveInlinePrice(theme)}
                                     disabled={savingPriceId === theme._id}
-                                    className="px-2 py-1 rounded-md text-xs font-bold bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/20 cursor-pointer disabled:opacity-50 transition-colors"
+                                    className="px-2 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 cursor-pointer disabled:opacity-50 transition-colors"
                                   >
                                     {savingPriceId === theme._id ? "..." : "Save"}
                                   </button>
@@ -3741,11 +3714,11 @@ export default function AdminDashboard() {
                             </td>
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
                               {theme.badge ? (
-                                <span className="bg-emerald-500/20 text-emerald-400 text-[9px] font-bold px-2 py-0.5 rounded border border-emerald-500/30 uppercase">
+                                <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold px-2 py-0.5 rounded border border-emerald-200 uppercase">
                                   {theme.badge}
                                 </span>
                               ) : (
-                                <span className="text-zinc-600 text-xs">—</span>
+                                <span className="text-slate-400 text-xs">—</span>
                               )}
                             </td>
                             <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
@@ -3753,24 +3726,23 @@ export default function AdminDashboard() {
                                 {/* Free / Paid toggle pill */}
                                 <button
                                   onClick={() => toggleFreeStatus(theme)}
-                                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border cursor-pointer transition-all ${
-                                    theme.price <= 0
-                                      ? "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border-amber-500/30"
-                                      : "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border-emerald-500/30"
-                                  }`}
+                                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border cursor-pointer transition-all ${theme.price <= 0
+                                    ? "bg-amber-50 text-amber-700 hover:bg-amber-100 border-amber-300"
+                                    : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-200"
+                                    }`}
                                 >
                                   <span>{theme.price <= 0 ? "🔒" : "✅"}</span>
                                   <span>{theme.price <= 0 ? "Paid" : "Free"}</span>
                                 </button>
                                 <button
                                   onClick={() => setEditScoreboardTarget(theme)}
-                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20 cursor-pointer"
+                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 cursor-pointer"
                                 >
                                   Edit
                                 </button>
                                 <button
                                   onClick={() => setDeleteScoreboardTarget(theme)}
-                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 cursor-pointer"
                                 >
                                   Delete
                                 </button>
@@ -3792,12 +3764,12 @@ export default function AdminDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 sm:gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h1 className="text-xl sm:text-2xl font-extrabold text-white font-space tracking-tight">SafePay Payments Logs</h1>
-                    <span className="bg-[#00D09C]/15 border border-[#00D09C]/30 text-[#00D09C] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-space tracking-tight">SafePay Payments Logs</h1>
+                    <span className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                       Gateway
                     </span>
                   </div>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">Real-time SafePay transaction records, automated unlocks, and customer access management</p>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">Real-time SafePay transaction records, automated unlocks, and customer access management</p>
                 </div>
               </div>
 
@@ -3813,7 +3785,7 @@ export default function AdminDashboard() {
                       </svg>
                     ),
                     color: "from-blue-500 to-indigo-600",
-                    glow: "shadow-blue-500/20",
+                    glow: "shadow-blue-500/10",
                   },
                   {
                     label: "Pending Verification",
@@ -3824,7 +3796,7 @@ export default function AdminDashboard() {
                       </svg>
                     ),
                     color: "from-amber-500 to-orange-600",
-                    glow: "shadow-amber-500/20",
+                    glow: "shadow-amber-500/10",
                   },
                   {
                     label: "Approved / Active Unlocks",
@@ -3834,31 +3806,31 @@ export default function AdminDashboard() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     ),
-                    color: "from-[#00D09C] to-teal-600",
-                    glow: "shadow-[#00D09C]/20",
+                    color: "from-emerald-500 to-teal-600",
+                    glow: "shadow-emerald-500/10",
                   },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl p-3.5 sm:p-4.5 flex items-center gap-3.5 shadow-lg shadow-black/20">
-                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-lg ${stat.glow} flex-shrink-0`}>
+                  <div key={stat.label} className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl p-3.5 sm:p-4.5 flex items-center gap-3.5 shadow-sm">
+                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white shadow-md ${stat.glow} flex-shrink-0`}>
                       {stat.icon}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-zinc-400 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
-                      <p className="text-white text-lg sm:text-2xl font-extrabold font-space truncate">{stat.value}</p>
+                      <p className="text-slate-500 text-[10px] sm:text-xs font-semibold tracking-wider uppercase truncate">{stat.label}</p>
+                      <p className="text-slate-900 text-lg sm:text-2xl font-extrabold font-space truncate">{stat.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Payments Table Container */}
-              <div className="bg-[#07092e] border border-white/5 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl shadow-black/30 w-full">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-white/5">
+              <div className="bg-white border border-slate-200/80 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-3.5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-white font-bold font-space text-sm">All SafePay Transactions</h2>
-                    <span className="text-xs text-zinc-500 font-semibold">({filteredPayments.length})</span>
+                    <h2 className="text-slate-900 font-bold font-space text-sm">All SafePay Transactions</h2>
+                    <span className="text-xs text-slate-400 font-semibold">({filteredPayments.length})</span>
                   </div>
                   <div className="relative w-full sm:w-64">
-                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input
@@ -3866,7 +3838,7 @@ export default function AdminDashboard() {
                       placeholder="Search email, tracker, item..."
                       value={paymentsSearchQuery}
                       onChange={(e) => setPaymentsSearchQuery(e.target.value)}
-                      className="w-full bg-[#0d0f3a] border border-zinc-800 text-white rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-[#00D09C] placeholder:text-zinc-600 transition-colors"
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-lg pl-9 pr-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-emerald-500 focus:bg-white placeholder:text-slate-400 transition-colors"
                     />
                   </div>
                 </div>
@@ -3874,31 +3846,31 @@ export default function AdminDashboard() {
                 <div className="overflow-x-auto w-full scrollbar-thin">
                   <table className="w-full text-left min-w-[760px]">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02]">
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Customer Email</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Gateway / Source</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">SafePay Tracker / Token</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Plan / Item</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Amount</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Status</th>
-                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Submitted</th>
-                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-zinc-400 tracking-wider uppercase">Actions</th>
+                      <tr className="border-b border-slate-100 bg-slate-50/75">
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Customer Email</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Gateway / Source</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">SafePay Tracker / Token</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Plan / Item</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Amount</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Status</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Submitted</th>
+                        <th className="text-right px-4 sm:px-6 py-3.5 text-[11px] sm:text-xs font-semibold text-slate-500 tracking-wider uppercase">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-100">
                       {loadingPayments ? (
                         <tr>
                           <td colSpan={8} className="text-center py-16">
                             <div className="flex flex-col items-center gap-3">
-                              <div className="w-8 h-8 border-4 border-[#00D09C] border-t-transparent rounded-full animate-spin" />
-                              <span className="text-zinc-400 text-sm">Loading transactions...</span>
+                              <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                              <span className="text-slate-500 text-sm">Loading transactions...</span>
                             </div>
                           </td>
                         </tr>
                       ) : filteredPayments.length === 0 ? (
                         <tr>
                           <td colSpan={8} className="text-center py-16">
-                            <span className="text-zinc-400 text-sm">No transactions found.</span>
+                            <span className="text-slate-500 text-sm">No transactions found.</span>
                           </td>
                         </tr>
                       ) : (
@@ -3929,25 +3901,25 @@ export default function AdminDashboard() {
                           }
 
                           return (
-                            <tr key={payment._id} className="hover:bg-white/[0.03] transition-colors">
+                            <tr key={payment._id} className="hover:bg-slate-50/80 transition-colors">
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4">
                                 <div className="flex items-center gap-2.5">
-                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00D09C]/80 to-teal-700 flex items-center justify-center text-slate-950 font-black text-xs flex-shrink-0">
+                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
                                     {payment.email.charAt(0).toUpperCase()}
                                   </div>
-                                  <p className="text-white text-xs sm:text-sm font-semibold truncate max-w-[150px] sm:max-w-xs">{payment.email}</p>
+                                  <p className="text-slate-900 text-xs sm:text-sm font-semibold truncate max-w-[150px] sm:max-w-xs">{payment.email}</p>
                                 </div>
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-[#00D09C]/10 text-[#00D09C] border border-[#00D09C]/25">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D09C]" />
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                   {payment.senderNumber || "SafePay"}
                                 </span>
                               </td>
-                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-[#00D09C] font-mono text-xs font-bold whitespace-nowrap">
+                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-emerald-700 font-mono text-xs font-bold whitespace-nowrap">
                                 {payment.trxId}
                               </td>
-                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-300 font-semibold text-xs whitespace-nowrap">
+                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-800 font-semibold text-xs whitespace-nowrap">
                                 <div>{payment.itemName}</div>
                                 {payment.matchId && (
                                   <div className="mt-1">
@@ -3955,40 +3927,37 @@ export default function AdminDashboard() {
                                       href={`/matches/${payment.matchId}/overlay`}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="text-amber-400 hover:underline text-[10px] bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 inline-block"
+                                      className="text-amber-800 hover:underline text-[10px] bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 inline-block font-semibold"
                                     >
                                       View Scoreboard Overlay
                                     </a>
                                   </div>
                                 )}
                               </td>
-                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-emerald-400 font-extrabold text-xs sm:text-sm whitespace-nowrap">
+                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-emerald-600 font-extrabold text-xs sm:text-sm whitespace-nowrap">
                                 {payment.itemPrice}
                               </td>
                               <td className="px-4 sm:px-6 py-3.5 sm:py-4 whitespace-nowrap">
                                 <div className="flex flex-col gap-1">
-                                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide w-fit ${
-                                    payment.status === "approved"
-                                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                      : payment.status === "rejected"
-                                      ? "bg-red-500/15 text-red-400 border border-red-500/30"
-                                      : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                                  }`}>
-                                    <span className={`w-1.5 h-1.5 rounded-full ${
-                                      payment.status === "approved" ? "bg-emerald-400" : payment.status === "rejected" ? "bg-red-400" : "bg-amber-400"
-                                    }`} />
+                                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide w-fit ${payment.status === "approved"
+                                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                    : payment.status === "rejected"
+                                      ? "bg-red-50 text-red-700 border border-red-200"
+                                      : "bg-amber-50 text-amber-700 border border-amber-200"
+                                    }`}>
+                                    <span className={`w-1.5 h-1.5 rounded-full ${payment.status === "approved" ? "bg-emerald-500" : payment.status === "rejected" ? "bg-red-500" : "bg-amber-500"
+                                      }`} />
                                     {payment.status.toUpperCase()}
                                   </span>
                                   {expiryText && (
-                                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded w-fit ${
-                                      isActive ? "text-amber-400 bg-amber-500/10 border border-amber-500/20" : "text-zinc-500 bg-zinc-800"
-                                    }`}>
+                                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded w-fit ${isActive ? "text-amber-800 bg-amber-50 border border-amber-200" : "text-slate-500 bg-slate-100 border border-slate-200"
+                                      }`}>
                                       {expiryText}
                                     </span>
                                   )}
                                 </div>
                               </td>
-                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-zinc-400 text-xs whitespace-nowrap">
+                              <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-slate-500 text-xs whitespace-nowrap">
                                 {new Date(payment.createdAt).toLocaleDateString("en-US", {
                                   year: "numeric",
                                   month: "short",
@@ -4001,7 +3970,7 @@ export default function AdminDashboard() {
                                     <button
                                       onClick={() => handleUpdatePaymentStatus(payment._id, "approved")}
                                       disabled={updatingPaymentId === payment._id}
-                                      className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20 cursor-pointer"
+                                      className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 cursor-pointer"
                                     >
                                       Approve
                                     </button>
@@ -4010,20 +3979,20 @@ export default function AdminDashboard() {
                                     <button
                                       onClick={() => handleUpdatePaymentStatus(payment._id, "rejected")}
                                       disabled={updatingPaymentId === payment._id}
-                                      className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-500/20 cursor-pointer"
+                                      className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 cursor-pointer"
                                     >
                                       {payment.status === "approved" ? "Revoke" : "Reject"}
                                     </button>
                                   )}
                                   <button
                                     onClick={() => setEmailTarget(payment)}
-                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20 cursor-pointer"
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 cursor-pointer"
                                   >
                                     Email
                                   </button>
                                   <button
                                     onClick={() => setDeletePaymentTarget(payment)}
-                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white border border-zinc-700/50 cursor-pointer"
+                                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-red-50 hover:text-red-700 hover:border-red-200 border border-slate-200 cursor-pointer transition-colors"
                                   >
                                     Delete
                                   </button>

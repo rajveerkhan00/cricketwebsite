@@ -62,7 +62,7 @@ export default function Login() {
           <Link href="/" className="flex items-center gap-2.5 group cursor-pointer">
             <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-amber-500/40 shadow-sm transition-all duration-300 group-hover:rotate-[12deg] group-hover:scale-105 group-hover:border-amber-500 flex-shrink-0">
               <Image
-                src="/image.jpeg"
+                src="/image2.jpeg"
                 alt="CriOverlay Logo"
                 fill
                 sizes="44px"

@@ -7665,70 +7665,70 @@ export default function OverlayPage() {
 
       const cardBorder = isIpl2025 ? "2.5px solid #38bdf8"
         : isBblStar ? "2.5px solid #C11725"
-        : isBblBlack ? "2.5px solid #ec4899"
-          : isJio ? "2.5px solid #e11d48"
-            : isEac ? "2.5px solid #facc15"
-              : isCwc23 ? "2.5px solid #d946ef"
-                : isCwc25 ? "2.5px solid #00e5ff"
-                  : isCt25 ? "2.5px solid #03a360"
-                    : isSa20 ? "2.5px solid #ebb509"
-                      : isFusion ? "2.5px solid #cc271f"
-                        : isCri ? "2.5px solid #74fb05"
-                          : isWcl ? "2.5px solid #0284c7"
-                            : isAsia ? "2.5px solid #e58808"
-                              : `2.5px solid ${theme.borderColor}`;
+          : isBblBlack ? "2.5px solid #ec4899"
+            : isJio ? "2.5px solid #e11d48"
+              : isEac ? "2.5px solid #facc15"
+                : isCwc23 ? "2.5px solid #d946ef"
+                  : isCwc25 ? "2.5px solid #00e5ff"
+                    : isCt25 ? "2.5px solid #03a360"
+                      : isSa20 ? "2.5px solid #ebb509"
+                        : isFusion ? "2.5px solid #cc271f"
+                          : isCri ? "2.5px solid #74fb05"
+                            : isWcl ? "2.5px solid #0284c7"
+                              : isAsia ? "2.5px solid #e58808"
+                                : `2.5px solid ${theme.borderColor}`;
 
       const cardShadow = isIpl2025 ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(56,189,248,0.25)"
         : isBblStar ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(0,109,68,0.4)"
-        : isBblBlack ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(236,72,153,0.3)"
-          : isJio ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(225,29,72,0.25)"
-            : isEac ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(250,204,21,0.25)"
-              : isCwc23 ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(217,70,239,0.3)"
-                : `0 25px 60px rgba(0,0,0,0.8), 0 0 30px ${theme.accent}30`;
+          : isBblBlack ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(236,72,153,0.3)"
+            : isJio ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(225,29,72,0.25)"
+              : isEac ? "0 25px 60px rgba(0,0,0,0.8), 0 0 35px rgba(250,204,21,0.25)"
+                : isCwc23 ? "0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(217,70,239,0.3)"
+                  : `0 25px 60px rgba(0,0,0,0.8), 0 0 30px ${theme.accent}30`;
 
       const primaryAccent = isIpl2025 ? "#facc15"
         : isBblStar ? "#006D44"
-        : isBblBlack ? "#ec4899"
-          : isJio ? "#e11d48"
-            : isEac ? "#facc15"
-              : isCwc23 ? "#d946ef"
-                : isCwc25 ? "#00e5ff"
-                  : isCt25 ? "#03a360"
-                    : isSa20 ? "#ebb509"
-                      : isFusion ? "#cc271f"
-                        : isCri ? "#74fb05"
-                          : isWcl ? "#0284c7"
-                            : isAsia ? "#e58808"
-                              : theme.accent;
+          : isBblBlack ? "#ec4899"
+            : isJio ? "#e11d48"
+              : isEac ? "#facc15"
+                : isCwc23 ? "#d946ef"
+                  : isCwc25 ? "#00e5ff"
+                    : isCt25 ? "#03a360"
+                      : isSa20 ? "#ebb509"
+                        : isFusion ? "#cc271f"
+                          : isCri ? "#74fb05"
+                            : isWcl ? "#0284c7"
+                              : isAsia ? "#e58808"
+                                : theme.accent;
 
       const secondaryAccent = isIpl2025 ? "#38bdf8"
         : isBblStar ? "#C11725"
-        : isBblBlack ? "#06b6d4"
-          : isJio ? "#ffffff"
-            : isEac ? "#781010"
-              : isCwc23 ? "#0ea5e9"
-                : isCwc25 ? "#ff007f"
-                  : isCt25 ? "#f59e0b"
-                    : isSa20 ? "#ffffff"
-                      : isFusion ? "#f97316"
-                        : isCri ? "#38bdf8"
-                          : isWcl ? "#38bdf8"
-                            : isAsia ? "#facc15"
-                              : theme.textSecondary;
+          : isBblBlack ? "#06b6d4"
+            : isJio ? "#ffffff"
+              : isEac ? "#781010"
+                : isCwc23 ? "#0ea5e9"
+                  : isCwc25 ? "#ff007f"
+                    : isCt25 ? "#f59e0b"
+                      : isSa20 ? "#ffffff"
+                        : isFusion ? "#f97316"
+                          : isCri ? "#38bdf8"
+                            : isWcl ? "#38bdf8"
+                              : isAsia ? "#facc15"
+                                : theme.textSecondary;
 
       const team1Grad = isJio ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
         : isEac ? "linear-gradient(135deg, #0c2560 0%, #16469d 100%)"
           : isCwc23 ? "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)"
             : isBblStar ? "linear-gradient(135deg, #004d2e 0%, #006D44 100%)"
-            : isBblBlack ? "linear-gradient(135deg, #4c1d95 0%, #2e1065 100%)"
-              : `linear-gradient(135deg, ${theme.primaryBg}, ${theme.headerBg})`;
+              : isBblBlack ? "linear-gradient(135deg, #4c1d95 0%, #2e1065 100%)"
+                : `linear-gradient(135deg, ${theme.primaryBg}, ${theme.headerBg})`;
 
       const team2Grad = isJio ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
         : isEac ? "linear-gradient(135deg, #781010 0%, #991b1b 100%)"
           : isCwc23 ? "linear-gradient(135deg, #eab308 0%, #ca8a04 100%)"
             : isBblStar ? "linear-gradient(135deg, #991b1b 0%, #C11725 100%)"
-            : isBblBlack ? "linear-gradient(135deg, #be185d 0%, #831843 100%)"
-              : `linear-gradient(135deg, ${theme.secondaryBg}, ${theme.headerBg})`;
+              : isBblBlack ? "linear-gradient(135deg, #be185d 0%, #831843 100%)"
+                : `linear-gradient(135deg, ${theme.secondaryBg}, ${theme.headerBg})`;
 
       return (
         <div className="fade-in" style={{
@@ -10406,342 +10406,342 @@ export default function OverlayPage() {
           <div className="slide-up" style={{ width: "96vw", maxWidth: "1340px", position: "relative", zIndex: 1, filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.35))", margin: "0" }}>
             {renderScoreboardMarqueeRibbon("champions-trophy-2025", scoringState, match, currentBatTeam, currentBowlTeam, bowler) || (
               <>
-              {/* Target Display Box (Floating Above Center) */}
-              {scoringState.target !== null && (
-                <div style={{
-                  position: "absolute",
-                  top: "-22px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
-                  border: "1.5px solid #00cc44",
-                  borderRadius: "20px",
-                  padding: "2px 16px",
-                  color: "#ffffff",
-                  fontSize: "10.5px",
-                  fontWeight: "900",
-                  letterSpacing: "0.8px",
-                  zIndex: 10,
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.35)"
-                }}>
-                  TARGET: <span style={{ color: "#00cc44" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
-                </div>
-              )}
-
-              {/* Main horizontal white container with 3-Column Symmetrical Grid */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr auto 1fr",
-                alignItems: "center",
-                background: "#ffffff",
-                height: "64px",
-                borderRadius: "16px",
-                border: "1.5px solid rgba(0,0,0,0.08)",
-                padding: "0 14px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.12)",
-                gap: "12px",
-                boxSizing: "border-box"
-              }}>
-
-                {/* LEFT WING: Batting Team Green Pill + Batsmen */}
-                <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start", gap: "10px" }}>
-                  {/* Batting Team Green Pill */}
+                {/* Target Display Box (Floating Above Center) */}
+                {scoringState.target !== null && (
                   <div style={{
-                    background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
-                    borderRadius: "10px",
-                    padding: "0 12px",
-                    height: "46px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: "105px",
-                    maxWidth: "125px",
-                    border: "1.5px solid rgba(255,255,255,0.4)",
-                    boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
-                    flexShrink: 0
+                    position: "absolute",
+                    top: "-22px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
+                    border: "1.5px solid #00cc44",
+                    borderRadius: "20px",
+                    padding: "2px 16px",
+                    color: "#ffffff",
+                    fontSize: "10.5px",
+                    fontWeight: "900",
+                    letterSpacing: "0.8px",
+                    zIndex: 10,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.35)"
                   }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                      {currentBatTeam}
-                    </span>
-                    <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
-                      BATTING
-                    </span>
+                    TARGET: <span style={{ color: "#00cc44" }}>{scoringState.target}</span> {rrr ? `• RRR: ${rrr}` : ""}
                   </div>
+                )}
 
-                  {/* Striker & Non-Striker details */}
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
-                    {/* Striker */}
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "21px", gap: "6px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
-                        <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "13px" }}>/</span>
-                        <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "13px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {scoringState.striker || "—"}
-                        </span>
+                {/* Main horizontal white container with 3-Column Symmetrical Grid */}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr auto 1fr",
+                  alignItems: "center",
+                  background: "#ffffff",
+                  height: "64px",
+                  borderRadius: "16px",
+                  border: "1.5px solid rgba(0,0,0,0.08)",
+                  padding: "0 14px",
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.12)",
+                  gap: "12px",
+                  boxSizing: "border-box"
+                }}>
+
+                  {/* LEFT WING: Batting Team Green Pill + Batsmen */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-start", gap: "10px" }}>
+                    {/* Batting Team Green Pill */}
+                    <div style={{
+                      background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
+                      borderRadius: "10px",
+                      padding: "0 12px",
+                      height: "46px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "105px",
+                      maxWidth: "125px",
+                      border: "1.5px solid rgba(255,255,255,0.4)",
+                      boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
+                      flexShrink: 0
+                    }}>
+                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {currentBatTeam}
+                      </span>
+                      <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
+                        BATTING
+                      </span>
+                    </div>
+
+                    {/* Striker & Non-Striker details */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
+                      {/* Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "21px", gap: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
+                          <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "13px" }}>/</span>
+                          <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "13px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.striker || "—"}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "950", flexShrink: 0 }}>
+                          <span style={{ color: "#0a1128", fontSize: "14px", lineHeight: 1 }}>{striker?.runs ?? 0}</span>
+                          <span style={{ color: "#64748b", fontSize: "10px", fontWeight: "800" }}>({striker?.balls ?? 0})</span>
+                        </div>
                       </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "950", flexShrink: 0 }}>
-                        <span style={{ color: "#0a1128", fontSize: "14px", lineHeight: 1 }}>{striker?.runs ?? 0}</span>
-                        <span style={{ color: "#64748b", fontSize: "10px", fontWeight: "800" }}>({striker?.balls ?? 0})</span>
+                      {/* Non-Striker */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "20px", gap: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
+                          <span style={{ color: "transparent", fontSize: "13px", userSelect: "none" }}>/</span>
+                          <span style={{ color: "#475569", fontWeight: "750", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {scoringState.nonStriker || "—"}
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", flexShrink: 0 }}>
+                          <span style={{ color: "#475569", fontSize: "13px", lineHeight: 1 }}>{nonStriker?.runs ?? 0}</span>
+                          <span style={{ color: "#94a3b8", fontSize: "9.5px", fontWeight: "700" }}>({nonStriker?.balls ?? 0})</span>
+                        </div>
                       </div>
                     </div>
-                    {/* Non-Striker */}
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "20px", gap: "6px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", minWidth: 0, flex: 1 }}>
-                        <span style={{ color: "transparent", fontSize: "13px", userSelect: "none" }}>/</span>
-                        <span style={{ color: "#475569", fontWeight: "750", fontSize: "12.5px", textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {scoringState.nonStriker || "—"}
-                        </span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "3px", fontWeight: "800", flexShrink: 0 }}>
-                        <span style={{ color: "#475569", fontSize: "13px", lineHeight: 1 }}>{nonStriker?.runs ?? 0}</span>
-                        <span style={{ color: "#94a3b8", fontSize: "9.5px", fontWeight: "700" }}>({nonStriker?.balls ?? 0})</span>
-                      </div>
-                    </div>
+
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginLeft: "4px", flexShrink: 0 }} />
                   </div>
 
-                  {/* Vertical Divider */}
-                  <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginLeft: "4px", flexShrink: 0 }} />
-                </div>
+                  {/* CENTER MODULE: Dead-Center Dark Indigo Capsule with inline CT25 animation */}
+                  {(() => {
+                    const ct25Anim = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "DRS REVIEW" : null) || "").trim().toUpperCase();
+                    let ct25Word = ct25Anim;
+                    if (ct25Anim === "FOUR" || ct25Anim === "4" || ct25Anim === "4S" || ct25Anim === "FOUR!") ct25Word = "FOUR!";
+                    else if (ct25Anim === "SIX" || ct25Anim === "6" || ct25Anim === "6S" || ct25Anim === "SIX!") ct25Word = "SIX!";
+                    else if (ct25Anim === "WICKET" || ct25Anim === "W" || ct25Anim === "WICKET!") ct25Word = "WICKET!";
+                    else if (ct25Anim === "OUT") ct25Word = "OUT!";
+                    else if (ct25Anim === "NOT OUT" || ct25Anim === "NOT_OUT" || ct25Anim === "NOTOUT") ct25Word = "NOT OUT!";
+                    else if (ct25Anim === "FREE HIT" || ct25Anim === "FREE_HIT" || ct25Anim === "FREEHIT") ct25Word = "FREE HIT!";
+                    else if (ct25Anim === "NO BALL" || ct25Anim === "NB" || ct25Anim === "NOBALL") ct25Word = "NO BALL!";
+                    else if (ct25Anim === "HAT-TRICK" || ct25Anim === "HATTRICK" || ct25Anim === "HAT TRICK") ct25Word = "HAT-TRICK!";
+                    else if (ct25Anim === "REVIEW" || ct25Anim === "DRS" || ct25Anim === "PENDING") ct25Word = "DRS REVIEW";
 
-                {/* CENTER MODULE: Dead-Center Dark Indigo Capsule with inline CT25 animation */}
-                {(() => {
-                  const ct25Anim = (scoringState.animation || (scoringState.decision === "OUT" ? "OUT" : scoringState.decision === "NOT OUT" ? "NOT OUT" : scoringState.decision === "PENDING" ? "DRS REVIEW" : null) || "").trim().toUpperCase();
-                  let ct25Word = ct25Anim;
-                  if (ct25Anim === "FOUR" || ct25Anim === "4" || ct25Anim === "4S" || ct25Anim === "FOUR!") ct25Word = "FOUR!";
-                  else if (ct25Anim === "SIX" || ct25Anim === "6" || ct25Anim === "6S" || ct25Anim === "SIX!") ct25Word = "SIX!";
-                  else if (ct25Anim === "WICKET" || ct25Anim === "W" || ct25Anim === "WICKET!") ct25Word = "WICKET!";
-                  else if (ct25Anim === "OUT") ct25Word = "OUT!";
-                  else if (ct25Anim === "NOT OUT" || ct25Anim === "NOT_OUT" || ct25Anim === "NOTOUT") ct25Word = "NOT OUT!";
-                  else if (ct25Anim === "FREE HIT" || ct25Anim === "FREE_HIT" || ct25Anim === "FREEHIT") ct25Word = "FREE HIT!";
-                  else if (ct25Anim === "NO BALL" || ct25Anim === "NB" || ct25Anim === "NOBALL") ct25Word = "NO BALL!";
-                  else if (ct25Anim === "HAT-TRICK" || ct25Anim === "HATTRICK" || ct25Anim === "HAT TRICK") ct25Word = "HAT-TRICK!";
-                  else if (ct25Anim === "REVIEW" || ct25Anim === "DRS" || ct25Anim === "PENDING") ct25Word = "DRS REVIEW";
+                    // Per-event color palette matching CT2025 design
+                    let animBg = "linear-gradient(135deg, #00cc44 0%, #059669 100%)";
+                    let animTextColor = "#ffffff";
+                    let animBorder = "#00cc44";
+                    if (ct25Word === "WICKET!" || ct25Word === "OUT!") { animBg = "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)"; animBorder = "#ef4444"; }
+                    else if (ct25Word === "FOUR!") { animBg = "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)"; animBorder = "#38bdf8"; }
+                    else if (ct25Word === "SIX!") { animBg = "linear-gradient(135deg, #00cc44 0%, #059669 100%)"; animBorder = "#34d399"; }
+                    else if (ct25Word === "NOT OUT!") { animBg = "linear-gradient(135deg, #16a34a 0%, #14532d 100%)"; animBorder = "#22c55e"; }
+                    else if (ct25Word === "FREE HIT!") { animBg = "linear-gradient(135deg, #f97316 0%, #c2410c 100%)"; animBorder = "#fb923c"; }
+                    else if (ct25Word === "NO BALL!") { animBg = "linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%)"; animBorder = "#a78bfa"; }
+                    else if (ct25Word === "HAT-TRICK!") { animBg = "linear-gradient(135deg, #db2777 0%, #9d174d 100%)"; animBorder = "#f472b6"; }
+                    else if (ct25Word === "DRS REVIEW") { animBg = "linear-gradient(135deg, #d97706 0%, #78350f 100%)"; animBorder = "#fbbf24"; }
 
-                  // Per-event color palette matching CT2025 design
-                  let animBg = "linear-gradient(135deg, #00cc44 0%, #059669 100%)";
-                  let animTextColor = "#ffffff";
-                  let animBorder = "#00cc44";
-                  if (ct25Word === "WICKET!" || ct25Word === "OUT!") { animBg = "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)"; animBorder = "#ef4444"; }
-                  else if (ct25Word === "FOUR!") { animBg = "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)"; animBorder = "#38bdf8"; }
-                  else if (ct25Word === "SIX!") { animBg = "linear-gradient(135deg, #00cc44 0%, #059669 100%)"; animBorder = "#34d399"; }
-                  else if (ct25Word === "NOT OUT!") { animBg = "linear-gradient(135deg, #16a34a 0%, #14532d 100%)"; animBorder = "#22c55e"; }
-                  else if (ct25Word === "FREE HIT!") { animBg = "linear-gradient(135deg, #f97316 0%, #c2410c 100%)"; animBorder = "#fb923c"; }
-                  else if (ct25Word === "NO BALL!") { animBg = "linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%)"; animBorder = "#a78bfa"; }
-                  else if (ct25Word === "HAT-TRICK!") { animBg = "linear-gradient(135deg, #db2777 0%, #9d174d 100%)"; animBorder = "#f472b6"; }
-                  else if (ct25Word === "DRS REVIEW") { animBg = "linear-gradient(135deg, #d97706 0%, #78350f 100%)"; animBorder = "#fbbf24"; }
+                    const ct25Repeated = Array(18).fill(ct25Word).join("   •   ");
 
-                  const ct25Repeated = Array(18).fill(ct25Word).join("   •   ");
-
-                  if (ct25Anim) {
-                    return (
-                      <div style={{
-                        background: animBg,
-                        height: "48px",
-                        borderRadius: "24px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "320px",
-                        flexShrink: 0,
-                        overflow: "hidden",
-                        position: "relative",
-                        border: `1.5px solid ${animBorder}`,
-                        boxShadow: `0 4px 20px ${animBorder}60`,
-                      }}>
-                        <style>{`
+                    if (ct25Anim) {
+                      return (
+                        <div style={{
+                          background: animBg,
+                          height: "48px",
+                          borderRadius: "24px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "320px",
+                          flexShrink: 0,
+                          overflow: "hidden",
+                          position: "relative",
+                          border: `1.5px solid ${animBorder}`,
+                          boxShadow: `0 4px 20px ${animBorder}60`,
+                        }}>
+                          <style>{`
                             @keyframes ct25MarqueeLTR {
                               0% { transform: translateX(-50%); }
                               100% { transform: translateX(0%); }
                             }
                           `}</style>
+                          <div style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "200%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            whiteSpace: "nowrap",
+                            animation: "ct25MarqueeLTR 5s linear infinite",
+                            pointerEvents: "none",
+                          }}>
+                            <span style={{
+                              fontSize: "17px",
+                              fontWeight: "950",
+                              letterSpacing: "2px",
+                              color: animTextColor,
+                              textTransform: "uppercase",
+                              display: "inline-block",
+                              paddingRight: "40px",
+                              textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+                            }}>
+                              {ct25Repeated}
+                            </span>
+                            <span style={{
+                              fontSize: "17px",
+                              fontWeight: "950",
+                              letterSpacing: "2px",
+                              color: animTextColor,
+                              textTransform: "uppercase",
+                              display: "inline-block",
+                              paddingRight: "40px",
+                              textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+                            }}>
+                              {ct25Repeated}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div style={{
+                        background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
+                        height: "48px",
+                        borderRadius: "24px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: "0 18px",
+                        width: "320px",
+                        flexShrink: 0,
+                        boxShadow: "0 4px 16px rgba(10,17,40,0.3), inset 0 1px 1px rgba(255,255,255,0.15)",
+                        border: "1px solid rgba(255,255,255,0.1)"
+                      }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                          {/* Left: Bowl V Bat */}
+                          <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                            {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9px" }}>V</span> {batTeamShort}
+                          </span>
+
+                          {/* Score box */}
+                          <div style={{ background: "#ffffff", borderRadius: "6px", padding: "2px 10px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
+                            <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "17px", lineHeight: 1, letterSpacing: "0.5px" }}>
+                              {scoringState.score} - {scoringState.wickets}
+                            </span>
+                          </div>
+
+                          {/* Right: Overs */}
+                          <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px" }}>
+                            {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OV
+                          </span>
+                        </div>
+
+                        {/* Bottom summary text in capsule */}
                         <div style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "200%",
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "center",
+                          fontSize: activeNotification ? "10px" : "8.5px",
+                          fontWeight: "900",
+                          color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
+                          background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
+                          padding: activeNotification ? "2px 8px" : "0",
+                          borderRadius: "4px",
+                          letterSpacing: "0.5px",
+                          marginTop: "2px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                          animation: "ct25MarqueeLTR 5s linear infinite",
-                          pointerEvents: "none",
+                          textAlign: "center",
+                          width: "100%",
+                          animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
                         }}>
-                          <span style={{
-                            fontSize: "17px",
-                            fontWeight: "950",
-                            letterSpacing: "2px",
-                            color: animTextColor,
-                            textTransform: "uppercase",
-                            display: "inline-block",
-                            paddingRight: "40px",
-                            textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-                          }}>
-                            {ct25Repeated}
-                          </span>
-                          <span style={{
-                            fontSize: "17px",
-                            fontWeight: "950",
-                            letterSpacing: "2px",
-                            color: animTextColor,
-                            textTransform: "uppercase",
-                            display: "inline-block",
-                            paddingRight: "40px",
-                            textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-                          }}>
-                            {ct25Repeated}
-                          </span>
+                          {activeNotification || statusLine}
                         </div>
                       </div>
                     );
-                  }
+                  })()}
 
-                  return (
+                  {/* RIGHT WING: Bowler Details & outcomes + Bowling Team Green Pill */}
+                  <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
+                    {/* Vertical Divider */}
+                    <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginRight: "4px", flexShrink: 0 }} />
+
+                    {/* Bowler Details & outcomes */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
+                      {/* Bowler details */}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#0a1128", fontWeight: "950", fontSize: "13px", height: "21px", gap: "6px" }}>
+                        <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
+                          {scoringState.bowler || "—"}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "baseline", gap: "2px", flexShrink: 0 }}>
+                          <span style={{ fontSize: "14px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
+                          <span style={{ color: "#64748b", fontWeight: "800", fontSize: "10px", marginLeft: "2px" }}>
+                            ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Outcome circles */}
+                      <div style={{ display: "flex", gap: "4.5px", alignItems: "center", height: "20px" }}>
+                        {Array.from({ length: totalBallSlots }).map((_, i) => {
+                          const val = thisOver[i];
+                          let cellBg = "rgba(10, 17, 40, 0.08)";
+                          let cellColor = "#0a1128";
+                          let borderStyle = "1px solid rgba(10,17,40,0.12)";
+                          if (val) {
+                            borderStyle = "none";
+                            if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; }
+                            else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
+                            else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
+                            else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
+                            else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
+                          }
+                          return (
+                            <div key={i} style={{
+                              width: "18px",
+                              height: "18px",
+                              background: cellBg,
+                              color: cellColor,
+                              border: borderStyle,
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "10px")),
+                              letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
+                              fontWeight: "950",
+                              lineHeight: 1,
+                              whiteSpace: "nowrap",
+                              flexShrink: 0
+                            }}>
+                              {val === "." ? "" : renderOutcomeText(val, 18)}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Bowling Team Green Pill */}
                     <div style={{
-                      background: "linear-gradient(135deg, #0a1128 0%, #0d1b3e 100%)",
-                      height: "48px",
-                      borderRadius: "24px",
+                      background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
+                      borderRadius: "10px",
+                      padding: "0 12px",
+                      height: "46px",
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      padding: "0 18px",
-                      width: "320px",
-                      flexShrink: 0,
-                      boxShadow: "0 4px 16px rgba(10,17,40,0.3), inset 0 1px 1px rgba(255,255,255,0.15)",
-                      border: "1px solid rgba(255,255,255,0.1)"
+                      minWidth: "105px",
+                      maxWidth: "125px",
+                      border: "1.5px solid rgba(255,255,255,0.4)",
+                      boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
+                      flexShrink: 0
                     }}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                        {/* Left: Bowl V Bat */}
-                        <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-                          {bowlTeamShort} <span style={{ opacity: 0.8, fontSize: "9px" }}>V</span> {batTeamShort}
-                        </span>
-
-                        {/* Score box */}
-                        <div style={{ background: "#ffffff", borderRadius: "6px", padding: "2px 10px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}>
-                          <span style={{ color: "#0a1128", fontWeight: "950", fontSize: "17px", lineHeight: 1, letterSpacing: "0.5px" }}>
-                            {scoringState.score} - {scoringState.wickets}
-                          </span>
-                        </div>
-
-                        {/* Right: Overs */}
-                        <span style={{ color: "#00cc44", fontWeight: "950", fontSize: "11px", letterSpacing: "0.5px" }}>
-                          {fmtOv(scoringState.balls, match.ballsPerOver)}/{match.overs} OV
-                        </span>
-                      </div>
-
-                      {/* Bottom summary text in capsule */}
-                      <div style={{
-                        fontSize: activeNotification ? "10px" : "8.5px",
-                        fontWeight: "900",
-                        color: activeNotification ? getNotificationStyles(activeNotification).textColor : "#ffffff",
-                        background: activeNotification ? getNotificationStyles(activeNotification).bg : "transparent",
-                        padding: activeNotification ? "2px 8px" : "0",
-                        borderRadius: "4px",
-                        letterSpacing: "0.5px",
-                        marginTop: "2px",
-                        textTransform: "uppercase",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        textAlign: "center",
-                        width: "100%",
-                        animation: activeNotification ? "pulseGlow 1s ease-in-out infinite alternate" : "none"
-                      }}>
-                        {activeNotification || statusLine}
-                      </div>
-                    </div>
-                  );
-                })()}
-
-                {/* RIGHT WING: Bowler Details & outcomes + Bowling Team Green Pill */}
-                <div style={{ display: "flex", alignItems: "center", minWidth: 0, justifyContent: "flex-end", gap: "10px" }}>
-                  {/* Vertical Divider */}
-                  <div style={{ width: "1px", height: "36px", background: "rgba(0,0,0,0.08)", marginRight: "4px", flexShrink: 0 }} />
-
-                  {/* Bowler Details & outcomes */}
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: 1, minWidth: 0, gap: "3px" }}>
-                    {/* Bowler details */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#0a1128", fontWeight: "950", fontSize: "13px", height: "21px", gap: "6px" }}>
-                      <span style={{ textTransform: "uppercase", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
-                        {scoringState.bowler || "—"}
+                      <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+                        {currentBowlTeam}
                       </span>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: "2px", flexShrink: 0 }}>
-                        <span style={{ fontSize: "14px" }}>{bowler?.wickets ?? 0} - {bowler?.runsConceded ?? 0}</span>
-                        <span style={{ color: "#64748b", fontWeight: "800", fontSize: "10px", marginLeft: "2px" }}>
-                          ({fmtOv(bowler?.ballsBowled ?? 0, match.ballsPerOver)})
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Outcome circles */}
-                    <div style={{ display: "flex", gap: "4.5px", alignItems: "center", height: "20px" }}>
-                      {Array.from({ length: totalBallSlots }).map((_, i) => {
-                        const val = thisOver[i];
-                        let cellBg = "rgba(10, 17, 40, 0.08)";
-                        let cellColor = "#0a1128";
-                        let borderStyle = "1px solid rgba(10,17,40,0.12)";
-                        if (val) {
-                          borderStyle = "none";
-                          if (val === "4" || val === "4s") { cellBg = "#0ea5e9"; cellColor = "#ffffff"; }
-                          else if (val === "6" || val === "6s") { cellBg = "#00cc44"; cellColor = "#ffffff"; }
-                          else if (val === "W" || val?.startsWith("W+") || val === "Wk") { cellBg = "#f87171"; cellColor = "#ffffff"; }
-                          else if (isExtraBall(val)) { cellBg = "#c084fc"; cellColor = "#ffffff"; }
-                          else { cellBg = "#0a1128"; cellColor = "#ffffff"; }
-                        }
-                        return (
-                          <div key={i} style={{
-                            width: "18px",
-                            height: "18px",
-                            background: cellBg,
-                            color: cellColor,
-                            border: borderStyle,
-                            borderRadius: "50%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: val && val.includes("+") ? undefined : (val && val.length > 3 ? "6px" : (val && val.length > 1 ? "8px" : "10px")),
-                            letterSpacing: val && val.length > 2 ? "-0.5px" : "normal",
-                            fontWeight: "950",
-                            lineHeight: 1,
-                            whiteSpace: "nowrap",
-                            flexShrink: 0
-                          }}>
-                            {val === "." ? "" : renderOutcomeText(val, 18)}
-                          </div>
-                        );
-                      })}
+                      <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
+                        BOWLING
+                      </span>
                     </div>
                   </div>
 
-                  {/* Bowling Team Green Pill */}
-                  <div style={{
-                    background: "linear-gradient(135deg, #00cc44 0%, #059669 100%)",
-                    borderRadius: "10px",
-                    padding: "0 12px",
-                    height: "46px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minWidth: "105px",
-                    maxWidth: "125px",
-                    border: "1.5px solid rgba(255,255,255,0.4)",
-                    boxShadow: "0 2px 8px rgba(0,204,68,0.25)",
-                    flexShrink: 0
-                  }}>
-                    <span style={{ color: "#ffffff", fontWeight: "950", fontSize: "12.5px", letterSpacing: "0.5px", textTransform: "uppercase", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                      {currentBowlTeam}
-                    </span>
-                    <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "8px", fontWeight: "900", letterSpacing: "1px", textTransform: "uppercase", marginTop: "1px" }}>
-                      BOWLING
-                    </span>
-                  </div>
                 </div>
-
-              </div>
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
         ) : (
           /* Match not started */
           <div className="slide-up" style={{ width: "94vw", maxWidth: "1060px", position: "relative", zIndex: 1, filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))" }}>
@@ -15265,7 +15265,8 @@ export default function OverlayPage() {
     const batLine2 = batWords.length > 1 ? batWords.slice(1).join(" ").toUpperCase() : "";
 
     // Split bowling team name into two lines if multiple words
-    const bowlWords = (currentBowlTeam || "TEAM").trim().split(/\s+/).filter(Boolean);
+    const resolvedBowlTeam = currentBowlTeam || (scoringState.bowlingTeam === "team1" ? match.team1Name : match.team2Name) || match.team2Name || "TEAM 2";
+    const bowlWords = resolvedBowlTeam.trim().split(/\s+/).filter(Boolean);
     const bowlLine1 = bowlWords.length > 1 ? bowlWords[0].toUpperCase() : bowlWords[0]?.toUpperCase() || "TEAM";
     const bowlLine2 = bowlWords.length > 1 ? bowlWords.slice(1).join(" ").toUpperCase() : "";
 
@@ -15328,51 +15329,51 @@ export default function OverlayPage() {
                 ""
               ).trim().toUpperCase();
 
-              const isBblFour     = bblRawAnim === "FOUR"    || bblRawAnim === "4"   || bblRawAnim === "4S"        || bblRawAnim === "FOUR!";
-              const isBblSix      = bblRawAnim === "SIX"     || bblRawAnim === "6"   || bblRawAnim === "6S"        || bblRawAnim === "SIX!" || bblRawAnim === "MAXIMUM";
-              const isBblWicket   = bblRawAnim === "WICKET"  || bblRawAnim === "W"   || bblRawAnim === "WICKET!"   || bblRawAnim === "OUT"  || bblRawAnim === "OUT!";
-              const isBblNotOut   = bblRawAnim === "NOT OUT" || bblRawAnim === "NOT_OUT" || bblRawAnim === "NOTOUT" || bblRawAnim === "NOT OUT!";
-              const isBblPending  = bblRawAnim === "PENDING" || bblRawAnim === "PENDING DECISION" || bblRawAnim === "DECISION PENDING" || bblRawAnim === "REVIEW" || bblRawAnim === "DRS" || bblRawAnim === "DRS REVIEW" || bblRawAnim === "THIRD UMPIRE";
-              const isBblFreeHit  = bblRawAnim === "FREE HIT" || bblRawAnim === "FREE_HIT" || bblRawAnim === "FREEHIT";
+              const isBblFour = bblRawAnim === "FOUR" || bblRawAnim === "4" || bblRawAnim === "4S" || bblRawAnim === "FOUR!";
+              const isBblSix = bblRawAnim === "SIX" || bblRawAnim === "6" || bblRawAnim === "6S" || bblRawAnim === "SIX!" || bblRawAnim === "MAXIMUM";
+              const isBblWicket = bblRawAnim === "WICKET" || bblRawAnim === "W" || bblRawAnim === "WICKET!" || bblRawAnim === "OUT" || bblRawAnim === "OUT!";
+              const isBblNotOut = bblRawAnim === "NOT OUT" || bblRawAnim === "NOT_OUT" || bblRawAnim === "NOTOUT" || bblRawAnim === "NOT OUT!";
+              const isBblPending = bblRawAnim === "PENDING" || bblRawAnim === "PENDING DECISION" || bblRawAnim === "DECISION PENDING" || bblRawAnim === "REVIEW" || bblRawAnim === "DRS" || bblRawAnim === "DRS REVIEW" || bblRawAnim === "THIRD UMPIRE";
+              const isBblFreeHit = bblRawAnim === "FREE HIT" || bblRawAnim === "FREE_HIT" || bblRawAnim === "FREEHIT";
               const isBblHatTrick = bblRawAnim === "HAT-TRICK" || bblRawAnim === "HATTRICK" || bblRawAnim === "HAT-TRICK BALL";
-              const isBblPowerplay= bblRawAnim === "POWERPLAY" || bblRawAnim === "POWER PLAY";
-              const isBblTourBound= bblRawAnim === "TOUR BOUNDARIES" || bblRawAnim === "BOUNDARIES" || ds === "TOUR BOUNDARIES" || ds === "BOUNDARIES" || ds === "TOURNAMENT BOUNDARIES";
+              const isBblPowerplay = bblRawAnim === "POWERPLAY" || bblRawAnim === "POWER PLAY";
+              const isBblTourBound = bblRawAnim === "TOUR BOUNDARIES" || bblRawAnim === "BOUNDARIES" || ds === "TOUR BOUNDARIES" || ds === "BOUNDARIES" || ds === "TOURNAMENT BOUNDARIES";
               if (isBblTourBound) {
                 return renderScoreboardTourBoundariesRibbon("bbl-starsports", match, tournamentMatches);
               }
-              const isBblFifty    = bblRawAnim === "FIFTY" || bblRawAnim === "50" || bblRawAnim === "HALF CENTURY";
-              const isBblCentury  = bblRawAnim === "CENTURY" || bblRawAnim === "100";
-              const isBblNoBall   = bblRawAnim === "NO BALL" || bblRawAnim === "NOBALL" || bblRawAnim === "NB";
-              const isBblWide     = bblRawAnim === "WIDE" || bblRawAnim === "WD";
+              const isBblFifty = bblRawAnim === "FIFTY" || bblRawAnim === "50" || bblRawAnim === "HALF CENTURY";
+              const isBblCentury = bblRawAnim === "CENTURY" || bblRawAnim === "100";
+              const isBblNoBall = bblRawAnim === "NO BALL" || bblRawAnim === "NOBALL" || bblRawAnim === "NB";
+              const isBblWide = bblRawAnim === "WIDE" || bblRawAnim === "WD";
 
               const hasBblAnim = bblRawAnim.length > 0;
 
               const bblLabel = isBblFour ? "FOUR!"
                 : isBblSix ? "SIX!"
-                : isBblWicket ? "OUT!"
-                : isBblNotOut ? "NOT OUT!"
-                : isBblPending ? "DECISION PENDING..."
-                : isBblFreeHit ? "FREE HIT"
-                : isBblHatTrick ? "HAT-TRICK BALL"
-                : isBblPowerplay ? "POWERPLAY"
-                : isBblTourBound ? "TOUR BOUNDARIES"
-                : isBblFifty ? "50! FIFTY"
-                : isBblCentury ? "100! CENTURY"
-                : isBblNoBall ? "NO BALL"
-                : isBblWide ? "WIDE"
-                : bblRawAnim;
+                  : isBblWicket ? "OUT!"
+                    : isBblNotOut ? "NOT OUT!"
+                      : isBblPending ? "DECISION PENDING..."
+                        : isBblFreeHit ? "FREE HIT"
+                          : isBblHatTrick ? "HAT-TRICK BALL"
+                            : isBblPowerplay ? "POWERPLAY"
+                              : isBblTourBound ? "TOUR BOUNDARIES"
+                                : isBblFifty ? "50! FIFTY"
+                                  : isBblCentury ? "100! CENTURY"
+                                    : isBblNoBall ? "NO BALL"
+                                      : isBblWide ? "WIDE"
+                                        : bblRawAnim;
 
               // Theme-based background gradient per outcome:
               const bblBg = isBblWicket ? "linear-gradient(135deg, #7f1d1d 0%, #C11725 50%, #991b1b 100%)"
                 : isBblNotOut ? "linear-gradient(135deg, #022c22 0%, #006D44 50%, #064e3b 100%)"
-                : isBblPending ? "linear-gradient(135deg, #78350f 0%, #C11725 50%, #006D44 100%)"
-                : "linear-gradient(135deg, #006D44 0%, #C11725 50%, #006D44 100%)";
+                  : isBblPending ? "linear-gradient(135deg, #78350f 0%, #C11725 50%, #006D44 100%)"
+                    : "linear-gradient(135deg, #006D44 0%, #C11725 50%, #006D44 100%)";
 
               const bblRepeat = Array(15).fill(bblLabel).join("  ★  ");
               return (
-              <div style={{ position: "relative" }}>
-                {/* ── Keyframes injected inline ── */}
-                <style>{`
+                <div style={{ position: "relative" }}>
+                  {/* ── Keyframes injected inline ── */}
+                  <style>{`
                   @keyframes bblLTR {
                     0%   { transform: translate3d(-50%, 0, 0); }
                     100% { transform: translate3d(0%, 0, 0); }
@@ -15387,494 +15388,439 @@ export default function OverlayPage() {
                   }
                 `}</style>
 
-                {/* ── Normal scoreboard (always visible underneath) ── */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "stretch",
-                  height: "52px",
-                  borderRadius: "6px",
-                  overflow: "hidden",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.7)"
-                }}>
-
-                {/* ── 1. LEFT SECTION (GREEN): Batting Team Name + Double Wave + Batsmen ── */}
-                <div style={{
-                  background: "linear-gradient(90deg, #005a36 0%, #006a42 60%, #007849 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  flex: "1.35",
-                  minWidth: "340px",
-                  position: "relative"
-                }}>
-                  {/* Team Name in 2 Lines */}
+                  {/* ── Normal scoreboard (always visible underneath) ── */}
                   <div style={{
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    padding: "0 12px 0 16px",
-                    lineHeight: 1.15,
-                    flexShrink: 0,
-                    minWidth: "110px",
-                    maxWidth: "145px"
+                    alignItems: "stretch",
+                    height: "54px",
+                    borderRadius: "0px",
+                    overflow: "hidden",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.85)",
+                    width: "100%"
                   }}>
-                    <span style={{
-                      color: "#ffffff",
-                      fontSize: "12px",
-                      fontWeight: 950,
-                      letterSpacing: "0.4px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap"
-                    }}>
-                      {batLine1}
-                    </span>
-                    {batLine2 && (
-                      <span style={{
-                        color: "#ffffff",
-                        fontSize: "11px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap"
-                      }}>
-                        {batLine2}
-                      </span>
-                    )}
-                  </div>
 
-                  {/* Wave 1: Double White S-Curve Separator */}
-                  <svg width="22" height="52" viewBox="0 0 22 52" fill="none" style={{ flexShrink: 0 }}>
-                    <path d="M4 2 C 16 13, 18 26, 6 39 C 2 44, 4 50, 8 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                    <path d="M12 2 C 24 13, 26 26, 14 39 C 10 44, 12 50, 16 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                  </svg>
-
-                  {/* Batsmen (Striker & Non-Striker) */}
-                  <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    padding: "0 12px 0 10px",
-                    flex: 1,
-                    gap: "2px",
-                    minWidth: 0
-                  }}>
-                    {/* Striker Row */}
+                    {/* ── 1. LEFT SECTION (GREEN): Batting Team Name + Double Wave + Batsmen ── */}
                     <div style={{
+                      background: "linear-gradient(90deg, #005a36 0%, #006a42 60%, #007849 100%)",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "8px"
+                      flex: "1.35",
+                      minWidth: "340px",
+                      position: "relative",
+                      zIndex: 5
                     }}>
+                      {/* Team Name in 2 Lines */}
                       <div style={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        overflow: "hidden",
-                        minWidth: 0
-                      }}>
-                        <span style={{ color: "#facc15", fontSize: "11px", fontWeight: 950, flexShrink: 0 }}>▸</span>
-                        <span style={{
-                          color: "#ffffff",
-                          fontSize: "12.5px",
-                          fontWeight: 950,
-                          letterSpacing: "0.3px",
-                          textTransform: "uppercase",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap"
-                        }}>
-                          {scoringState.striker || "BATTER 1"}
-                        </span>
-                      </div>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        flexShrink: 0
-                      }}>
-                        <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "12px", textAlign: "right" }}>
-                          {striker?.runs ?? 0}
-                        </span>
-                        <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "12px", textAlign: "right" }}>
-                          {striker?.balls ?? 0}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Non-Striker Row */}
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "8px"
-                    }}>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        overflow: "hidden",
-                        minWidth: 0,
-                        paddingLeft: "15px"
-                      }}>
-                        <span style={{
-                          color: "#ffffff",
-                          fontSize: "12.5px",
-                          fontWeight: 950,
-                          letterSpacing: "0.3px",
-                          textTransform: "uppercase",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap"
-                        }}>
-                          {scoringState.nonStriker || "BATTER 2"}
-                        </span>
-                      </div>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        flexShrink: 0
-                      }}>
-                        <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "12px", textAlign: "right" }}>
-                          {nonStriker?.runs ?? 0}
-                        </span>
-                        <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "12px", textAlign: "right" }}>
-                          {nonStriker?.balls ?? 0}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ── 2. SEAM WAVE TRANSITION (Green to White) ── */}
-                <div style={{ position: "relative", width: "24px", flexShrink: 0, zIndex: 3, marginLeft: "-2px", marginRight: "-1px" }}>
-                  <svg width="24" height="52" viewBox="0 0 24 52" fill="none" style={{ position: "absolute", inset: 0 }}>
-                    <path d="M0 0 L14 0 C24 13, 26 26, 14 39 C10 44, 12 50, 16 52 L0 52 Z" fill="#007849" />
-                    <path d="M3 2 C 15 13, 17 26, 5 39 C 1 44, 3 50, 7 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                    <path d="M11 2 C 23 13, 25 26, 13 39 C 9 44, 11 50, 15 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                  </svg>
-                </div>
-
-                {/* ── 3. CENTER SECTION (WHITE): Team Abbr + Score + Overs + Run Rate ── */}
-                <div style={{
-                  background: "#ffffff",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "2px 14px",
-                  minWidth: "220px",
-                  flexShrink: 0,
-                  zIndex: 2,
-                  position: "relative",
-                  overflow: "hidden"
-                }}>
-                  {/* Normal score content */}
-                  {/* Top Line: Team Abbr + Score + Overs */}
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "10px",
-                    width: "100%",
-                    lineHeight: 1
-                  }}>
-                    {/* Team Abbreviation (Navy Blue) */}
-                    <span style={{
-                      color: "#0a1f5c",
-                      fontSize: "16px",
-                      fontWeight: 950,
-                      letterSpacing: "0.5px",
-                      textTransform: "uppercase"
-                    }}>
-                      {batTeamShort}
-                    </span>
-
-                    {/* Score - Wickets (Bold Black) */}
-                    <span style={{
-                      color: "#000000",
-                      fontSize: "25px",
-                      fontWeight: 950,
-                      letterSpacing: "-0.5px"
-                    }}>
-                      {scoringState.score}-{scoringState.wickets}
-                    </span>
-
-                    {/* Overs / Total Overs (Navy Blue) */}
-                    <span style={{
-                      color: "#0a1f5c",
-                      fontSize: "15px",
-                      fontWeight: 950,
-                      letterSpacing: "0.2px"
-                    }}>
-                      {oversText}
-                    </span>
-                  </div>
-
-                  {/* Bottom Line: RUN RATE / TARGET / NOTIFICATION */}
-                  <div style={{
-                    color: "#000000",
-                    fontSize: "10.5px",
-                    fontWeight: 900,
-                    letterSpacing: "0.5px",
-                    textTransform: "uppercase",
-                    marginTop: "3px",
-                    lineHeight: 1,
-                    textAlign: "center"
-                  }}>
-                    {scoringState.customInputText ? (
-                      scoringState.customInputText
-                    ) : need !== null && bLeft !== null ? (
-                      `TARGET ${scoringState.target} • NEED ${need} IN ${bLeft}B`
-                    ) : (
-                      `RUN RATE ${crr}`
-                    )}
-                  </div>
-
-                  {/* ── CENTER ANIMATION OVERLAY (inside white panel) ── */}
-                  {hasBblAnim && (
-                    <div style={{
-                      position: "absolute",
-                      inset: 0,
-                      overflow: "hidden",
-                      zIndex: 10,
-                      pointerEvents: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: bblBg,
-                      animation: "bblCenterGlow 1.5s ease-in-out infinite",
-                      willChange: "box-shadow"
-                    }}>
-                      {/* Pulsing zoom wrapper */}
-                      <div style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
+                        flexDirection: "column",
                         justifyContent: "center",
-                        animation: "bblZoom 2.2s ease-in-out infinite",
-                        willChange: "transform",
-                        transformOrigin: "center center"
+                        padding: "0 12px 0 16px",
+                        lineHeight: 1.15,
+                        flexShrink: 0,
+                        minWidth: "110px",
+                        maxWidth: "145px"
                       }}>
-                        {/* Left-to-right scrolling track */}
-                        <div style={{
-                          display: "flex",
-                          alignItems: "center",
-                          whiteSpace: "nowrap",
-                          animation: "bblLTR 8s linear infinite",
-                          willChange: "transform",
-                          transform: "translate3d(0, 0, 0)"
-                        }}>
-                          <span style={{
-                            fontSize: "20px",
-                            fontWeight: 950,
-                            color: "#FFFFFF",
-                            letterSpacing: "4px",
-                            textTransform: "uppercase",
-                            WebkitTextStroke: "1px rgba(0,0,0,0.5)",
-                            textShadow: "0 2px 10px rgba(0,0,0,0.8), 0 0 14px rgba(255,255,255,0.7)",
-                            display: "inline-block",
-                            paddingRight: "28px"
-                          }}>{bblRepeat}</span>
-                          <span style={{
-                            fontSize: "20px",
-                            fontWeight: 950,
-                            color: "#FFFFFF",
-                            letterSpacing: "4px",
-                            textTransform: "uppercase",
-                            WebkitTextStroke: "1px rgba(0,0,0,0.5)",
-                            textShadow: "0 2px 10px rgba(0,0,0,0.8), 0 0 14px rgba(255,255,255,0.7)",
-                            display: "inline-block",
-                            paddingRight: "28px"
-                          }}>{bblRepeat}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* ── 4. SEAM WAVE TRANSITION (White to Red) ── */}
-                <div style={{ position: "relative", width: "24px", flexShrink: 0, zIndex: 3, marginLeft: "-1px", marginRight: "-2px" }}>
-                  <svg width="24" height="52" viewBox="0 0 24 52" fill="none" style={{ position: "absolute", inset: 0 }}>
-                    <path d="M12 0 C22 13, 24 26, 12 39 C8 44, 10 50, 14 52 L24 52 L24 0 Z" fill="#b91c1c" />
-                    <path d="M3 2 C 15 13, 17 26, 5 39 C 1 44, 3 50, 7 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                    <path d="M11 2 C 23 13, 25 26, 13 39 C 9 44, 11 50, 15 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                  </svg>
-                </div>
-
-                {/* ── 5. RIGHT SECTION (RED): Bowler Name + Figures + Double Wave + Bowling Team Name ── */}
-                <div style={{
-                  background: "linear-gradient(90deg, #b91c1c 0%, #c8102e 50%, #dc2626 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flex: "1.35",
-                  minWidth: "340px",
-                  position: "relative"
-                }}>
-                  {/* Bowler Details & Figures & This Over Balls */}
-                  <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    gap: "2px",
-                    minWidth: 0,
-                    flex: 1,
-                    padding: "0 10px 0 14px"
-                  }}>
-                    {/* Top Row: Bowler Name + Wickets-Runs and Overs */}
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "8px"
-                    }}>
-                      <span style={{
-                        color: "#ffffff",
-                        fontSize: "12.5px",
-                        fontWeight: 950,
-                        letterSpacing: "0.3px",
-                        textTransform: "uppercase",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap"
-                      }}>
-                        {scoringState.bowler || "BOWLER"}
-                      </span>
-                      <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        flexShrink: 0
-                      }}>
-                        <span style={{
-                          color: "#ffffff",
-                          fontSize: "13px",
-                          fontWeight: 950,
-                          letterSpacing: "0.3px"
-                        }}>
-                          {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
-                        </span>
                         <span style={{
                           color: "#ffffff",
                           fontSize: "12px",
-                          fontWeight: 900,
-                          opacity: 0.9
+                          fontWeight: 950,
+                          letterSpacing: "0.4px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
                         }}>
-                          {fmtOv(bowler?.ballsBowled ?? 0, bpo)}
+                          {batLine1}
                         </span>
+                        {batLine2 && (
+                          <span style={{
+                            color: "#ffffff",
+                            fontSize: "11px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap"
+                          }}>
+                            {batLine2}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Curly Wave 1: Double White S-Curve Separator */}
+                      <svg width="36" height="54" viewBox="0 0 36 54" fill="none" style={{ flexShrink: 0 }}>
+                        <path d="M 8 3 C 22 11, 26 19, 19 29 C 12 39, 9 44, 14 51" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                        <path d="M 17 3 C 31 11, 35 19, 28 29 C 21 39, 18 44, 23 51" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                      </svg>
+
+                      {/* Batsmen (Striker & Non-Striker) */}
+                      <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        padding: "0 10px 0 12px",
+                        flex: 1,
+                        gap: "3px",
+                        minWidth: 0
+                      }}>
+                        {/* Striker Row */}
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "8px"
+                        }}>
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            overflow: "hidden",
+                            minWidth: 0
+                          }}>
+                            <span style={{ color: "#a3e635", fontSize: "12px", fontWeight: 950, flexShrink: 0, lineHeight: 1 }}>▸</span>
+                            <span style={{
+                              color: "#ffffff",
+                              fontSize: "12.5px",
+                              fontWeight: 950,
+                              letterSpacing: "0.3px",
+                              textTransform: "uppercase",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap"
+                            }}>
+                              {scoringState.striker || "BATTER 1"}
+                            </span>
+                          </div>
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                            flexShrink: 0
+                          }}>
+                            <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "14px", textAlign: "right" }}>
+                              {striker?.runs ?? 0}
+                            </span>
+                            <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "14px", textAlign: "right" }}>
+                              {striker?.balls ?? 0}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Non-Striker Row */}
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "8px"
+                        }}>
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            overflow: "hidden",
+                            minWidth: 0,
+                            paddingLeft: "15px"
+                          }}>
+                            <span style={{
+                              color: "#ffffff",
+                              fontSize: "12.5px",
+                              fontWeight: 950,
+                              letterSpacing: "0.3px",
+                              textTransform: "uppercase",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap"
+                            }}>
+                              {scoringState.nonStriker || "BATTER 2"}
+                            </span>
+                          </div>
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                            flexShrink: 0
+                          }}>
+                            <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "14px", textAlign: "right" }}>
+                              {nonStriker?.runs ?? 0}
+                            </span>
+                            <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: 950, minWidth: "14px", textAlign: "right" }}>
+                              {nonStriker?.balls ?? 0}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Bottom Row: THIS OVER Delivery Balls */}
+                    {/* ── 2. SEAM WAVE TRANSITION (Green to White) ── */}
+                    <div style={{ position: "relative", width: "56px", height: "54px", flexShrink: 0, zIndex: 5, marginLeft: "-1px", marginRight: "-1px" }}>
+                      <svg width="56" height="54" viewBox="0 0 56 54" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                        <path d="M 0 0 L 26 0 C 36 6, 50 16, 42 28 C 34 38, 20 44, 0 50 L 0 54 L 0 0 Z" fill="#007849" />
+                        <path d="M 26 0 C 36 6, 50 16, 42 28 C 34 38, 20 44, 0 50 L 0 54 L 56 54 L 56 0 L 26 0 Z" fill={hasBblAnim ? "none" : "#ffffff"} />
+                        <path d="M 26 0 C 36 6, 50 16, 42 28 C 34 38, 20 44, 0 50" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                        <path d="M 16 0 C 26 6, 40 16, 32 28 C 24 38, 10 42, 0 43" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                      </svg>
+                    </div>
+
+                    {/* ── 3. CENTER SECTION (WHITE): Team Abbr + Score + Overs + Run Rate ── */}
                     <div style={{
+                      background: hasBblAnim ? "transparent" : "#ffffff",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "2px 16px",
+                      minWidth: "220px",
+                      flexShrink: 0,
+                      zIndex: 2,
+                      position: "relative",
+                      overflow: hasBblAnim ? "visible" : "hidden"
+                    }}>
+                      {/* Normal score content */}
+                      {/* Top Line: Team Abbr + Score + Overs */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "12px",
+                        width: "100%",
+                        lineHeight: 1
+                      }}>
+                        {/* Team Abbreviation (Navy Blue) */}
+                        <span style={{
+                          color: "#0a1f5c",
+                          fontSize: "16px",
+                          fontWeight: 950,
+                          letterSpacing: "0.5px",
+                          textTransform: "uppercase"
+                        }}>
+                          {batTeamShort}
+                        </span>
+
+                        {/* Score - Wickets (Bold Black) */}
+                        <span style={{
+                          color: "#000000",
+                          fontSize: "26px",
+                          fontWeight: 950,
+                          letterSpacing: "-0.5px"
+                        }}>
+                          {scoringState.score}-{scoringState.wickets}
+                        </span>
+
+                        {/* Overs / Total Overs (Navy Blue) */}
+                        <span style={{
+                          color: "#0a1f5c",
+                          fontSize: "15px",
+                          fontWeight: 950,
+                          letterSpacing: "0.2px"
+                        }}>
+                          {oversText}
+                        </span>
+                      </div>
+
+                      {/* Bottom Line: RUN RATE / TARGET / NOTIFICATION */}
+                      <div style={{
+                        color: "#0a1f5c",
+                        fontSize: "11px",
+                        fontWeight: 900,
+                        letterSpacing: "0.6px",
+                        textTransform: "uppercase",
+                        marginTop: "3px",
+                        lineHeight: 1,
+                        textAlign: "center"
+                      }}>
+                        {scoringState.customInputText ? (
+                          scoringState.customInputText
+                        ) : need !== null && bLeft !== null ? (
+                          `TARGET ${scoringState.target} • NEED ${need} IN ${bLeft}B`
+                        ) : (
+                          `RUN RATE ${crr}`
+                        )}
+                      </div>
+
+                      {/* ── CENTER ANIMATION OVERLAY (spanning entire white center area between waves) ── */}
+                      {hasBblAnim && (
+                        <div style={{
+                          position: "absolute",
+                          top: 0,
+                          bottom: 0,
+                          left: "-57px",
+                          right: "-57px",
+                          overflow: "hidden",
+                          zIndex: 4,
+                          pointerEvents: "none",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: bblBg,
+                          animation: "bblCenterGlow 1.5s ease-in-out infinite",
+                          willChange: "box-shadow"
+                        }}>
+                          {/* Pulsing zoom wrapper */}
+                          <div style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            animation: "bblZoom 2.2s ease-in-out infinite",
+                            willChange: "transform",
+                            transformOrigin: "center center"
+                          }}>
+                            {/* Left-to-right scrolling track */}
+                            <div style={{
+                              display: "flex",
+                              alignItems: "center",
+                              whiteSpace: "nowrap",
+                              animation: "bblLTR 8s linear infinite",
+                              willChange: "transform",
+                              transform: "translate3d(0, 0, 0)"
+                            }}>
+                              <span style={{
+                                fontSize: "20px",
+                                fontWeight: 950,
+                                color: "#FFFFFF",
+                                letterSpacing: "4px",
+                                textTransform: "uppercase",
+                                WebkitTextStroke: "1px rgba(0,0,0,0.5)",
+                                textShadow: "0 2px 10px rgba(0,0,0,0.8), 0 0 14px rgba(255,255,255,0.7)",
+                                display: "inline-block",
+                                paddingRight: "28px"
+                              }}>{bblRepeat}</span>
+                              <span style={{
+                                fontSize: "20px",
+                                fontWeight: 950,
+                                color: "#FFFFFF",
+                                letterSpacing: "4px",
+                                textTransform: "uppercase",
+                                WebkitTextStroke: "1px rgba(0,0,0,0.5)",
+                                textShadow: "0 2px 10px rgba(0,0,0,0.8), 0 0 14px rgba(255,255,255,0.7)",
+                                display: "inline-block",
+                                paddingRight: "28px"
+                              }}>{bblRepeat}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ── 4. SEAM WAVE TRANSITION (White to Red) ── */}
+                    <div style={{ position: "relative", width: "56px", height: "54px", flexShrink: 0, zIndex: 5, marginLeft: "-1px", marginRight: "-1px" }}>
+                      <svg width="56" height="54" viewBox="0 0 56 54" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                        <path d="M 0 0 L 30 0 C 20 6, 6 16, 14 28 C 22 38, 36 44, 56 50 L 56 54 L 0 54 Z" fill={hasBblAnim ? "none" : "#ffffff"} />
+                        <path d="M 30 0 C 20 6, 6 16, 14 28 C 22 38, 36 44, 56 50 L 56 54 L 56 0 Z" fill="#c8102e" />
+                        <path d="M 30 0 C 20 6, 6 16, 14 28 C 22 38, 36 44, 56 50" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                        <path d="M 40 0 C 30 6, 16 16, 24 28 C 32 38, 46 42, 56 43" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                      </svg>
+                    </div>
+
+                    {/* ── 5. RIGHT SECTION (RED): Bowler Name + Figures + Double Wave + Bowling Team Name ── */}
+                    <div style={{
+                      background: "#c8102e",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: "6px"
+                      flex: "1.35",
+                      minWidth: "340px",
+                      position: "relative",
+                      zIndex: 5
                     }}>
-                      <span style={{
-                        color: "rgba(255,255,255,0.85)",
-                        fontSize: "9px",
-                        fontWeight: 950,
-                        letterSpacing: "0.6px",
-                        textTransform: "uppercase",
-                        flexShrink: 0
+                      {/* Bowler Details & Figures (Single clean centered row matching reference image) */}
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "12px",
+                        flex: 1,
+                        padding: "0 14px 0 16px",
+                        minWidth: 0
                       }}>
-                        THIS OVER
-                      </span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                        {(() => {
-                          const thisOver = scoringState.thisOver || [];
-                          const extrasCount = thisOver.filter(isExtraBall).length;
-                          const total = Math.max(bpo, bpo + extrasCount);
-                          return Array.from({ length: total }).map((_, i) => {
-                            const v = thisOver[i];
-                            const isW = v === "W" || v?.startsWith("W+");
-                            const is6 = v === "6" || v === "6S";
-                            const is4 = v === "4" || v === "4S";
-                            const isNbWd = isExtraBall(v);
-                            const bg = isW ? "#ef4444" : is6 ? "#7c3aed" : is4 ? "#eab308" : isNbWd ? "#0284c7" : v && v !== "." && v !== "0" ? "#16a34a" : v === "." || v === "0" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.18)";
-                            const color = is4 ? "#000000" : "#ffffff";
-                            return (
-                              <div key={i} style={{
-                                width: "16px",
-                                height: "16px",
-                                borderRadius: "50%",
-                                background: bg,
-                                border: `1px solid ${v ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.25)"}`,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontSize: "8px",
-                                fontWeight: 950,
-                                color: color,
-                                flexShrink: 0,
-                                boxShadow: v ? "0 1px 3px rgba(0,0,0,0.5)" : "none"
-                              }}>
-                                {v && v.includes("+") ? renderOutcomeText(v, 16) : (v === "." || v === "0" ? "•" : (v ?? ""))}
-                              </div>
-                            );
-                          });
-                        })()}
+                        <span style={{
+                          color: "#ffffff",
+                          fontSize: "14px",
+                          fontWeight: 950,
+                          letterSpacing: "0.5px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {scoringState.bowler || "BOWLER"}
+                        </span>
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          flexShrink: 0
+                        }}>
+                          <span style={{
+                            color: "#ffffff",
+                            fontSize: "14px",
+                            fontWeight: 950,
+                            letterSpacing: "0.5px"
+                          }}>
+                            {bowler?.wickets ?? 0}-{bowler?.runsConceded ?? 0}
+                          </span>
+                          <span style={{
+                            color: "#ffffff",
+                            fontSize: "13.5px",
+                            fontWeight: 900,
+                            letterSpacing: "0.3px",
+                            opacity: 0.95
+                          }}>
+                            {fmtOv(bowler?.ballsBowled ?? 0, bpo)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Curly Wave 4: Double White S-Curve Separator */}
+                      <svg width="36" height="54" viewBox="0 0 36 54" fill="none" style={{ flexShrink: 0 }}>
+                        <path d="M 8 3 C 22 11, 26 19, 19 29 C 12 39, 9 44, 14 51" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                        <path d="M 17 3 C 31 11, 35 19, 28 29 C 21 39, 18 44, 23 51" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                      </svg>
+
+                      {/* Bowling Team Name (2nd Team Name) in 2 Lines */}
+                      <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        padding: "0 16px 0 12px",
+                        lineHeight: 1.15,
+                        flexShrink: 0,
+                        minWidth: "110px",
+                        maxWidth: "145px"
+                      }}>
+                        <span style={{
+                          color: "#ffffff",
+                          fontSize: "12px",
+                          fontWeight: 950,
+                          letterSpacing: "0.4px",
+                          textTransform: "uppercase",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}>
+                          {bowlLine1}
+                        </span>
+                        {bowlLine2 && (
+                          <span style={{
+                            color: "#ffffff",
+                            fontSize: "11px",
+                            fontWeight: 900,
+                            letterSpacing: "0.4px",
+                            textTransform: "uppercase",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap"
+                          }}>
+                            {bowlLine2}
+                          </span>
+                        )}
                       </div>
                     </div>
+
                   </div>
 
-                  {/* Wave 3: Double White S-Curve Separator */}
-                  <svg width="22" height="52" viewBox="0 0 22 52" fill="none" style={{ flexShrink: 0 }}>
-                    <path d="M4 2 C 16 13, 18 26, 6 39 C 2 44, 4 50, 8 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                    <path d="M12 2 C 24 13, 26 26, 14 39 C 10 44, 12 50, 16 52" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round" />
-                  </svg>
-
-                  {/* 2nd Team (Bowling Team) Name in 2 Lines */}
-                  <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "flex-end",
-                    padding: "0 16px 0 12px",
-                    lineHeight: 1.15,
-                    flexShrink: 0,
-                    minWidth: "90px",
-                    maxWidth: "140px"
-                  }}>
-                    <span style={{
-                      color: "#ffffff",
-                      fontSize: "12px",
-                      fontWeight: 950,
-                      letterSpacing: "0.4px",
-                      textTransform: "uppercase",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap"
-                    }}>
-                      {bowlLine1}
-                    </span>
-                    {bowlLine2 && (
-                      <span style={{
-                        color: "#ffffff",
-                        fontSize: "11px",
-                        fontWeight: 900,
-                        letterSpacing: "0.4px",
-                        textTransform: "uppercase",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap"
-                      }}>
-                        {bowlLine2}
-                      </span>
-                    )}
-                  </div>
                 </div>
-
-                </div>
-
-              </div>
               );
             })()}
           </div>

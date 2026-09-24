@@ -4,7 +4,7 @@ import path from "path";
 
 export async function GET() {
   try {
-    const imagePath = path.join(process.cwd(), "public", "image.jpeg");
+    const imagePath = path.join(process.cwd(), "public", "image2.jpeg");
     const imageBuffer = fs.readFileSync(imagePath);
     const base64Data = imageBuffer.toString("base64");
 
