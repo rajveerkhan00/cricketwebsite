@@ -18,7 +18,7 @@ function SafePaySuccessContent() {
       searchParams.get("token") ||
       searchParams.get("beacon") ||
       searchParams.get("tracker");
-    const sig = searchParams.get("sig") || "";
+    const sig = searchParams.get("sig") || searchParams.get("signature") || "";
     const orderId = searchParams.get("order_id");
     const email = searchParams.get("email");
     const itemName = searchParams.get("item");

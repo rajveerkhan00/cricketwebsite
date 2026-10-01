@@ -76,7 +76,10 @@ export async function POST(req: Request) {
       );
     }
 
-    const secretKey = process.env.SAFEPAY_SECRET_KEY;
+    const secretKey =
+      process.env.SAFEPAY_PRIVATE_KEY ||
+      process.env.SAFEPAY_SECRET_KEY ||
+      "ee4bc5d0a8d6713730ed4d402d53052f3e0eb3c66850142da395b56569f858ee";
 
     // Optional cryptographic signature validation if sig provided by Safepay redirect
     if (sig && secretKey) {

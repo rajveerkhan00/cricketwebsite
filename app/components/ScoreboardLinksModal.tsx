@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SafePayModal from "./SafePayModal";
 
 // ── Theme color palette (mirrors overlay THEME_MAP) ──────────────────────────
 const THEME_COLORS: Record<string, { accent: string; bg: string; border: string; text: string }> = {
@@ -49,8 +48,7 @@ export default function ScoreboardLinksModal({
 }: ScoreboardLinksModalProps) {
   const [themes, setThemes] = useState<ThemeItem[]>([]);
   const [loadingThemes, setLoadingThemes] = useState(true);
-  const [isSafePayOpen, setIsSafePayOpen] = useState(false);
-  const [selectedThemeForPurchase, setSelectedThemeForPurchase] = useState<ThemeItem | null>(null);
+  const [themeBuyingSlug, setThemeBuyingSlug] = useState<string | null>(null);
   const [approvedSlugs, setApprovedSlugs] = useState<string[]>([]);
   const [loadingPurchases, setLoadingPurchases] = useState(false);
 
@@ -62,6 +60,72 @@ export default function ScoreboardLinksModal({
 
   // Inline Preview State
   const [previewTheme, setPreviewTheme] = useState<ThemeItem | null>(null);
+
+  const handleDirectThemePurchase = async (theme: ThemeItem) => {
+    let email =
+      userEmail ||
+      (typeof window !== "undefined"
+        ? localStorage.getItem("crioverlay_user_email") || ""
+        : "");
+
+    if (!email) {
+      const prompted = window.prompt("Enter your email address to unlock this scoreboard theme:");
+      if (!prompted || !prompted.includes("@")) {
+        showToast("A valid email address is required for theme purchase.", "error");
+        return;
+      }
+      email = prompted.trim();
+      if (typeof window !== "undefined") {
+        localStorage.setItem("crioverlay_user_email", email);
+      }
+    }
+
+    const priceNum =
+      typeof theme.price === "number"
+        ? theme.price
+        : parseFloat(String(theme.price || "500").replace(/[^0-9.]/g, ""));
+
+    setThemeBuyingSlug(theme.slug);
+
+    try {
+      const orderId = `SP-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const origin = window.location.origin;
+      const itemName = `Scoreboard Theme: ${theme.slug}`;
+      const successUrl = `${origin}/safepay/success?email=${encodeURIComponent(
+        email
+      )}&item=${encodeURIComponent(itemName)}&price=${encodeURIComponent(
+        String(priceNum)
+      )}&planType=&order_id=${encodeURIComponent(orderId)}`;
+      const cancelUrl = `${origin}/safepay/cancel`;
+
+      const res = await fetch("/api/safepay/create-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: priceNum,
+          orderId,
+          currency: "PKR",
+          redirectUrl: successUrl,
+          cancelUrl: cancelUrl,
+          source: "hosted",
+          webhooks: true,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.checkoutUrl) {
+        showToast(data.error || "Failed to create SafePay checkout session.", "error");
+        setThemeBuyingSlug(null);
+        return;
+      }
+
+      window.location.href = data.checkoutUrl;
+    } catch {
+      showToast("Network error. Could not connect to SafePay.", "error");
+      setThemeBuyingSlug(null);
+    }
+  };
+
 
   const fetchPurchases = async () => {
     if (!userEmail) return;
@@ -410,13 +474,18 @@ export default function ScoreboardLinksModal({
                             ) : (
                               <td colSpan={2} className="p-3 text-center">
                                 <button
-                                  onClick={() => {
-                                    setSelectedThemeForPurchase(theme);
-                                    setIsSafePayOpen(true);
-                                  }}
-                                  className="w-full max-w-[280px] mx-auto py-1 px-4 rounded-full font-black text-[10px] uppercase tracking-wider text-slate-900 shadow bg-gradient-to-r from-[#00D09C] to-[#00b386] hover:from-[#00ba8a] hover:to-[#009a74] active:scale-95 transition-all cursor-pointer"
+                                  onClick={() => handleDirectThemePurchase(theme)}
+                                  disabled={themeBuyingSlug === theme.slug}
+                                  className="w-full max-w-[280px] mx-auto py-1 px-4 rounded-full font-black text-[10px] uppercase tracking-wider text-slate-900 shadow bg-gradient-to-r from-[#00D09C] to-[#00b386] hover:from-[#00ba8a] hover:to-[#009a74] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-75"
                                 >
-                                  🔒 Buy Theme (SafePay)
+                                  {themeBuyingSlug === theme.slug ? (
+                                    <>
+                                      <div className="w-3 h-3 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                                      Redirecting to SafePay...
+                                    </>
+                                  ) : (
+                                    "🔒 Buy Theme (SafePay)"
+                                  )}
                                 </button>
                               </td>
                             )}
@@ -435,17 +504,6 @@ export default function ScoreboardLinksModal({
         </div>
       </div>
 
-      {selectedThemeForPurchase && (
-        <SafePayModal
-          isOpen={isSafePayOpen}
-          onClose={() => {
-            setIsSafePayOpen(false);
-            setSelectedThemeForPurchase(null);
-          }}
-          itemName={`Scoreboard Theme: ${selectedThemeForPurchase.slug}`}
-          itemPrice={`${selectedThemeForPurchase.price}`}
-        />
-      )}
 
       {/* ── Inline Scoreboard Preview Overlay ───────────────────────────── */}
       {previewTheme && (

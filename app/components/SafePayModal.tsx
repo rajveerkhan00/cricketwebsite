@@ -61,7 +61,7 @@ export default function SafePayModal({
           currency: "PKR",
           redirectUrl: successUrl,
           cancelUrl: cancelUrl,
-          source: "custom",
+          source: "hosted",
           webhooks: true,
         }),
       });
