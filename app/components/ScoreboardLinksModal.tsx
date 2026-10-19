@@ -17,6 +17,15 @@ const THEME_COLORS: Record<string, { accent: string; bg: string; border: string;
   "ipl-2025":              { accent: "#fbbf24", bg: "rgba(4,6,35,0.97)",    border: "#f59e0b", text: "#fde68a" },
   "crioverlay-green":      { accent: "#76ff03", bg: "rgba(9,13,22,0.97)",   border: "#76ff03", text: "#b2ff59" },
   "starsports-t20":        { accent: "#0284c7", bg: "rgba(15,23,42,0.97)",   border: "#0284c7", text: "#38bdf8" },
+  "tapeball-white":        { accent: "#ff5722", bg: "rgba(255,255,255,0.98)", border: "#ff5722", text: "#ff5722" },
+  "crioverlay-white":      { accent: "#ff5722", bg: "rgba(255,255,255,0.98)", border: "#ff5722", text: "#ff5722" },
+  "cricneon":              { accent: "#00d4ff", bg: "rgba(10,18,36,0.98)",   border: "#00d4ff", text: "#38bdf8" },
+  "neon-cyber":            { accent: "#00d4ff", bg: "rgba(10,18,36,0.98)",   border: "#00d4ff", text: "#38bdf8" },
+  "t20-neon":              { accent: "#00d4ff", bg: "rgba(10,18,36,0.98)",   border: "#00d4ff", text: "#38bdf8" },
+  "cricaqua":              { accent: "#00f5ff", bg: "rgba(3,24,44,0.98)",    border: "#00f5ff", text: "#38bdf8" },
+  "aqua-wave":             { accent: "#00f5ff", bg: "rgba(3,24,44,0.98)",    border: "#00f5ff", text: "#38bdf8" },
+  "ocean-cyber":           { accent: "#00f5ff", bg: "rgba(3,24,44,0.98)",    border: "#00f5ff", text: "#38bdf8" },
+  "cric-ocean":            { accent: "#00f5ff", bg: "rgba(3,24,44,0.98)",    border: "#00f5ff", text: "#38bdf8" },
 };
 
 const getFallbackColors = (slug: string) =>
