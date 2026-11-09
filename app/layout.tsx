@@ -51,6 +51,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* PWA meta tags */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="CriOverlay" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <meta name="theme-color" content="#1b8c1b" />
         <link rel="icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
 
