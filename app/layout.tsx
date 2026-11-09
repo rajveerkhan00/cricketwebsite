@@ -27,13 +27,15 @@ export const metadata: Metadata = {
   title: "CriOverlay | Live Cricket Scoring Overlay App",
   description:
     "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
+  manifest: "/manifest.json", // ✅ Added for PWA installation
   icons: {
     icon: [
       { url: "/api/favicon", type: "image/svg+xml" },
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
     shortcut: "/api/favicon",
-    apple: "/api/favicon",
+    // ✅ Changed to point to the physical PNG file required for iOS homescreens
+    apple: "/icon-192.png",
   },
 };
 
@@ -51,7 +53,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/api/favicon" />
+
+        {/* ✅ Moved from body to head for proper PWA detection */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1b8c1b" />
       </head>
       <body
         className="min-h-full flex flex-col bg-white text-slate-900"

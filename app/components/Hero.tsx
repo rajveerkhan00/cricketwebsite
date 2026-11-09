@@ -3,16 +3,90 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+// ✅ Type for the Chrome install prompt event
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
+// ✅ Extend Navigator so `navigator.standalone` (iOS Safari) is typed
+interface NavigatorWithStandalone extends Navigator {
+  standalone?: boolean;
+}
 
 export default function Hero() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  // Capture the browser's install prompt
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    // Detect if already installed (standalone mode)
+    const nav = window.navigator as NavigatorWithStandalone;
+    if (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      nav.standalone === true
+    ) {
+      setIsInstalled(true);
+    }
+
+    const installedHandler = () => setIsInstalled(true);
+    window.addEventListener("appinstalled", installedHandler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("appinstalled", installedHandler);
+    };
+  }, []);
 
   const handleGetStarted = () => {
     if (session) {
       router.push("/tournaments");
     } else {
       router.push("/login");
+    }
+  };
+
+  const handleAddShortcut = async () => {
+    // Already installed
+    if (isInstalled) {
+      alert("Shortcut already added!");
+      return;
+    }
+
+    // Chromium browsers: trigger native install prompt (one click)
+    if (deferredPrompt) {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") setIsInstalled(true);
+      setDeferredPrompt(null);
+      return;
+    }
+
+    // iOS Safari / unsupported browsers: show manual instructions
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      alert(
+        "To add to Home Screen on iOS:\n\n1. Tap the Share button\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add'"
+      );
+    } else {
+      alert(
+        "To add a shortcut:\n\n• Desktop Chrome/Edge: Click the install icon in the address bar, or open the browser menu → 'Install CriOverlay'\n• Mobile: Open the browser menu → 'Add to Home screen'"
+      );
     }
   };
 
@@ -35,31 +109,39 @@ export default function Hero() {
       <div className="absolute bottom-[-10%] left-[-10%] w-[45%] h-[45%] rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        
+
         {/* Left Content */}
         <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold tracking-widest text-emerald-700 uppercase shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             Next-Gen Sports Technology
           </div>
-          
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight font-space">
             CriOverlay - LIVE CRICKET
             <span className="block mt-2 bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent">
               SCORING OVERLAY APP
             </span>
           </h1>
-          
+
           <p className="text-slate-600 text-lg md:text-xl max-w-xl leading-relaxed font-normal font-outfit">
             We revolutionize your event experience with top-notch technology. Whether it's live streaming for sports, festivals, or meetings, or providing real-time cricket scoring with stunning international graphics, we have everything you need.
           </p>
-          
+
           <div className="pt-2 flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleGetStarted}
               className="group relative bg-[#1b8c1b] hover:bg-[#157015] active:scale-95 text-white font-bold text-lg px-8 py-3.5 rounded-lg transition-all duration-300 shadow-[0_4px_20px_rgba(27,140,27,0.25)] hover:shadow-[0_4px_25px_rgba(27,140,27,0.4)]"
             >
               Get Started
+            </button>
+
+            {/* ✅ NEW: Add Shortcut button */}
+            <button
+              onClick={handleAddShortcut}
+              className="group relative bg-white hover:bg-slate-50 active:scale-95 text-[#1b8c1b] font-bold text-lg px-8 py-3.5 rounded-lg border-2 border-[#1b8c1b] transition-all duration-300 shadow-sm hover:shadow-md"
+            >
+              {isInstalled ? "✓ Shortcut Added" : "Add to Home Screen"}
             </button>
           </div>
         </div>
@@ -76,7 +158,7 @@ export default function Hero() {
               className="object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out drop-shadow-lg"
             />
           </div>
-          
+
           <p className="text-xs font-bold tracking-widest text-emerald-800 uppercase text-center mt-2 font-space bg-emerald-50 border border-emerald-200/80 px-4 py-1.5 rounded-full shadow-xs">
             LIVE CRICKET STREAMING SCORECARD SOFTWARE!
           </p>
@@ -86,5 +168,3 @@ export default function Hero() {
     </section>
   );
 }
-
-
