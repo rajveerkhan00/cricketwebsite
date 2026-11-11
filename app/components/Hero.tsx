@@ -26,6 +26,9 @@ export default function Hero() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [isIos, setIsIos] = useState(false);
+  const [isAndroid, setIsAndroid] = useState(false);
 
   // Capture the browser's install prompt
   useEffect(() => {
@@ -44,6 +47,10 @@ export default function Hero() {
       setIsInstalled(true);
     }
 
+    const ua = navigator.userAgent;
+    setIsIos(/iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+    setIsAndroid(/Android/.test(ua));
+
     const installedHandler = () => setIsInstalled(true);
     window.addEventListener("appinstalled", installedHandler);
 
@@ -61,12 +68,9 @@ export default function Hero() {
     }
   };
 
-  const handleAddShortcut = async () => {
-    // Already installed
-    if (isInstalled) {
-      alert("Shortcut already added!");
-      return;
-    }
+  const handleInstallClick = async () => {
+    // Already installed — nothing to do
+    if (isInstalled) return;
 
     // Chromium browsers: trigger native install prompt (one click)
     if (deferredPrompt) {
@@ -77,17 +81,9 @@ export default function Hero() {
       return;
     }
 
-    // iOS Safari / unsupported browsers: show manual instructions
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (isIOS) {
-      alert(
-        "To add to Home Screen on iOS:\n\n1. Tap the Share button\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add'"
-      );
-    } else {
-      alert(
-        "To add a shortcut:\n\n• Desktop Chrome/Edge: Click the install icon in the address bar, or open the browser menu → 'Install CriOverlay'\n• Mobile: Open the browser menu → 'Add to Home screen'"
-      );
-    }
+    // Browsers without a native prompt (iOS Safari, Firefox, etc.)
+    // → show manual install instructions
+    setShowInstallModal(true);
   };
 
   return (
@@ -136,13 +132,25 @@ export default function Hero() {
               Get Started
             </button>
 
-            {/* ✅ NEW: Add Shortcut button */}
-            <button
-              onClick={handleAddShortcut}
-              className="group relative bg-white hover:bg-slate-50 active:scale-95 text-[#1b8c1b] font-bold text-lg px-8 py-3.5 rounded-lg border-2 border-[#1b8c1b] transition-all duration-300 shadow-sm hover:shadow-md"
-            >
-              {isInstalled ? "✓ Shortcut Added" : "Add to Home Screen"}
-            </button>
+            {/* ✅ Install App button */}
+            {isInstalled ? (
+              <div className="flex items-center gap-2 px-8 py-3.5 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-bold text-lg">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                App Installed
+              </div>
+            ) : (
+              <button
+                onClick={handleInstallClick}
+                className="group relative bg-white hover:bg-slate-50 active:scale-95 text-[#1b8c1b] font-bold text-lg px-8 py-3.5 rounded-lg border-2 border-[#1b8c1b] transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2.5"
+              >
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Install App
+              </button>
+            )}
           </div>
         </div>
 
@@ -165,6 +173,96 @@ export default function Hero() {
         </div>
 
       </div>
+
+      {/* Install Instructions Modal (browsers without native prompt) */}
+      {showInstallModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm"
+          onClick={() => setShowInstallModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowInstallModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              aria-label="Close"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="flex flex-col items-center text-center gap-4">
+              {/* App icon */}
+              <div className="w-16 h-16 rounded-2xl bg-[#1b8c1b] flex items-center justify-center shadow-lg shadow-emerald-600/30">
+                <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+              </div>
+
+              <h3 className="text-xl font-extrabold text-slate-900 font-space">
+                Install CriOverlay
+              </h3>
+
+              {isIos ? (
+                <ol className="text-left text-sm text-slate-600 space-y-3 w-full">
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">1</span>
+                    <span>Tap the <strong>Share</strong> button <svg className="inline w-4 h-4 -mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg> at the bottom of Safari</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">2</span>
+                    <span>Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">3</span>
+                    <span>Tap <strong>"Add"</strong> in the top-right corner</span>
+                  </li>
+                </ol>
+              ) : isAndroid ? (
+                <ol className="text-left text-sm text-slate-600 space-y-3 w-full">
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">1</span>
+                    <span>Tap the <strong>⋮ menu</strong> (three dots) in Chrome</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">2</span>
+                    <span>Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">3</span>
+                    <span>Confirm with <strong>"Install"</strong></span>
+                  </li>
+                </ol>
+              ) : (
+                <ol className="text-left text-sm text-slate-600 space-y-3 w-full">
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">1</span>
+                    <span>Click the <strong>install icon</strong> in the address bar, or open the <strong>⋮ browser menu</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">2</span>
+                    <span>Select <strong>"Install CriOverlay"</strong> or <strong>"Apps → Install this site as an app"</strong></span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center">3</span>
+                    <span>Confirm — the app will appear on your <strong>desktop</strong></span>
+                  </li>
+                </ol>
+              )}
+
+              <button
+                onClick={() => setShowInstallModal(false)}
+                className="mt-2 w-full bg-[#1b8c1b] hover:bg-[#157015] text-white font-bold py-3 rounded-lg transition-colors"
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
