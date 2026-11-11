@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     ],
     shortcut: "/api/favicon",
     // ✅ Changed to point to the physical PNG file required for iOS homescreens
-    apple: "/icons/icon-192.png",
+    apple: "/icons/apple-touch-icon.png",
   },
 };
 
@@ -55,7 +55,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="CriOverlay" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <meta name="theme-color" content="#1b8c1b" />
         <link rel="icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
