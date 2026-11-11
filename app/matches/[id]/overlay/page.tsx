@@ -473,20 +473,91 @@ const computePlayerTournamentStats = (matches: Match[], name: string) => {
   };
 };
 
-const getPointsTable = (match: Match, themeSlug: string, plusOne: boolean) => {
-  const t1 = match.team1Name; const t2 = match.team2Name;
-  let others = ["CSK", "MI", "RCB", "KKR", "SRH", "LSG"];
-  if (["asia-cup", "cwc-19", "cwc-23-india", "cwc-25-india", "wt20-2024"].includes(themeSlug)) others = ["IND", "AUS", "ENG", "RSA", "NZL", "PAK"];
-  else if (["bbl-black", "bbl-starsports"].includes(themeSlug)) others = ["SYS", "AS", "BH", "MS", "PS", "MR"];
-  const allTeams = Array.from(new Set([t1, t2, ...others])).slice(0, 6);
-  return allTeams.map((name) => {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    hash = Math.abs(hash);
-    const won = (hash % 4) + 2; const tied = hash % 2; const lost = 7 - won - tied;
-    const pts = won * 2 + tied * (plusOne ? 2 : 1);
-    return { name, p: 7, w: won, l: lost, t: tied, pts, nrr: ((hash % 200) / 100 - 1).toFixed(3) };
-  }).sort((a, b) => b.pts - a.pts || parseFloat(b.nrr) - parseFloat(a.nrr));
+const getPointsTable = (matches: Match[], plusOne: boolean) => {
+  const teamStats: Record<string, { p: number; w: number; l: number; t: number; pts: number; runsFor: number; runsAgainst: number; ballsFor: number; ballsAgainst: number; nrr: string }> = {};
+
+  matches.forEach(m => {
+    const ss = m.scoringState;
+    if (!ss || m.status === "Not Started") return;
+
+    const t1 = m.team1Name;
+    const t2 = m.team2Name;
+
+    // Initialize team stats if not exists
+    [t1, t2].forEach(team => {
+      if (!teamStats[team]) {
+        teamStats[team] = { p: 0, w: 0, l: 0, t: 0, pts: 0, runsFor: 0, runsAgainst: 0, ballsFor: 0, ballsAgainst: 0, nrr: "0.000" };
+      }
+    });
+
+    // Determine match result
+    if (m.status === "Completed") {
+      teamStats[t1].p++;
+      teamStats[t2].p++;
+
+      // Get scores from both innings
+      const inn1Score = ss.score || 0;
+      const inn1Wickets = ss.wickets || 0;
+      const inn1Balls = ss.balls || 0;
+
+      const inn2Score = ss.firstInnings?.score || 0;
+      const inn2Wickets = ss.firstInnings?.wickets || 0;
+      const inn2Balls = ss.firstInnings?.balls || 0;
+
+      // Determine which team batted first
+      const t1BattedFirst = ss.battingTeam === "team1";
+      const t1Score = t1BattedFirst ? inn1Score : inn2Score;
+      const t1Wickets = t1BattedFirst ? inn1Wickets : inn2Wickets;
+      const t1Balls = t1BattedFirst ? inn1Balls : inn2Balls;
+      const t2Score = t1BattedFirst ? inn2Score : inn1Score;
+      const t2Wickets = t1BattedFirst ? inn2Wickets : inn1Wickets;
+      const t2Balls = t1BattedFirst ? inn2Balls : inn1Balls;
+
+      // Track runs and balls for NRR calculation
+      teamStats[t1].runsFor += t1Score;
+      teamStats[t1].runsAgainst += t2Score;
+      teamStats[t1].ballsFor += t1Balls;
+      teamStats[t1].ballsAgainst += t2Balls;
+
+      teamStats[t2].runsFor += t2Score;
+      teamStats[t2].runsAgainst += t1Score;
+      teamStats[t2].ballsFor += t2Balls;
+      teamStats[t2].ballsAgainst += t1Balls;
+
+      // Determine winner
+      if (m.matchTied) {
+        teamStats[t1].t++;
+        teamStats[t2].t++;
+        teamStats[t1].pts += plusOne ? 2 : 1;
+        teamStats[t2].pts += plusOne ? 2 : 1;
+      } else if (t1Score > t2Score) {
+        teamStats[t1].w++;
+        teamStats[t2].l++;
+        teamStats[t1].pts += 2;
+      } else {
+        teamStats[t2].w++;
+        teamStats[t1].l++;
+        teamStats[t2].pts += 2;
+      }
+    }
+  });
+
+  // Calculate NRR for each team
+  Object.keys(teamStats).forEach(team => {
+    const stats = teamStats[team];
+    if (stats.ballsFor > 0 && stats.ballsAgainst > 0) {
+      const runRateFor = stats.runsFor / (stats.ballsFor / 6);
+      const runRateAgainst = stats.runsAgainst / (stats.ballsAgainst / 6);
+      stats.nrr = (runRateFor - runRateAgainst).toFixed(3);
+    } else {
+      stats.nrr = "0.000";
+    }
+  });
+
+  // Convert to array and sort
+  return Object.entries(teamStats)
+    .map(([name, stats]) => ({ name, ...stats }))
+    .sort((a, b) => b.pts - a.pts || parseFloat(b.nrr) - parseFloat(a.nrr));
 };
 
 const GLOBAL_CSS = `
@@ -1056,7 +1127,7 @@ export default function OverlayPage() {
   // Fetch all matches in the same tournament for real stats aggregation
   useEffect(() => {
     if (!match?.tournamentId || match.tournamentId === "demo-tournament-id") return;
-    fetch(`/api/matches?tournamentId=${match.tournamentId}`, { cache: "no-store" })
+    fetch(`/api/public/tournament-matches?tournamentId=${match.tournamentId}`, { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         if (data?.matches && Array.isArray(data.matches)) {
@@ -6005,7 +6076,8 @@ export default function OverlayPage() {
     // ── POINTS TABLE & PT (TIED POINT +1) — Broadcast-Grade Standings with Exact Theme Palette or IPL 2025 Replica ──
     if (isPointsTable || isPointsTablePlusOne) {
       const isPlusOne = isPointsTablePlusOne;
-      const ptList = getPointsTable(match, themeSlug, isPlusOne);
+      const matchesToScan = (tournamentMatches && tournamentMatches.length > 0) ? tournamentMatches : [match];
+      const ptList = getPointsTable(matchesToScan, isPlusOne);
 
       const isIpl2025 = themeSlug === "ipl-2025";
       const isBblStar = themeSlug === "bbl-starsports";
