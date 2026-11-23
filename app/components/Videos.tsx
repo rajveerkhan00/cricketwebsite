@@ -6,22 +6,22 @@ export default function Videos() {
   const videos = [
     {
       title: "CriOverlay Scoreboard 1",
-      thumbnail: "/scoreboard (1).png",
+      thumbnail: "/scoreboard-1.png",
       link: "#",
     },
     {
       title: "CriOverlay Scoreboard 2",
-      thumbnail: "/scoreboard (2).png",
+      thumbnail: "/scoreboard-2.png",
       link: "#",
     },
     {
       title: "CriOverlay Scoreboard 3",
-      thumbnail: "/scoreboard (3).png",
+      thumbnail: "/scoreboard-3.png",
       link: "#",
     },
     {
       title: "CriOverlay Scoreboard 4",
-      thumbnail: "/scoreboard (4).png",
+      thumbnail: "/scoreboard-4.png",
       link: "#",
     },
   ];
