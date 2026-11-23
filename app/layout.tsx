@@ -24,6 +24,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://crioverlay.com"),
   title: "CriOverlay | Live Cricket Scoring Overlay App",
   description:
     "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
@@ -36,6 +37,28 @@ export const metadata: Metadata = {
     shortcut: "/api/favicon",
     // ✅ Changed to point to the physical PNG file required for iOS homescreens
     apple: "/icons/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "CriOverlay | Live Cricket Scoring Overlay App",
+    description: "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
+    url: "https://crioverlay.com",
+    siteName: "CriOverlay",
+    images: [
+      {
+        url: "/image2.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "CriOverlay Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CriOverlay | Live Cricket Scoring Overlay App",
+    description: "Professional broadcast-quality live cricket scorecards and sports graphics overlays for OBS, Prism Live Studio, and streaming commentators.",
+    images: ["/image2.jpeg"],
   },
 };
 
@@ -59,6 +82,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#1b8c1b" />
         <link rel="icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
 
         {/* ✅ Moved from body to head for proper PWA detection */}
         <link rel="manifest" href="/manifest.json" />
