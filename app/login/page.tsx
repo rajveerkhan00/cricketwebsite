@@ -188,6 +188,14 @@ export default function Login() {
             )}
           </button>
         </form>
+
+        {/* Link to Signup */}
+        <p className="text-xs text-center text-slate-500 mt-2">
+          Don't have an account?{" "}
+          <Link href="/signup" className="font-bold text-amber-600 hover:text-amber-700">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
