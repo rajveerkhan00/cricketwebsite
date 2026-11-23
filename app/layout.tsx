@@ -83,6 +83,10 @@ export default function RootLayout({
         <link rel="icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="shortcut icon" href="/api/favicon" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/icon.png" sizes="192x192" />
+        <link rel="icon" href="/icon-512.png" sizes="512x512" />
+        <meta name="msapplication-TileColor" content="#1b8c1b" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* ✅ Moved from body to head for proper PWA detection */}
         <link rel="manifest" href="/manifest.json" />
