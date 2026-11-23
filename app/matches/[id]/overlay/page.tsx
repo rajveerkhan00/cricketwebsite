@@ -10348,10 +10348,6 @@ export default function OverlayPage() {
                       <span style={{ color: "#142248", fontWeight: 950, fontSize: "12px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
                         {currentBowlTeam || match.team2Name}
                       </span>
-                      {/* CricScorer/Bat badge */}
-                      <div style={{ width: "16px", height: "16px", background: "#142248", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center", color: "#E58808", fontSize: "8.5px", fontWeight: "bold" }}>
-                        🏏
-                      </div>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: "3px", marginTop: "1px" }}>
                       <span style={{ color: "#E58808", fontSize: "7.5px", fontWeight: 950, letterSpacing: "0.5px" }}>BOWL:</span>
@@ -10751,15 +10747,12 @@ export default function OverlayPage() {
                     </div>
                   </div>
 
-                  {/* Bowling Team Logo & CricScorer Badge */}
+                  {/* Bowling Team Logo */}
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     <div style={{ width: "44px", height: "44px", borderRadius: "50%", border: "3px solid #dc2626", display: "flex", alignItems: "center", justifyContent: "center", background: "#dc2626", padding: "3px", textAlign: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }}>
                       <span style={{ color: "#FFFFFF", fontWeight: 900, fontSize: "8.5px", lineHeight: "1.1", textTransform: "uppercase" }}>
                         {currentBowlTeam.split(" ").slice(0, 2).join("\n")}
                       </span>
-                    </div>
-                    <div style={{ width: "24px", height: "24px", background: "#07152b", border: "1.5px solid #02b3e4", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#facc15", fontSize: "12px", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>
-                      🏏
                     </div>
                   </div>
                 </div>
@@ -12435,10 +12428,6 @@ export default function OverlayPage() {
                     <span style={{ color: "#000000", fontWeight: "900", fontSize: "15px", letterSpacing: "0.5px", textTransform: "uppercase" }}>
                       {currentBowlTeam}
                     </span>
-                    {/* CricScorer overlay badge */}
-                    <div style={{ marginLeft: "10px", width: "22px", height: "22px", background: "#475569", borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fbbf24", fontSize: "11px", flexShrink: 0 }}>
-                      🏏
-                    </div>
                   </div>
 
                 </div>
@@ -13386,26 +13375,6 @@ export default function OverlayPage() {
                             })}
                           </div>
                         </div>
-
-                        {/* Watermark brand icon */}
-                        <div style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "linear-gradient(135deg, #15803d 0%, #166534 100%)",
-                          padding: "4px 10px",
-                          borderRadius: "9999px",
-                          color: "#ffffff",
-                          fontSize: "10px",
-                          fontWeight: "950",
-                          letterSpacing: "0.6px",
-                          gap: "4px",
-                          flexShrink: 0,
-                          height: "26px",
-                          boxShadow: "0 2px 8px rgba(21,128,61,0.3)"
-                        }}>
-                          <span>🏏</span>
-                          <span style={{ fontSize: "9px" }}>CricScorer</span>
-                        </div>
                       </div>
 
                     </div>
@@ -13522,9 +13491,6 @@ export default function OverlayPage() {
                             );
                           })}
                         </div>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", background: "linear-gradient(135deg, #15803d 0%, #166534 100%)", padding: "4px 10px", borderRadius: "9999px", color: "#ffffff", fontSize: "10px", fontWeight: "950", letterSpacing: "0.6px", gap: "4px", flexShrink: 0, height: "26px", boxShadow: "0 2px 8px rgba(21,128,61,0.3)" }}>
-                        <span>🏘️</span><span style={{ fontSize: "9px" }}>CricScorer</span>
                       </div>
                     </div>
                   </div>
