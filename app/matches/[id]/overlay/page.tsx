@@ -14370,7 +14370,7 @@ export default function OverlayPage() {
                       boxShadow: "0 2px 8px rgba(225, 29, 72, 0.5)"
                     }}>
                       <span className="live-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#ffffff", display: "inline-block" }} />
-                      <span>JIO LIVE</span>
+                      <span>LIVE</span>
                     </div>
                     <div style={{
                       background: "rgba(15, 23, 42, 0.8)",
