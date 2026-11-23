@@ -9,6 +9,7 @@ import Link from "next/link";
 import StorageIndicator from "../../components/StorageIndicator";
 import ScoreboardLinksModal from "../../components/ScoreboardLinksModal";
 import { toast } from "react-toastify";
+import html2canvas from "html2canvas";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Match {
@@ -1806,31 +1807,48 @@ export default function MatchScoringPage() {
               : `${bat1Team} won by ${Math.max(0, scoringState.target - scoringState.score - 1)} run${Math.max(0, scoringState.target - scoringState.score - 1) === 1 ? "" : "s"}`)
             : "Match Completed";
 
+          const handleDownloadPNG = async (elementId: string, filename: string) => {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            try {
+              // Add watermark element temporarily
+              const watermark = document.createElement("div");
+              watermark.style.cssText = "position: absolute; bottom: 10px; right: 10px; font-size: 10px; color: #666; font-weight: bold; opacity: 0.7; z-index: 1000;";
+              watermark.textContent = "Powered by crioverlay.com";
+              element.style.position = "relative";
+              element.appendChild(watermark);
+
+              const canvas = await html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+              });
+
+              // Remove watermark
+              element.removeChild(watermark);
+
+              // Convert to blob and download
+              canvas.toBlob((blob) => {
+                if (!blob) return;
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `${filename}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                toast.success("Image saved to gallery!");
+              }, "image/png");
+            } catch (error) {
+              console.error("Error generating image:", error);
+              toast.error("Failed to generate image");
+            }
+          };
+
           const handleDownloadPDF = () => {
-            const printContent = document.getElementById("match-scorecard-print");
-            if (!printContent) return;
-            const win = window.open("", "_blank", "width=900,height=700");
-            if (!win) return;
-            win.document.write(`
-              <html><head><title>Scorecard - ${match.team1Name} vs ${match.team2Name}</title>
-              <style>
-                body{font-family:Arial,sans-serif;color:#111;background:#fff;padding:24px;font-size:13px}
-                h1{font-size:20px;font-weight:900;margin-bottom:4px}
-                h2{font-size:14px;font-weight:800;margin:20px 0 8px;text-transform:uppercase;border-bottom:2px solid #333;padding-bottom:4px}
-                h3{font-size:12px;font-weight:800;margin:12px 0 4px;color:#555}
-                table{width:100%;border-collapse:collapse;margin-bottom:8px}
-                th{text-align:left;font-size:10px;font-weight:800;padding:6px 8px;background:#f1f5f9;text-transform:uppercase;letter-spacing:1px}
-                td{padding:6px 8px;border-bottom:1px solid #e2e8f0;font-size:12px}
-                .winner{background:#d1fae5;padding:8px 16px;border-radius:6px;font-weight:900;font-size:15px;display:inline-block;margin-bottom:16px}
-                .score-big{font-size:22px;font-weight:900}
-                .inn-header{background:#0f172a;color:#fff;padding:8px 12px;border-radius:4px;margin-bottom:8px}
-                @media print{body{padding:12px}}
-              </style></head><body>
-              ${printContent.innerHTML}
-              </body></html>`);
-            win.document.close();
-            win.focus();
-            setTimeout(() => { win.print(); }, 500);
+            handleDownloadPNG("match-scorecard-print", `scorecard-${match.team1Name}-vs-${match.team2Name}`);
           };
 
           const InningsTable = ({ inn, batTeam, bowlTeam, innNo }: { inn: any, batTeam: string, bowlTeam: string, innNo: number }) => {
@@ -1937,10 +1955,10 @@ export default function MatchScoringPage() {
 
                 <div className="flex flex-wrap items-center justify-end gap-3.5">
                   <button
-                    onClick={handleDownloadPDF}
+                    onClick={() => handleDownloadPNG("match-scorecard-print", `scorecard-${match.team1Name}-vs-${match.team2Name}`)}
                     className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer border border-slate-300 uppercase"
                   >
-                    ⬇️ Plain PDF
+                    ⬇️ Scorecard Image
                   </button>
                   <button
                     onClick={() => {
@@ -1950,7 +1968,7 @@ export default function MatchScoringPage() {
                     }}
                     className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer shadow-md uppercase"
                   >
-                    📄 Graphical Summary PDF
+                    📄 Summary Preview
                   </button>
                   <button
                     onClick={() => {
@@ -1960,7 +1978,7 @@ export default function MatchScoringPage() {
                     }}
                     className="flex items-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-xs tracking-wider rounded-lg transition-all active:scale-95 cursor-pointer shadow-md uppercase"
                   >
-                    📊 Graphical Scorecard PDF
+                    📊 Scorecard Preview
                   </button>
                 </div>
               </div>
