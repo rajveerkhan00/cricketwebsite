@@ -5,23 +5,23 @@ import Image from "next/image";
 export default function Videos() {
   const videos = [
     {
-      title: "CriOverlay PhotoShow",
-      thumbnail: "/thumb-scoreboard.png",
+      title: "CriOverlay Scoreboard 1",
+      thumbnail: "/scoreboard (1).png",
       link: "#",
     },
     {
-      title: "CriOverlay Tutorial",
-      thumbnail: "/thumb-control.png",
+      title: "CriOverlay Scoreboard 2",
+      thumbnail: "/scoreboard (2).png",
       link: "#",
     },
     {
-      title: "Camerafi and Prism Live",
-      thumbnail: "/thumb-control.png",
+      title: "CriOverlay Scoreboard 3",
+      thumbnail: "/scoreboard (3).png",
       link: "#",
     },
     {
-      title: "Cricket Scoring Tutorial",
-      thumbnail: "/thumb-scoreboard.png",
+      title: "CriOverlay Scoreboard 4",
+      thumbnail: "/scoreboard (4).png",
       link: "#",
     },
   ];
